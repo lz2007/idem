@@ -1,0 +1,562 @@
+<!-- 统一运维管理平台--设备资源管理--采集工作站管理 -->
+<!-- caojiacong -->
+<template>
+    <div class="tyywglpt ywzx-cjgzzgl" :controller="cjgzzgl-vm">
+
+        <div class="ywzx-cjgzzgl-left">
+            <div class="tyywglpt-search-box">
+                <xmp :widget="{is:'ms-form',$form:@$form,inline:true}">
+                    <ms-form-item :widget="{label:@cjgzzgl_language.department}" :class="'form-item form-single-line'">
+                        <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'cjgzzgl-tree-select-1', getSelected:@getSelected, selectedKey:@orgId, selectedTitle:@orgName, onChange:@handleTreeChange, extraExpandHandle:@extraExpandHandle, branchShow:true, clickBranchBack:@clickBranchBack, includedStatus:@included_status}"></ms-tree-selecting>
+                    </ms-form-item>
+                    <!-- 设备厂商影响设备型号 -->
+                    <!-- 此处的设备厂商/型号包含已废弃的 , , (@manufacturerOptions.length === 0 && 'disabled')(@modelOptions.length === 0 && 'disabled')-->
+                    <ms-form-item :widget="{label: @cjgzzgl_language.manufacturer}" :class="['form-item']">
+                        <ms-select :widget="{col:'manufacturer', value:[@getDefaultManu(manufacturerOptions,dataJson)], displayValue:@cjgzzgl_language.noOptionalDeviceManufacturer, options:@manufacturerOptions, onChange:@handleManuChange}">
+                        </ms-select>
+                    </ms-form-item>
+                    <ms-form-item :widget="{label: @cjgzzgl_language.deviceModel}" :class="['form-item']">
+                        <ms-select :widget="{col:'model', value:[@getDefaultModel(modelOptions, isManuSelectMode, dataJson)], displayValue:@cjgzzgl_language.noOptionalDeviceModel, options:@modelOptions, onChange:@handleModelChange}">
+                        </ms-select>
+                    </ms-form-item>
+                    <button type="button" class="btn btn-query" :click="@query" :if="@authority.SEARCH">{{@cjgzzgl_language.query}}</button>
+                </xmp>
+            </div>
+        </div>
+        <div class="tyywglpt-tool-bar ywzx-cjgzzgl-bar">
+            <div class="tyywglpt-tool-bar-inner">
+                <div class="btnIcon" :click="@handleRegister" :class="@selectedRowsLength !== 0 && 'disabled'" :if="@authority.REGISTRY">
+                    <i class="icon icon_addUser"></i>
+                    <span class="btn-tool-ywxz">{{@cjgzzgl_language.register}}</span>
+                </div>
+                <div class="btnIcon" :click="@handlePloySetting" :class="@settingIsDisabled(checkedIsSource, selectedRowsLength)"
+                    :if="@authority.CLPZ">
+                    <!-- 本域设备才能配置 -->
+                    <i class="icon icon_policy"></i>
+                    <span class="btn-tool-ywxz">{{@cjgzzgl_language.policySetting}}</span>
+                </div>
+                <div class="btnIcon" :click="@handleSafeSetting" :class="@settingIsDisabled(checkedIsSource, selectedRowsLength)"
+                    :if="@authority.AQPZ">
+                    <!-- 本域设备才能配置 -->
+                    <i class="icon icon_security"></i>
+                    <span class="btn-tool-ywxz">{{@cjgzzgl_language.securitySetting}}</span>
+                </div>
+                <div class="btnIcon" :click="@handleUpdate" :class="@updateIsDisabled(checkedIsSameManuAndModel, selectedRowsLength)"
+                    :if="@authority.UPDATE">
+                    <!-- 本域设备才能配置 -->
+                    <i class="icon icon_upload"></i>
+                    <span class="btn-tool-ywxz">{{@cjgzzgl_language.uploadSetting}}</span>
+                </div>
+                <!-- 同型号的才能一起批量升级 -->
+                <!-- <input :if="@authority.UPDATE" type="button" value="升级" :click="@handleUpdate" class="btn btn-tool" :class="@updateIsDisabled(checkedIsSameManuAndModel, selectedRowsLength)"> -->
+            </div>
+        </div>
+        <div class="tyywglpt-list-panel">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <li class="col-3 first-item">
+                        <input type="checkbox" id="checkall" :duplex-checked="@checkAll" data-duplex-changed="@handleCheckAll($event)">
+                        <label for="checkall" :class="[@checkAll ? 'check_selected' : 'check_unselected']"></label>
+                    </li>
+                    <li class="col-4">{{@cjgzzgl_language.tableNo}}</li>
+                    <li class="col-14">{{@cjgzzgl_language.department}}</li>
+                    <li class="col-10">{{@cjgzzgl_language.deviceName}}</li>
+                    <li class="col-14">{{@cjgzzgl_language.communicationCode}}</li>
+                    <li class="col-10">{{@cjgzzgl_language.deviceIP}}</li>
+                    <li class="col-8">{{@cjgzzgl_language.manufacturer}}</li>
+                    <li class="col-6">{{@cjgzzgl_language.model}}</li>
+                    <li class="col-8">{{@cjgzzgl_language.storageService}}</li>
+                    <li class="col-6">{{@cjgzzgl_language.onlineStatus}}</li>
+                    <!-- <li class="col-8">{{@cjgzzgl_language.maintainer}}</li> -->
+                    <!-- <li class="col-4">{{@cjgzzgl_language.daysOfStorage}}</li> -->
+                    <li class="col-7">{{@cjgzzgl_language.edition}}</li>
+                    <li class="col-10 last-item">{{@cjgzzgl_language.operation}}</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@loading" class="list-loading">
+                    <span>{{cjgzzgl_language.loading}}</span>
+                </li>
+                <li :if="@isNull" class="list-null">{{@cjgzzgl_language.noRecords}}</li>
+                <li :if="!@loading && !@isNull" :for="($index, item) in @list">
+                    <div class="col-3 first-item">
+                        <input type="checkbox" :attr="{'id':$index}" :duplex-checked="item.checked" data-duplex-changed="@handleCheck($index,item,$event)">
+                        <label :attr="{'for':$index}" :class="[item.checked ? 'check_selected' : 'check_unselected']"></label>
+                    </div>
+                    <div class="col-4">{{((@current - 1) * @pageSize) + $index+1}}</div>
+                    <div class="col-14" :attr="{'title':item.orgName || '','data-toggle':'popover'}">{{@item.orgName |
+                        fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.wsName || '','data-toggle':'popover'}">{{@item.wsName |
+                        fillterEmpty}}</div>
+                    <div class="col-14" :attr="{'title':item.gbCode || '','data-toggle':'popover'}">{{@item.gbCode |
+                        fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.ipAddr || '','data-toggle':'popover'}">{{@item.ipAddr |
+                        fillterEmpty}}</div>
+                    <div class="col-8" :attr="{'title':item.manufacturerName || '','data-toggle':'popover'}">{{@item.manufacturerName
+                        | fillterEmpty}}</div>
+                    <div class="col-6" :attr="{'title':item.modelnum || '','data-toggle':'popover'}">{{@item.modelnum |
+                        fillterEmpty}}</div>
+                    <div class="col-8" :attr="{'title':item.storageName || '','data-toggle':'popover'}">{{@item.storageName
+                        | fillterEmpty}}</div>
+                    <div class="col-6" :class="[item.isOnline !== 1 && 'isoffline']" :attr="{'title':item.isOnlineName || '','data-toggle':'popover'}">{{@item.isOnlineName
+                        | fillterEmpty}}</div>
+                    <!-- <div class="col-8" :attr="{'title':item.admin || '','data-toggle':'popover'}">{{@item.admin |
+                        fillterEmpty}}</div> -->
+                    <!-- <div class="col-4" :attr="{'title':'item.1' || '','data-toggle':'popover'}">{{@item.admin | fillterEmpty}}</div> -->
+                    <div class="col-7" :attr="{'title':item.version || '','data-toggle':'popover'}">{{@item.version |
+                        fillterEmpty}}</div>
+                    <div class="col-10">
+                        <div class="op_edit" :attr="{title: @cjgzzgl_language.modify}" :class="[item.source && 'disabled']" :click="@handleModify(item)" :if="@authority.MODIFY"></div>
+                        <div class="op_delete" :attr="{title: @cjgzzgl_language.delete}" :class="[item.source && 'disabled']" :click="@handleDelete(item)" :if="@authority.DELETE"></div>
+                        <!-- <span :if="@authority.OPT_SHOW"> - </span> -->
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 采集站的批量删除去掉了 -->
+        <div class="bottom-tool-bar" :click="@handleBatchDelete" :class="[(!@checkedIsSource || @selectedRowsLength < 1) && 'disabled']"
+            :if="false">
+            <i class="icon icon_batchDel"></i>
+            <span class="btn-tool-ywxz">{{@cjgzzgl_language.batchDelete}}</span>
+        </div>
+        <!-- <div class="bottom-tool-bar">
+            <i class="icon icon_addUser"></i>             
+            <input :if="@authority.BATCHDELETE" class="btn btn-tool" :class="[(!@checkedIsSource || @selectedRowsLength < 1) && 'disabled']"
+                type="button" value="批量删除" :click="@handleBatchDelete">
+        </div> -->
+
+
+        <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent}"></ms-pages>
+
+        <!-- 注册弹窗 -->
+        <div :controller="cjgzzgl-register-vm" class="sbzygl-modal cjgzzgl-modal-register">
+            <xmp :widget="{is:'common-ms-modal', title:@txt_register, modalSelector:'#cjgzzgl-modal-register', modalWidth:360, show:@show, onOk:@handleOk, onCancel:@handleCancel,
+            cancelText: @cancel, okText: @save, btnalign:'center'}">
+                <div id="cjgzzgl-modal-register">
+                    <div class="modal-title"></div>
+                    <!-- 设备厂商影响设备型号 -->
+                    <!-- 此处的设备厂商/型号过滤掉已废弃的了(注释不要放到ms-form内的最开始，否则将解析出错)  -->
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <ms-form-item :class="['form-item', !@validJson.manufacturer && 'has-error', (@manufacturerOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>{{@cjgzzgl_language.manufacturer}}</label>
+                            <!-- <ms-select :widget="{col:'manufacturer', value:[@defaultManufacturer], displayValue:'暂无可选的设备厂商', options:@manufacturerOptions,onChange:@handleManuChange}">
+                            </ms-select> -->
+                            <ms-search-select :widget="{owner:'manufacturer', searchLabel:@inputJson.manufacturer,options:@manufacturerOptions,getSearchLabel:getSearchLabel,getSelected:getSearchSelected,onFocus:@handleSearchSelectFocus,onBlur:@handleSearchSelectFormat}"></ms-search-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.manufacturer" :attr="{title:@cjgzzgl_language.pleaseChooseTheDeviceManufacturer}">{{@cjgzzgl_language.pleaseChooseTheDeviceManufacturer}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item model-item',!@validJson.modelnum && 'has-error',(@modelOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>{{@cjgzzgl_language.model}}</label>
+                            <!-- <ms-select :widget="{col:'modelnum', value:[@defaultModel], displayValue:@cjgzzgl_language.noOptionalDeviceModel, options:@modelOptions, onChange:@handleModelChange}">
+                            </ms-select> -->
+                            <ms-search-select :widget="{owner:'model', searchLabel:@inputJson.model,options:@modelOptions,getSearchLabel:@getSearchLabel,onFocus:@handleSearchSelectFocus,onBlur:@handleSearchSelectFormat}"></ms-search-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.modelnum" :attr="{title:@cjgzzgl_language.pleaseChooseTheDeviceModel}">{{@cjgzzgl_language.pleaseChooseTheDeviceModel}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',((!@validJson.ip || !@validJson.ipUnique) ? 'has-error' : '')]">
+                            <label>
+                                <i>* </i>{{@cjgzzgl_language.deviceIP}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.ip}" :duplex="@inputJson.ip"
+                                    :focus="@handleFocus('ip',$event)" :blur="@handleFormat('ip',@ipReg,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('ip',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.ip" :attr="{title:@cjgzzgl_language.supportTheCombinationOf0To255DigitsAndDot}">
+                                <i class="fa fa-info-circle"></i>{{@cjgzzgl_language.supportTheCombinationOf0To255DigitsAndDot}}</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.ip" :attr="{title:@cjgzzgl_language.inputTheCorrectDeviceIP}">{{@cjgzzgl_language.inputTheCorrectDeviceIP}}</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.ipUnique" :attr="{title:@cjgzzgl_language.inputTheUniqueDeviceIP}">{{@cjgzzgl_language.inputTheUniqueDeviceIP}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item form-item-lg',((!@validJson.gbCode || !@validJson.gbCodeUnique) ? 'has-error' : '')]">
+                            <label :attr="{title:@cjgzzgl_language.communicationCode}">
+                                <i>* </i>{{@cjgzzgl_language.communicationCode}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.gbCode}" :duplex="@inputJson.gbCode"
+                                    :focus="@handleFocus('gbCode',$event)" :blur="@handleFormat('gbCode',@gbCodeReg,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('gbCode',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.gbCode" :attr="{title:@cjgzzgl_language.supportTheCombinationOfDigitsAndCharactersNoMoreThan20Bit + @inputJson.gbCode.length + ')'}">
+                                <i class="fa fa-info-circle"></i><span>{{@cjgzzgl_language.supportTheCombinationOfDigitsAndCharactersNoMoreThan20Bit}}</span>{{@inputJson.gbCode.length}})</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.gbCode" :attr="{title:@cjgzzgl_language.inputOrCreateACorrectCommunicationCode}">{{@cjgzzgl_language.inputOrCreateACorrectCommunicationCode}}</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.gbCodeUnique" :attr="{title:@cjgzzgl_language.inputOrCreateAUniqueCommunicationCode}">{{@cjgzzgl_language.inputOrCreateAUniqueCommunicationCode}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.wsName && 'has-error']">
+                            <label>
+                                <i>* </i>{{@cjgzzgl_language.deviceName}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.wsName}" :duplex="@inputJson.wsName"
+                                    :focus="@handleFocus('wsName',$event)" :blur="@handleFormat('wsName',null,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('wsName',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.wsName" :attr="{title:@inputJson.wsName.length
+                                > 30 ? @cjgzzgl_language.maximum30CharactersAreAllowed :
+                                @cjgzzgl_language.inputAUniqueDeviceName}">{{@inputJson.wsName.length
+                                > 30 ? @cjgzzgl_language.maximum30CharactersAreAllowed :
+                                @cjgzzgl_language.inputAUniqueDeviceName}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.addr && 'has-error']">
+                            <label>
+                                <i>* </i>{{@cjgzzgl_language.installationSite}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.addr}" :duplex="@inputJson.addr"
+                                    :focus="@handleFocus('addr',$event)" :blur="@handleFormat('addr',null,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('addr',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.addr" :attr="{title:@inputJson.addr.length >
+                                30 ? @cjgzzgl_language.maximum30CharactersAreAllowed :
+                                @cjgzzgl_language.inputTheInstallationSite}">{{@inputJson.addr.length
+                                >
+                                30 ? @cjgzzgl_language.maximum30CharactersAreAllowed :
+                                @cjgzzgl_language.inputTheInstallationSite}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.admin && 'has-error']">
+                            <label>{{@cjgzzgl_language.mainTainer}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.admin}" :duplex="@inputJson.admin"
+                                    :focus="@handleFocus('admin',$event)" :blur="@handleFormat('admin',@adminReg,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('admin',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip form-tip-admin" :if="@showJson.admin" :attr="{title:@cjgzzgl_language.supportChineseEnglishNumbersBracketCharacters}">
+                                <i class="fa fa-info-circle"></i>{{@cjgzzgl_language.supportChineseEnglishNumbersBracketCharacters}}</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.admin" :attr="{title:@inputJson.admin.length > 30 ?
+                                @cjgzzgl_language.maximum30CharactersAreAllowed :
+                                @cjgzzgl_language.inputTheCorrectMaintainer}">{{@inputJson.admin.length
+                                > 30 ?
+                                @cjgzzgl_language.maximum30CharactersAreAllowed :
+                                @cjgzzgl_language.inputTheCorrectMaintainer}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.phone && 'has-error']">
+                            <label>{{@cjgzzgl_language.phone}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.phone}" :duplex="@inputJson.phone"
+                                    :focus="@handleFocus('phone',$event)" :blur="@handleFormat('phone',@telReg,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('phone',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.phone" :attr="{title:@cjgzzgl_language.supportMobilePhoneNumberAndLandlineAvailableSeparation}">
+                                <i class="fa fa-info-circle"></i>{{@cjgzzgl_language.supportMobilePhoneNumberAndLandlineAvailableSeparation}}</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.phone" :attr="{title:@cjgzzgl_language.inputTheCorrectPhone}">{{@cjgzzgl_language.inputTheCorrectPhone}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item', !@validJson.expireDays && 'has-error']">
+                            <label>
+                                <i>* </i>{{@cjgzzgl_language.daysOfStorage}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.expireDays}" :duplex="@inputJson.expireDays"
+                                    :focus="@handleFocus('expireDays',$event)" :blur="@handleFormat('expireDays',@expireDaysReg,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('expireDays',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.expireDays" :attr="{title:@cjgzzgl_language.OnlyNonZeroPositiveIntegersOfNoMoreThan9DigitsAreSupported}">
+                                <i class="fa fa-info-circle"></i>{{@cjgzzgl_language.OnlyNonZeroPositiveIntegersOfNoMoreThan9DigitsAreSupported}}
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.expireDays" :attr="{title:@cjgzzgl_language.inputTheCorrectDaysOfStorage}">{{@cjgzzgl_language.inputTheCorrectDaysOfStorage}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="'form-item'">
+                            <label><i>* </i>{{@cjgzzgl_language.department}}</label>
+                            <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, selectedKey:@orgId, selectedTitle:@orgName, wrapId: 'cjgzzgl-tree-select-2', getSelected:@getSelected, onChange:@handleTreeChange, extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                        </ms-form-item>
+                        <!-- <div class="modal-title">策略配置信息</div> -->
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+
+        <!-- 策略配置弹窗 -->
+        <div :controller="cjgzzgl-ploysetting-vm" class="sbzygl-modal cjgzzgl-modal-ploysetting">
+            <xmp :widget="{is:'common-ms-modal', title:@txt_policySetting, modalSelector:'#cjgzzgl-modal-ploysetting', modalWidth:380, modalHeight: 100, show:@show, onOk:@handleOk, onCancel:@handleCancel,
+            cancelText: @cancel, okText: @save, btnalign:'center'}">
+                <div id="cjgzzgl-modal-ploysetting">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <ms-form-item :class="['form-item',!daysValid && 'has-error']">
+                            <label>{{@cjgzzgl_language.daysOfStorage}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@defaultDays}" :duplex="@defaultDays"
+                                    :focus="@handleFocus" :blur="@handleFormat">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showTip" :attr="{title:@cjgzzgl_language.OnlyNonZeroPositiveIntegersOfNoMoreThan9DigitsAreSupported}">
+                                <i class="fa fa-info-circle"></i>{{@cjgzzgl_language.OnlyNonZeroPositiveIntegersOfNoMoreThan9DigitsAreSupported}}</div>
+                            <div class="form-tip invalid-tip" :if="!@daysValid" :attr="{title:@cjgzzgl_language.inputTheCorrectDaysOfStorage}">{{@cjgzzgl_language.inputTheCorrectDaysOfStorage}}</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 安全配置弹窗 -->
+        <div :controller="cjgzzgl-safesetting-vm" class="sbzygl-modal cjgzzgl-modal-safesetting ywzx-cjgzzgl-modal-safesetting">
+            <xmp :widget="{is:'common-ms-modal', title:@txt_securitySetting, modalSelector:'#cjgzzgl-modal-safesetting', modalWidth:360, modalHeight: 478, show:@show, onOk:@handleOk, onCancel:@handleCancel,
+            cancelText: @cancel, okText: @save, btnalign:'center'}">
+                <div id="cjgzzgl-modal-safesetting">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <div class="safesetting-form-group">
+                            <!-- <input type="checkbox" :attr="{'id':'deviceAll'}" :duplex-checked="@deviceAllStatus"
+                                data-duplex-changed="@handleAllDeviceSelect($event)"> -->
+                            <!-- <label :attr="{'for':'deviceAll'}" :class="['select-label', @isDeviceAllchecked ? 'check_selected' : (@isDeviceSomeChecked ? 'check_selected_some' : 'check_unselected')]"></label> -->
+                            <label class="label_title">{{@cjgzzgl_language.deviceControlStrategy}}</label>
+                            <ul class="checkbox-group device-checkbox-group">
+                                <li :for="($index,el) in @deviceOptions" :class="[$index == 2 && 'third-checkbox']">
+                                    <input type="checkbox" :attr="{'id': 'device'+$index}" :duplex-checked="@deviceCheck[el.value]"
+                                        data-duplex-changed="@handleDeviceCheck($event)">
+                                    <label :attr="{'for':'device'+$index}" :class="['select-label', @deviceCheck[el.value] ? 'check_selected' : 'check_unselected']"></label>
+                                    <label>{{el.label}}</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="safesetting-form-group">
+                            <!-- <input type="checkbox" :attr="{'id':'exportAll'}" :duplex-checked="@exportAllStatus"
+                                data-duplex-changed="@handleAllExportSelect($event)"> -->
+                            <!-- <label :attr="{'for':'exportAll'}" :class="['select-label', isExportAllchecked ? 'check_selected' : (@isExportSomeChecked ? 'check_selected_some' : 'check_unselected')]"></label> -->
+                            <label class="label_title">{{@cjgzzgl_language.exportStrategy}}</label>
+                            <ul class="checkbox-group export-checkbox-group">
+                                <li :for="($index,el) in @exportOptions">
+                                    <input type="checkbox" :attr="{'id': 'export'+$index}" :duplex-checked="@exportCheck[el.value]"
+                                        data-duplex-changed="@handleExportCheck($event)">
+                                    <label :attr="{'for':'export'+$index}" :class="['select-label', @exportCheck[el.value] ? 'check_selected' : 'check_unselected']"></label>
+                                    <label>{{el.label}}</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="safesetting-form-group radio-group">
+                            <label class="type-title net-title label_title">{{@cjgzzgl_language.networkControlStrategy}}</label>
+                            <div>
+                                <input type="radio" :attr="{'id':'net-on'}" value="true" :duplex="@netCheck">
+                                <label :attr="{'for':'net-on'}" :class="['select-label', @boolNetCheck ? 'radio_selected' : 'radio_unselected']"></label>
+                                <label>{{@cjgzzgl_language.enable}}</label>
+                            </div>
+                            <div>
+                                <input type="radio" :attr="{'id':'net-off'}" value="false" :duplex="@netCheck">
+                                <label :attr="{'for':'net-off'}" :class="['select-label', !@boolNetCheck ? 'radio_selected' : 'radio_unselected']"></label>
+                                <label>{{@cjgzzgl_language.disable}}</label>
+                            </div>
+                        </div>
+                        <div class="safesetting-form-group radio-group">
+                            <label class="type-title net-title label_title" :attr="{title:@cjgzzgl_language.lawEnforcementRecorderRegistrationModel}">{{@cjgzzgl_language.lawEnforcementRecorderRegistrationModel}}</label>
+                            <div>
+                                <input type="radio" :attr="{'id':'mode-on'}" value="true" :duplex="@modeAuto">
+                                <label :attr="{'for':'mode-on'}" :class="['select-label', @boolModeAuto ? 'radio_selected' : 'radio_unselected']"></label>
+                                <label>{{@cjgzzgl_language.manual}}</label>
+                            </div>
+                            <div>
+                                <input type="radio" :attr="{'id':'mode-off'}" value="false" :duplex="@modeAuto">
+                                <label :attr="{'for':'mode-off'}" :class="['select-label', !@boolModeAuto ? 'radio_selected' : 'radio_unselected']"></label>
+                                <label>{{@cjgzzgl_language.auto}}</label>
+                            </div>
+                        </div>
+                        <ms-form-item :class="['form-item safesetting-form-group',!whiteValid && 'has-error']">
+                            <label class="type-title label_title" :attr="{title:@cjgzzgl_language.whiteList}">{{@cjgzzgl_language.whiteList}}</label>
+                            <!-- <ms-input :widget="{col:'whiteList',value:@whiteListValue}"></ms-input> -->
+                            <div class="has-icon whiteList-div">
+                                <input type="text" class="form-control" :attr="{title:@whiteListValue}" :duplex="@whiteListValue"
+                                    :focus="@handleFocus" :blur="@handleFormat">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip whiteList-tip" id="whiteList-tip" :if="!@whiteValid" :attr="{title:@cjgzzgl_language.maximum15CharactersAreAllowed}">{{@cjgzzgl_language.maximum15CharactersAreAllowed}}</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 修改弹窗 -->
+        <div :controller="cjgzzgl-modify-vm" class="sbzygl-modal cjgzzgl-modal-modify">
+            <xmp :widget="{is:'common-ms-modal', title:@txt_modify, modalSelector:'#cjgzzgl-modal-modify', modalWidth: 360, show:@show, onOk:@handleOk, onCancel:@handleCancel,cancelText: @cancel, okText: @save, btnalign:'center'}">
+                <div id="cjgzzgl-modal-modify">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <div class="modal-title"></div>
+                        <ms-form-item :class="['form-item disabled-select',!@validJson.manufacturer && 'has-error']">
+                            <label>
+                                <i>* </i>{{@cjgzzgl_language.manufacturer}}</label>
+                            <input type="text" class="form-control" :attr="{title:@inputJson.manufacturerName}" :duplex="@inputJson.manufacturerName"
+                                disabled>
+                            <!-- <div class="form-tip invalid-tip tip-md" :if="!@validJson.manufacturer">设备厂商不能为空</div> -->
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.modelnum && 'has-error']">
+                            <label>
+                                <i>* </i>{{@cjgzzgl_language.model}}</label>
+                            <div class="has-icon has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.modelnum}" :duplex="@inputJson.modelnum"
+                                    disabled>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.modelnum" :attr="{title:@cjgzzgl_language.pleaseChooseTheDeviceModel}">{{@cjgzzgl_language.pleaseChooseTheDeviceModel}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',((!@validJson.ip || !@validJson.ipUnique) ? 'has-error' : '')]">
+                            <label>
+                                <i>* </i>{{@cjgzzgl_language.deviceIP}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.ip}" :duplex="@inputJson.ip"
+                                    :focus="@handleFocus('ip',$event)" :blur="@handleFormat('ip',@ipReg,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('ip',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.ip" :attr="{title:@cjgzzgl_language.supportTheCombinationOf0To255DigitsAndDot}">
+                                <i class="fa fa-info-circle"></i>{{@cjgzzgl_language.supportTheCombinationOf0To255DigitsAndDot}}</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.ip" :attr="{title:@cjgzzgl_language.inputTheCorrectDeviceIP}">{{@cjgzzgl_language.inputTheCorrectDeviceIP}}</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.ipUnique" :attr="{title:@cjgzzgl_language.inputTheUniqueDeviceIP}">{{@cjgzzgl_language.inputTheUniqueDeviceIP}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item form-item-lg',!@validJson.gbCode && 'has-error']">
+                            <label :attr="{title:@cjgzzgl_language.communicationCode}">
+                                <i>* </i>{{@cjgzzgl_language.communicationCode}}</label>
+                            <div class="has-icon has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.gbCode}" :duplex="@inputJson.gbCode"
+                                    disabled>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.gbCode" :attr="{title:@cjgzzgl_language.theCommunicationCodeCannotBeEmpty}">{{@cjgzzgl_language.theCommunicationCodeCannotBeEmpty}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.wsName && 'has-error']">
+                            <label>
+                                <i>* </i>{{@cjgzzgl_language.deviceName}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.wsName}" :duplex="@inputJson.wsName"
+                                    :focus="@handleFocus('wsName',$event)" :blur="@handleFormat('wsName',null,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('wsName',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.wsName" :attr="{title:@inputJson.wsName.length
+                                > 30 ? @cjgzzgl_language.maximum30CharactersAreAllowed :
+                                @cjgzzgl_language.inputAUniqueDeviceName}">{{@inputJson.wsName.length
+                                > 30
+                                ? @cjgzzgl_language.maximum30CharactersAreAllowed :
+                                @cjgzzgl_language.inputAUniqueDeviceName}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.wsAddr && 'has-error']">
+                            <label>
+                                <i>* </i>{{@cjgzzgl_language.installationSite}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.wsAddr}" :duplex="@inputJson.wsAddr"
+                                    :focus="@handleFocus('wsAddr',$event)" :blur="@handleFormat('wsAddr',null,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('wsAddr',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.wsAddr" :attr="{title:@inputJson.addr.length >
+                                30 ? @cjgzzgl_language.maximum30CharactersAreAllowed :
+                                @cjgzzgl_language.inputTheInstallationSite}">{{@inputJson.wsAddr.length
+                                > 30
+                                ? @cjgzzgl_language.maximum30CharactersAreAllowed :
+                                @cjgzzgl_language.inputTheInstallationSite}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.admin && 'has-error']">
+                            <label>{{@cjgzzgl_language.mainTainer}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.admin}" :duplex="@inputJson.admin"
+                                    :focus="@handleFocus('admin',$event)" :blur="@handleFormat('admin',@adminReg,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('admin',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip form-tip-admin" :if="@showJson.admin" :attr="{title:@cjgzzgl_language.supportChineseEnglishNumbersBracketCharacters}">
+                                <i class="fa fa-info-circle"></i>{{@cjgzzgl_language.supportChineseEnglishNumbersBracketCharacters}}</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.admin" :attr="{title:@inputJson.admin.length > 30 ?
+                                @cjgzzgl_language.maximum30CharactersAreAllowed :
+                                @cjgzzgl_language.inputTheCorrectMaintainer}">{{@inputJson.admin.length
+                                > 30 ?
+                                @cjgzzgl_language.maximum30CharactersAreAllowed :
+                                @cjgzzgl_language.inputTheCorrectMaintainer}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.phoneNumber && 'has-error']">
+                            <label>{{@cjgzzgl_language.phone}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.phoneNumber}" :duplex="@inputJson.phoneNumber"
+                                    :focus="@handleFocus('phoneNumber',$event)" :blur="@handleFormat('phoneNumber',@telReg,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('phoneNumber',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.phoneNumber" :attr="{title:@cjgzzgl_language.supportMobilePhoneNumberAndLandlineAvailableSeparation}">
+                                <i class="fa fa-info-circle"></i>{{@cjgzzgl_language.supportMobilePhoneNumberAndLandlineAvailableSeparation}}</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.phoneNumber" :attr="{title:@cjgzzgl_language.inputTheCorrectPhone}">{{@cjgzzgl_language.inputTheCorrectPhone}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item', !@validJson.expireDays && 'has-error']">
+                            <label>
+                                <i>* </i>{{@cjgzzgl_language.daysOfStorage}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.expireDays}" :duplex="@inputJson.expireDays"
+                                    :focus="@handleFocus('expireDays',$event)" :blur="@handleFormat('expireDays',expireDaysReg,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('expireDays',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.expireDays" :attr="{title:@cjgzzgl_language.OnlyNonZeroPositiveIntegersOfNoMoreThan9DigitsAreSupported}">
+                                <i class="fa fa-info-circle"></i>{{@cjgzzgl_language.OnlyNonZeroPositiveIntegersOfNoMoreThan9DigitsAreSupported}}
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.expireDays" :attr="{title:@cjgzzgl_language.inputTheCorrectDaysOfStorage}">{{@cjgzzgl_language.inputTheCorrectDaysOfStorage}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="'form-item disabled-select'">
+                            <label><i>* </i>{{@cjgzzgl_language.department}}</label>
+                            <ms-tree-selecting :widget="{tree:@orgData, disabledSelect:true, showSearch:true, selectedKey:@orgId, selectedTitle:@orgName,wrapId: 'cjgzzgl-tree-select-3', getSelected:@getSelected, onChange:@handleTreeChange, extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                        </ms-form-item>
+
+                        <!-- <ms-form-item :class="['form-item']">
+                            <label>上级存储服务:</label>
+                            <input type="text" class="form-control" :attr="{title:@inputJson.storageName}" :duplex="@inputJson.storageName"
+                                disabled>
+                        </ms-form-item> -->
+
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 删除弹窗 -->
+        <div :controller="cjgzzgl-delete-vm" class="sbzygl-modal sbzygl-modal-tip sbzygl-modal-delete">
+            <xmp :widget="{is:'common-ms-modal', title:@txt_delete, modalSelector:'#cjgzzgl-modal-delete', btnalign:'center', modalWidth:300, modalHeight: 80, show:@show, onOk:@handleOk, onCancel:@handleCancel,
+            cancelText: @cancel, okText: @save}">
+                <p :if="!@isBatch" class="tip-text" id="cjgzzgl-modal-delete">{{@cjgzzgl_language.areYouSureToDeleteThisItem}}</p>
+                <p :if="@isBatch" class="tip-text" id="cjgzzgl-modal-delete">
+                    <span>{{@cjgzzgl_language.areYouSureToDelete}}</span>
+                    <span>{{@selectedRowsLength}}</span>
+                    <span>{{@cjgzzgl_language.item}}</span>
+                </p>
+            </xmp>
+        </div>
+
+        <!-- 升级弹窗新 -->
+        <div :controller="cjgzzgl-update-vm" class="sbzygl-modal sbzygl-modal-update">
+            <xmp :widget="{is:'common-ms-modal', title:@cjgzzgl_language.upgrade, modalSelector:'#cjgzzgl-modal-update',okText:@cjgzzgl_language.save,cancelText:@cjgzzgl_language.cancel, modalWidth:800, modalHeight: 300, btnalign: 'center', okDisabled:@okDisabled, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="cjgzzgl-modal-update">
+                    <h4>{{@cjgzzgl_language.selectAUpgradePackage}}</h4>
+                    <div class="update-title">
+                        <span class="col-10"></span>
+                        <span class="col-20">{{@cjgzzgl_language.packageName}}</span>
+                        <span class="col-15">{{@cjgzzgl_language.model}}</span>
+                        <span class="col-15">{{@cjgzzgl_language.edition}}</span>
+                        <span class="col-30">{{@cjgzzgl_language.uploadTime}}</span>
+                        <span class="col-10">{{@cjgzzgl_language.uploadContent}}</span>
+                    </div>
+                    <ul class="update-package-list">
+                        <li :for="($index,el) in @updateData | orderBy(@order, @dir)">
+                            <div class="col-10">
+                                <input type="radio" :attr="{'id':'update'+$index,'name':'updateCheck','value':@el.id}"
+                                    :duplex="@el.checked" data-duplex-changed="@handleCheckChange($index,el,$event)">
+                                <label :attr="{'for':'update'+$index}" :class="['select-label', @checkedIndex == $index ? 'radio_selected' : 'radio_unselected']"></label>
+                            </div>
+                            <!-- <div class="col-20" :attr="{title:el.manufacturerName || '','data-toggle':'popover'}">
+                                {{el.manufacturerName || '-'}}
+                            </div> -->
+                            <div class="col-20" :attr="{title:el.name || '','data-toggle':'popover'}">
+                                {{el.name || '-'}}
+                            </div>
+                            <div class="col-15" :attr="{title:el.model || '','data-toggle':'popover'}">
+                                {{el.model || '-'}}
+                            </div>
+                            <div class="col-15" :attr="{title:el.version || '','data-toggle':'popover'}">
+                                {{el.version || '-'}}
+                            </div>
+                            <div class="col-30" :attr="{title:el.insertTime || '','data-toggle':'popover'}">
+                                {{el.insertTime || '-'}}
+                            </div>
+                            <div class="col-10">
+                                <!-- <a class="oparate op_view" :click="@handleLook(el)">{{@cjgzzgl_language.look}}</a> -->
+                                <a class="oparate op_view" :click="@handleLook(el)" :attr="{title: @cjgzzgl_language.look}"></a>
+                            </div>
+                        </li>
+                        <li :if="@updateData.length == 0">{{@cjgzzgl_language.noPackage}}</li>
+                    </ul>
+                </div>
+            </xmp>
+        </div>
+        <!-- 查看弹窗 -->
+        <div :controller="cjgzzgl-look-vm" class="sbzygl-modal sbzygl-modal-look">
+            <xmp :widget="{is:'common-ms-modal', title:@cjgzzgl_language.uploadContent, modalSelector:'#cjgzzgl-modal-look', drag:true, btnalign:'center', modalWidth:600, modalHeight:200, show:@show,ifcancelBtn:false,onOk:@handleOk,onCancel:@handleOk,okText:@cjgzzgl_language.save}">
+                <div id="cjgzzgl-modal-look" ms-html="@updateContent">
+                </div>
+            </xmp>
+        </div>
+        <!-- 升级下发提示弹窗 -->
+        <div :controller="cjgzzgl-allottip-vm" class="sbzygl-modal sbzygl-modal-tip sbzygl-modal-allottip">
+            <xmp :widget="{is:'common-ms-modal', title:@cjgzzgl_language.tip, modalSelector:'#cjgzzgl-modal-allottip', drag:true, btnalign:'center', modalWidth:300, modalHeight:80, show:@show,ifcancelBtn:false,onOk:@handleOk,okText:@cjgzzgl_language.save}">
+                <p class="tip-text" id="cjgzzgl-modal-allottip">{{@cjgzzgl_language.taskHasDown}}</p>
+            </xmp>
+        </div>
+    </div>
+</template>

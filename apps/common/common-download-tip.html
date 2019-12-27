@@ -1,0 +1,13 @@
+<template>
+    <div :controller="download-tip-vm" class="modal-download-tip">
+        <xmp :widget="{is:'common-ms-modal', title: @languageTxt.downloadTip, modalSelector:'#modal-download-tip', modalWidth:400, modalHeight: 100, show:@show, okText: @languageTxt.downloadTipY, cancelText: @languageTxt.downloadTipN, onOk:@handleOk, onCancel:@handleCancel}">
+            <div id="modal-download-tip">
+                <div>
+                    <slot></slot>
+                    <a id="download-link" :attr="{href:@plugLink}"></a>
+                </div>
+                <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%; height:100%;z-index:0;opacity:0;filter:alpha(opacity=0);"></iframe>
+            </div>
+        </xmp>
+    </div>
+</template>

@@ -1,0 +1,183 @@
+<template>
+    <div class="czrz-toolBar">
+        <div class="czrz_menubar" :if="@authority.SEARCH">
+            <div class="">
+                <!--<span>查询条件</span>-->
+                <ms-form :widget="{$form:@$searchForm,inline:true}">
+                    <div class="czrzHearder">
+                        <div class="czrz-fixWidth">
+                            <!--<xmp is="ms-form">-->
+                            <label class="czrz-labelLineHeight">开始时间：</label>
+                            <ms-form-item :css="{width: '210px'}">
+                                <ms-datepicker :widget="{
+                                onChange:@handlerChangeStart,
+                                col:'startTime',
+                                placeholder:'请选择开始时间',
+                                showTime:true,
+                                width: '100%',
+                                endDate:@czrz_endDate,
+                                value: @startTime
+                            }"></ms-datepicker>
+                                <div class="czrz_tip_box czrz_start_time_tip" style="margin-top: -10px;">
+                                    <span :class="['czrz_tip']" :css="{display:@start_null}">
+                                        <i class="fa fa-exclamation-circle">&nbsp;开始时间不能为空</i>
+                                    </span>
+                                </div>
+                            </ms-form-item>
+                            <!--</xmp>-->
+                        </div>
+                        <div class="czrz-fixWidth">
+                            <!--<xmp is="ms-form">-->
+                            <label class="czrz-labelLineHeight">结束时间：</label>
+                            <ms-form-item :css="{width: '210px'}">
+                                <ms-datepicker :widget="{
+                                onChange:@handlerChangeEnd,
+                                col:'endDate',
+                                placeholder:'请选择结束时间',
+                                showTime:true,
+                                width: '100%',
+                                endDate:@czrz_endDate,
+                                value: @endTime
+                            }"></ms-datepicker>
+                                <div class="czrz_tip_box czrz_end_time_tip" style="margin-top: -10px;">
+                                    <span :class="['czrz_tip']" :css="{display:@end_null}">
+                                        <i class="fa fa-exclamation-circle">&nbsp;结束时间不能为空</i>
+                                    </span>
+                                </div>
+                            </ms-form-item>
+                            <!--</xmp>-->
+                        </div>
+                        <div class="czrz-fixWidth">
+                            <label class="czrz-labelLineHeight">应用系统：</label>
+                            <div :controller="czrz-search-sys" class="czrz-sys">
+                                <ms-select :widget="{value:@selValue,options:@options,onChange:@halderChange}"></ms-select>
+                            </div>
+                        </div>
+                        <a class="czrz-btn-search" :if="@authority.SEARCH" :click='@czrzSearch'>查询</a>
+                    </div>
+            </div>
+        </div>
+        </ms-form>
+
+        <div class="czrzBtns" :if="@authority.DCRZ">
+            <ul>
+                <li :click="@czrzExport" class="addRole-disabled">
+                    <label class="czrzOpeBtns">导出日志</label>
+                </li>
+            </ul>
+        </div>
+
+        <!-- <div :controller='czrz_tabCont'>
+            <div class="czrz-table">
+                <ms-table-saika :class="['czrz_tabCont']" :widget="{data:@remoteList,isTitle:true,loading:@loading,onSelect:@handleSelect,onSelectAll:@handleSelectAll,pagination:@pagination}">
+                    <ms-table-header :widget="{title:'序号',dataIndex:'index'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'记录标识',dataIndex:'logId'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'应用系统',dataIndex:'app'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'用户标识',dataIndex:'user'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'单位标识',dataIndex:'org'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'操作时间',dataIndex:'insertTime'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'终端标识',dataIndex:'terminal'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'操作类型',dataIndex:'operator'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'操作结果',dataIndex:'results'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'失败原因代码',dataIndex:'failCode'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'功能模块名称',dataIndex:'funcModule'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'操作条件',dataIndex:'conditions'}"></ms-table-header>
+                </ms-table-saika>
+            </div>
+            <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent}"></ms-pages>
+        </div> -->
+
+        <div class="ajgl-table ajtb" :controller="czrz_tabCont" style="margin-top:42px;">
+            <div :class="['czrz-table']">
+                <div :controller="xtpegl_czrz_table" :class="['table-index']" id="czrz_table">
+                    <div class="table-index-thead-fixed">
+                        <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                            <li class="col-5" data-order="1">序号</li>
+                            <li class="col-5" data-order="2">记录标识</li>
+                            <li class="col-10" data-order="3">应用系统</li>
+                            <li class="col-10" data-order="4">用户标识</li>
+                            <li class="col-7" data-order="5">单位标识</li>
+                            <li class="col-10" data-order="6">操作时间</li>
+                            <li class="col-8" data-order="7">终端标识</li>
+                            <li class="col-5" data-order="8">操作类型</li>
+                            <li class="col-10" data-order="9">操作结果</li>
+                            <li class="col-10" data-order="10">失败原因代码</li>
+                            <li class="col-10" data-order="11">功能模块名称</li>
+                            <li class="col-10" data-order="12">操作条件</li>                    
+                        </ul>
+                    </div>
+
+                    <ul class="table-index-tbody">
+                        <li class="list-null" :if="!@remoteList.length">暂无数据</li>
+
+                        <li :for="($index, record) in @remoteList">
+                            <div class="tbody col-5">
+                                <div class="table-cont">{{record['index']}}</div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['logId'] && (record['logId'] != '-') ? {rel:'drevil',tdval:record['logId']}:''">
+                                    {{record['logId']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['app'] && (record['app'] != '-') ? {rel:'drevil',tdval:record['app']}:''">
+                                    {{record['app']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['user'] && (record['user'] != '-') ? {rel:'drevil',tdval:record['user']}:''">
+                                    {{record['user']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-7">
+                                <div class="table-cont" :attr="record['org'] && (record['org'] != '-') ? {rel:'drevil',tdval:record['org']}:''">
+                                    {{record['org']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['insertTime'] && (record['insertTime'] != '-') ? {rel:'drevil',tdval:record['insertTime']}:''">
+                                    {{record['insertTime']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-8">
+                                <div class="table-cont" :attr="record['terminal'] && (record['terminal'] != '-') ? {rel:'drevil',tdval:record['terminal']}:''">
+                                    {{record['terminal']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['operator'] && (record['operator'] != '-') ? {rel:'drevil',tdval:record['operator']}:''">
+                                    {{record['operator']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['results'] && (record['results'] != '-') ? {rel:'drevil',tdval:record['results']}:''">
+                                    {{record['results']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['failCode'] && (record['failCode'] != '-') ? {rel:'drevil',tdval:record['failCode']}:''">
+                                    {{record['failCode']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['funcModule'] && (record['funcModule'] != '-') ? {rel:'drevil',tdval:record['funcModule']}:''">
+                                    {{record['funcModule']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['conditions'] && (record['conditions'] != '-') ? {rel:'drevil',tdval:record['conditions']}:''">
+                                    {{record['conditions']}}
+                                </div>
+                            </div>                            
+                        </li>
+                    </ul>
+                    <div class="table-index-loading" :if="@loading">
+                        <span class="loadingSpan">结果加载中</span>
+                    </div>
+                </div>
+            </div>
+            <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent}"></ms-pages>
+            <!-- <ms-pages :widget="{total:@pagination.total,pageSize:@pagination.pageSize,current:@pagination.current,onChange:@handleTableChange,getCurrent:@getCurrent}"></ms-pages> -->
+        </div>
+    </div>
+</template>

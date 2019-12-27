@@ -1,0 +1,70 @@
+{
+  "ret": true,
+  "body": [{
+    "dep_code": "999999999999",
+    "dep_name": "大加保全",
+    "children": [{
+      "dep_code": "00000001",
+      "dep_name": "昆明市城市管理综合行政执法局",
+      "children": [{
+        "dep_code": "guanduqu",
+        "dep_name": "官渡区城管",
+        "children": [{
+          "dep_code": "00dcf7f3934b4a92aa5192fab23bdd91",
+          "dep_name": "管理",
+          "children": null
+        }]
+      },
+        {
+          "dep_code": "jidong",
+          "dep_name": "机动组",
+          "children": null
+        },
+        {
+          "dep_code": "panlongqu",
+          "dep_name": "盘龙区城管",
+          "children": null
+        },
+        {
+          "dep_code": "wuhuaqu",
+          "dep_name": "五华区城管",
+          "children": [{
+            "dep_code": "3cdf63878ea3457eae28e82692ad2e4b",
+            "dep_name": "五华街道城管",
+            "children": null
+          },
+            {
+              "dep_code": "6761abda580a403da8cc1f6cea4d95c7",
+              "dep_name": "新华街道城管",
+              "children": null
+            }]
+        },
+        {
+          "dep_code": "zhidui",
+          "dep_name": "支队",
+          "children": null
+        }]
+    },
+      {
+        "dep_code": "ceshi0001",
+        "dep_name": "测试集团",
+        "children": [{
+          "dep_code": "1000000001",
+          "dep_name": "测试1",
+          "children": null
+        }]
+      },
+      {
+        "dep_code": "gmtest",
+        "dep_name": "test",
+        "children": null
+      },
+      {
+        "dep_code": "0f0396f307fa4047a6eedc91d965536a",
+        "dep_name": "系统管理员",
+        "children": null
+      }]
+  }],
+  "error": 0,
+  "msg": "Request succeed."
+}

@@ -1,0 +1,594 @@
+/*公共按钮*/
+
+.sjbgl .tyywglpt-search-box .label-lg {
+    width: 265px;
+}
+
+.sjbgl .tyywglpt-search-box .label-lg label {
+    width: 80px;
+}
+
+.sjbgl .tyywglpt-search-box .time-item {
+    width: 500px;
+}
+
+.sjbgl .tyywglpt-search-box .date-line {
+    margin: 0 8px;
+}
+
+.sjbgl .tyywglpt-list-panel {
+    top: 214px;
+}
+
+.sjbgl .tyywglpt-list-panel .fa-check-square {
+    color: #0078d7;
+    font-size: 14px;
+}
+
+.sjbgl .tyywglpt-list-panel .fa-square-o {
+    color: #a7aaac;
+    font-size: 14px;
+}
+
+.sjbgl .fa-check-circle.success {
+    color: #00CC66;
+    font-size: 40px;
+    display: block;
+    width: 40px;
+    margin: 0 auto;
+}
+
+
+/*按钮组*/
+
+.sjgl-sjbgl .ane-checkbox input[type="checkbox"]:checked+.text::before {
+    display: inline-block;
+    content: "\F00C";
+    background-color: #f5f8fc;
+    border-color: #c8c8c8;
+}
+
+.sjbgl .ane-upload-container {
+    float: left;
+    width: 100px;
+}
+
+
+/*按钮组 -end*/
+
+.sjbgl .ane-upload-list-info,
+.sjbgl .ane-upload-btn-close {
+    display: none !important;
+}
+
+.sjgbptgl-table table {
+    margin-bottom: 0;
+}
+
+.sjbgl .fa {
+    cursor: pointer
+}
+
+.sjbgl .form-control {
+    padding-right: 12px;
+}
+
+.sjbgl-progress {
+    display: none
+}
+
+
+/* 上传 */
+
+.sjbgl .progress {
+    margin-top: 20px;
+}
+
+.sjbgl .uploadstatetext {
+    font-size: 14px;
+    padding: 20px 0;
+    text-align: right;
+}
+
+.sjbgl .uploadstateprogress {
+    padding-left: 0;
+    padding-right: 0;
+    width: 80%;
+}
+
+.sjbgl .waittext {
+    text-align: center;
+    font-size: 14px;
+}
+
+.sjbgl .uploadfinish {
+    margin: 0 auto;
+    width: 71px;
+    height: 71px;
+    background: url(/static/image/tyywglpt/uploadfinish.png?__sprite) no-repeat;
+}
+
+.sjbgl .uploadfinishtext {
+    color: #5BA91F;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.sjbgl .btn.fileinput-button {
+    line-height: 30px;
+    padding: 0 10px;
+    overflow: hidden;
+}
+
+
+/* 删除 */
+
+.sjbgl-del-body .tip-text {
+    height: 80px;
+    line-height: 80px;
+    font-size: 16px;
+    color: #536b82;
+    text-align: center;
+    margin-top: -16px;
+    margin-bottom: 0;
+}
+
+
+/* 上传信息弹窗 */
+
+.sjbgl-modal-upload-info {
+    font-size: 14px;
+}
+
+.sjbgl-modal-upload-info label {
+    width: 103px;
+    text-align: right;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 5px;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.sjbgl-modal-upload-info label i {
+    color: red;
+}
+
+.sjbgl-modal-upload-info .form-inline .form-item {
+    display: inline-block;
+    width: 288px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.sjbgl-modal-upload-info .form-item .form-control {
+    display: inline-block;
+    width: 180px;
+    height: 30px;
+    padding: 0 12px;
+    line-height: 30px;
+    color: #536b82;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.sjbgl-modal-upload-info .form-item input.form-control,
+.sjbgl-modal-upload-info .form-item textarea.form-control {
+    padding: 0 20px 0 12px;
+}
+
+.sjbgl-modal-upload-info .form-item textarea.form-control {
+    height: 100px;
+    resize: none;
+    white-space: pre-wrap;
+    overflow: auto;
+    line-height: 1.5;
+}
+
+.sjbgl-modal-upload-info .form-item .has-icon {
+    display: inline-block;
+    position: relative;
+    background: #fff;
+}
+
+.sjbgl-modal-upload-info .form-item .has-icon-input-wrap {
+    padding: 0 20px 0 12px;
+    border: 1px solid #d1d0d0;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.sjbgl-modal-upload-info .form-item .has-icon-input-wrap input {
+    width: 146px;
+    height: 28px;
+    padding: 0;
+    border: none;
+}
+
+.sjbgl-modal-upload-info .form-item .has-icon-disabled,
+.sjbgl-modal-upload-info .form-item input[disabled] {
+    color: #536b82;
+    background: #ddd;
+    cursor: not-allowed;
+}
+
+.sjbgl-modal-upload-info .form-item .has-icon .fa-close {
+    position: absolute;
+    top: 6px;
+    right: 5px;
+    font-size: 16px;
+    color: #536b82;
+    cursor: pointer;
+}
+
+.sjbgl-modal-upload-info .form-inline .textarea-item .fa-close {
+    top: 0;
+}
+
+.sjbgl-modal-upload-info .form-inline .textarea-item {
+    margin-top: 20px;
+}
+
+.sjbgl-modal-upload-info .has-error .has-icon {
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    border-color: #a94442;
+}
+
+.sjbgl-modal-upload-info .form-item .form-tip {
+    position: absolute;
+    width: 350px;
+    /* width: 100%; */
+    padding-left: 110px;
+    text-align: left;
+}
+
+.sjbgl-modal-upload-info .form-item .form-tip.tip-md {
+    width: 140%;
+    padding-left: 127px;
+}
+
+.sjbgl-modal-upload-info .form-item .fa-info-circle {
+    color: #E09E1F;
+    margin-right: 5px;
+}
+
+.sjbgl-modal-upload-info .form-item .invalid-tip {
+    color: #d2403d;
+}
+
+.sjbgl-modal-upload-info .ane-select-selection .ane-select-selected {
+    padding: 0;
+}
+
+.sjbgl-modal-upload-info .ane-select-arrow,
+.sjbgl-modal-upload-info .ane-tree-select-arrow {
+    top: 4px;
+}
+
+.sjbgl-modal-upload-info .form-item .btn {
+    position: absolute;
+    width: 60px;
+    right: -70px;
+}
+
+.sjbgl-modal-upload-info #sbzygl-modal-upgradeComfirm .upgradeComfirmP {
+    text-align: center;
+    margin-top: 42px;
+    font-size: 15px;
+}
+
+.op_edit {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
+    background: url(/static/image/xtywgl/edit.png?__sprite) no-repeat;
+    vertical-align: middle;
+    cursor: pointer;
+    border-left: none !important;
+}
+
+.op_issueComfirm {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
+    background: url(/static/image/xtywgl/issueComfirm.png?__sprite) no-repeat;
+    vertical-align: middle;
+    cursor: pointer;
+    border-left: none !important;
+}
+
+.sjbgl-modal-upload-info .issueComfirm{
+    height: 60px;
+    line-height: 60px;
+    font-size: 14px;
+    margin-top: -16px;
+    margin-bottom: 0;
+    padding-left: 30px;
+}
+.op_delete {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    background: url(/static/image/xtywgl/del.png?__sprite) center center no-repeat;
+    vertical-align: middle;
+    cursor: pointer;
+    border-left: none !important;
+}
+
+.sjbgl-iptpackageName-focus {
+    border-width: 1px;
+    border-color: #84bbf2;
+    border-width: 1px;
+    box-shadow: #bce2ff 0px 0px 8px;
+    -moz-box-shadow: #bce2ff 0px 0px 8px;
+    -webkit-box-shadow: #bce2ff 0px 0px 8px;
+}
+
+.sjbgl-iptpackageName-clear {
+    display: inline-block;
+    width: 20px;
+    height: 22px;
+    vertical-align: middle;
+    line-height: 22px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    color: #536c80;
+    background: url(/static/image/zfsypsjglpt/input_close_icon.png?__sprite) no-repeat;
+}
+
+.sjbgl-iptpackageName {
+    display: inline-block;
+    height: 30px;
+    width: 178px;
+    padding-left: 12px;
+    padding-right: 0px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background-color: #fff;
+    border: 1px solid #b8c5d3;
+    border-radius: 2px;
+    color: #536b82;
+    /* -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; */
+}
+
+.sjbgl-iptpackageName input {
+    width: 82% !important;
+    border: none;
+    border-color: #fff;
+    width: 166px;
+    height: 22px;
+    line-height: 22px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: 2px;
+}
+
+.sjbgl-iptpackageName input:focus {
+    border: none;
+    outline: none;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(249, 250, 251, 0.6);
+}
+
+.sjbgl-iptpackageName-focus {
+    border-width: 1px;
+    border-color: #84bbf2;
+    border-width: 1px;
+    box-shadow: #bce2ff 0px 0px 8px;
+    -moz-box-shadow: #bce2ff 0px 0px 8px;
+    -webkit-box-shadow: #bce2ff 0px 0px 8px;
+}
+
+.longPacketName label,
+.dataMoveLeft label {
+    width: 107px !important;
+    font-weight: normal !important;
+    color: #2c3640;
+}
+
+.longPacketName {
+    width: 290px !important;
+    margin-right: 0px !important;
+}
+
+.sjbglPadRig {
+    padding-right: 8px;
+}
+
+.sjbglSearBg {
+    background: #fff !important;
+    margin-top: 0px !important;
+}
+
+.dataMoveLeft {
+    margin-left: -63px;
+    margin-right: 0px !important;
+    width: 553px !important;
+}
+
+.dataMoveLeft .ane-datepicker {
+    width: 122px !important;
+}
+
+.sjbglTable {
+    top: 139px !important;
+    left: 0px !important;
+}
+
+.sjbglTable .tyywglpt-list-header li {
+    border-left: 1px solid #f2f2f2;
+}
+
+.sjbglQuery {
+    margin-left: 0;
+    margin-right: 40px;
+    background: #1055b3 !important;
+}
+
+.sjbglQuery:hover {
+    background: #1055b3 !important;
+}
+
+.sjbglUploadBtn {
+    background: #1055b3 !important;
+}
+
+.hideManu {
+    display: none !important;
+}
+
+.sjbglUploadOpenBtn {
+    /* margin-top: -6px !important; */
+    right: 1px !important;
+}
+
+.sjbglLN label {
+    width: 121px !important;
+}
+
+.sjbglLN {
+    width: 306px !important;
+}
+
+.sjbglLN .invalid-tip {
+    padding-left: 131px !important;
+}
+
+.sjbglLN .tip-md {
+    width: 122% !important;
+}
+
+.versionBottom {
+    margin-bottom: 37px !important;
+}
+
+.sjbgldateControl {
+    float: right;
+    width: 80px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    background-color: #fff;
+    color: #607785;
+    cursor: pointer;
+    border: 1px solid #b5c5d5;
+    /* margin-top: 10px; */
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+}
+
+.sjbgldateControl.dataBtnActive,
+.sjbgldateControl:hover {
+    border: 1px solid #1055b3;
+    color: #1055b3;
+}
+
+
+/* .sjbgldateControl.week {
+    margin-left: 113px;
+} */
+
+.sjbgldateControl.month {
+    margin-left: 7px;
+}
+
+.sjbglModelSearch {
+    width: 205px !important;
+}
+
+.sjbglModelSearch .ane-select {
+    width: 50% !important;
+}
+
+.sjbglModelSearch label {
+    font-weight: normal !important;
+    color: #2c3640;
+}
+
+.sjbgl-modal-upload-info .checkbox-group {
+    padding-left: 10px;
+}
+
+.sjbgl-modal-upload-info .checkbox-group li {
+    display: inline-block;
+    width: 280px;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 15px;
+}
+
+.sjbgl-modal-upload-info .checkbox-group .third-checkbox {
+    width: 110px;
+}
+
+.sjbgl-modal-upload-info .checkbox-group li input {
+    vertical-align: middle;
+    margin: 5px;
+}
+
+.sjbgl-modal-upload-info .select-label {
+    width: 6px;
+    height: 13px;
+}
+
+.sjbgl-modal-upload-info .search-input-wrap{
+    width: 298px;
+    border:1px solid #B9CDE2;
+    height:32px;
+    margin: 0 auto;
+}
+
+.sjbgl-modal-upload-info  .search-input-wrap input{
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    width: 268px;
+    border-right: 1px solid #b8c5d3;
+    padding-left: 8px;
+}
+.sjbgl-modal-upload-info  .search-input-wrap i{
+    display: inline-block;
+    width:28px;
+    height: 28px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.sjbgl-modal-upload-info .org-group{
+    margin: 0 auto;
+}
+
+.sjbgl-modal-upload-info .org-group{
+    height: 330px;
+    width: 298px;
+    overflow: auto;
+    margin-top: 10px;
+}
+/* 覆盖树字体样式 */
+.sjbgl-modal-upload-info .org-group .ztree li a span{
+    font-size: 14px;
+    font-family: "Microsoft YaHei",serif;
+    color: #536b82;
+}
+/* 覆盖树蓝色图标位置 */
+.sjbgl-modal-upload-info .org-group .ztree li a span.ico_docu{
+    background: url(/static/image/xtywgl-sbzygl/station2.png) 3px 0px no-repeat !important;
+}
+
+.sjbgl-modal-upload-info .AllocationDialog{
+    margin-top: 7px;
+}

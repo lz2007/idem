@@ -1,0 +1,290 @@
+.sxzhxt-gjglcontrol   .btn.common-bg{
+    position: relative;
+    top: -15px;
+    background: #077CE1;
+}
+
+.sxzhxt-gjglcontrol  {
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    color: #333333;
+    min-height: 550px;
+    height:100%;
+}
+
+.sxzhxt-gjglcontrol   .header{
+    width: 99%;
+    background: #ffffff;
+    border-bottom: 1px solid rgb(204, 204, 204);
+    position: relative;
+    margin: auto;
+    overflow: hidden;    
+}
+
+.sxzhxt-gjglcontrol   .header span{
+    display: inline-block;
+    padding: 10px 20px;
+    font-family: "Microsoft YaHei",serif;
+    color: #536b82;
+}
+
+.sxzhxt-gjglcontrol   .header span.btn-return{
+    display: inline-block;
+    border: 1px solid #cccccc;
+    position: absolute;
+    right: 0;
+    top: 7px;
+    padding: 2px;
+    width: 120px;
+    text-align: center;
+    color:#fff;
+    background: #fd8702;
+    cursor: pointer;
+
+}
+.sxzhxt-gjglcontrol   .header span.btn-return:hover{
+    background: #db7400;
+}
+
+.sxzhxt-gjglcontrol   .gjglcontrol-box{
+    width: 99%;
+    overflow: hidden;
+    margin: 10px;
+}
+.sxzhxt-gjglcontrol   .gjglcontrol-box  .vedio-wrap {
+    width:49%;
+    /* height:398px; */
+    height: 428px;
+    position: relative;
+    background: #000;
+}
+.sxzhxt-gjglcontrol    .vedio-wrap  .video span{
+    width:100%;
+    height:100%;
+    text-align: center;
+    padding-top:180px;
+    font-size: 20px;    
+    display: inline-block;
+}
+.sxzhxt-gjglcontrol  .video-tool-wrap{
+    height: 30px;
+    line-height: 30px;
+    /* background: #000; */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.sxzhxt-gjglcontrol  .video-tool-bar{
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    position: relative;
+}
+.sxzhxt-gjglcontrol  .video-tool-bar .video-speed{
+    position: absolute;
+    left: 0;
+}
+.sxzhxt-gjglcontrol  .video-tool-bar li{
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 12px;
+    color: #358dcc;
+    cursor: pointer;
+}
+.sxzhxt-gjglcontrol  .video-tool-bar li.playStatusPos{
+  float: right;
+}
+.sxzhxt-gjglcontrol  .video-tool-bar li:hover{
+    color: #0078d7;
+}
+.sxzhxt-gjglcontrol  .video-tool-bar.disabled li{
+    cursor: not-allowed;
+}
+.sxzhxt-gjglcontrol  .video-tool-bar.disabled li:hover{
+    color: #666; 
+}
+.sxzhxt-gjglcontrol   .video,.sxzhxt-gjglcontrol   .map{
+    width: 100%;
+    max-height: 400px;
+}
+.sxzhxt-gjglcontrol   .video img{
+    width: 100%;
+    height:398px;
+    display: inline-block;
+}
+.titleInfo{
+    width: 99%;
+    margin: auto;
+    overflow: hidden;
+    margin-top: 15px;
+}
+.titleInfo  .detail-btn{
+    width:140px;
+    height:35px;
+    display: inline-block;
+    background: #077CE1;
+    line-height: 35px;
+    color:#fff;
+}
+.sxzhxt-gjglcontrol   .footer{
+    width: 99%;
+    height:179px;
+    overflow: hidden;
+    margin: auto;
+    background: #F2F2F2;
+    padding:12px;
+    position: relative;
+    overflow: hidden;
+}
+/* 详细信息 */
+.sxzhxt-gjglcontrol   .sos-detail{
+    width: 750px;
+    font-family: "Microsoft YaHei",serif;
+    color: #536b82;
+    margin-left:10px;
+}
+.sxzhxt-gjglcontrol   .sos-detail  li{
+   float: left;
+   width:300px;
+}
+.sxzhxt-gjglcontrol   .sos-detail  li span{
+    display: inline-block;
+    /* width:223px; */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    /* margin-top:-4px; */
+    margin-top: -2px;
+    margin-left: 5px;
+}
+.sxzhxt-gjglcontrol   .sos-detail h5{
+    display: inline-block;
+    text-align: left;
+    color: #536b82;
+    font-weight: bold;
+}
+.sxzhxt-gjglcontrol   .sos-detail .deal-condition{
+    position: absolute;
+    top: 12px;
+    left: 590px;
+}
+.sxzhxt-gjglcontrol   .sos-detail .deal-opinion{
+    position: absolute;
+    top:50px;
+   left:590px;
+}
+.sxzhxt-gjglcontrol .sos-detail .sos-detail-aready{
+    position: relative;
+    top:-22px;
+    left: 45px;
+}
+.sxzhxt-gjglcontrol .sos-detail .sos-detail-aready.sos-detail-aready-zhcn {
+    left: 74px;
+}
+/* 处理告警弹框 */
+.deal-warning-dialog {
+    position:relative;
+}
+.deal-warning-dialog  .tip-text{
+   height: 60px;
+   line-height: 60px;
+   font-size:16px;
+   text-align: center;
+   color: #536b82;
+   font-family: "Microsoft YaHei",serif;
+}
+
+/* 调度 */
+.diaoduBtn{
+    position: absolute;
+    z-index: 999;
+    right: 20px;
+    top: 125px;
+    width: 82px;
+}
+.sxzhxt-gjglcontrol   image{
+    cursor: pointer;
+}
+/*设备信息弹框*/
+.sxzhxt-gjglcontrol   .esriPopup .titlePane{
+    background: rgb(7, 124, 225);
+    line-height: 25px;
+}
+/* 语音呼叫按钮 */
+.sxzhxt-gjglcontrol   .callBtn{
+    padding: 3px 10px;
+    color: #fff;
+    background: rgb(7, 124, 225);
+    border-radius: 5px;
+    margin-top: 5px;
+}
+/* 语音最小化 */
+.sszhyyMincontianer{
+    display: inline-block;
+    padding: 2px 10px;
+    position: absolute;
+    bottom: 0;
+    color: #fff;
+    background: rgb(7, 124, 225);
+    cursor: pointer;
+}
+.sszhyyMincontianer p{
+    margin: 0;
+}
+.sszhxt-gjglcontrol-map{
+    position: absolute;
+    top: 130px;
+    right: 10px;
+    left: 55%; 
+    /* bottom: -21px; */
+    height: 400px;
+}
+.sszhyythcontent .xhgood {
+    width:13px;
+    height:14px;
+    margin-right: 5px;
+    vertical-align: middle;
+    background: url("../../static/image/sszhxt-sszh/signalgood.png") no-repeat scroll;
+}
+.sszhspxhwzgood{
+    color: green;
+}
+.sszhyythcontent .xhbetter {
+    width:13px;
+    height:8px;
+    margin-right: 5px;
+    vertical-align: middle;
+    background: url("../../static/image/sszhxt-sszh/signalbetter.png") no-repeat scroll;
+}
+.sszhspxhwzbetter{
+    color: #FF7E00;
+}
+.sszhyythcontent .xhbad {
+    width:13px;
+    height:8px;
+    margin-right: 5px;
+    vertical-align: middle;
+    background: url("../../static/image/sszhxt-sszh/signalbad.png") no-repeat scroll;
+}
+.sszhspxhwzbad{
+    color: red;
+}
+.opionionSpanWidth{
+    width: 40px !important;
+}
+.sszhxt-gjglcontrol-sosBtn{
+    position: fixed;
+    bottom: 0px;
+    top: auto;
+    right: 0px;
+    left: auto;
+}
+.sszhxt-gjglcontrol-sos-info{
+    position: fixed;
+    bottom: 30px;
+    right: 0px;
+    left: auto;
+}

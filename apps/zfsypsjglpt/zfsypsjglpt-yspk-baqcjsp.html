@@ -1,0 +1,50 @@
+<template>
+    <div class="zfsypsjglpt_yspk_baqcjsp">
+        <div class="search_box">
+            <div class="hBox">
+                <div class="dataFormBox" :controller="case">
+                    <span>案件：</span>
+                    <ms-select :widget="{col: 'con', options:@case_options, value: @case_val, onChange: @onChangeC}" :class="['formInput']"></ms-select>
+                </div>
+                <div class="dataFormBox" :controller="suspect">
+                    <span>嫌疑人：</span>
+                    <ms-select :widget="{col: 'con', options:@suspect_options, value: @suspect_val, onChange: @onChangeS}" :class="['formInput']"></ms-select>
+                </div>
+                <div class="dataFormBox" :controller="room">
+                    <span>房间：</span>
+                    <ms-select :widget="{col: 'room', options:@room_options, value: @room_val, onChange: @onChangeR}" :class="['formInput']"></ms-select>
+                </div>
+            </div>
+
+            <div class="hBox">
+                <div class="dataFormBox" :controller="select_cam">
+                    <span>选择摄像头：</span>
+                    <ms-select :widget="{col: 'select_cam', options:@select_cam_options, value: @select_val, onChange: @onChangeS}" :class="['formInput']"></ms-select>
+                </div>
+                <div class="dataFormBox" :controller="change_type">
+                    <ms-radio-group :widget="{value: @select_type, options:@change_type_options, onChange:@onChangeC}"></ms-radio-group>
+                </div>
+                <a class="confirm_btn" :click="@confirmBtn">确定</a>
+            </div>
+
+        </div>
+
+        <div class="baqcjsp_sssp" :class="[@baqcjsp_toggle ? 'item_show':'item_hide']">
+        	<span class="baqcjsp_title">实时视频</span>
+            <div class="item_content">
+                <div class="web_player">
+                    <!--<object id="baqcjsp_gxxPlayOcx" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9" width="100%" height="100%"></object>-->
+                </div>
+                <div class="relation_info">
+                    <span class="relation_title">案件信息</span>
+
+                    <a class="relation_btn" :click="add_relation">确定</a>
+
+                </div>
+                <div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,82 @@
+<template>
+    <div :controller="changePwd">
+        <ms-dialog :widget="{$innerVm:'change_Pwd', className: 'changePwdDialog', isMove: true, show:@show, width: 450, height: 350, onCancel:@editCancel, okText:'提交', cancelText:'取消',move_return:@move_return_pwd}">
+            <div slot="body" ms-skip>
+                <div id="changePwd" :class="[@extra_class ? 'sszhxt_en' : '']">
+                    <div class="ipt-class">
+                        <xmp :widget="{is:'ms-label-tips', label:@pwd_language.oldPwd}">
+                            <ms-input-tips :widget="{value:@record.oldPwd, tips_prompt:true, tips_error: @oldPwd_tips_error, tips_html:@oldPwd_tips_text, type: 'password', col: 'oldPwd', onChange:@iputhandle, $rules: {required: true, message: '请输入旧密码'}}"></ms-input-tips>
+                        </xmp>
+                    </div>
+                    <div class="ipt-class">
+                        <xmp :widget="{is:'ms-label-tips', label:@pwd_language.newPwd}">
+                            <ms-input-tips :widget="{value:@record.newPwd, tips_prompt:true, tips_error: @newPwd_tips_error, tips_html:@newPwd_tips_text, type: 'password', col: 'newPwd', onChange:@iputhandle, $rules: {required: true, message: '请输入新密码'}}"></ms-input-tips>
+                        </xmp>
+                    </div>
+                    <div class="ipt-class">
+                        <xmp :widget="{is:'ms-label-tips', label:@pwd_language.repPwd}">
+                            <ms-input-tips :widget="{value:@record.repPwd, tips_prompt:true, tips_error: @repPwd_tips_error, tips_html:@repPwd_tips_text, type: 'password', col: 'repPwd', onChange:@iputhandle, $rules: {required: true, message: '请重复新密码'}}"></ms-input-tips>
+                        </xmp>
+                    </div>
+                    <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%; height:100%;z-index:-1;opacity:0;filter:alpha(opacity=0);"></iframe>
+                </div>
+            </div>
+            <!-- 因为ocx会遮住弹框，要加上iframe才可以显示出来，所以重新定义底部 -->
+            <div slot="footer" class="modal-footer" ms-skip>
+                <a class="btn btn-default btnOk" :click="@editOk">{{@pwd_language.submit}}</a>
+                <a class="btn btn-default btnCancel" :click="@editCancel">{{@pwd_language.cancel}}</a>
+                <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%; height:100%;z-index:-1;opacity:0;filter:alpha(opacity=0);"></iframe>
+            </div>
+        </ms-dialog>
+    </div>
+    <div :controller="logout_vm" class="logout_vm">
+        <xmp :widget="{is: 'ms-dialog', $innerVm: 'logout', show: @show_logout, isMove: true, width: 450, height: 195, onCancel: @cancelLogout, okText:'退出',move_return:@move_return_logout}">
+            <div slot="body" ms-skip>
+                <h5 :css="{'font-size': '16px', 'color': '#536b82', 'text-align': 'center'}" ms-text="@logoutMsg"></h5>
+                <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%; height:100%;z-index:-1;opacity:0;filter:alpha(opacity=0);"></iframe>
+            </div>
+            <!-- 因为ocx会遮住弹框，要加上iframe才可以显示出来，所以重新定义底部 -->
+            <div slot="footer" class="modal-footer" ms-skip>
+                <a class="btn btn-default btnOk" :click="@handleLogout">{{@btn.confirm}}</a>
+                <a class="btn btn-default btnCancel" :click="@cancelLogout">{{@btn.cancel}}</a>
+                <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%; height:100%;z-index:-1;opacity:0;filter:alpha(opacity=0);"></iframe>
+            </div>
+        </xmp>
+    </div>
+
+    <div :controller="qrCodeVm" class="qrCodeVm">
+        <xmp :widget="{is: 'ms-dialog', $innerVm: 'qrCode', className: 'qrCodeDialog', show: @qrCodeShow, isMove: true, width: 330, height: 435, onCancel: @qrCodeCancel, okText:'退出', move_return:@move_return_qrCode}">
+            <div slot="body" ms-skip>
+                <div class="comparison_result">
+                    <!-- <img class="qrCodeImg" src="../../static/image/404/img_abnormal.png" :if="@result_list.length == 0"> -->
+                    <ul class="result_list" :if="@result_list.length > 0">
+                        <li ms-for="el in @result_list" :class="['result_li']">
+                            <div :click="@result_list_click(@el.index)" style="width:100%; height:100%;">
+                                {{@el.txt}}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="policeInfo">
+                    <img class="qrCodeImg" :attr="{src: @qrCodeTxtObj.qrcode}" onerror="javascript:this.src='../../static/image/404/img_abnormal.png';">
+                    <div class="textPanel">
+                        <span class="span_title">{{@qrCodeTxt.qrCodeName}}:</span>
+                        <span :attr="{title: @qrCodeTxtObj.name}">{{@qrCodeTxtObj.name}}</span>
+                    </div>
+                    <div class="textPanel">
+                        <span class="span_title">{{@qrCodeTxt.qrCodeModel}}:</span>
+                        <span :attr="{title: @qrCodeTxtObj.model}">{{@qrCodeTxtObj.model}}</span>
+                    </div>
+                    <div class="textPanel">
+                        <span class="span_title">{{@qrCodeTxt.qrCodeType}}:</span>
+                        <span :attr="{title: @qrCodeTxtObj.type}">{{@qrCodeTxtObj.type}}</span>
+                    </div>
+                    <div class="textPanel">
+                        <span class="span_title">{{@qrCodeTxt.qrCodeNumber}}:</span>
+                        <span class="span_small" :attr="{title: @qrCodeTxtObj.number}">{{@qrCodeTxtObj.number}}</span>
+                    </div>
+                </div>
+            </div>
+        </xmp>
+    </div>
+</template>

@@ -1,0 +1,150 @@
+.table-saika{
+    position: relative;
+    height: 100%;
+    margin-bottom: 5px;
+    border-top: 1px solid #e0e7ec;
+    border-left: 1px solid #e0e7ec;
+    border-right: 1px solid #e0e7ec;
+    border-bottom: 1px solid #e0e7ec;
+    background-color: #F7F7F7;
+}
+.table-saika .visibility {
+    visibility: hidden;
+}
+.table-saika .ane-checkbox label {
+    margin-bottom: 0;
+}
+.table-saika .fixed-table-saika-thead{
+    height: auto;
+}
+.table-saika .fixed-table-saika-tbody{
+    position: absolute;
+    width: 100%;
+    top: 34px;
+    bottom: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.table-saika .fixed-table-saika-tbody .table{
+    margin-top: -34px;
+    margin-bottom: 0px;
+}
+.table-saika .fixed-table-saika-thead .table{
+    margin-bottom: 0px;
+}
+.table-saika .fixed-table-saika-tbody .table > tbody {
+    cursor: pointer;
+}
+.table-saika .table>tbody>tr>td{
+    max-width: 90px;
+    border-color: #e0e7ec;
+    font-family: "Microsoft YaHei";
+    color: #536b82;
+    font-size: 14px;
+    vertical-align: middle;
+    text-align: center;
+    /* word-wrap:break-word;需要换行可自行在自己css表填写该属性 */
+}
+.table-saika .table>tbody tr:hover{
+    background-color: #e8eff5;
+}
+.table-saika .fixed-table-saika-tbody .table > tbody tr td{
+    padding: 0px;
+    line-height: 31px;
+    vertical-align: center;
+    border-width: 0px 1px 1px 0;
+    border-style: solid;
+    text-align: center;
+    font-weight: normal;
+    padding-left: 2px;
+    padding-right: 2px;
+    position: relative;
+} 
+.table-saika .fixed-table-saika-thead .table > thead tr th{
+    padding: 0px;
+    line-height: 31px;
+    vertical-align: center;
+    border-width: 0px 1px 1px 0;
+    border-style: solid;
+    border-color: #B7C3CA;
+    text-align: center;
+    font-weight: normal;
+} 
+.table-saika .table > thead{
+    background-color: #E0E7ED;
+    border-width: 1px 1px 0px 1px;
+    border-style: solid;
+    border-color: #B7C3CA;
+}
+.table-saika  .table tr th, .table-saika .table > thead:first-child > tr:first-child > th {
+    text-align: center;
+    border: 1px solid #a5b4bd;
+}
+.table-saika .table>thead>tr>th {
+    padding: 0px;
+    line-height: 31px;
+    vertical-align: center;
+    border-width: 0px 1px 1px 0;
+    border-style: solid;
+    border-color: #B7C3CA;
+    text-align: center;
+    font-weight: normal;
+    background-color: #e0e7ec;
+    font-family: "Microsoft YaHei";
+    color: #536b82;
+    font-size: 14px;
+}
+.fixed-table-saika-loading{
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    top: 0;
+    bottom: 0;
+    z-index: 99;
+    background-color: #F7F7F7;
+    line-height: 34px;
+    vertical-align: middle;
+    background: #f7f7f7 url(/static/image/tyywglpt/loading.gif) center center no-repeat;
+}
+.loadingSpan{
+    position: absolute;
+    top: 52%;
+    left: 48%;
+    text-align: center;
+    color: #536b82;
+}
+.noData{
+    position: absolute;
+    left: 49%;
+    top: 8px;
+    color: #536b82;
+    font-size: 14px;
+}
+.title-content{
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+    white-space:pre-line;
+    overflow-x: hidden;
+    overflow-y: auto;
+    word-break: break-all; 
+    word-wrap:break-word;
+}
+.table-saika .trigon{
+    width: 0;
+    height: 0;
+    border-color: #009900 transparent;
+    border-width: 10px 0 0 10px;
+    border-style: solid;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 9;
+}
+.table-saika .table>tbody>tr>td .table-cont{
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

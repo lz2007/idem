@@ -1,0 +1,165 @@
+<template>
+    <div class="zfsypsjglpt_tjfx_glqktj">
+        <div class="search_box" :if="@opt_glqktj.authority.SEARCH">
+            <div class="hBox" style="padding-top: 10px;">
+                <div class="dataFormBox dataTreeBox">
+                    <span>执勤部门：</span>
+                    <div class="dep_tree" :controller="glqktj_tree">
+                        <ms-tree-selecting :widget="{tree: @glqktj_data, showSearch: true, wrapId: 'glqktj-tree-select', getSelected: @getSelected, selectedKey: @tree_key ? @tree_key : '', selectedTitle: @tree_title ? @tree_title : '', onChange: @select_change, extraExpandHandle: @extraExpandHandle}"></ms-tree-selecting>
+                    </div>
+                    <!-- <div class="included_dep" :click="@included_dep_click">
+                        <img :attr="{src:@included_dep_img}">包含子部门
+                    </div> -->
+                </div>
+                <div class="dataFormBox" :controller="glqktj_man_type">
+                    <span>人员类别：</span>
+                    <ms-select :widget="{col: 'con', options:@man_type_options, value: @man_type, onChange: @onChangeT}" :class="['formInput']"></ms-select>
+                </div>
+
+                <a class="common_fun_btn" :if="@opt_glqktj.authority.EXPORT" :click="@importBtn">导出</a>
+                <a class="common_search_btn" :if="@opt_glqktj.authority.SEARCH" :click="@searchBtn">查询</a>
+            </div>
+            <div class="hBox" style="padding-top: 6px;">
+
+                <div class="dataRadioBox" :controller="glqktj_time_range">
+                    <span>时间范围：</span>
+                    <ms-select :widget="{col: 'con', options:@time_range_options, value: @time_range, onChange: @onChangeTR}" :class="['formInput']"></ms-select>
+
+                    <div class="dataTimeBox" :if="@select_time">
+                        <!-- <span class="dataTimeBox_span">开始时间：</span> -->
+                        <div class="glqktj_timePanel" :controller="glqktj_startTime">
+                            <ms-month-picker :widget="{format: 'YYYY-MM', value:@glqktj_startTime, showTime: false, onChange:@handleTimeChange}"></ms-month-picker>
+                        </div>
+                        <!-- <span class="dataTimeBox_span" style="margin-left: 55px;">结束时间：</span> -->
+                        <span style="float:left; height:28px; line-height:28px;">-</span>
+                        <div class="glqktj_timePanel" :controller="glqktj_endTime">
+                            <ms-month-picker :widget="{format: 'YYYY-MM', value:@glqktj_endTime, showTime: false, onChange:@handleTimeChange}"></ms-month-picker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tjfx_glqktj_table" :controller="tjfx_glqktj_table">
+            <ms-org-breadcrumb :widget="{cid:'glqktj-ga-breadcrumb',list: @breadcrumbList, handleclick: @breadcrumbClick}"></ms-org-breadcrumb>
+            <div :class="['glqktj_tabCont']">
+                <div :controller="glqktj_table" :class="['table-index']" id="glqktj_table">
+                    <div class="table-index-thead-fixed">
+                        <ul class="glqktj_table_parent" :css="{paddingRight:@paddingRight}">
+                            <li parent="1" class="col-4">
+                                <span style="visibility: hidden;">序号</span>
+                            </li>
+                            <li parent="2" :class="[@count_obj ? 'col-24' : 'col-18']">
+                                <span style="visibility: hidden;">执勤部门</span>
+                            </li>
+                            <li parent="3" class="col-6" :class="[@count_obj ? 'count_obj_hide' : 'count_obj_show']">
+                                <span style="visibility: hidden;">姓名/警号</span>
+                            </li>
+                            <li parent="4" class="col-24">
+                                <span>总体情况</span>
+                            </li>
+                            <li parent="5" class="col-24">
+                                <span>警情管理</span>
+                            </li>
+                            <li parent="6" class="col-24">
+                                <span>案件管理</span>
+                            </li>
+                        </ul>
+                        <ul class="table-index-thead glqktj_table_son" :css="{paddingRight:@paddingRight}">
+                            <li data-order="1" son="1" class="col-4">
+                                <span class="glqktj_table_son_span">序号</span>
+                            </li>
+                            <li data-order="2" son="2" :class="[@count_obj ? 'col-24' : 'col-18']">
+                                <span class="glqktj_table_son_span">执勤部门</span>
+                            </li>
+                            <li data-order="3" son="3" class="col-6" :class="[@count_obj ? 'count_obj_hide' : 'count_obj_show']">
+                                <span class="glqktj_table_son_span">姓名/警号</span>
+                            </li>
+                            <li data-order="4" son="4" class="col-8 glqktj_table_down">执法总数量</li>
+                            <li data-order="5" son="4" class="col-8 glqktj_table_down">已关联总数量</li>
+                            <li data-order="6" son="4" class="col-8 glqktj_table_down">总关联率</li>
+
+                            <li data-order="7" son="5" class="col-8 glqktj_table_down">执法数量</li>
+                            <li data-order="8" son="5" class="col-8 glqktj_table_down">已关联数量</li>
+                            <li data-order="9" son="5" class="col-8 glqktj_table_down">关联率</li>
+
+                            <li data-order="10" son="6" class="col-8 glqktj_table_down">执法数量</li>
+                            <li data-order="11" son="6" class="col-8 glqktj_table_down">已关联数量</li>
+                            <li data-order="12" son="6" class="col-8 glqktj_table_down">关联率</li>
+                        </ul>
+                    </div>
+                    <ul class="table-index-tbody">
+                        <li class="list-null" :if="!@data.length">暂无数据</li>
+                        <li :for="($index, record) in @data">
+                            <div class="tbody col-4">
+                                <div class="table-cont">{{(@currentPage - 1) * @prePageSize + $index + 1}}</div>
+                            </div>
+                            <div class="tbody" :class="[@count_obj ? 'col-24' : 'col-18']">
+
+                                <div class="table-cont glqktjDeptTree" :attr="record['orgName'] && (record['orgName'] != '-') ? {rel:'drevil',tdval:record['orgName']}:''">
+                                    <a :click="@searchBtnFormTable(record, false)">{{record['orgName']}}</a>
+                                </div>
+                            </div>
+                            <div class="tbody col-6" :class="[@count_obj ? 'count_obj_hide' : 'count_obj_show']">
+                                <div class="table-cont" :attr="record['userName'] && (record['userName'] != '-') ? {rel:'drevil',tdval:record['userName']}:''">
+                                    {{record['userName']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-8">
+                                <div class="table-cont" :attr="record['zfzsl'] && (record['zfzsl'] != '-') ? {rel:'drevil',tdval:record['zfzsl']}:''">
+                                    {{record['zfzsl']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-8">
+                                <div class="table-cont" :attr="record['yglzsl'] && (record['yglzsl'] != '-') ? {rel:'drevil',tdval:record['yglzsl']}:''">
+                                    {{record['yglzsl']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-8">
+                                <div class="table-cont" :attr="record['zgll'] && (record['zgll'] != '-') ? {rel:'drevil',tdval:record['zgll']}:''">
+                                    {{record['zgll']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-8">
+                                <div class="table-cont" :attr="record['jqzfsl'] && (record['jqzfsl'] != '-') ? {rel:'drevil',tdval:record['jqzfsl']}:''">
+                                    {{record['jqzfsl']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-8">
+                                <div class="table-cont" :attr="record['jqyglsl'] && (record['jqyglsl'] != '-') ? {rel:'drevil',tdval:record['jqyglsl']}:''">
+                                    {{record['jqyglsl']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-8">
+                                <div class="table-cont" :attr="record['jqgll'] && (record['jqgll'] != '-') ? {rel:'drevil',tdval:record['jqgll']}:''">
+                                    {{record['jqgll']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-8">
+                                <div class="table-cont" :attr="record['ajzfsl'] && (record['ajzfsl'] != '-') ? {rel:'drevil',tdval:record['ajzfsl']}:''">
+                                    {{record['ajzfsl']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-8">
+                                <div class="table-cont" :attr="record['ajyglsl'] && (record['ajyglsl'] != '-') ? {rel:'drevil',tdval:record['ajyglsl']}:''">
+                                    {{record['ajyglsl']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-8">
+                                <div class="table-cont" :attr="record['ajgll'] && (record['ajgll'] != '-') ? {rel:'drevil',tdval:record['ajgll']}:''">
+                                    {{record['ajgll']}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="table-index-loading" :if="@loading">
+                        <span class="loadingSpan">结果加载中</span>
+                    </div>
+                    <!-- <div :if="!@loading && !@data.length" class="noData">暂无数据</div> -->
+                </div>
+            </div>
+            <div class="glqktj_jjb_page">
+                <ms-pages :widget="{total:@table_pagination.total, pageSize:@table_pagination.pageSize, current:@table_pagination.current, onChange:@handlePageChange, getCurrent:@getCurrent, overLimit:@page_type}"></ms-pages>
+            </div>
+        </div>
+    </div>
+</template>

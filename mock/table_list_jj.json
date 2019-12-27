@@ -1,0 +1,27 @@
+{
+    "code": 0,
+    "msg": "成功！",
+    "data": {
+        "totalPages": 1,
+        "totalElements": 1,
+        "currentPages": 0,
+        "perPages": 10,
+        "currentElements": [{
+            "orgId": "1",
+            "orgName": "一级部门",
+            "orgCode": "87s5463y",
+            "orgPath": "/11111111/",
+            "policeType": "LEVAM_JYLB_JY",
+            "policeTypeName": "警员",
+            "userName": "chenhuiqin",
+            "userCode": "111111",
+            "videoCount": 6,
+            "videoMatchCount": 0,
+            "videoKeyCount": 0,
+            "videoLabelCount": 0,
+            "videoNoMark": 0,
+            "audioOnlyCount": 100,
+            "picOnlyCount": 200
+        }]
+    }
+}

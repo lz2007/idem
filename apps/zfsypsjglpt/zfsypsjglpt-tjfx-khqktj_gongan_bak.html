@@ -1,0 +1,188 @@
+<template>
+    <div class="zfsypsjglpt_jdkp_zhkp">
+        <div>
+            <div class="search_box" :if="@authority.SEARCH || @authority.QZPZ || @authority.EXPOERT">
+                <div class="hBox" style="padding-top:10px;">
+                    <div class="dataFormBox">
+                        <span class="span_cls">执勤部门：</span>
+                        <div class="dep_tree" :controller="zhkp_tree">
+                            <!-- <ms-tree-select :widget="{treeData: @zhkp_data, onChange: @select_change, value: @zhkp_value, expandedKeys: @zhkp_expandedKeys}"
+                                :class="['formInput']"></ms-tree-select> -->
+                            <ms-tree-selecting :widget="{tree: @zhkp_data, showSearch: true, wrapId: 'zhkp-tree-select', getSelected: @getSelected, selectedKey: @tree_key ? @tree_key : '', selectedTitle: @tree_title ? @tree_title : '', onChange: @select_change, extraExpandHandle: @extraExpandHandle}"></ms-tree-selecting>
+                        </div>
+                    </div>
+                    <div class="dataFormBox" :controller="khqktj_ga_count_type">
+                        <span class="span_cls">统计对象：</span>
+                        <ms-select :widget="{col: 'con', options:@count_type_options, value: @count_type, onChange: @onChangeType}" :class="['formInput']"></ms-select>
+                    </div>
+                </div>
+                <div class="btn-wrap">
+                    <a class="weight_setting_btn" :click="@config" :if="@authority.QZPZ">权重配置</a>
+                    <a class="common_export_btn" :click="@exportBtn" :if="@authority.EXPOERT">导出</a>
+                    <a class="common_search_btn" :click="@searchBtn" :if="@authority.SEARCH">查询</a>
+                </div>
+                <a class="tips-img" :click="@alert_tips">
+                    <img src="/static/image/zfsypsjglpt/u4131.png">
+                </a>
+                <div class="hBox" style="padding-top:10px;" :controller="khqktj_ga_time_range_vm">
+                    <div class="dataFormBox" :controller="khqktj_ga_manType">
+                        <span class="span_cls">人员类别：</span>
+                        <ms-select :widget="{col: 'con', options:@count_type_options, value: @count_type, onChange: @onChangeType}" :class="['formInput']"></ms-select>
+                    </div>
+                    <div class="dataFormBox">
+                        <span class="span_cls">时间范围：</span>
+                        <ms-select :widget="{col: 'con', options:@time_range_options, value: @time_range, onChange: @onChangeTR}" :class="['formInput timeSelect']"></ms-select>
+                    </div>
+                    <div class="dataTimeBox" :if="@select_time">
+                        <div class="zhkp-dataRight" :controller="khqktj_ga_startTime_vm">
+                            <ms-month-picker :widget="{format: 'YYYY-MM',value:@zhkp_time_val,showTime: false,onChange:@handleTimeChange}"></ms-month-picker>
+                        </div>
+                        <span style="display: inline-block;float: left;padding: 0 10px 0 8px;">-</span>
+                        <div class="zhkp-dataRight" :controller="khqktj_ga_zhkp_endTime_vm">
+                            <ms-month-picker :widget="{format: 'YYYY-MM',value:@zhkp_time_val,showTime: false,onChange:@handleTimeChange}"></ms-month-picker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="zfsypsjglpt_jdkp_zhkp_table" :controller="zfsypsjglpt_tjfx_khqktj_ga_table">
+                <div :class="['zhkp_tabCont']">
+                    <div :controller="zhkp_table_vm" :class="['table-index']" id="zhkp_table_id">
+                        <div class="table-index-thead-fixed">
+                            <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                                <li data-order="1" :class="[@tableToggle ? 'col-5' : 'col-4']">序号</li>
+                                <li data-order="2" :class="[@tableToggle ? 'col-20' : 'col-10']">执勤部门</li>
+                                <li data-order="3" :if="!@tableToggle" :class="['col-15']">警员/警号</li>
+                                <li :attr="{'data-order': @tableToggle ? '3' : '4'}" :class="[@tableToggle ? 'col-9' : 'col-5']">总评分</li>
+                                <li :attr="{'data-order': @tableToggle ? '4' : '5','title':@isHeaderTitle ? @zfypbldfTitle :''}" class="col-12">{{@zfypbldfTitle}}</li>
+                                <li :attr="{'data-order': @tableToggle ? '5' : '6','title':@isHeaderTitle ? @zfysyldfTitle:''}" class="col-12">{{@zfysyldfTitle}}</li>
+                                <li :attr="{'data-order': @tableToggle ? '6' : '7','title':@isHeaderTitle  ? @spjsdrudfTitle:''}" class="col-12">{{@spjsdrudfTitle}}</li>
+                                <li :attr="{'data-order': @tableToggle ? '7' : '8','title':@isHeaderTitle ? @jqglldfTitle:''}" class="col-10">{{@jqglldfTitle}}</li>
+                                <li :attr="{'data-order': @tableToggle ? '8' : '9','title':@isHeaderTitle ? @ajglldfTitle:''}" class="col-10">{{@ajglldfTitle}}</li>
+                                <li :attr="{'data-order': @tableToggle ? '9' : '10','title':@isHeaderTitle ? @jckpldfTitle:''}" class="col-10">{{@jckpldfTitle}}</li>
+                                <!-- <li :attr="{'data-order': @tableToggle ? '10' : '11','title':@isHeaderTitle ?@fzkhdfTitle:''}" :class="[@tableToggle ? 'col-10' : 'col-9']">{{@fzkhdfTitle}}</li> -->
+                            </ul>
+                        </div>
+                        <ul class="table-index-tbody">
+                            <li class="list-null" :if="!@data.length">暂无数据</li>
+                            <li :for="($index, record) in @data">
+                                <div class="tbody" :class="[@tableToggle ? 'col-5' : 'col-4']">
+                                    <div class="table-cont">{{(@currentPage-1)*@prePageSize+$index + 1}}</div>
+                                </div>
+                                <div class="tbody" :class="[@tableToggle ? 'col-20' : 'col-10']">
+                                    <div class="table-cont" :attr="record['orgName'] && (record['orgName'] != '-') ? {rel:'drevil',tdval:record['orgName']}:''">
+                                        {{record['orgName']}}
+                                    </div>
+                                </div>
+                                <div class="tbody" :if="!@tableToggle" :class="['col-15']">
+                                    <div class="table-cont" :attr="record['userName'] && (record['userName'] != '-') ? {rel:'drevil',tdval:record['userName']}:''">
+                                        {{record['userName']}}
+                                    </div>
+                                </div>
+                                <div class="tbody" :class="[@tableToggle ? 'col-9' : 'col-5']">
+                                    <div class="table-cont" :attr="record['zpf'] && (record['zpf'] != '-') ? {rel:'drevil',tdval:record['zpf']}:''">
+                                        {{record['zpf'] | toFixed3}}
+                                    </div>
+                                </div>
+                                <div class="tbody col-12">
+                                    <div class="table-cont td-text-color" :attr="record['zfypbl'] && (record['zfypbl'] != '-') ? {rel:'drevil',tdval:record['zfypbl']}:''">
+                                        {{record['zfypbldf'] | toFixed3}}
+                                    </div>
+                                    <div :attr="{title:record['zfypbl']}" class="trigon"></div>
+                                </div>
+                                <div class="tbody col-12">
+                                    <div class="table-cont" :attr="record['zfysyl'] && (record['zfysyl'] != '-') ? {rel:'drevil',tdval:record['zfysyl']}:''">
+                                        {{record['zfysyldf'] | toFixed3}}
+                                    </div>
+                                    <div :attr="{title:record['zfysyl']}" class="trigon"></div>
+                                </div>
+                                <div class="tbody col-12">
+                                    <div class="table-cont" :attr="record['spjsdru'] && (record['spjsdru'] != '-') ? {rel:'drevil',tdval:record['spjsdru']}:''">
+                                        {{record['spjsdrudf'] | toFixed3}}
+                                    </div>
+                                    <div :attr="{title:record['spjsdru']}" class="trigon"></div>
+                                </div>
+                                <div class="tbody col-10">
+                                    <div class="table-cont" :attr="record['jqgll'] && (record['jqgll'] != '-') ? {rel:'drevil',tdval:record['jqgll']}:''">
+                                        {{record['jqglldf'] | toFixed3}}
+                                    </div>
+                                    <div :attr="{title:record['jqgll']}" class="trigon"></div>
+                                </div>
+                                <div class="tbody col-10">
+                                    <div class="table-cont" :attr="record['ajgll'] && (record['ajgll'] != '-') ? {rel:'drevil',tdval:record['ajgll']}:''">
+                                        {{record['ajglldf'] | toFixed3}}
+                                    </div>
+                                    <div :attr="{title:record['ajgll']}" class="trigon"></div>
+                                </div>
+                                <div class="tbody col-10">
+                                    <div class="table-cont" :attr="record['jckpl'] && (record['jckpl'] != '-') ? {rel:'drevil',tdval:record['jckpl']}:''">
+                                        {{record['jckpldf'] | toFixed3}}
+                                    </div>
+                                    <div :attr="{title:record['jckpl']}" class="trigon"></div>
+                                </div>
+                                <!-- <div class="tbody" :class="[@tableToggle ? 'col-10' : 'col-9']">
+                                    <div class="table-cont" :attr="record['fzkh'] && (record['fzkh'] != '-') ? {rel:'drevil',tdval:record['fzkh']}:''">
+                                        {{record['fzkhdf']}}
+                                    </div>
+                                </div> -->
+                            </li>
+                        </ul>
+                        <div class="table-index-loading" :if="@loading">
+                            <span class="loadingSpan">结果加载中</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div :if="@tableToggle && @change">
+                    <ms-table-saika-li :class="['zhkp_tabCont']" :widget="{data:@zhkp_table_data, prePageSize:@table_pagination.pageSize, actions:@actions, loading:@table_loading, isTitle: true,headerPopover:true}">
+                        <ms-table-header :widget="{title:'序号', dataIndex:'index',width: 5}"></ms-table-header>
+                        <ms-table-header :widget="{title:'所属部门', dataIndex:'orgName',width: 10}"></ms-table-header>
+                        <ms-table-header :widget="{title:'总评分', dataIndex:'zpf',width: 9}"></ms-table-header>
+                        <ms-table-header :widget="{title:@zfypbldfTitle, dataIndex:'zfypbldf', promptBox: 'zfypbl', className: 'text-color',width:12 }"></ms-table-header>
+                        <ms-table-header :widget="{title:@zfysyldfTitle, dataIndex:'zfysyldf', promptBox: 'zfysyl',width:12}"></ms-table-header>
+                        <ms-table-header :widget="{title:@spjsdrudfTitle, dataIndex:'spjsdrudf', promptBox: 'spjsdru',width:12}"></ms-table-header>
+                        <ms-table-header :widget="{title:@jqglldfTitle, dataIndex:'jqglldf', promptBox: 'jqgll',width:10 }"></ms-table-header>
+                        <ms-table-header :widget="{title:@ajglldfTitle, dataIndex:'ajglldf', promptBox: 'ajgll',width:10 }"></ms-table-header>
+                        <ms-table-header :widget="{title:@jckpldfTitle, dataIndex:'jckpldf', promptBox: 'jckpl',width:10 }"></ms-table-header>
+                        <ms-table-header :widget="{title:@fzkhdfTitle, dataIndex:'fzkhdf',width:10}"></ms-table-header>
+                    </ms-table-saika-li>
+                </div>
+                <div :if="!@tableToggle && @change">
+                    <ms-table-saika-li :class="['zhkp_tabCont']" :widget="{data:@zhkp_table_data, prePageSize:@table_pagination.pageSize, actions:@actions, loading:@table_loading, isTitle: true,headerPopover:true}">
+                        <ms-table-header :widget="{title:'序号', dataIndex:'index',width: 4}"></ms-table-header>
+                        <ms-table-header :widget="{title:'所属部门', dataIndex:'orgName',width: 8}"></ms-table-header>
+                        <ms-table-header :widget="{title:'警员/警号', dataIndex:'userName',width: 8}"></ms-table-header>
+                        <ms-table-header :widget="{title:'总评分', dataIndex:'zpf',width: 5}"></ms-table-header>
+                        <ms-table-header :widget="{title:@zfypbldfTitle, dataIndex:'zfypbldf', promptBox: 'zfypbl', className: 'text-color',width: 12}"></ms-table-header>
+                        <ms-table-header :widget="{title:@zfysyldfTitle, dataIndex:'zfysyldf', promptBox: 'zfysyl',width: 12}"></ms-table-header>
+                        <ms-table-header :widget="{title:@spjsdrudfTitle, dataIndex:'spjsdrudf', promptBox: 'spjsdru',width: 12}"></ms-table-header>
+                        <ms-table-header :widget="{title:@jqglldfTitle, dataIndex:'jqglldf', promptBox: 'jqgll',width: 10}"></ms-table-header>
+                        <ms-table-header :widget="{title:@ajglldfTitle, dataIndex:'ajglldf', promptBox: 'ajgll',width: 10}"></ms-table-header>
+                        <ms-table-header :widget="{title:@jckpldfTitle, dataIndex:'jckpldf', promptBox: 'jckpl',width: 10}"></ms-table-header>
+                        <ms-table-header :widget="{title:@fzkhdfTitle, dataIndex:'fzkhdf',width: 9}"></ms-table-header>
+                    </ms-table-saika-li>
+                </div> -->
+                <!-- 分页 -->
+                <div class="zhkp_page">
+                    <ms-pages :widget="{total:@table_pagination.total, onChange:@handlePageChange, current:@table_pagination.current, getCurrent:@getCurrent, pageSize:@table_pagination.pageSize}"></ms-pages>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- xx率计算描述弹窗 -->
+    <div class="zhkp-tips" :controller="khqktj_ga_tips">
+        <ms-dialog :widget="{$innerVm:'khqktj_ga_tipsVm', show:@show,onCancel:@handleCancel, onOk:@handleOk,height:320,width:630,isMove:true}">
+            <div slot="body" ms-skip>
+                <div slot="body" ms-skip>
+                    <!-- <p>1、执法记录仪配发率=（部门所有执法记录仪总数量 / 部门终端用户数）*100%，执法记录仪总数量含正常、维修、停用、注销状态的执法记录仪数量。</p> -->
+                    <p>1、执法记录仪配发率=（部门正常使用执法记录仪总数量 / 总执法人数）*100%;</p>
+                    <p>2、执法记录仪使用率(统计对象为部门): 执法记录仪使用率=（执法记录仪在线天数总和 /每天执法记录仪数量总和）*100%；</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;执法记录仪使用率(统计对象为人员) : 执法记录仪使用率=（选定时间内执法记录仪在线天数 /选定的天数）*100%；</p>
+                    <p>3、视频及时导入率=[1-（超过24小时导入执法视频数 / 执法视频数）]*100%</p>
+                    <p>4、警情/案件关联率=已关联数量 / 执法数量*100%</p>
+                    <p>5、考评率=（考评的警情数+考评的案件数）/（警情总数+案件总数）*100%</p>
+                </div>
+            </div>
+            <div slot="footer" ms-skip>
+            </div>
+        </ms-dialog>
+    </div>
+</template>

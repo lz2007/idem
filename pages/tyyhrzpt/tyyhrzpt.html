@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>配置管理系统</title>
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="/node_modules/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="/node_modules/ane/dist/ane.css" rel="stylesheet" />
+    <link href="./tyyhrzpt.css" rel="stylesheet" />
+    <!--<link rel="stylesheet" href="http://10.10.9.95:8088/jsapi/3.14/dijit/themes/claro/claro.css">-->
+    <!--<link rel="stylesheet" href="http://10.10.9.95:8088/jsapi/3.14/esri/css/esri.css">-->
+    <script src="/static/mod.js"></script>
+    <!--[if lt IE 9]>
+    <script src="/static/polyfill/html5shiv.js"></script>
+    <script src="/static/polyfill/respond.src.js"></script>
+    <![endif]-->
+</head>
+
+<body :controller="root">
+    <ms-browser-upgrade-tips></ms-browser-upgrade-tips>
+
+    <xmp is="ms-layout">
+        <div class="ms-layout-header">
+
+            <div class="logo">
+                <span class="logo-icon"></span> {{@titleName}}
+            </div>
+
+            <div class="ms-layout-sider">
+                <wbr is="common-sidebar"/>
+            </div>
+
+                <div class="setting" :controller="setting">
+                    <div class="setting_bar" ms-mouseenter="@showSet" ms-mouseleave="@hideSet" :visible="@toggle">
+                        <ul>
+                            <li :click="@bindModify"><i class="fa fa-key" aria-hidden="true" style="padding-right: 8px;"></i>修改密码</li>
+                            <li :click="@bindLogout"><i class="fa fa-cog" aria-hidden="true" style="padding-right: 8px;"></i>退出登录</li>
+                        </ul>
+                    </div>
+
+                    <span :click="toMain_index" class="header-home"></span>
+
+                    <span :click="setting_click" class="header-setting"></span>
+                </div>
+
+                <h5 class="currentUser">
+                    <span>
+                        <span class="info_title">用户：</span>
+                        <span class="textNoWrap" ms-attr="{title: @userName}">{{@userName}}</span>
+                        <span class="info_title">| 单位：</span>
+                        <span class="textNoWrap" ms-attr="{title: @orgName}">{{@orgName}}</span>
+                        <span class="role">
+                            <span class="info_title">| 角色：</span>
+                            <span class="textNoWrap" ms-attr="{title: @roleNames[0]}">{{@roleNames[0]}}</span>
+                            <i ms-if="@roleShow" class="fa fa-angle-down" aria-hidden="true"></i>
+                            <i ms-if="@roleShow" class="fa fa-angle-up" aria-hidden="true"></i>
+                            <div ms-if="@roleShow" class="userWrap">
+                                <div class="triangle"></div>
+                                <ul>
+                                    <li ms-for="item in @roleNames" ms-attr="{title: @item}">{{item}}</li>
+                                </ul>
+                            </div>
+                        </span>
+                    </span>
+                </h5>
+
+            </div>
+
+            <ms-layout :widget="{}">
+                <div class="ane-layout-content-wrapper">
+                    <div ms-html="@currentPage"></div>
+                </div>
+            </ms-layout>
+    </xmp>
+
+    <!-- <div :controller="change_pwd_vm" class="change-pwd">
+        <ms-dialog :widget="{$innerVm: 'change_pwd_form', show: @show, onOk: @handleOk, onCancel: @handleCancel}">
+            <div slot="body" ms-skip>
+                <div :controller="change_validate_vm">
+                    <ms-form is="ms-form" :widget="{$form:@$form,inline:true}">
+                        <ms-form-item :widget="{label:'原密码:'}">
+                            <ms-input :widget="{col:'old_pwd', value:old_pwd, type:'password', $rules:{required:true,message:'请输入原密码!'}}"></ms-input>
+                        </ms-form-item>
+                        <ms-form-item :widget="{label:'新密码:'}">
+                            <ms-input :widget="{col:'new_pwd', value:new_pwd, type:'password', $rules:{required:true,message:'请输入新密码!'}}"></ms-input>
+                        </ms-form-item>
+                        <ms-form-item :widget="{label:'确认新密码:'}">
+                            <ms-input :widget="{col:'rep_pwd', value:rep_pwd, type:'password', $rules:{required:true,message:'请输入确认的新密码!'}}"></ms-input>
+                        </ms-form-item>                       
+                    </ms-form>
+                </div>              
+            </div>
+        </ms-dialog>
+    </div> -->
+
+    <!-- 右上角弹窗组件 -->
+    <!-- <ms-header-operation></ms-header-operation> -->
+
+    <!-- <div :controller="logout_vm" class="logout_vm">
+        <xmp :widget="{is: 'ms-dialog', $innerVm: 'logout', show: @show_logout, width: 450, height: 195, onCancel: @cancelLogout, onOk: @handleLogout, okText:'退出'}">
+            <div slot="body" ms-skip>
+                <h5 :css="{'font-size': '16px', 'color': '#536b82'}" ms-text="@logoutMsg"></h5>
+            </div>
+        </xmp>
+    </div> -->
+
+    <div :controller="help_vm">
+        <xmp :widget="{is:'ms-dialog', $innerVm: 'help_inner_vm', show: @show, className:@extraClass, onCancel: @handleCancle, cancelText:@cancelText}">
+            <div slot="body" ms-skip>
+                <h5 :css="{'font-size': '16px'}" ms-text="@helpMsg"></h5>
+            </div>
+            <div slot="footer" class="modal-footer" ms-skip>
+                <a class="btn btn-default" :click="@handleClose">关闭</a>
+            </div>
+        </xmp>
+    </div>
+
+    <script>
+        require(['./tyyhrzpt']);
+        document.body.style.height = document.body.style.minHeight = window.document.documentElement.clientHeight +
+            'px';
+    </script>
+</body>
+
+</html>

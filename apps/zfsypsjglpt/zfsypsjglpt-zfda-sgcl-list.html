@@ -1,0 +1,82 @@
+<template>
+    <div class="zfda-sgcl-list">
+
+        <div :class="['ajgl-tabCont']">
+            <div :controller="zfdn-sgcl-table2" :class="['table-index']" id="zfdn-sgcl-table">
+                <div class="table-index-thead-fixed">
+
+                    <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                        <li data-order='1' class="col-5">序号</li>
+                        <li data-order='2' class="col-5">操作</li>
+                        <li data-order='3' class="col-15">执勤部门</li>
+                        <li data-order='4' class="col-15">姓名/警号</li>
+                        <li data-order='5' class="col-15">事故编号</li>
+                        <li data-order='6' class="col-15">事故时间</li>
+                        <li data-order='7' class="col-15">事故地点</li>
+                        <li data-order='8' class="col-10">处理时间</li>
+                        <li data-order='9' class="col-5">关联媒体</li>
+
+                    </ul>
+                </div>
+                <ul class="table-index-tbody">
+                    <li :if="(!@data.length)" class="list-null">暂无数据</li>
+
+                    <li :for="($index, record) in @data">
+                        <div class="tbody col-5">
+                            <div class="table-cont">{{(current-1)*pageSize+$index+1}}</div>
+                        </div>
+                        <div class="tbody col-5">
+                            <div class="table-cont">
+                                <span>
+                                    <a class="checkLook" :click="@handle('sgcl',record)">查看</a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="tbody col-15">
+                            <div class="table-cont" :attr="record['orgName'] && (record['orgName'] != '-') ? {rel:'drevil',tdval:record['orgName']}:''">
+                                {{record['orgName']}}
+                            </div>
+                        </div>
+                        <div class="tbody col-15">
+                            <div class="table-cont" :attr="record['userCode'] && (record['userCode'] != '-') ? {rel:'drevil',tdval:(record['userName']+'('+record['userCode']+')')}:''">
+                                {{record['userName']}} ({{record['userCode']}})
+                            </div>
+                        </div>
+                        <div class="tbody col-15">
+                            <div class="table-cont" :attr="record['sgbh'] && (record['sgbh'] != '-') ? {rel:'drevil',tdval:record['sgbh']}:''">
+                                {{record['sgbh']}}
+                            </div>
+                        </div>
+                        <div class="tbody col-15">
+                            <div class="table-cont" :attr="record['sgfssj'] && (record['sgfssj'] != '-') ? {rel:'drevil',tdval:record['sgfssj']}:''">
+                                {{record['sgfssj']}}
+                            </div>
+                        </div>
+                        <div class="tbody col-15">
+                            <div class="table-cont" :attr="record['sgdd'] && (record['sgdd'] != '-') ? {rel:'drevil',tdval:record['sgdd']}:''">
+                                {{record['sgdd']}}
+                            </div>
+                        </div>
+                        <div class="tbody col-10">
+                            <div class="table-cont" :attr="record['clsj'] && (record['clsj'] != '-') ? {rel:'drevil',tdval:record['clsj']}:''">
+                                {{record['clsj']}}
+                            </div>
+                        </div>
+                        <div class="tbody col-5">
+                            <div class="table-cont">
+                                {{record['relStatus']?'已关联':'未关联'}}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="table-index-loading" :if="@loading">
+                    <span class="loadingSpan">结果加载中</span>
+                </div>
+                <!-- <div :if="(!@loading && !@data.length)" class="noData">暂无数据</div> -->
+
+
+            </div>
+        </div>
+    </div>
+
+</template>

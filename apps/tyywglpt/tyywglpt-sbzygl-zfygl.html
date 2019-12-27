@@ -1,0 +1,734 @@
+<!-- 统一运维管理平台--设备资源管理--执法仪管理 -->
+<!-- caojiacong -->
+<template>
+    <div class="tyywglpt zfygl" :controller="zfygl-vm">
+
+        <!-- 查询表单 -->
+        <div class="tyywglpt-search-box" :if="@authority.SEARCH">
+            <ms-form :widget="{$form:@$form,inline:true}">
+                <div>
+                    <ms-form-item :widget="{label:'设备所属部门:'}" :class="'form-item label-lg'">
+                        <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'zfygl-tree-select-1', getSelected:@getSelected, selectedKey:@dataJson ? @dataJson.orgId : '', selectedTitle:@dataJson ? @dataJson.orgName : '', onChange:@handleTreeChange, extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                    </ms-form-item>
+                    <!-- 设备厂商影响设备类型和设备型号，设备厂商为空或不限时设备类型不影响设备型号，设备厂商为具体值时设备类型影响设备型号 -->
+                    <!-- 此处的设备厂商/类型/型号包含已废弃的(注释不要放到ms-form内的最开始，否则将解析出错)  -->
+                    <ms-form-item :widget="{label: '设备厂商:'}" :class="['form-item', (@manufacturerOptions.length === 0 && 'disabled')]">
+                        <ms-select :widget="{col:'manufacturer', value:[@getDefaultManu(manufacturerOptions,dataJson)], displayValue:'暂无可选的设备厂商', options:@manufacturerOptions, onChange:@handleManuChange}">
+                        </ms-select>
+                    </ms-form-item>
+                    <!-- 设备类型的默认值要用queryDefaultType,如果类似设备厂商那样做的话，ie8堆栈溢出 -->
+                    <ms-form-item :widget="{label:'设备类型:'}" :class="['form-item', (@typeOptions.length === 0 && 'disabled')]">
+                        <ms-select :widget="{col:'type', value:[@queryDefaultType], displayValue:'暂无可选的设备类型', options:@typeOptions, onChange:@handleTypeChange}">
+                        </ms-select>
+                    </ms-form-item>
+                    <ms-form-item :widget="{label: '设备型号:'}" :class="['form-item', (@modelOptions.length === 0 && 'disabled')]">
+                        <ms-select :widget="{col:'model', value:[@getDefaultModel(modelOptions, isManuOrTypeSelectMode, dataJson)], displayValue:'暂无可选的设备型号', options:@modelOptions, onChange:@handleModelChange}">
+                        </ms-select>
+                    </ms-form-item>
+                </div>
+                <div class="search-line-second">
+                    <ms-form-item :widget="{label:'姓名/警号:'}" :class="'form-item label-lg'">
+                        <div class="has-icon-input-wrap">
+                            <input type="input" class="form-control" ms-duplex="@userName" :keypress="@handlePress" :focus="@handleFocus" :blur="@handleBlur"
+                                :attr="{title: @userName}">
+                            <span class="fa fa-close" :mousedown="@handleClear('userName',$event)|prevent" :visible="false"></span>
+                        </div>
+                    </ms-form-item>
+                    <ms-form-item :widget="{label:'设备状态:'}" :class="['form-item', (@statusOptions.length === 0 && 'disabled')]">
+                        <ms-select :widget="{col:'status', value:[@getDefaultStatus(statusOptions, dataJson)], displayValue:'暂无可选的设备状态', options:@statusOptions}">
+                        </ms-select>
+                    </ms-form-item>
+                    <ms-form-item :widget="{label:'注册时间:'}" :class="'form-item duration-item'">
+                        <ms-select :widget="{col:'time', value:[@dataJson ? @dataJson.timeMode : 1], onChange:@handleTimeChange}">
+                            <ms-select-option :widget="{value:1}">本周</ms-select-option>
+                            <ms-select-option :widget="{value:2}">本月</ms-select-option>
+                            <ms-select-option :widget="{value:3}">自定义时间</ms-select-option>
+                        </ms-select>
+                    </ms-form-item>
+                    <div :visible="@isDuration" class="duration-container">
+                        <ms-form-item>
+                            <ms-datepicker :widget="{
+                                col:'beginTime',
+                                placeholder:'请选择开始日期',
+                                value: @beginTime,
+                            }"></ms-datepicker>
+                        </ms-form-item>
+                        <span class="date-line">-</span>
+                        <ms-form-item>
+                            <ms-datepicker :widget="{
+                                col:'endTime',
+                                placeholder:'请选择结束日期',
+                                value: @endTime
+                            }"></ms-datepicker>
+                        </ms-form-item>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-query" :click="@query">查询</button>
+            </ms-form>
+        </div>
+
+        <!-- 工具操作 -->
+        <div class="tyywglpt-tool-bar">
+            <div class="tyywglpt-tool-bar-inner">
+                <input :if="@authority.REGISTRY" type="button" value="注册" :click="@handleRegister" class="btn btn-tool" :class="@selectedRowsLength !== 0 && 'disabled'">
+                <button :if="@authority.BATCHREGISTRY" id="fileupload" class="btn btn-tool" :class="@selectedRowsLength !== 0 && 'disabled'"
+                    :click="@showDownLoadTip">批量注册</button>
+                <input :if="@authority.REGISTRY" type="button" value="批量注册模板" :click="@handleRegistermodel" class="btn btn-tool" :class="@selectedRowsLength !== 0 && 'disabled'">
+                <!-- 只有4g执法仪才可以升级，且要同型号的才能一起批量升级 -->
+                <input :if="@authority.UPGRADE" type="button" value="升级" :click="@handleUpdate" class="btn btn-tool" :class="@updateIsDisabled(checkedIsSameModel, selectedRowsLength, checkedIs4G)">
+                <input :if="@authority.CJZDXSJ" type="button" value="采集站定向升级" :click="@handleUpdateDirect" class="btn btn-tool btn-tool-lg">
+                <!-- 执法仪必须在线才能远程控制 -->
+                <input :if="@authority.YCPZGX" type="button" value="远程配置更新" :click="@handleRemoteUpdate" class="btn btn-tool btn-tool-lg"
+                    :class="@remoteUpdateIsDisabled(selectedIsOnline, selectedRowsLength)">
+                <!-- 执法仪必须在线才能远程控制 -->
+                <input :if="@authority.YCXF" type="button" value="远程下发" :click="@handleRemoteAllot" class="btn btn-tool btn-tool-lg" :class="@remoteAllotIsDisabled(selectedIsOnline, selectedRowsLength, selectedIsBindUser)">
+            </div>
+        </div>
+
+        <!-- 表格 -->
+        <div class="tyywglpt-list-panel">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <li class="col-2 first-item">
+                        <input type="checkbox" id="checkall" :duplex-checked="@checkAll" data-duplex-changed="@handleCheckAll($event)">
+                        <label for="checkall" :class="[@checkAll ? 'check_selected' : 'check_unselected']"></label>
+                    </li>
+                    <li class="col-4">序号</li>
+                    <li class="col-6">操作</li>
+                    <li class="col-9">设备所属部门</li>
+                    <li class="col-8">姓名/警号</li>
+                    <li class="col-6">设备厂商</li>
+                    <li class="col-6">设备型号</li>
+                    <li class="col-7">设备类型</li>
+                    <li class="col-6">设备名称</li>
+                    <li class="col-10">国标编号</li>
+                    <li class="col-5">电池电量</li>
+                    <li class="col-5">在线状态</li>
+                    <li class="col-5">设备状态</li>
+                    <li class="col-6">定位状态</li>
+                    <li class="col-6">设备版本</li>
+                    <li class="col-9 last-item">注册时间</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@loading" class="list-loading">
+                    <span>结果加载中</span>
+                </li>
+                <li :if="@isNull" class="list-null">暂无数据</li>
+                <li :if="!@loading && !isNull" :for="($index, item) in @list">
+                    <div class="col-2 first-item">
+                        <input type="checkbox" :attr="{'id':$index}" :duplex-checked="item.checked" data-duplex-changed="@handleCheck($index,item,$event)">
+                        <label :attr="{'for':$index}" :class="[item.checked ? 'check_selected' : 'check_unselected']"></label>
+                    </div>
+                    <div class="col-4">{{((@current - 1) * @pageSize) + $index+1}}</div>
+                    <div class="col-6">
+                        <a :if="@authority.MODIFY" class="oparate" :class="[item.source && 'disabled']" :click="@handleModify(item)">修改</a>
+                        <a :if="@authority.DELETE" class="oparate last-operate" :class="[item.source && 'disabled']" :click="@handleDelete(item)">删除</a>
+                        <span :if="@authority.OPT_SHOW"> - </span>
+                    </div>
+                    <div class="col-9" :attr="{'title':item.orgName || '', 'data-toggle':'popover'}">{{@item.orgName | fillterEmpty}}</div>
+                    <div class="col-8" :attr="{'title':item.allot || '', 'data-toggle':'popover'}">{{@item.allot | fillterEmpty}}</div>
+                    <div class="col-6" :attr="{'title':item.manufactruerName || '', 'data-toggle':'popover'}">{{@item.manufactruerName | fillterEmpty}}</div>
+                    <div class="col-6" :attr="{'title':item.model || '', 'data-toggle':'popover'}">{{@item.model | fillterEmpty}}</div>
+                    <div class="col-7" :attr="{'title':item.typeName || '','data-toggle':'popover'}">{{@item.typeName | fillterEmpty}}</div>
+                    <div class="col-6" :attr="{'title':item.name || '','data-toggle':'popover'}">{{@item.name | fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.gbcode || '','data-toggle':'popover'}">{{@item.gbcode | fillterEmpty}}</div>
+                    <div class="col-5" :attr="{'title':item.battery || '','data-toggle':'popover'}">{{@item.battery | fillterEmpty}}</div>
+                    <div class="col-5" :class="[item.online !== 1 && 'isoffline']" :attr="{'title':item.onlineStatus || '','data-toggle':'popover'}">{{@item.onlineStatus | fillterEmpty}}</div>
+                    <div class="col-5" :attr="{'title':item.statusName || '','data-toggle':'popover'}">{{@item.statusName | fillterEmpty}}</div>
+                    <div class="col-6" :attr="{'title':item.locationStatus || '','data-toggle':'popover'}">{{@item.locationStatus | fillterEmpty}}</div>
+                    <div class="col-6" :attr="{'title':item.version || '','data-toggle':'popover'}">{{@item.version | fillterEmpty}}</div>
+                    <div class="col-9" :attr="{'title':item.insertTime || '','data-toggle':'popover'}">{{@item.insertTime | fillterEmpty}}</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 批量删除 -->
+        <div class="bottom-tool-bar">
+            <input :if="@authority.BATCHDELETE" class="btn btn-tool" :class="[(!@checkedIsSource || @selectedRowsLength < 1) && 'disabled']"
+                type="button" value="批量删除" :click="@handleBatchDelete">
+        </div>
+
+        <!-- 分页 -->
+        <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent}"></ms-pages>
+
+        <!-- 注册弹窗 -->
+        <div :controller="zfygl-register-vm" class="sbzygl-modal zfygl-modal-register">
+            <xmp :widget="{is:'common-ms-modal', title:'注册', modalSelector:'#zfygl-modal-register', modalWidth:820, modalHeight: auto, show:@show, okDisabled:@allotLoading, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="zfygl-modal-register">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <div class="modal-title">设备信息</div>
+                        <!-- 设备厂商影响设备类型和设备型号，设备类型影响设备型号 -->
+                        <!-- 此处的设备厂商/类型/型号过滤掉已废弃的了(注释不要放到ms-form内的最开始，否则将解析出错)  -->
+                        <ms-form-item :class="['form-item', !@validJson.manufacturer && 'has-error', (@manufacturerOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>设备厂商:</label>
+                            <ms-select :widget="{col:'manufacturer', value:[@defaultManufacturer], displayValue:'暂无可选的设备厂商', options:@manufacturerOptions, onChange:@handleManuChange}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.manufacturer">请选择设备厂商</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item', !@validJson.type && 'has-error', (@typeOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>设备类型:</label>
+                            <ms-select :widget="{col:'type', value:[@defaultType], displayValue:'暂无可选的设备类型', options:@typeOptions, onChange:@handleDeviceTypeChange}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.type">请选择设备类型</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item model-item', !@validJson.model && 'has-error', (@modelOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>设备型号:</label>
+                            <ms-select :widget="{col:'model', value:[@defaultModel], displayValue:'暂无可选的设备型号', options:@modelOptions, onChange:@handleModelChange}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.model">请选择设备型号</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.name && 'has-error']">
+                            <label>
+                                <i>* </i>设备名称:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.name}" :duplex="@inputJson.name" :focus="@handleFocus('name',$event)"
+                                    :blur="@handleFormat('name',null,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('name',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.name">{{@inputJson.name.length > 30 ? '最多只可输入30位字符' : '请输入唯一的设备名称'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.capacity && 'has-error']">
+                            <label>容量:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.capacity}" :duplex="@inputJson.capacity" :focus="@handleFocus('capacity',$event)"
+                                    :blur="@handleFormat('capacity',@capacityReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('capacity',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.capacity">
+                                <i class="fa fa-info-circle"></i>单位为GB，支持小于10位的非0正整数</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.capacity">请输入正确的容量</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.imei && 'has-error']">
+                            <label>IMEI:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.imei}" :duplex="@inputJson.imei" :focus="@handleFocus('imei',$event)"
+                                    :blur="@handleFormat('imei',@lengthReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('imei',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.imei">最多只可输入30位字符</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item form-item-lg']">
+                            <label>
+                                <i>* </i>设备所属部门:</label>
+                            <!-- ms-tree-selecting组件的源码在aaps/common/common-tree-select.js -->
+                            <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, selectedKey:@orgId, selectedTitle: @orgName, wrapId: 'zfygl-tree-select-2', getSelected:@getSelected, onChange:@handleTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                            <div class="form-tip invalid-tip" :if="!@validJson.orgRid">请选择设备所属部门</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item form-item-lg',((!@validJson.gbcode || !@validJson.gbcodeUnique) ? 'has-error' : '')]">
+                            <label>
+                                <i>* </i>国标编号:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.gbcode}" :duplex="@inputJson.gbcode" :focus="@handleFocus('gbcode',$event)"
+                                    :blur="@handleFormat('gbcode',@gbcodeReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('gbcode',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.gbcode">
+                                <i class="fa fa-info-circle"></i>支持数字与字母组合，长度只能为20位（当前长度为{{@inputJson.gbcode.length}}）</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.gbcode">请输入/生成正确的国标编号</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.gbcodeUnique">请输入/生成唯一的国标编号</div>
+                        </ms-form-item>
+                        <div class="modal-title">SIM卡信息</div>
+                        <ms-form-item :class="['form-item',!@validJson.ip && 'has-error']">
+                            <label>专网卡IP:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.ip}" :duplex="@inputJson.ip" :focus="@handleFocus('ip',$event)"
+                                    :blur="@handleFormat('ip',@ipReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('ip',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.ip">
+                                <i class="fa fa-info-circle"></i>支持0~255的数字与.的组合</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.ip">请输入正确的专网卡IP</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.sim && 'has-error']">
+                            <label>电话号码:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.sim}" :duplex="@inputJson.sim" :focus="@handleFocus('sim',$event)"
+                                    :blur="@handleFormat('sim',@telReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('sim',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.sim">
+                                <i class="fa fa-info-circle"></i>支持手机号与座机，可用-分隔</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.sim">请输入正确的联系电话</div>
+                        </ms-form-item>
+                        <div class="modal-title allot-title">配发信息</div>
+                        <input type="button" class="btn btn-normal allot-type-btn" value="切换方式" :click="@handleTabType">
+                        <div :visible="@allotQuery" class="allot-container">
+                            <ms-form-item :class="['form-item form-item-lg',!@validJson.allotKeyword && 'has-error']">
+                                <label>查询:</label>
+                                <div class="has-icon">
+                                    <input type="text" class="form-control" :attr="{title:@inputJson.allotKeyword,placeholder:'可输入姓名/警号查询配发对象，至少输入2个非特殊字符才可查询'}"
+                                        :duplex="@inputJson.allotKeyword" :keyup="@handleAllotQuery | stop" :focus="@handleFocus('allotKeyword',$event)"
+                                        :blur="@allotQueryBlur($event)">
+                                    <i class="fa fa-close" :visible="false" :mousedown="@handleClear('allotKeyword',$event)|prevent"></i>
+                                </div>
+                                <div class="form-tip invalid-tip" :if="!@validJson.allotKeyword">{{@inputJson.allotKeyword.length > 20 ? '最多只能输入20个字符' : '至少输入2个非特殊字符才可查询'}}</div>
+                            </ms-form-item>
+                            <br/>
+                            <ms-form-item :class="['form-item form-item-lg allot-item-query', (@allotOptions.length === 0 && 'disabled')]">
+                                <label>配发对象:</label>
+                                <!-- ms-large-select组件的源码在aaps/common/common-ms-select.js -->
+                                <ms-large-select :widget="{owner:'allot-query',options:allotOptions,value:@defaultAllot,showSearch:true,loading:@allotLoading,page:@allotPageQuery,pageTotal:@allotPageTotal,pageSize:@allotPageSize,displayValue:'暂无可选的配发对象',onChange:@allotChange,getLoading:@getLoading}"></ms-large-select>
+                            </ms-form-item>
+                            <br/>
+                            <ms-form-item :class="'form-item form-item-lg'">
+                                <label>对象所在部门:</label>
+                                <input type="text" class="form-control" :attr="{title:@inputJson.orgName}" :duplex="@inputJson.orgName" disabled>
+                            </ms-form-item>
+                        </div>
+                        <div :visible="!@allotQuery" class="allot-container">
+                            <ms-form-item :class="'form-item'">
+                                <label>对象所在部门:</label>
+                                <!-- ms-tree-selecting组件的源码在aaps/common/common-tree-select.js -->
+                                <!-- 这里isTriggerWhenChange设为false, onChange时不需要触发getSelected -->
+                                <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, isTriggerWhenChange:false, selectedKey:@allotOrgId, selectedTitle: @allotOrgName, height:200, wrapId: 'zfygl-tree-select-3', getSelected:@getAllotSelected, onChange:@handleAllotTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                            </ms-form-item>
+                            <ms-form-item :class="['form-item allot-item-org', (@allotOptions.length === 0 && 'disabled')]">
+                                <label>配发对象:</label>
+                                <!-- ms-large-select组件的源码在aaps/common/common-ms-select.js -->
+                                <ms-large-select :widget="{owner:'allot-org',options:allotOptions,value:@defaultAllot,showSearch:true,loading:@allotLoading,page:@allotPageByOrg,pageTotal:@allotPageTotal,pageSize:@allotPageSize,displayValue:'暂无可选的配发对象',onChange:@allotChange,getLoading:@getLoading}"></ms-large-select>
+                            </ms-form-item>
+                        </div>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 修改弹窗 -->
+        <div :controller="zfygl-modify-vm" class="sbzygl-modal zfygl-modal-modify">
+            <xmp :widget="{is:'common-ms-modal', title:'修改', modalSelector:'#zfygl-modal-modify', modalWidth:820, show:@show, ifokBtn: !@isDump, cancelText: @isDump ? '关闭' : '取消', okDisabled:@allotLoading, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="zfygl-modal-modify">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <div class="modal-title">设备状态</div>
+                        <ms-form-item :class="['form-item', (@statusOptions.length === 0 && 'disabled'),(@isDump && 'disabled-select')]">
+                            <label>设备状态:</label>
+                            <ms-select :widget="{col:'status', disabledSelect: @isDump, value:[@selectedRowsData.length > 0 ? @selectedRowsData[0]['status'] : ''], displayValue:[@statusOptions.length === 0 ? '暂无可选的设备状态' : '暂未选择，请选择'], options:@statusOptions}">
+                            </ms-select>
+                        </ms-form-item>
+                        <div class="modal-title">设备信息</div>
+                        <ms-form-item :class="['form-item',!@validJson.manufacturer && 'has-error']">
+                            <label>
+                                <i>* </i>设备厂商:</label>
+                            <input type="text" class="form-control" :attr="{title:@inputJson.manufacturerName}" :duplex="@inputJson.manufacturerName"
+                                disabled>
+                            <div class="form-tip invalid-tip" :if="!@validJson.manufacturer">设备厂商不能为空</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.type && 'has-error']">
+                            <label>
+                                <i>* </i>设备类型:</label>
+                            <input type="text" class="form-control" :attr="{title:@inputJson.typeName}" :duplex="@inputJson.typeName" disabled>
+                            <div class="form-tip invalid-tip" :if="!@validJson.type">设备类型不能为空</div>
+                        </ms-form-item>
+
+                        <ms-form-item :class="['form-item', (@statusOptions.length === 0 && 'disabled'),(@isDump && 'disabled-select')]">
+                            <label>设备型号:</label>
+                            <ms-select :widget="{col:'model', value:[@inputJson.model], disabledSelect: @isDump,displayValue:'暂无可选的设备状态', options:@modelOptions,onChange:@handleModelChange}">
+                            </ms-select>
+                        </ms-form-item>
+
+                        <!-- <ms-form-item :class="['form-item model-item', !@validJson.model && 'has-error', (@modelOptions.length === 0 && 'disabled')]"> -->
+                            <!-- <label>
+                                <i>* </i>设备型号:</label>
+                            <div class="has-icon" :class="@isDump && 'has-icon-disabled'">
+                             <ms-select :widget="{col:'model', value:[@inputJson.model], displayValue:'暂无可选的设备型号', options:@modelOptions, onChange:@handleModelChange}">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.model}" :duplex="@inputJson.model" :focus="@handleFocus('model',$event)"
+                                    :blur="@handleFormat('model',null,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('model',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.model">设备型号不能为空</div> -->
+                             <!-- <label>
+                                <i>* </i>设备型号:</label>
+                            <ms-select :widget="{col:'model', value:[@inputJson.model], displayValue:'暂无可选的设备型号', options:@modelOptions, onChange:@handleModelChange}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.model">请选择设备型号</div>
+                        </ms-form-item> -->
+                        
+                        <ms-form-item :class="['form-item',!@validJson.name && 'has-error']">
+                            <label>
+                                <i>* </i>设备名称:</label>
+                            <div class="has-icon" :class="@isDump && 'has-icon-disabled'">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.name,disabled:@isDump}" :duplex="@inputJson.name" :focus="@handleFocus('name',$event)"
+                                    :blur="@handleFormat('name',null,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('name',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.name">{{@inputJson.name.length > 30 ? '最多只可输入30位字符' : '请输入唯一的设备名称'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.capacity && 'has-error']">
+                            <label>容量:</label>
+                            <div class="has-icon" :class="@isDump && 'has-icon-disabled'">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.capacity,disabled:@isDump}" :duplex="@inputJson.capacity"
+                                    :focus="@handleFocus('capacity',$event)" :blur="@handleFormat('capacity',@capacityReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('capacity',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.capacity">
+                                <i class="fa fa-info-circle"></i>单位为GB，支持小于10位的非0正整数</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.capacity">请输入正确的容量</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.imei && 'has-error']">
+                            <label>IMEI:</label>
+                            <div class="has-icon has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.imei}" :duplex="@inputJson.imei" disabled>
+                            </div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item form-item-lg disabled-select',!@validJson.orgRid && 'has-error']">
+                            <label>
+                                <i>* </i>设备所属部门:</label>
+                            <!-- ms-tree-selecting组件的源码在aaps/common/common-tree-select.js -->
+                            <ms-tree-selecting :widget="{tree:@orgData, disabledSelect: true, showSearch:true, selectedKey:@orgId, selectedTitle: @orgName, wrapId: 'zfygl-tree-select-4', getSelected:@getSelected, onChange:@handleTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                            <div class="form-tip invalid-tip" :if="!@validJson.orgRid">设备所属部门不能为空</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item form-item-lg',!@validJson.gbcode && 'has-error']">
+                            <label>
+                                <i>* </i>国标编号:</label>
+                            <div class="has-icon has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.gbcode}" :duplex="@inputJson.gbcode" disabled>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.gbcode">国标编号不能为空</div>
+                        </ms-form-item>
+                        <div class="modal-title">SIM卡信息</div>
+                        <ms-form-item :class="['form-item',!@validJson.ip && 'has-error']">
+                            <label>专网卡IP:</label>
+                            <div class="has-icon has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.ip}" :duplex="@inputJson.ip" disabled>
+                            </div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.sim && 'has-error']">
+                            <label>电话号码:</label>
+                            <div class="has-icon has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.sim}" :duplex="@inputJson.sim" disabled>
+                            </div>
+                        </ms-form-item>
+                        <div class="modal-title" :if="!@isAbnormal">配发信息</div>
+                        <input :if="!@isAbnormal" type="button" class="btn btn-normal allot-type-btn" value="切换方式" :click="@handleTabType">
+                        <div :visible="@allotQuery && !@isAbnormal" class="allot-container">
+                            <ms-form-item :class="['form-item form-item-lg',!@validJson.allotKeyword && 'has-error']">
+                                <label>查询:</label>
+                                <div class="has-icon">
+                                    <input type="text" class="form-control" :attr="{title:@inputJson.allotKeyword,placeholder:'可输入姓名/警号查询配发对象，至少输入2个非特殊字符才可查询'}"
+                                        :duplex="@inputJson.allotKeyword" :keyup="@handleAllotQuery | stop" :focus="@handleFocus('allotKeyword',$event)"
+                                        :blur="@allotQueryBlur($event)">
+                                    <i class="fa fa-close" :visible="false" :mousedown="@handleClear('allotKeyword',$event)|prevent"></i>
+                                </div>
+                                <div class="form-tip invalid-tip" :if="!@validJson.allotKeyword">{{@inputJson.allotKeyword.length > 20 ? '最多只能输入20个字符' : '至少输入2个非特殊字符才可查询'}}</div>
+                            </ms-form-item>
+                            <br/>
+                            <ms-form-item :class="['form-item form-item-lg allot-item-query', (@allotOptions.length === 0 && 'disabled')]">
+                                <label>配发对象:</label>
+                                <!-- 使用defaultAllot来设置更改查询关键字时的下拉框默认选中值，使用lastUserId来设置上一次注册或修改时的下拉框默认选中值 -->
+                                <!-- ms-large-select组件的源码在aaps/common/common-ms-select.js -->
+                                <ms-large-select :widget="{owner:'allot-query',options:allotOptions,value:(@defaultAllot ? @defaultAllot : @lastUserId),showSearch:true,loading:@allotLoading,page:@allotPageQuery,pageTotal:@allotPageTotal,pageSize:@allotPageSize,displayValue:(@allotOptions.length === 0 ? '暂无可选的配发对象' : '暂未选择，请选择'),onChange:@allotChange,getLoading:@getLoading}"></ms-large-select>
+                            </ms-form-item>
+                            <br/>
+                            <ms-form-item :class="'form-item form-item-lg'">
+                                <label>对象所在部门:</label>
+                                <input type="text" class="form-control" :attr="{title:@inputJson.orgName}" :duplex="@inputJson.orgName" disabled>
+                            </ms-form-item>
+                        </div>
+                        <div :visible="!@allotQuery && !@isAbnormal" class="allot-container">
+                            <ms-form-item :class="'form-item'">
+                                <label>对象所在部门:</label>
+                                <!-- 使用lastOrgId来设置上一次注册或修改时的默认选中的部门值 -->
+                                <!-- ms-tree-selecting组件的源码在aaps/common/common-tree-select.js -->
+                                <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, selectedKey:(@lastOrgId ? @lastOrgId : @allotOrgId), selectedTitle: (@lastOrgName ? @lastOrgName : @allotOrgName), height:200, wrapId: 'zfygl-tree-select-5', getSelected:@getAllotSelected, onChange:@handleAllotTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                            </ms-form-item>
+                            <ms-form-item :class="['form-item allot-item-org', (@allotOptions.length === 0 && 'disabled')]">
+                                <label>配发对象:</label>
+                                <!-- 使用defaultAllot来设置更换部门时的默认选中值，使用lastUserId来设置上一次注册或修改时的默认选中值 -->
+                                <!-- ms-large-select组件的源码在aaps/common/common-ms-select.js -->
+                                <ms-large-select :widget="{owner:'allot-org',options:allotOptions,value:(@defaultAllot ? @defaultAllot : @lastUserId),showSearch:true,loading:@allotLoading,page:@allotPageByOrg,pageTotal:@allotPageTotal,pageSize:@allotPageSize,displayValue:(@allotOptions.length === 0 ? '暂无可选的配发对象' : '暂未选择，请选择'),onChange:@allotChange,getLoading:@getLoading}"></ms-large-select>
+                            </ms-form-item>
+                        </div>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 升级弹窗新 -->
+        <div :controller="zfygl-update-vm" class="sbzygl-modal sbzygl-modal-update">
+            <xmp :widget="{is:'common-ms-modal', title:'升级', modalSelector:'#zfygl-modal-update',ifextraBtn:true,okText:'采集站升级',cancelText:'取消',extraText:'无线网络升级',modalWidth:800, modalHeight: 300, btnalign: 'center', okDisabled:@okDisabled, extraDisabled:@extraDisabled, show:@show, onOk:@handleCjzUpdate, onCancel:@handleCancel, onExtra:handleWifiUpdate}">
+                <div id="zfygl-modal-update">
+                    <div class="update-title">
+                        <span class="col-10"></span>
+                        <span class="col-20">设备厂商</span>
+                        <span class="col-15">设备型号</span>
+                        <span class="col-15">版本</span>
+                        <span class="col-10">更新内容</span>
+                        <span class="col-30">上传时间</span>
+                    </div>
+                    <ul class="update-package-list">
+                        <li :for="($index,el) in @updateData | orderBy(@order, @dir)">
+                            <div class="col-10">
+                                <input type="radio" :attr="{'id':'update'+$index,'name':'updateCheck','value':@el.id}" :duplex="@el.checked" data-duplex-changed="@handleCheckChange($index,el,$event)">
+                                <label :attr="{'for':'update'+$index}" :class="['select-label', @checkedIndex == $index ? 'radio_selected' : 'radio_unselected']"></label>
+                            </div>
+                            <div class="col-20" :attr="{title:el.manufacturerName || '','data-toggle':'popover'}">
+                                {{el.manufacturerName || '-'}}
+                            </div>
+                            <div class="col-15" :attr="{title:el.model || '','data-toggle':'popover'}">
+                                {{el.model || '-'}}
+                            </div>
+                            <div class="col-15" :attr="{title:el.version || '','data-toggle':'popover'}">
+                                {{el.version || '-'}}
+                            </div>
+                            <div class="col-10">
+                                <a class="oparate" :click="@handleLook(el)">查看</a>
+                            </div>
+                            <div class="col-30" :attr="{title:el.insertTime || '','data-toggle':'popover'}">
+                                {{el.insertTime || '-'}}
+                            </div>
+                        </li>
+                        <li :if="@updateData.length == 0">暂无升级包</li>
+                    </ul>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 采集站定向升级弹窗 -->
+        <div :controller="zfygl-direct-vm" class="sbzygl-modal sbzygl-modal-direct">
+            <xmp :widget="{is:'common-ms-modal', title:'采集站定向升级', modalSelector:'#zfygl-modal-direct',okText:'升级',cancelText:'取消',modalWidth:600, modalHeight: 500, okDisabled:@okDisabled, show:@show, onOk:@handleUpdate, onCancel:@handleCancel}">
+                <div id="zfygl-modal-direct">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <ms-form-item :class="'form-item'">
+                            <label>选择部门:</label>
+                            <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, width: 280, selectedKey:@orgId, selectedTitle: @orgName, wrapId: 'zfygl-tree-select-6', getSelected:@getSelected, onChange:@handleTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                        </ms-form-item>
+                        <ms-form-item :class="'form-item'">
+                            <label>选择采集工作站:</label>
+                            <ul class="checkbox-group">
+                                <li :if="@deviceLoading" class="list-loading">
+                                    <span>结果加载中</span>
+                                </li>
+                                <li :if="deviceOptions.length == 0" class="null">
+                                    暂无可选的采集工作站
+                                </li>
+                                <li :if="deviceOptions.length > 0">
+                                    <input type="checkbox" :attr="{'id':'deviceAll'}" :duplex-checked="@isDeviceAllchecked" data-duplex-changed="@handleAllDeviceSelect($event)">
+                                    <label :attr="{'for':'deviceAll'}" :class="['select-label', @isDeviceAllchecked ? 'check_selected' : 'check_unselected']"></label>
+                                    <label>全选</label>
+                                </li>
+                                <!-- 此处数据量可能很大，所以用jq插入的 -->
+                                <ul :if="deviceOptions.length > 0" class="device-list">
+                                </ul>
+                            </ul>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',(@manufacturerOptions.length === 0 && 'disabled')]">
+                            <label>设备厂商:</label>
+                            <ms-select :widget="{col:'manufacturer', value:[@defaultManufacturer], displayValue:'暂无可选的设备厂商', options:@manufacturerOptions, onChange:@handleManuChange}">
+                            </ms-select>
+                        </ms-form-item>
+                        <ms-form-item :class="'form-item'">
+                            <label>选择型号:</label>
+                            <ul class="checkbox-group">
+                                <li :if="@modelLoading" class="list-loading">
+                                    <span>结果加载中</span>
+                                </li>
+                                <li :if="modelOptions.length == 0" class="null">
+                                    暂无可选的型号
+                                </li>
+                                <!-- 此处数据量可能很大，所以用jq插入的 -->
+                                <ul :if="modelOptions.length > 0" class="model-list">
+                                </ul>
+                            </ul>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 查看弹窗 -->
+        <div :controller="zfygl-look-vm" class="sbzygl-modal sbzygl-modal-look">
+            <xmp :widget="{is:'common-ms-modal', title:'更新内容', modalSelector:'#zfygl-modal-look', drag:true, btnalign:'center', modalWidth:600, modalHeight:200, show:@show,ifcancelBtn:false,onOk:@handleOk,onCancel:@handleOk}">
+                <div id="zfygl-modal-look" ms-html="@updateContent">
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 升级下发提示弹窗 -->
+        <div :controller="zfygl-allottip-vm" class="sbzygl-modal sbzygl-modal-tip sbzygl-modal-allottip">
+            <xmp :widget="{is:'common-ms-modal', title:'提示', modalSelector:'#zfygl-modal-allottip', drag:true, btnalign:'center', modalWidth:300, modalHeight:80, show:@show,ifcancelBtn:false,onOk:@handleOk}">
+                <p class="tip-text" id="zfygl-modal-allottip">升级任务已下达</p>
+            </xmp>
+        </div>
+
+        <!-- 删除弹窗 -->
+        <div :controller="zfygl-delete-vm" class="sbzygl-modal sbzygl-modal-tip sbzygl-modal-delete">
+            <xmp :widget="{is:'common-ms-modal', title:'确定删除', modalSelector:'#zfygl-modal-delete', btnalign:'center', modalWidth:300, modalHeight: 80, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <p :if="!@isBatch" class="tip-text" id="zfygl-modal-delete">是否确定删除该项数据？</p>
+                <p :if="@isBatch" class="tip-text" id="zfygl-modal-delete">是否确定删除选中的{{@selectedRowsLength}}条数据？</p>
+            </xmp>
+        </div>
+
+        <!-- 注销确认弹窗 -->
+        <div :controller="zfygl-dump-vm" class="sbzygl-modal sbzygl-modal-tip sbzygl-modal-dump">
+            <xmp :widget="{is:'common-ms-modal', title:'确定注销', modalSelector:'#zfygl-modal-dump', btnalign:'center', modalWidth:400, modalHeight: 80, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <p class="tip-text" id="zfygl-modal-dump">注销操作为不可逆操作，您是否确定注销该设备？</p>
+            </xmp>
+        </div>
+
+        <!-- 远程配置更新弹窗 -->
+        <div :controller="zfygl-remote-update-vm" class="sbzygl-modal zfygl-modal-remote-update">
+            <xmp :widget="{is:'common-ms-modal', title:'远程配置更新', modalSelector:'#zfygl-modal-remote-update', modalWidth:760, modalHeight: auto, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="zfygl-modal-remote-update">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <ms-form-item :class="['form-item form-item-lg',!@validJson.deviceId && 'has-error']">
+                            <label>
+                                <i>* </i>国标编号:</label>
+                            <div class="has-icon has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.deviceId}" :duplex="@inputJson.deviceId" disabled>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.deviceId">国标编号不能为空</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.deviceName && 'has-error']">
+                            <label>
+                                <i>* </i>设备名称:</label>
+                            <div class="has-icon has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.deviceName}" :duplex="@inputJson.deviceName" disabled>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.deviceName">设备名称不能为空</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.recordFrameRate && 'has-error']">
+                            <label>
+                                <i>* </i>本地录像帧率:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.recordFrameRate}" :duplex="@inputJson.recordFrameRate" :focus="@handleFocus('recordFrameRate',$event)"
+                                    :blur="@handleFormat('recordFrameRate',@positiveIntReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('recordFrameRate',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.recordFrameRate">
+                                <i class="fa fa-info-circle"></i>仅支持非0正整数，默认值25</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.recordFrameRate">请输入正确的本地录像帧率</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.recordResolution && 'has-error']">
+                            <label>
+                                <i>* </i>本地录像分辨率:</label>
+                            <ms-select :widget="{col:'recordResolution', value:['720P']}">
+                                <ms-select-option :widget="{value:'480P'}">480P</ms-select-option>
+                                <ms-select-option :widget="{value:'720P'}">720P</ms-select-option>
+                                <ms-select-option :widget="{value:'1080P'}">1080P</ms-select-option>
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.recordResolution">请选择本地录像分辨率</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.bitRate && 'has-error']">
+                            <label>
+                                <i>* </i>网传码率:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.bitRate}" :duplex="@inputJson.bitRate" :focus="@handleFocus('bitRate',$event)"
+                                    :blur="@handleFormat('bitRate',@positiveIntReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('bitRate',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.bitRate">
+                                <i class="fa fa-info-circle"></i>仅支持非0正整数，默认值600000</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.bitRate">请输入正确的网传码率</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.frameRate && 'has-error']">
+                            <label>
+                                <i>* </i>网传帧率:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.frameRate}" :duplex="@inputJson.frameRate" :focus="@handleFocus('frameRate',$event)"
+                                    :blur="@handleFormat('frameRate',@positiveIntReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('frameRate',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.frameRate">
+                                <i class="fa fa-info-circle"></i>仅支持非0正整数，默认值25</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.frameRate">请输入正确的网传帧率</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.transResolution && 'has-error']">
+                            <label>
+                                <i>* </i>网传分辨率:</label>
+                            <ms-select :widget="{col:'transResolution', value:['720P']}">
+                                <ms-select-option :widget="{value:'480P'}">480P</ms-select-option>
+                                <ms-select-option :widget="{value:'720P'}">720P</ms-select-option>
+                                <ms-select-option :widget="{value:'1080P'}">1080P</ms-select-option>
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.transResolution">请选择网传分辨率</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.deviceStateRate && 'has-error']">
+                            <label>
+                                <i>* </i>基本信息上报频率:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.deviceStateRate}" :duplex="@inputJson.deviceStateRate" :focus="@handleFocus('deviceStateRate',$event)"
+                                    :blur="@handleFormat('deviceStateRate',@rateReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('deviceStateRate',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.deviceStateRate">
+                                <i class="fa fa-info-circle"></i>仅支持大于1000的整数，默认值5000</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.deviceStateRate">请输入正确的基本信息上报频率</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.locationRate && 'has-error']">
+                            <label>
+                                <i>* </i>定位信息发送频率:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.locationRate}" :duplex="@inputJson.locationRate" :focus="@handleFocus('locationRate',$event)"
+                                    :blur="@handleFormat('locationRate',@rateReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('locationRate',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.locationRate">
+                                <i class="fa fa-info-circle"></i>仅支持大于1000的整数，默认值1000</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.locationRate">请输入正确的定位信息发送频率</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.volume && 'has-error']">
+                            <label>
+                                <i>* </i>设备音量:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.volume}" :duplex="@inputJson.volume" :focus="@handleFocus('volume',$event)"
+                                    :blur="@handleFormat('volume',@hundredReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('volume',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.volume">
+                                <i class="fa fa-info-circle"></i>仅支持0~100的整数，默认值100</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.volume">请输入正确的设备音量</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.brightness && 'has-error']">
+                            <label>
+                                <i>* </i>拍照亮度:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.brightness}" :duplex="@inputJson.brightness" :focus="@handleFocus('brightness',$event)"
+                                    :blur="@handleFormat('brightness',@hundredReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('brightness',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.brightness">
+                                <i class="fa fa-info-circle"></i>仅支持0~100的整数，默认值100</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.brightness">请输入正确的拍照亮度</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.contrast && 'has-error']">
+                            <label>
+                                <i>* </i>拍照对比度:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.contrast}" :duplex="@inputJson.contrast" :focus="@handleFocus('contrast',$event)"
+                                    :blur="@handleFormat('contrast',@hundredReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('contrast',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.contrast">
+                                <i class="fa fa-info-circle"></i>仅支持0~100的整数，默认值100</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.contrast">请输入正确的拍照对比度</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.acutance && 'has-error']">
+                            <label>
+                                <i>* </i>拍照锐度:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.acutance}" :duplex="@inputJson.acutance" :focus="@handleFocus('acutance',$event)"
+                                    :blur="@handleFormat('acutance',@hundredReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('acutance',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.acutance">
+                                <i class="fa fa-info-circle"></i>仅支持0~100的整数，默认值100</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.acutance">请输入正确的拍照锐度</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 下载提醒 -->
+        <ms-download-tip :widget="{show:@downloadTipShow,plugLink:'/static/flash_player.zip',getShowStatus:getShowStatus}">
+            <div>
+                <p>批量注册功能需要Flash插件的支持，您未安装Flash插件，是否下载？</p>
+                <p class="tip-text">
+                    <i class="fa fa-info-circle"></i>下载完成后请关闭浏览器安装</p>
+            </div>
+        </ms-download-tip>
+    </div>
+</template>

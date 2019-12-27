@@ -1,0 +1,38 @@
+{
+  "code": 0,
+  "msg": "成功！",
+  "data": [
+    {
+      "syxh": "/666",
+      "mjjg": null,
+      "mjjh": null,
+      "bmmc": "0",
+      "path": "/666",
+      "riqi": null,
+      "zfysps": 1,
+      "zfyspzsc": 3600,
+      "zfyspzdx": 0,
+      "over12fileNum": 1,
+      "over24fileNum": 0,
+      "over48fileNum": 0,
+      "jqgs": null,
+      "ajgs": null
+    },
+    {
+      "syxh": "/666",
+      "mjjg": null,
+      "mjjh": null,
+      "bmmc": "0",
+      "path": "/666",
+      "riqi": null,
+      "zfysps": 1,
+      "zfyspzsc": 3600,
+      "zfyspzdx": 0,
+      "over12fileNum": 1,
+      "over24fileNum": 0,
+      "over48fileNum": 0,
+      "jqgs": null,
+      "ajgs": null
+    }
+  ]
+}

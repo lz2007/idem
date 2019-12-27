@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="/node_modules/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <style type="text/css">
+        body,
+        html,
+        #mapDiv {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+        }
+        .info-window-content{
+            overflow: auto !important;
+            height: auto !important;
+        }
+    </style>
+
+    <script src="http://map.maplite.cn/api"></script>
+</head>
+
+<body>
+    <div id="mapDiv"></div>
+</body>
+
+<!--<script src="/static/mod.js"></script>-->
+
+<script>
+
+    //解决IE8之类不支持getElementsByClassName
+    if (!document.getElementsByClassName) {
+        document.getElementsByClassName = function (className, element) {
+            var children = (element || document).getElementsByTagName('*');
+            var elements = new Array();
+            for (var i = 0; i < children.length; i++) {
+                var child = children[i];
+                var classNames = child.className.split(' ');
+                for (var j = 0; j < classNames.length; j++) {
+                    if (classNames[j] == className) {
+                        elements.push(child);
+                        break;
+                    }
+                }
+            }
+            return elements;
+        }
+    }
+    var map;
+    var markerArr = [],
+        labelArr = [];
+    var infoWindowShowing = {}; //保存信息窗口打开信息
+    var recordOrlockDevice = {}; //保存正在录像或锁定的设备,gbcode.record = true|false,gbcode.lock=true|false
+
+    window.onload = function () {
+        var tmpPoint = [113.2744940000, 23.1484710000];
+        //默认城市
+        if (parent.avalon && parent.avalon.vmodels['sszhxt_vm']) {
+            tmpPoint = [parent.avalon.vmodels['sszhxt_vm'].$cityDetailobj.lon, parent.avalon.vmodels['sszhxt_vm'].$cityDetailobj
+                .lat
+            ];
+        }
+        map = new MapLite.Map("mapDiv", {
+            center: tmpPoint,
+            level: 12,
+            isInertiaDrag: false,
+            basemap: "online/tdt/map"//可以配置不同底图："online/baidu/map", "online/google/map" , "online/qq/map", "online/amap/map", "online/tdt/map"
+                                     //分别为"百度", "谷歌", "腾讯", "高德", "天地图"
+        });
+        map.on("ready", function () {
+            parent.$('#back-iframe,.backdrop-loading,.backdrop').remove();
+            window.loadMapCompelete = true;
+        });
+        map.on("click", function (e) {
+            //console.log(e);
+        });
+
+        //轨迹起点symbol
+        window.startSymbol = window.esriMap.createPicSymbol(32, 48, "../../static/image/sszhxt/begin.png");
+        //轨迹终点symbol
+        window.endSymbol = window.esriMap.createPicSymbol(32, 48, "../../static/image/sszhxt/end.png");
+        //位置symbol
+        window.locationSymbol = window.esriMap.createPicSymbol(32, 48, "../../static/image/sszhxt/locate_md.png");
+
+        //轨迹的线symbol
+        window.lineSymbol = new MapLite.LineSymbol({
+            color: "red",
+            weight: 2,
+            opacity: 0.8
+        });
+    };
+
+
+
+    window.playVideo = function (gbcode, username, usercode, signal,name,mytype,myData) {
+        var data= JSON.parse(myData);
+        if(mytype == 0){
+            data.channelSet = '';
+        }
+        parent.avalon.vmodels['mapinfowindow'].playVideo(gbcode, username, usercode, signal,name, mytype, data.channelSet);
+    }
+    window.startTalk = function (gbcode, username, usercode, signal, symbol) {
+        if (symbol != 'false') {
+            var person = username + '(' + usercode + ')';
+            parent.avalon.vmodels['deviceInfoPop'].call(gbcode, person, signal,mytype);
+            return;
+        }
+        parent.avalon.vmodels['mapinfowindow'].startTalk(gbcode, username, usercode, signal);
+    }
+    window.photograph = function (gbcode) {
+        parent.avalon.vmodels['mapinfowindow'].photograph(gbcode);
+    }
+    window.lock = function (gbcode) {
+        var judge = judgeLock(gbcode);
+        parent.avalon.vmodels['mapinfowindow'].lock(gbcode, !judge);
+    }
+    window.record = function (gbcode) {
+        var judegRecord = judgeRecord(gbcode);
+        parent.avalon.vmodels['mapinfowindow'].record(gbcode, !judegRecord);
+    }
+    //改变span样式
+    window.changeSpanCss = function (symbol) {
+        if (symbol) {
+            $('#onspan').css({
+                color: '#999999',
+                background: '#cccccc'
+            });
+            $('#offspan').css({
+                color: '#FFFFFF',
+                background: 'green'
+            });
+        } else {
+            $('#offspan').css({
+                color: '#999999',
+                background: '#cccccc'
+            });
+            $('#onspan').css({
+                color: '#FFFFFF',
+                background: 'green'
+            });
+        }
+
+    }
+    //增加锁定背景
+    window.addOrRemoveMask = function (symbol, tipword, end) {
+        if (symbol) {
+            var content =
+                '<div id="lockMask" style="width: 100%;height: 100%;position: absolute;top: 0px;background: black;z-index: 9999;opacity: 0.4;filter:alpha(opacity=50);text-align: center">';
+            content += '<div style="position: relative;top: 46%;color: #ffffff;font-size: 25px;">';
+            if (end) content +=
+                '<span style="background: url(/static/image/tyywglpt/loading.gif) center center no-repeat;display: inline-block;width: 45px;height: 20px;"></span>';
+            content += '<span>' + tipword + '</span></div></div>';
+            $('.esriPopupWrapper').append(content);
+        } else {
+            $('#lockMask').remove();
+        }
+
+    }
+    //disable button
+    window.disableOrActiveButton = function (symbol) {
+        if (symbol) {
+            $("#videobutton").attr({
+                disabled: 'disabled'
+            });
+            $("#photobutton").attr({
+                disabled: 'disabled'
+            });
+            $("#onspan").attr({
+                disabled: 'disabled'
+            });
+            $("#offspan").attr({
+                disabled: 'disabled'
+            });
+            $("#lockbutton").text('远程解锁');
+        } else {
+            $("#videobutton").removeAttr('disabled');
+            $("#photobutton").removeAttr('disabled');
+            $("#onspan").removeAttr('disabled');
+            $("#offspan").removeAttr('disabled');
+            $("#lockbutton").text('远程锁定');
+
+        }
+    }
+    //记录录像或锁定的设备
+    window.settleData = function (gbcode, symbolrecord, symbollock) {
+        if (!recordOrlockDevice[gbcode]) {
+            recordOrlockDevice[gbcode] = {};
+        }
+        recordOrlockDevice[gbcode].record = symbolrecord;
+        recordOrlockDevice[gbcode].lock = symbollock;
+    }
+    //判断设备是否是lock
+    window.judgeLock = function (gbcode) {
+        if (recordOrlockDevice[gbcode] && recordOrlockDevice[gbcode].lock) {
+            return true;
+        }
+        return false;
+    }
+    //判断是否在录像
+    window.judgeRecord = function (gbcode) {
+        if (recordOrlockDevice[gbcode] && recordOrlockDevice[gbcode].record) {
+            return true;
+        }
+        return false;
+    }
+    window.closeEvn = function () {
+        var key;
+        for (key in infoWindowShowing) {
+            infoWindowShowing[key] = 0;
+        }
+    }
+
+    window.esriMap = {
+        clearMapData: function () {
+            markerArr = [];
+            labelArr = [];
+            recordOrlockDevice = {};
+        },
+        remove_overlay: function () {
+            map.clear();
+            map.removeAllLayers();
+            this.clearMapData();
+        },
+        clearDrawLayer: function () {
+            map.clear();
+            map.removeAllLayers();
+        },
+        getRecordData: function () {
+            return recordOrlockDevice;
+        },
+        setMapCenter: function (lon, lat, levels) {
+            //设置地图中心点,含有级别参数
+            levels = levels ? levels : 13;
+            var point = '' + lon + ' ' + lat + '';
+            map.zoomToLevel(levels, point);
+        },
+        //设置地图中心点
+        setCenterAt: function (lon, lat) {
+            this.setMapCenter(lon, lat);
+        },
+        // 根据gps点确定地图显示级别
+        setViewport: function(points) {
+            var getZoom = function (maxJ, minJ, maxW, minW) {
+                if (maxJ == minJ && maxW == minW) return 13;
+                var diff = maxJ - minJ;
+                if (diff < (maxW - minW) * 2.1) diff = (maxW - minW) * 2.1;
+                diff = parseInt(10000 * diff) / 10000;
+    
+                var zoomArr = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
+                var diffArr = new Array(360, 180, 90, 45, 22, 11, 5.5, 2.75, 1.37, 0.68, 0.34, 0.17, 0.08, 0.04, 0.02);
+    
+                for (var i = 0; i < diffArr.length; i++) {
+                    if ((diff - diffArr[i]) >= 0) {
+                        return zoomArr[i] + 1;
+                    }
+                }
+                return 14;
+            };
+            //根据原始数据计算中心坐标和缩放级别，并为地图设置中心坐标和缩放级别。  
+            var setZoom = function(points){
+                var maxLng = points[0][0];  
+                var minLng = points[0][0];  
+                var maxLat = points[0][1];  
+                var minLat = points[0][1];  
+                var res;  
+                for (var i = points.length - 1; i >= 0; i--) {  
+                    res = points[i];  
+                    if(res[0] > maxLng) maxLng =res[0];  
+                    if(res[0] < minLng) minLng =res[0];  
+                    if(res[1] > maxLat) maxLat =res[1];  
+                    if(res[1] < minLat) minLat =res[1];  
+                };  
+                var cenLng =(parseFloat(maxLng)+parseFloat(minLng))/2;  
+                var cenLat = (parseFloat(maxLat)+parseFloat(minLat))/2;  
+                var zoom = getZoom(maxLng, minLng, maxLat, minLat);  
+                esriMap.setMapCenter(cenLng,cenLat, zoom);
+            };
+            setZoom(points);
+        },
+        createMarker: function (data, center) {
+            if (!data.userName) {
+                data.userName = '-';
+            }
+            if (!data.userCode) {
+                data.userCode = '-';
+            }
+            if (!data.battery) {
+                data.battery = 0;
+            }
+            if (!data.capacityTotal) {
+                data.capacityTotal = 0;
+            }
+            if (!data.capacityUsed) {
+                data.capacityUsed = 0;
+            }
+            if (!data.speed) {
+                data.speed = 0;
+            }
+            if (!data.signal) {
+                data.signal = 0;
+            }
+            if (!data.deviceName) {
+                data.deviceName = '-';
+            }
+            if (data.videoStatus == 0) {
+                data.videoStatus = false;
+            } else {
+                data.videoStatus = true;
+            }
+            if (data.locked != undefined &&data.locked == 0) {
+                data.locked = false;
+            } else if(data.locked != undefined && data.locked != 0 ) {
+                data.locked = true;
+            }
+            //本域执法仪才有锁定等这些功能
+            if(data.mytype == 0 && !data.source){
+                settleData(data.gbcode, data.videoStatus, data.locked);
+            }else{
+                data.source  = data.platformGbcode;
+            }
+
+            // if(isShowMap(data.detail.gps.deviceId)){
+            //     center && setMapCenter(point.lon, point.lat);
+            //     return;
+            // }
+
+            var iconUrl = "";
+            var icon_h = 35;
+            var icon_w = 35 ;
+            if (data.isRealTimeView) {
+                data.deviceType = 'DSJ';
+            }
+            if (data.mytype == 2) { //
+                data.deviceType = 2;
+            } else if (data.mytype == 1) {
+                data.deviceType = 3;
+            } else if(data.mytype == 3){
+                data.deviceType = 4;
+            } else{
+                data.deviceType = 'DSJ';
+            }
+
+            switch (data.deviceType) {
+                case 'DSJ':
+                    iconUrl = "../../static/image/sszhxt-sszh/locate.png";
+                    icon_h = 35;
+                    icon_w = 30;
+                    break;
+                case 2:
+                    iconUrl = "../../static/image/sszhxt-sszh/locate_car.png";
+                    break;
+                case 3:
+                    iconUrl = "../../static/image/sszhxt-sszh/locate_fast.png";
+                    break;
+                case 4:
+                    iconUrl = "../../static/image/sszhxt-sszh/locate_dron.png";
+                    break;
+
+                default:
+                    iconUrl = "../../static/image/sszhxt-sszh/locate.png";
+            }
+
+            var cruPoint = new MapLite.Point(data.longitude, data.latitude);
+            var pictureSymbol = new MapLite.PictureSymbol(iconUrl, icon_w, icon_h);
+            var content = "";
+            content += '<div class="infowindowcontainer" style="font-size: 14px;color:#3c3c3c;word-break: break-all;">';
+
+            //本域执法仪才有
+            if(data.mytype == 0 && !data.source){
+                if(!data.userName || !data.userCode){
+                    content += '<p>警员姓名/警号: ' + data.userName + '(' + data.userCode + ')</p>';
+                }else {
+                    content += '<p>设备名称: ' + data.deviceName + '</p>';
+                }
+                content += '<p class="deviceID">' + '国标编号: ' + data.gbcode + '</p>';
+            }else{
+                if(data.mytype == 0){
+                    data.type = '执法仪记录仪';
+                    data.name = data.deviceName;
+                }
+                content += '<p>设备名称：'+ data.name +'</p>';
+                content += '<p>设备类型：' + data.type + '</p>';
+                content += '<p>设备型号：' + data.model + '</p>';
+            }
+
+
+            //区分级联和设备接入,同时只有本域执法仪才有这写
+            if (!data.source && data.mytype ==0) {
+                var width = data.battery / 100 * 29 + 'px';
+                if (!width) width = '0px';
+                content +=
+                    '<p style="position: relative;">剩余电量: <span style="display:inline-block;width: 34px;height: 28px;background:url(/static/image/sszhxt-sszh/battery.png) no-repeat scroll;vertical-align: middle;"></span>';
+                if (Number(data.battery) <= 25) {
+                    content += '<span style="width:' + width +
+                        ';height: 16px;background: red;position:  relative;left: -32px;vertical-align:top;top:6px;display: inline-block;"></span>';
+                } else if (Number(data.battery) <= 45) {
+                    content += '<span style="width:' + width +
+                        ';height: 16px;background: orange;position:  relative;left: -32px;vertical-align:top;top:6px;display: inline-block;"></span>';
+                } else {
+                    content += '<span style="width:' + width +
+                        ';height: 16px;background: green;position:  relative;left: -32px;vertical-align:top;top:6px;display: inline-block;"></span>';
+                }
+                content += '<span style="position:  absolute;left: 75px;top:5px;font-size: 12px;">' + data.battery +
+                    '</span></p>';
+                var syrl = data.capacityUsed; //使用容量
+                var zrl = data.capacityTotal;
+                var spanwidth;
+                if(zrl){
+                    spanwidth = syrl / zrl * 180;
+                }else{
+                    spanwidth = 0;
+                }
+                var spanTwowidth;
+                spanTwowidth = spanwidth ? spanTwowidth = spanwidth / 4 + 80 + 'px' : spanTwowidth = '80px';
+                spanwidth ? spanwidth = spanwidth + 'px' : spanwidth = '0px';
+                content +=
+                    '<p>存储容量: <span style="display: inline-block;border-radius: 4px;width: 180px;height: 17px;background: #cccccc;font-size: 12px;margin-right: 5px;">';
+                content +=
+                    '<span style="display:inline-block;border-radius: 4px;height: 17px;vertical-align:top;background:red;width:' +
+                    spanwidth + '"></span>';
+                content += '<span style="color:#ffffff;position: absolute;left: ' + spanTwowidth +
+                    ';vertical-align: top;">' + syrl + 'GB</span></span>';
+                content += '<span>' + zrl + 'GB</span></p>';
+                //content += '<p>速度: ' + data.speed + 'm/s</p>';
+                // var signalword = '';
+                // if (data.signal < 15) {
+                //     signalword = '差';
+                // } else if (data.signal > 50) {
+                //     signalword = '优';
+                // } else {
+                //     signalword = '良';
+                // }
+                // content += '<p>信号强度: ' + signalword + '</p>';
+                var spancontent = '';
+                if (recordOrlockDevice[data.gbcode] && !recordOrlockDevice[data.gbcode].record || data.vedioStatus) {
+                    if (data.locked) {
+                        spancontent = '<button id="onspan" disabled="disabled" class="btn" onclick="record(\'' +
+                            data.gbcode +
+                            '\')" style="background: #cccccc;color: #999999;padding: 0px 5px;border-radius: 0;">ON</button><button disabled="disabled" class="btn" onclick="record(\'' +
+                            data.gbcode +
+                            '\')" id="offspan" style="background: green;color: #ffffff;padding: 0px 5px;border-radius: 0;">OFF</button>';
+                    } else {
+                        spancontent = '<button id="onspan" class="btn" onclick="record(\'' + data.gbcode +
+                            '\')" style="background: #cccccc;color: #999999;padding: 0px 5px;border-radius: 0;">ON</button><button class="btn" onclick="record(\'' +
+                            data.gbcode +
+                            '\')" id="offspan" style="background: green;color: #ffffff;padding: 0px 5px;border-radius: 0;">OFF</button>';
+                    }
+                } else {
+                    if (data.locked) {
+                        spancontent = '<button  disabled="disabled"id="onspan" class="btn" onclick="record(\'' +
+                            data.gbcode +
+                            '\')" style="background: green;color: #ffffff;padding: 0px 5px;border-radius: 0;">ON</button><button disabled="disabled" class="btn" onclick="record(\'' +
+                            data.gbcode +
+                            '\')" id="offspan" style="background: #cccccc;color: #999999;padding: 0px 5px;border-radius: 0;">OFF</button>';
+
+                    } else {
+                        spancontent = '<button id="onspan" class="btn" onclick="record(\'' + data.gbcode +
+                            '\')" style="background: green;color: #ffffff;padding: 0px 5px;border-radius: 0;">ON</button><button class="btn" onclick="record(\'' +
+                            data.gbcode +
+                            '\')" id="offspan" style="background: #cccccc;color: #999999;padding: 0px 5px;border-radius: 0;">OFF</button>';
+                    }
+                }
+
+                if (data.isAllowRecord) content += '<p>录像: ' + spancontent + '</p>';
+                // content += '<p>版本号: ' + data.detail.dsj.version+'</p>';
+            }
+
+            var count = 0; //用于判断按钮放在那个div用的，暂时没用到
+            content += '<div style="margin-bottom: 5px;">';
+            var myData =JSON.stringify(data).replace(/"/g, '&quot;');
+            if (!data.isRealTimeView && data.isAllowVideo) {
+                count++;
+                if (data.locked) {
+                    content +=
+                        '<button disabled="disabled" id="videobutton" class="btn btn-primary  btn-sm" style="margin-right: 5px;background: rgb(7, 124, 225);");" ' +
+                        'onclick="playVideo(\'' +data.gbcode + '\',\'' + data.userName + '\',\'' + data.userCode + '\',\'' + data.signal +
+                        '\',\''+''+'\',\''+data.mytype+'\',\''+myData+'\',);">' + '视频呼叫' + '</button>';
+                } else {
+                    //执法仪
+                    if(data.mytype == 0){
+                        content +=
+                        '<button id="videobutton" class="btn btn-primary  btn-sm" style="margin-right: 5px;background: rgb(7, 124, 225);");" onclick="playVideo(\'' +
+                        data.gbcode + '\',\'' + data.userName + '\',\'' + data.userCode + '\',\'' + data.signal +
+                            '\',\''+''+'\',\''+data.mytype+'\',\''+ myData +'\');">' + '视频呼叫' + '</button>';
+                    }else{
+                        //多通道
+                        content +=
+                            '<button id="videobutton" class="btn btn-primary  btn-sm" style="margin-right: 5px;background: rgb(7, 124, 225);");" onclick="playVideo(\'' +
+                            data.gbcode + '\',\'' + data.userName + '\',\'' + '' + '\',\'' + data.signal +
+                            '\',\''+ data.name +'\', \''+data.mytype+'\',\''+myData+'\');">' + '视频呼叫' + '</button>';
+                    }
+                }
+            }
+
+
+            if (!data.source && data.mytype ==0) {
+                //告警详情那里也有语音呼叫
+                if (!data.isRealTimeView) {
+                    data.isRealTimeView = false;
+                }
+                if (data.isAllowSpeak) {
+                    count++;
+                    if (data.locked) {
+                        content +=
+                            '<button disabled="disabled" class="btn btn-primary  btn-sm" style="margin-right: 5px;background: rgb(7, 124, 225);" onclick="startTalk(\'' +
+                            data.gbcode + '\',\'' + data.userName + '\',\'' + data.userCode + '\',\'' + data.signal +
+                            '\',\'' + data.isRealTimeView + '\',\'' +data.mytype+'\');">' + '语音呼叫' + '</button>';
+                    } else {
+                        content +=
+                            '<button class="btn btn-primary  btn-sm" style="margin-right: 5px;background: rgb(7, 124, 225);" onclick="startTalk(\'' +
+                            data.gbcode + '\',\'' + data.userName + '\',\'' + data.userCode + '\',\'' + data.signal +
+                            '\',\'' + data.isRealTimeView + '\',\''+data.mytype+'\');">' + '语音呼叫' + '</button>';
+                    }
+                }
+                if (data.isAllowPhotograph) {
+                    count++;
+                    if (data.locked) {
+                        content +=
+                            '<button disabled="disabled" id="photobutton" class="btn btn-primary  btn-sm" style="margin-right: 5px;background: rgb(7, 124, 225);" onclick="photograph(\'' +
+                            data.gbcode + '\');">' + '远程拍照' + '</button>';
+                    } else {
+                        content +=
+                            '<button id="photobutton" class="btn btn-primary  btn-sm" style="margin-right: 5px;background: rgb(7, 124, 225);" onclick="photograph(\'' +
+                            data.gbcode + '\');">' + '远程拍照' + '</button>';
+                    }
+                }
+                if (data.isAllowLock) {
+                    var word = '';
+                    if (data.locked) {
+                        word = '远程解锁';
+                    } else {
+                        word = '远程锁定';
+                    }
+                    count++;
+                    content +=
+                        '<button id="lockbutton" class="btn btn-primary  btn-sm" style="margin-right: 5px;background: rgb(7, 124, 225);" onclick="lock(\'' +
+                        data.gbcode + '\');">' + word + '</button>';
+                }
+            }
+            content += '</div>';
+            //        content += '<div>';
+            //        content += '<button class="btn btn-success btn-sm" style="margin-right: 5px;" onclick="starttalk(\''+data.deviceId+'\');">' + getI18NStr('msg.startTalk') + '</button>';
+            //         content += '<button class="btn btn-primary  btn-sm" style="margin-right: 5px;" onclick="@startRecord(\''+data.gbcode+'\');">' + '录制视频' + '</button>';
+            //         content += '<button class="btn btn-primary  btn-sm" onclick="@sentmessage(\''+data.gbcode+'\');">' + '消息下发' + '</button>';
+            //        content += '</div>';
+            content += '</div>';
+            if (data.userName) {
+                var string = data.userName + '(' + data.userCode + ')';
+                var ls = new MapLite.TextSymbol({
+                    yOffset: 25
+                });
+                var pointLabel = map.addGraphic(cruPoint, ls);
+                pointLabel.setText(string);
+                pointLabel.id = data.userCode;
+                pointLabel.name = data.userName;
+                // pointLabel.dev = data.deviceId;
+                pointLabel.gbcode = data.gbcode;
+                labelArr.push(pointLabel);
+
+            }
+
+            //var marker = new MapLite.Graphic(cruPoint, pictureSymbol);
+            var marker = map.addGraphic(cruPoint, pictureSymbol);
+            if (infoWindowShowing[data.gbcode] == 1) {
+                marker.showInfoWindow(content, true);
+            }
+            marker.id = data.userCode;
+            marker.name = data.userName;
+            // marker.dev = data.deviceId;
+            marker.gbcode = data.gbcode;
+            // marker.acountId = data.accountId;
+            markerArr.push(marker);
+            //GisObject.map.graphics.add(marker);
+            center && esriMap.setMapCenter(data.longitude, data.latitude, 16);
+            var ele = document.getElementsByClassName('info-window-close')[0];
+            if (ele) {
+                if (ele.removeEventListener) { //所有主流浏览器，除了 IE 8 及更早 IE版本
+                    ele.removeEventListener("click", closeEvn);
+                } else if (x.detachEvent) { // IE 8 及更早 IE 版本
+                    x.detachEvent("onclick", closeEvn);
+                }
+                if (ele.addEventListener) { //所有主流浏览器，除了 IE 8 及更早 IE版本
+                    ele.addEventListener("click", closeEvn);
+                } else if (x.attachEvent) { // IE 8 及更早 IE 版本
+                    x.attachEvent("onclick", closeEvn);
+                }
+            }
+            marker.on("click", function (e) {
+                if(data.sosSource == "FACE_MONITORING") {
+                    parent.avalon.vmodels['sszhrlbk'].show(data);
+                } else if(data.sosSource == "CAR_MONITORING") {
+                    parent.avalon.vmodels['sszh-cpbk'].show(data);
+                } else if (data.sosSource == "DEVICE_SOS") {
+                    marker.showInfoWindow(content, true);
+                    infoWindowShowing[e.gbcode] = 1;
+                }
+                var ele = document.getElementsByClassName('info-window-close')[0];
+                if (ele.removeEventListener) { //所有主流浏览器，除了 IE 8 及更早 IE版本
+                    ele.removeEventListener("click", closeEvn);
+                } else if (x.detachEvent) { // IE 8 及更早 IE 版本
+                    x.detachEvent("onclick", closeEvn);
+                }
+                if (ele.addEventListener) { //所有主流浏览器，除了 IE 8 及更早 IE版本
+                    ele.addEventListener("click", closeEvn);
+                } else if (x.attachEvent) { // IE 8 及更早 IE 版本
+                    x.attachEvent("onclick", closeEvn);
+                }
+
+            });
+        },
+        removerMarker: function (data) { ///删除标记物
+            var markerTmp;
+            for (var i = 0; i < markerArr.length; i++) {
+                markerTmp = markerArr[i];
+                if (markerTmp.gbcode == data) {
+                    map.removeGraphic(markerTmp);
+                    //GisObject.map.graphics.remove(markerTmp);
+                    markerArr.splice(i--, 1);
+                }
+            }
+            for (var j = 0; j < labelArr.length; j++) {
+                markerTmp = labelArr[j];
+                if (markerTmp.gbcode == data) {
+                    map.removeGraphic(markerTmp);
+                    //GisObject.map.graphics.remove(markerTmp);
+                    labelArr.splice(j--, 1);
+                }
+            }
+            if(infoWindowShowing[data] == 1){
+                map.hideInfoWindow();
+            }
+
+        },
+        //测距
+        measureLength: function () {
+            map.measureLength();
+        },
+
+        /**
+         * 添加线
+         * @param {Object} points   坐标数组
+         * @param {symbol} lineSymbol    线样式
+         */
+        addPolyline: function (points, lineSymbol) {
+            lineSymbol = lineSymbol ? lineSymbol : window.lineSymbol;
+            var copyarr = [];
+            for (var i = 0; i < points.length; i++) {
+                copyarr.push(new MapLite.Coordinate(points[i][0], points[i][1]));
+            }
+            var polyLine = new MapLite.LineString(copyarr)
+            var polyLineGraphic = map.addGraphic(polyLine, lineSymbol);
+            return polyLineGraphic;
+        },
+        addPictureMarker: function (x, y, pictureSymbol, attributs, infotemplete) {
+            var pt = new MapLite.Point(new MapLite.Coordinate(x, y));
+            var pictureGraphic = map.addGraphic(pt, pictureSymbol)
+            return pictureGraphic.feature.oid;
+        },
+        removePictureMarker: function (pictureGraphicOid) {
+            map.removeGraphic(pictureGraphicOid);
+        },
+        /**
+         * 生成图片symbol
+         * @param {number} width   宽度
+         * @param {number} height   高度
+         * @param {string} url    图片url
+         */
+        createPicSymbol: function (width, height, url) {
+            var symbol = new MapLite.PictureSymbol({
+                "src": url, //图片访问路径
+                "height": height, //高度
+                "width": width, //宽度
+                "position": 0, //形状相对于坐标点的位置
+                "xOffset": 0, //x偏移量
+                "yOffset": -24, //y偏移量
+            })
+            return symbol;
+        },
+        removeTrackLayer: function () {
+            this.clearDrawLayer();
+        }
+    }
+
+    window.showMessage = parent.avalon.vmodels['sszhxt_vm'].showMessage;
+    /*
+   *  lala函数作用就是每次new一下，将放回值赋值drawpath.TrackGraphicLayer和当前new的这个对象的TrackGraphicLayer
+   *  即this.TrackGraphicLayer,通过对比this.TrackGraphicLayer === drawpath.TrackGraphicLayer,成立就画轨迹，
+   *  不成立说明某人点了轨迹列表中的另一个item
+   * */
+    function lala() {
+        return {
+            'a': 1
+        }
+    }
+    window.DrawPath = function (json, mapObj, vm, getTrackTotalAjax, getPageDeviceTrackAjax, getDeviceTrackByDuration, player) {
+        this.json = json;
+        this.totalPage = 0;
+        this.maxPage = 0;
+        this.curGpsPage = 0;
+        this.gpsPageSize = 200;
+        this.beginPoint = {};
+        this.isGettingTrack = true;
+        this.curTrackId = null;
+        this.TrackGraphicLayer = null;
+        this.beginPoint = {};
+        this.timer = null;
+        this.timers = []; //用来存储画线定时器句柄
+        this.polyineCount = 0;
+        this.polyLineEndCount = 0;
+        this.arrPoints = []; //用于存储蓝色标记数组
+        this.leftPonts = []; //去除已经显示过的剩下没显示的蓝色数组
+        this.markerCount = 0; //蓝色标记数组下标
+        this.markerGraphics = []; //上一个蓝色标记数组(包括设备和时间信息)
+        this.markerId = "";
+        this.markerLayer = null;
+        this.map = map;
+        this.vm = vm;
+        this.player = player;
+        this.picSymbol = null;
+        this.getTrackTotalAjax = getTrackTotalAjax;
+        this.getPageDeviceTrackAjax = getPageDeviceTrackAjax;
+        this.getDeviceTrackByDuration = getDeviceTrackByDuration;
+        //this.init();
+
+    };
+    DrawPath.prototype = {
+        constructor: DrawPath,
+        init: function () {
+            DrawPath.curTrackId = this.curTrackId = 'trackLine' + Math.random();
+            DrawPath.TrackGraphicLayer = this.TrackGraphicLayer = new lala();
+        },
+        draw: function () {
+            this.getTrackTotal();
+        },
+        drawPathByDuration: function () {
+            this.getPathByDuration();
+        },
+        getTrackTotal: function () {
+            var that = this;
+            this.getTrackTotalAjax(that.json).then(function (ret) {
+                that.total = ret.data.gpsSize;
+                that.maxPage = Math.ceil(that.total / that.gpsPageSize);
+                //   that.mapObj.polyLineEndCount = that.maxPage-1;
+                if (that.total == 0) {
+                    showMessage('warn', '暂无gps轨迹信息');
+                    //alert('暂无gps轨迹信息');
+                    return false;
+                }
+
+                that.getGpsPageTrack(that.json, 0, that.gpsPageSize);
+
+            });
+        },
+        getGpsPageTrack: function (json, page, pageSize) {
+            var that = this;
+            //console.log('m:' + this.maxPage, 'page' + this.curGpsPage, this.timers);
+            if (this.curGpsPage >= this.maxPage) {
+                //   vm.btnDisabled = false;
+                return false;
+            } else if (!this.isGettingTrack) {
+                return false;
+            }
+            this.getPageDeviceTrackAjax(json, page, pageSize).then(function (ret) {
+                if (that.curGpsPage == 0) {
+                    that.beginPoint = ret.data.currentElements[0];
+                    //console.log('lon:' + that.beginPoint.longitude, 'that.lat:' + that.beginPoint.latitude);
+                    esriMap.setMapCenter(that.beginPoint.longitude, that.beginPoint.latitude, 18);
+                }
+                that.polyLine(ret.data.currentElements, that.maxPage - 1);
+                //  that.mapObj.addLine(ret.data.currentElements, 200,vm.curGpsPage);
+                that.arrPoints = that.arrPoints.concat(ret.data.currentElements);
+                ++that.curGpsPage;
+                that.getGpsPageTrack(json, that.curGpsPage, that.gpsPageSize);
+
+            });
+        },
+        getPathByDuration: function () {
+            var that = this;
+            this.getDeviceTrackByDuration(this.json).then(function (ret) {
+                if (ret.code == 0) {
+                    if ($.isEmptyObject(ret.data)) {
+                        showMessage('warn', '暂无gps轨迹信息');
+                        return false;
+                    }
+                    var points = ret.data[that.json['deviceIds'][0]];
+                    that.beginPoint = points[0];
+                    that.arrPoints = that.leftPonts = points;
+                    // that.map.centerAndZoom(new esri.geometry.Point(this.beginPoint.longitude, this.beginPoint.latitude), 20);
+                    esriMap.setMapCenter(that.beginPoint.longitude, that.beginPoint.latitude, 10);
+
+                    that.polyLine(points, 0);
+                } else {
+                    showMessage('error', ret.msg);
+                }
+
+
+            });
+        },
+        polyLine: function (curArr, curPage) {
+            var that = this;
+            var paths = [];
+            var inPaths = [];
+            for (var i in curArr) {
+                inPaths.push([curArr[i]['longitude'], curArr[i]['latitude']]);
+            }
+            // paths.push(inPaths);
+            //画线
+            if (DrawPath.TrackGraphicLayer == that.TrackGraphicLayer) //为了防止请求时上一次的轨迹没清完
+                esriMap.addPolyline(inPaths);
+            if (that.polyineCount == 0) {
+                var beginPoint = curArr[0];
+                var beginMarkerGraphic = that.createMarker("../../static/image/sszhxt/begin.png");
+                esriMap.addPictureMarker(beginPoint.longitude, beginPoint.latitude, beginMarkerGraphic);
+                that.vm.btnDisabled = true;
+            }
+            //终点
+            if (that.polyineCount == curPage) {
+                var endPoint = curArr[curArr.length - 1];
+                var endMarkerGraphic = that.createMarker("../../static/image/sszhxt/end.png");
+                esriMap.addPictureMarker(endPoint.longitude, endPoint.latitude, endMarkerGraphic);
+                that.vm.btnDisabled = false; //轨迹画完播放按钮才能呈现激活状态
+            }
+            ++that.polyineCount;
+        },
+        createMarker: function (url) {
+            var iconUrl = url ? url : "../../static/image/sszhxt/locate.png";
+            var marker = esriMap.createPicSymbol(25,30 ,iconUrl);
+            this.picSymbol = marker;
+
+            return marker;
+        },
+        addMarker: function (timeInterval, step) {
+            var that = this;
+            this.timer = setInterval(function () {
+                for (var i = 0; i < that.markerGraphics.length; i++) {
+                    that.clearGraphicsByLayer(that.markerGraphics[i]); //清除上一次的蓝色标记
+                    that.markerGraphics.splice(i, 1);
+                    i--;
+                }
+
+                if (that.markerCount == (that.arrPoints.length)) {
+                    that.markerCount = 0;
+                    clearInterval(that.timer);
+                    that.vm.showPlayBtn = true;
+                    return false;
+                }
+                var curPoint = that.arrPoints[that.markerCount];
+                var diviceInfo = (curPoint['deviceName'] || '-') + '(' + (curPoint['deviceId'] || '-') + ')';
+                var deviceTiime = DrawPath.formatDate(curPoint['time']);
+                var point = new MapLite.Point(curPoint.longitude, curPoint.latitude);
+                //蓝色标记物
+                var markerGraphic = that.createMarker(null);
+                var marker = map.addGraphic(point, markerGraphic);
+
+
+                var label1 = new MapLite.TextSymbol({
+                    xOffset:0,
+                    yOffset: 5,
+                    color: "#2f94fc"
+                });
+                var pointLabel1 = map.addGraphic(point, label1);
+                pointLabel1.setText(diviceInfo);
+
+                var label2 = new MapLite.TextSymbol({
+                    xOffset:0,
+                    yOffset: 20,
+                    color: "#2f94fc"
+                });
+                var pointLabel2 = map.addGraphic(point, label2);
+                pointLabel2.setText(deviceTiime);
+                that.markerGraphics.push(pointLabel1, pointLabel2, marker);
+                esriMap.setMapCenter(curPoint.longitude,curPoint.latitude,16);
+                var step = step || 1;
+                that.markerCount = that.markerCount + step;
+            }, timeInterval);
+        },
+        //这个是用于告警管理查看视频和画轨迹用的
+        addMarkerByDuration2: function (timeStamp) {
+            var that = this;
+            //console.log('timeStamp' + timeStamp);
+            for (var i = 0; i < that.leftPonts.length; i++) {
+                if (timeStamp >= that.leftPonts[i]['time']) {
+                    for (var i = 0; i < that.markerGraphics.length; i++) {
+                        that.clearGraphicsByLayer(that.markerGraphics[i]); //清除上一次的蓝色标记
+                        that.markerGraphics.splice(i, 1);
+                        i--;
+                    }
+                    that.markerCount = i;
+                    var curPoint = that.leftPonts[that.markerCount];
+                    var diviceInfo = (curPoint['deviceName'] || '-') + '(' + (curPoint['deviceId'] || '-') + ')';
+                    var deviceTiime = DrawPath.formatDate(curPoint['time']);
+                    var point = new MapLite.Point(curPoint.longitude, curPoint.latitude);
+                    //蓝色标记物
+
+
+                    var markerGraphic = that.createMarker(null);
+                    var marker = map.addGraphic(point, markerGraphic);
+
+
+                    var label1 = new MapLite.TextSymbol({
+                        xOffset:0,
+                        yOffset: 5,
+                        color: "#2f94fc"
+                    });
+                    var pointLabel1 = map.addGraphic(point, label1);
+                    pointLabel1.setText(diviceInfo);
+
+                    var label2 = new MapLite.TextSymbol({
+                        xOffset:0,
+                        yOffset: 20,
+                        color: "#2f94fc"
+                    });
+                    var pointLabel2 = map.addGraphic(point, label2);
+                    pointLabel2.setText(deviceTiime);
+                    that.markerGraphics.push(label1, label2, marker);
+
+
+
+                    that.leftPonts = that.leftPonts.splice(i + 1);
+                    break;
+                }
+            }
+        },
+        removeLayer: function () {
+            esriMap.clearDrawLayer()
+        },
+        clearGraphicsByLayer: function (overlay) {
+            this.map.removeGraphic(overlay);
+        },
+        resetLayerPos: function (centePpoint, zoom) {
+            esriMap.setMapCenter(centePpoint.longitude, centePpoint.latitude, zoom);
+        },
+        addLine: function (arr, time, curPage) {
+            var length = arr.length,
+                count = 0,
+                addLineTimer = null;
+            var _this = this;
+            addLineTimer = setInterval(function () {
+                if (count == length - 1) {
+                    //  console.log(111);
+                    clearInterval(addLineTimer);
+                    // gjcxMap.setMapExtend(new esri.geometry.Polyline({
+                    //     "paths": gjcxMap.paths
+                    // }));
+                    return false;
+                }
+                //   console.log(count,arr[count]['longitude'],arr[count]['latitude']);
+
+                var point1 = arr[count];
+                var point2 = arr[++count];
+                var arrTwoPoint = [point1, point2];
+                // if(count == arr.length-1)
+                // _this.polyLine([arr[arr.length-2],arr[arr.length-1]]);
+                // else
+                //  console.log('count'+count);
+                _this.polyLine(arrTwoPoint, curPage);
+            }, time);
+            gjcxMap.timers.push(addLineTimer);
+
+        },
+        clearTimer: function () {
+            if (this.timer)
+                clearInterval(this.timer);
+            for (var i in this['timers']) {
+                clearInterval(this['timers'][i]);
+                this['timers'][i] = null;
+            }
+            this.timer = null;
+            this['timers'] = [];
+        }
+    };
+
+    DrawPath.formatDate = function (now) {
+        if (!now)
+            return '-';
+        var date = new Date(now);
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var dat = date.getDate();
+        var hour = date.getHours() > 9 ? date.getHours() : '0' + date.getHours();
+        var mm = date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes();
+        var seconds = date.getSeconds() > 9 ? date.getSeconds() : '0' + date.getSeconds();
+        return year + '-' + month + '-' + dat + "  " + hour + ":" + mm + ":" + seconds;
+    }
+
+</script>
+
+</html>

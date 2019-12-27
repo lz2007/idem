@@ -1,0 +1,12 @@
+<template>
+    <article class="khdscfwgl tyywglpt-ccfwgl">
+        <div class="common-btn  queryTable">
+            <xmp :widget="{is:'ms-form',$form:@$form,inline:true}">
+                <ms-form-item :widget="{label:'所属部门:'}" :class="'form-item'">
+                    <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'tree-select-wrap-1', getSelectedValue:@getSelectedValue}"></ms-tree-selecting>
+                </ms-form-item>
+            </xmp>
+            <button class="btn">查询</button>
+        </div>
+    </article>
+</template>

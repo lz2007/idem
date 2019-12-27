@@ -1,0 +1,247 @@
+[
+    [
+        [{
+                "markType": 1,
+                "markTypeName": "事故处理",
+                "markTime": 1508223108640,
+                "markDesc": "我是描述",
+                "longitude": 113.2693246420,
+                "latitude": 23.1520769760
+            },
+            {
+                "markType": 3,
+                "markTypeName": "非现场处罚",
+                "markTime": 1508223408640,
+                "markDesc": "我是描述",
+                "longitude": 113.2643246425,
+                "latitude": 23.1500769765
+            },
+            {
+                "markType": 5,
+                "markTypeName": "接处警",
+                "markTime": 1508263108640,
+                "markDesc": "我是描述",
+                "longitude": 113.2613246429,
+                "latitude": 23.1580769769
+            }
+        ],
+        [{
+            "markType": 1,
+            "markTypeName": "事故处理",
+            "markTime": 1508223108640,
+            "markDesc": "我是描述",
+            "longitude": 113.2643246425,
+            "latitude": 23.1500769765
+        }],
+        [{
+                "markType": 4,
+                "markTypeName": "强制措施",
+                "markTime": 1508223608640,
+                "markDesc": "我是描述",
+                "longitude": 113.2689246425,
+                "latitude": 23.1530769765
+            },
+            {
+                "markType": 3,
+                "markTypeName": "非现场处罚",
+                "markTime": 1508228408640,
+                "markDesc": "我是描述",
+                "longitude": 113.2610246425,
+                "latitude": 23.1519769765
+            },
+            {
+                "markType": 5,
+                "markTypeName": "接处警",
+                "markTime": 1508263108640,
+                "markDesc": "我是描述",
+                "longitude": 113.2667246425,
+                "latitude": 23.1592769765
+            }
+        ],
+        [{
+            "markType": 1,
+            "markTypeName": "事故处理",
+            "markTime": 1508223108640,
+            "markDesc": "我是描述",
+            "longitude": 113.2643246425,
+            "latitude": 23.1500769765
+        }],
+        [{
+                "markType": 5,
+                "markTypeName": "接处警",
+                "markTime": 1508223708640,
+                "markDesc": "我是描述",
+                "longitude": 113.2698246425,
+                "latitude": 23.1564769765
+            },
+            {
+                "markType": 3,
+                "markTypeName": "非现场处罚",
+                "markTime": 1508228408640,
+                "markDesc": "我是描述",
+                "longitude": 113.2630246425,
+                "latitude": 23.1509769765
+            }
+        ],
+        []
+    ],
+    [
+        [{
+                "markType": 1,
+                "markTypeName": "事故处理",
+                "markTime": 1508223108640,
+                "markDesc": "我是描述",
+                "longitude": 113.2693246420,
+                "latitude": 23.1520769760
+            },
+            {
+                "markType": 3,
+                "markTypeName": "非现场处罚",
+                "markTime": 1508223408640,
+                "markDesc": "我是描述",
+                "longitude": 113.2643246425,
+                "latitude": 23.1500769765
+            },
+            {
+                "markType": 5,
+                "markTypeName": "接处警",
+                "markTime": 1508263108640,
+                "markDesc": "我是描述",
+                "longitude": 113.2613246429,
+                "latitude": 23.1580769769
+            },
+            {
+                "markType": 1,
+                "markTypeName": "事故处理",
+                "markTime": 1508223108640,
+                "markDesc": "我是描述",
+                "longitude": 113.2503246425,
+                "latitude": 23.1550769765
+            }
+        ],
+        [{
+                "markType": 1,
+                "markTypeName": "事故处理",
+                "markTime": 1508223108640,
+                "markDesc": "我是描述",
+                "longitude": 113.2643246425,
+                "latitude": 23.1500769765
+            },
+            {
+                "markType": 1,
+                "markTypeName": "事故处理",
+                "markTime": 1508223108640,
+                "markDesc": "我是描述",
+                "longitude": 113.2693246420,
+                "latitude": 23.1520769760
+            },
+            {
+                "markType": 3,
+                "markTypeName": "非现场处罚",
+                "markTime": 1508223408640,
+                "markDesc": "我是描述",
+                "longitude": 113.2643246425,
+                "latitude": 23.1500769765
+            },
+            {
+                "markType": 5,
+                "markTypeName": "接处警",
+                "markTime": 1508263108640,
+                "markDesc": "我是描述",
+                "longitude": 113.2613246429,
+                "latitude": 23.1580769769
+            }
+        ],
+        [{
+                "markType": 4,
+                "markTypeName": "强制措施",
+                "markTime": 1508223608640,
+                "markDesc": "我是描述",
+                "longitude": 113.2689246425,
+                "latitude": 23.1530769765
+            },
+            {
+                "markType": 3,
+                "markTypeName": "非现场处罚",
+                "markTime": 1508228408640,
+                "markDesc": "我是描述",
+                "longitude": 113.2610246425,
+                "latitude": 23.1519769765
+            },
+            {
+                "markType": 5,
+                "markTypeName": "接处警",
+                "markTime": 1508263108640,
+                "markDesc": "我是描述",
+                "longitude": 113.2667246425,
+                "latitude": 23.1592769765
+            },
+            {
+                "markType": 1,
+                "markTypeName": "事故处理",
+                "markTime": 1508223108640,
+                "markDesc": "我是描述",
+                "longitude": 113.2643246425,
+                "latitude": 23.1500769765
+            }
+        ],
+        [{
+                "markType": 1,
+                "markTypeName": "事故处理",
+                "markTime": 1508223108640,
+                "markDesc": "我是描述",
+                "longitude": 113.2643246425,
+                "latitude": 23.1500769765
+            },
+            {
+                "markType": 5,
+                "markTypeName": "接处警",
+                "markTime": 1508223708640,
+                "markDesc": "我是描述",
+                "longitude": 113.2698246425,
+                "latitude": 23.1564769765
+            },
+            {
+                "markType": 3,
+                "markTypeName": "非现场处罚",
+                "markTime": 1508228408640,
+                "markDesc": "我是描述",
+                "longitude": 113.2630246425,
+                "latitude": 23.1509769765
+            }
+        ],
+        [{
+                "markType": 5,
+                "markTypeName": "接处警",
+                "markTime": 1508223708640,
+                "markDesc": "我是描述",
+                "longitude": 113.2698246425,
+                "latitude": 23.1564769765
+            },
+            {
+                "markType": 3,
+                "markTypeName": "非现场处罚",
+                "markTime": 1508228408640,
+                "markDesc": "我是描述",
+                "longitude": 113.2630246425,
+                "latitude": 23.1509769765
+            },
+            {
+                "markType": 1,
+                "markTypeName": "事故处理",
+                "markTime": 1508223108640,
+                "markDesc": "我是描述",
+                "longitude": 113.2643246425,
+                "latitude": 23.1500769765
+            }
+        ],
+        [{
+            "markType": 3,
+            "markTypeName": "非现场处罚",
+            "markTime": 1508228408640,
+            "markDesc": "我是描述",
+            "longitude": 113.2630246425,
+            "latitude": 23.1509769765
+        }]
+    ]
+]

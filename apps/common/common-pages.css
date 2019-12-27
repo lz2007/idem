@@ -1,0 +1,65 @@
+/* 公共分页 */
+.com-pages {
+    position: absolute;
+    right: 8px;
+    bottom: 0px;
+    color: #536b82;
+}
+
+.com-pages span.btn {
+    background: #0078d7;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 0;
+}
+
+.com-pages span.btn:hover {
+    background: #0057a1;
+}
+
+.com-pages .btn.disabeld {
+    cursor: not-allowed;
+    background: #d4d7d9;
+}
+
+.com-pages .btn.disabeld:hover {
+    background: #d4d7d9;
+}
+
+.com-pages button:hover,
+.com-pages button:focus {
+    color: #fff;
+    background: #0A5DA5;
+}
+
+.com-pages .prev {
+    margin: 0 8px;
+}
+
+.com-pages .ep {
+    margin: 0 0 0 8px;
+}
+
+.com-pages .hp {
+    margin: 0 0 0 8px;
+}
+
+.com-pages a {
+    margin-right: 8px;
+    color: #0A5DA5;
+}
+
+.com-pages.pagesEN span.btn {
+    background: none;
+    color: #0053ba;
+}
+
+.com-pages.pagesEN span.btn:active {
+    box-shadow: none !important;
+}
+
+.com-pages.pagesEN .btn.disabeld {
+    background: none;
+    color: #b3b3b3;
+}

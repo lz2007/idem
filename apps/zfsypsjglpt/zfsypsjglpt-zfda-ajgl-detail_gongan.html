@@ -1,0 +1,421 @@
+<template>
+    <div class="ajgl-container">
+        <div class="ajgl-ck-head">
+            <img :if="checkLooking" class="ck-head" src="/static/image/zfda-ajgl-ck/filemt.png?__sprite">
+            <span :attr="{title: @checkLooking}">{{@checkLooking}}</span>
+            <button class="ajgl-back" :click="ajgl_back">返回</button>
+        </div>
+        <div style="width:100%;height:1px;margin:1px auto;padding:0px;background-color:#0078d7;"></div>
+        <div class="ajgl-ck-mid">
+            <div class="col-md-7 col-xs-3 player" :loading="@loading">
+                <div class="jqgl-ck-mid-img" :if="@imgff">
+                    <ms-pic-player :widget="{src: @src, playerID:'plIMG', preview_w:'300', preview_h:'250'}"></ms-pic-player>
+                </div>
+                <div class="outDateMedia">文件已过期</div>
+                <div class="finishDelete">已被删除关联</div>
+                <div class="ajgl-object" id="ocxPlayer" :if="@ocxPlayer">
+                    <!-- <ms-gm-webplayer :widget="{src: @video_url, playerID: 'ocxp'}"></ms-gm-webplayer>
+                     -->
+                    <!-- <iframe src="/webplayer.html" width="100%" height="500" id="ply" name="gm_name" marginheight="0" marginwidth="0" frameborder="0"></iframe> -->
+                    <ms-player :widget="{src: @video_url, ajbh:@ajgl_ajbh, special_id:'ply', media_type:@media_type, player_width:@web_width, player_height:@web_height, player_left:@web_left, player_top:@web_top, play_status:@play_status,dialog_status:@dialog_status}"></ms-player>
+                </div>
+            </div>
+            <div class="col-md-5 col-xs-3 glmt">
+                <div class="glmt-title">
+                    <span>关联媒体</span>
+                </div>
+
+                <!-- <div class="glmt-type">
+                    <button ms-class="[@jq_clickClass]">接处警</button>
+                    <button ms-class="[@jq_clickClass]" :click="@glmt_pzzz" :if="@pzzzStatus">盘证制作</button>
+                    <button ms-class="[@cj_clickClass]" :click="@glmt_cj">处警</button>
+                </div> -->
+
+                <!-- 按钮 -start -->
+                <div class="glmt-type">
+                    <button :click="clickGlmtType(0)" :class="jq_clickClass">接处警</button>
+                    <button ms-class="[@jq_clickClass]" :click="@glmt_pzzz" :if="@pzzzStatus">盘证制作</button>
+                    <button :click="clickGlmtType(1)" :class="cj_clickClass">轨迹定位</button>
+                </div>
+                <!-- 按钮 -end -->
+
+                <div class="glmt-jj-content" ms-if="@glmt_jq_show">
+                    <div class="noDataInfo" ms-visible="@jq_nodata">暂无数据</div>
+                    <div class="glmt-jj-div" ms-for="(key,el) in @jq_data" :click="@playFile">
+                        <div class="glmt-jj-inline firtmtinfo">
+
+                            <ms-checkbox :attr="{name: @el.rid}" class="glmt-checkbox" :widget="{onChange:@checkOne, checked:@el.checked}"></ms-checkbox>
+                            <img :attr="{name: @el.rid}" class="glmt-img" src="/static/image/zfda-ajgl-ck/man.png?__sprite">
+                            <span :attr="{name: @el.rid,type: @el.type, path: @el.path}">{{@el.userName}}
+                                <span class="innerSpan">({{@el.userCode}})</span>
+                            </span>
+                            <!-- <img :attr="{name: @el.rid}" :click="@toggleMt" class="zkCtrl" src="/static/image/zfda-ajgl-ck/wzk.png?__sprite"> -->
+                        </div>
+                        <div style="padding-left: 27px;white-space: nowrap;">
+                            <div class="glmt-jj-inline jj-inline-div cmspan ajgljj">
+                                <span>拍摄民警：</span>
+                                <span class="cmspan_prop"><span>{{el.userName | checkNull}}({{el.userCode |
+                                        checkNull}})</span></span>
+                            </div>
+                            <div class="glmt-jj-inline jj-inline-div cmspan ajgljj">
+                                <span>拍摄时间：</span>
+                                <span class="cmspan_prop"><span>{{el.startTime | checkNull}}</span></span>
+                            </div>
+                            <div class="glmt-jj-inline jj-inline-div cmspan ajgljj">
+                                <span>拍摄时长：</span>
+                                <span class="cmspan_prop"><span>{{el.duration | checkNull}}</span></span>
+                            </div>
+                        </div>
+                        <div class="mtsecondpart" :visible="@el.toggle">
+                            <div style="width:90%;height:1px;margin:1px auto;padding:0px;background-color:#e0e7ec;"></div>
+                            <div class="glmt-jj-inline jj-inline-div">
+                                <div class="inlineSpan">
+                                    <span>民警岗位:</span>
+                                    <span>{{el.jobType | checkNull}}</span>
+                                </div>
+                                <div class="inlineSpan">
+                                    <span>存储位置:</span>
+                                    <span>{{el.path | checkNull}}</span>
+                                </div>
+                            </div>
+                            <div class="glmt-jj-inline jj-inline-div">
+                                <div class="inlineSpan">
+                                    <span>拍摄民警:</span>
+                                    <span>{{el.userName | checkNull}}({{@el.userCode | checkNull}})</span>
+                                </div>
+                                <div class="inlineSpan">
+                                    <span>关键媒体:</span>
+                                    <span>{{el.keyFile | checkNull}}</span>
+                                </div>
+                            </div>
+                            <div class="glmt-jj-inline jj-inline-div">
+                                <div class="inlineSpan">
+                                    <span>拍摄时间:</span>
+                                    <span>{{el.startTime | checkNull}}</span>
+                                </div>
+                                <div class="inlineSpan">
+                                    <span>存储天数:</span>
+                                    <span>{{el.saveTime | checkNull}}</span>
+                                </div>
+                            </div>
+                            <div class="glmt-jj-inline jj-inline-div">
+                                <div class="inlineSpan">
+                                    <span>导入时间:</span>
+                                    <span>{{el.importTime | checkNull}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 轨迹定位 -start -->
+                <div class="glmt-cj-content" :visible="@glmt_map_Show" style="height: 424px;">
+                    <ms-gjdw-map :widget="{ajaxData: @mapAjaxData, mapShow: @glmt_map_Show}"></ms-gjdw-map>
+                </div>
+                <!-- 轨迹定位 -end -->
+
+                <div class="gljq" ms-if="@glmt_cj_show">
+                    <div>
+                        <div class="gljq_inline">
+                            <span>警情编号：</span>
+                            <ms-select :widget="{onChange:@viewJq, value:[@typeOptions.length > 0 ? @typeOptions[0].value: ''], displayValue:'暂无关联警情', options:@typeOptions}">
+                            </ms-select>
+                        </div>
+                        <div class="gljq_inline">
+                            <!-- <span>报警时间：{{@gljq_info.bjsj | formatDateKP}}</span> -->
+                            <span>报警时间：</span>
+                            <span class="innerSpan  commonSpan">
+                                <div>{{@gljq_info.bjsj | formatDate}}</div>
+                            </span>
+                            <label class="all-info" :click="@show_allInfo">详细</label>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="gljq_inline">
+                            <!-- <span>警情类别：{{@gljq_info.jqlbmc | checkNull}}</span> -->
+
+                            <span>警情类别：</span>
+                            <span class="innerSpan  commonSpan">
+                                <div>{{@gljq_info.jqlbmc | checkNull}}</div>
+                            </span>
+                        </div>
+                        <div class="gljq_inline">
+                            <span>报警内容：</span>
+                            <span class="innerSpan  commonSpan">
+                                <div>{{@gljq_info.bjnr | checkNull}}</div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glmt-cj-content" ms-if="@glmt_cj_show">
+                    <!-- <div class="gljq">
+                        <div>
+                            <div class="gljq_inline">
+                                <span>警情编号：</span>
+                                <ms-select :click="@clearPo" :widget="{onChange:@viewJq, value:[@typeOptions.length > 0 ? @typeOptions[0].value: ''], displayValue:'暂无关联警情', options:@typeOptions}">
+                                </ms-select>
+                            </div>
+                            <div class="gljq_inline">
+                                <span>报警时间：{{@gljq_info.bjsj | formatDateKP}}</span>
+                                <label class="all-info" :click="@show_allInfo">详细</label>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="gljq_inline">
+                                <span>警情类别：{{@gljq_info.jqlbmc | checkNull}}</span>
+                            </div>
+                            <div class="gljq_inline">
+                                <span>报警内容：{{@gljq_info.bjnr | checkNull}}</span>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="noDataInfo" ms-visible="@cj_nodata">暂无数据</div>
+                    <div class="glmt-jj-div" ms-for="(key,el) in @cj_data" :click="@playFile">
+                        <div class="glmt-jj-inline firtmtinfo">
+                            <ms-checkbox :click="@sp | stop" :attr="{name: @el.rid}" class="glmt-checkbox" :widget="{onChange:@checkOne, checked:@el.checked}"></ms-checkbox>
+                            <!-- <img :attr="{name: @el.rid}" class="glmt-img" src="/static/image/zfda-ajgl-ck/man.png?__sprite"> -->
+                            <span :attr="{rid: @el.rid,type: @el.type, path: @el.path,userName:el.userName,userCode:el.userCode,name:el.name}">文件名:
+                                <span class="innerSpan">({{@el.fileName}})</span>
+                            </span>
+                            <!-- <img :attr="{name: @el.rid}" :click="@toggleMt" class="zkCtrl" src="/static/image/zfda-ajgl-ck/wzk.png?__sprite"> -->
+                        </div>
+                        <div style="padding-left: 27px;white-space: nowrap;">
+                            <div class="glmt-jj-inline jj-inline-div cmspan ajgljj">
+                                <span>拍摄民警：</span>
+                                <span class="cmspan_prop"><span>{{el.userName | checkNull}}({{el.userCode |
+                                        checkNull}})</span></span>
+                            </div>
+                            <div class="glmt-jj-inline jj-inline-div cmspan ajgljj">
+                                <span>拍摄时间：</span>
+                                <span class="cmspan_prop"><span>{{el.startTime | checkNull}}</span></span>
+                            </div>
+                            <div class="glmt-jj-inline jj-inline-div cmspan ajgljj">
+                                <span>拍摄时长：</span>
+                                <span class="cmspan_prop"><span>{{el.duration | checkNull}}</span></span>
+                            </div>
+                        </div>
+                        <div class="mtsecondpart" :visible="@el.toggle">
+                            <div style="width:90%;height:1px;margin:1px auto;padding:0px;background-color:#e0e7ec;"></div>
+                            <div class="glmt-jj-inline jj-inline-div">
+                                <div class="inlineSpan">
+                                    <span>民警岗位:</span>
+                                    <span>{{el.jobType | checkNull}}</span>
+                                </div>
+                                <div class="inlineSpan">
+                                    <span>存储位置:</span>
+                                    <span>{{el.path | checkNull}}</span>
+                                </div>
+                            </div>
+                            <div class="glmt-jj-inline jj-inline-div">
+                                <div class="inlineSpan">
+                                    <span>拍摄民警:</span>
+                                    <span>{{@el.userName | checkNull}}({{@el.userCode | checkNull}})</span>
+                                </div>
+                                <div class="inlineSpan">
+                                    <span>关键媒体:</span>
+                                    <span>{{el.keyFile | checkNull}}</span>
+                                </div>
+                            </div>
+                            <div class="glmt-jj-inline jj-inline-div">
+                                <div class="inlineSpan">
+                                    <span>拍摄时间:</span>
+                                    <span>{{el.startTime | checkNull}}</span>
+                                </div>
+                                <div class="inlineSpan">
+                                    <span>存储天数:</span>
+                                    <span>{{el.saveTime | checkNull}}</span>
+                                </div>
+                            </div>
+                            <div class="glmt-jj-inline jj-inline-div">
+                                <div class="inlineSpan">
+                                    <span>导入时间:</span>
+                                    <span>{{el.importTime | checkNull}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glmt-operate" ms-if="@glmt_cj_show">
+                    <!-- <input class="checkAllBox" type="checkbox" ms-duplex-checked="@allchecked" data-duplex-changed="@checkAll" />全选 -->
+                    <ms-checkbox class="checkAllBox" :widget="{onChange:@checkAll, checked:@allchecked}"></ms-checkbox>
+                    <span>共有{{@glmt_total}}条关联媒体，已选择{{@glmt_selected}}条</span>
+
+                    <!-- <button :if="@authority.CHECK_SCGL" class="deletegl" :click="@delgl">删除关联</button>
+                        <button :if="@authority.CHECK_TJGL" class="addgl" :click="@tjgl">添加关联</button> -->
+                    <button class="download" :if="@authority.CHECK_DOWNLOAD" :click="@download">下载</button>
+                    <br style="clear:both">
+                </div>
+
+            </div>
+            <br style="clear: both">
+        </div>
+        <div class="ajgl-ck-footer">
+            <div class="jbxx-type">
+                <button ms-class="[@jbxx_clickClass]" :click="@jbxx">案件信息</button>
+                <button ms-class="[@cjxx_clickClass]" :click="@cjxx">媒体信息</button>
+            </div>
+            <div class="jbxx" ms-if="@jbxx_show" :controller="ajgl_jbxx_info">
+                <div class="jbxx-inline" style="margin-top:0px">
+                    <span>
+                        <b>案件编号：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.ajbh | checkNull}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>受理单位：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.sldwmc | checkNull}}</div>
+                        </span>
+                    </span>
+                </div>
+                <div class="jbxx-inline">
+                    <span>
+                        <b>案件类别：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.ajlb | checkNull}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>办案人员：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.zbmjxm | checkNull}}({{@infomation.zbr | checkNull}})</div>
+                        </span>
+                    </span>
+                </div>
+                <div class="jbxx-inline">
+                    <span>
+                        <b>案件名称：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.ajmc | checkNull}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>涉案人员：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.sary | checkNull}}</div>
+                        </span>
+                    </span>
+                </div>
+                <div class="jbxx-inline">
+                    <span>
+                        <b>案发时间：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.afsj | checkNull}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>案发事件：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.jyaq | checkNull}}</div>
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="cjxx" ms-if="@cjxx_show" :controller="ajgl_cjxx_info">
+                <div class="jbxx-inline" style="margin-top:0px">
+                    <span>
+                        <b>岗位名称：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.jobType | checkNull}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>存储位置：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.path | checkNull}}</div>
+                        </span>
+                    </span>
+                </div>
+                <div class="jbxx-inline">
+                    <span>
+                        <b>拍摄民警：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{infomation.userName}}({{@infomation.userCode | checkNull}})</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>关联媒体：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.keyFile | checkNull}}</div>
+                        </span>
+                    </span>
+                </div>
+                <div class="jbxx-inline">
+                    <span>
+                        <b>拍摄时间：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.startTime | checkNull}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>存储天数：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.saveTime | checkNull}}</div>
+                        </span>
+                    </span>
+                </div>
+                <div class="jbxx-inline">
+                    <span>
+                        <b>导入时间：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.importTime | checkNull}}</div>
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="ajgl-allinfo">
+            <ms-dialog :widget="{$innerVm: 'ajgl-allinfo', show: @show_info, okText: '确认', cancelText: '关闭',isMove:true,width:'980', height:'400',onCancel: @cancelInfo,move_return:@move_return}">
+                <div slot="body" ms-skip>
+
+                    <div class="allinfo-dialog" :controller="allinfo_body">
+                        <div>
+                            <span>警情编号：{{@allInfomation.jqbh | checkNull}}</span>
+                            <span>报警时间：{{@allInfomation.bjsj | formatDate}}</span>
+                            <span>事发地点：{{@allInfomation.sfdd | checkNull}}</span>
+                        </div>
+                        <div>
+                            <span>报警人：{{@allInfomation.bjrxm | checkNull}}</span>
+                            <span>报警电话：{{@allInfomation.bjrdh | checkNull}}</span>
+                            <span>报警内容：{{@allInfomation.bjnr | checkNull}}</span>
+                        </div>
+                        <div>
+                            <span>到达现场时间：{{@allInfomation.ddxcsj}}</span>
+                            <span>处警人：{{@allInfomation.cjrxm | checkNull}}</span>
+                            <span>报警来源：{{@allInfomation.jlly | checkNull}}</span>
+                        </div>
+                        <div>
+                            <span>处警单位：{{@allInfomation.cjdwmc | checkNull}}</span>
+                            <span>事发时间：{{@allInfomation.sfsj | formatDate}}</span>
+                            <span>处警时间：{{@allInfomation.cjsj}}</span>
+                        </div>
+                        <div>
+
+                            <span>警情类别：{{@allInfomation.jqlbmc | checkNull}}</span>
+                            <span>民警意见：{{@allInfomation.mjyj | checkNull}}</span>
+                        </div>
+                    </div>
+                </div>
+            </ms-dialog>
+        </div>
+        <div class="back-confirm">
+            <ms-dialog :widget="{$innerVm: 'back-confirm', show: @back_confirm, okText: '确认', isMove:true,cancelText: '取消', onOk: @goback,width:'299', height:'180',onCancel: @handleCancel_confirm,move_return:@move_return2}">
+                <div slot="body" ms-skip>
+
+                    <div class="delete-dialog">
+                        <span>是否确定离开此页面？</span>
+                    </div>
+                </div>
+            </ms-dialog>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,161 @@
+<template>
+    <div class="ms-canvas">
+        <div class="ms-canvas-screen" :css="{height:(@dyImgShow ? @height+112:@height+12),width:'100%'}">
+            <img :if="@isShowText && !@dyImgShow"  ms-attr="{id:@canvasId+'scream',src:@cUrl}" style="border: 1px solid #f2f2f2;vertical-align: top;margin-top: 10px" :css="{height:@height,width:@width}">
+            <canvas :class="[@canvasId]" style="border: 1px solid #f2f2f2;vertical-align: top;margin-top: 10px" :css="{display:((@dyImgShow || @isShowText )? 'none':'inline-block')}" ms-attr="{id:@canvasId}"></canvas>
+            <img :if="@dyImgShow" ms-attr="{src:@dyImgUrl}" :css="{height:(@height+100),width:'100%'}" style="border: 1px solid #f2f2f2;vertical-align: top;margin-top: 10px">
+            <div :visible="@isShowText" ms-attr="{id:@canvasId+'textareaDiv'}" :css="@textCss" class="text"><textarea ms-attr="{id:@canvasId+'textarea'}" :css="@areaCss"></textarea></div>
+            <!-- <div :if="@isShowText" tabindex="0" class="textAble" ms-attr="{id:@canvasId+'textAble'}" contenteditable="true" :focus="onFocus()" :blur="onBlur()"></div> -->
+            <ul class="canvas-opt" :css="{left:(@width-160)+'px',display:@display}">
+                <li :click="onClick('rectangle')" :hover="handle('rectangle')" title="矩形">
+                    <img :if="!@rectangle" src="/static/image/canvas_img/rectangle.png" />
+                    <img :if="@rectangle" src="/static/image/canvas_img/rectangle-over.png" />
+                </li>
+                <li :click="onClick('circle')" :hover="handle('circle')" title="画圆">
+                    <img :if="!@circle" src="/static/image/canvas_img/circle.png" />
+                    <img :if="@circle" src="/static/image/canvas_img/circle-over.png" />
+                </li>
+                <li :click="onClick('arrow')" :hover="handle('arrow')" title="箭头">
+                    <img :if="!@arrow" src="/static/image/canvas_img/arrow.png" />
+                    <img :if="@arrow" src="/static/image/canvas_img/arrow-over.png" />
+                </li>
+                <li :click="onClick('text')" :hover="handle('arrow')" title="文字">
+                    <img :if="!@text" src="/static/image/canvas_img/text.png" />
+                    <img :if="@text" src="/static/image/canvas_img/text-over.png" />
+                </li>
+                <!-- <li :click="onClick('save')" :hover="handle('arrow')" title="保存">
+                    <img  src="/static/image/canvas_img/save.png" />
+                </li> -->
+                <li :click="onClick('return')" :hover="handle('arrow')" title="返回">
+                    <img src="/static/image/canvas_img/return.png" />
+                    <!-- <img src="/static/image/canvas_img/return-over.png" /> -->
+                </li>
+            </ul>
+            <ul :visible="@textStyleShow"  class="textStyle-select" :css="{left:(@width-280)+'px'}">
+                <li class="li font-family">
+                    <ms-select id="font_family" :widget="{value:@fontFamilySelect,panelClassName:@canvasId+'-panel-family',onChange:@handleFamilyChange}">
+                        <ms-select-option :widget="{value:'SimSun'}">宋体</ms-select-option>
+                        <ms-select-option :widget="{value:'SimHei'}">黑体</ms-select-option>
+                        <ms-select-option :widget="{value:'Microsoft YaHei'}">微软雅黑</ms-select-option>
+                        <ms-select-option :widget="{value:'Microsoft JhengHei'}">微软正黑体</ms-select-option>
+                        <ms-select-option :widget="{value:'NSimSun'}">新宋体</ms-select-option>
+                        <ms-select-option :widget="{value:'PMingLiU'}">新细明体</ms-select-option>
+                        <ms-select-option :widget="{value:'MingLiU'}">细明体</ms-select-option>
+                        <ms-select-option :widget="{value:'DFKai'}">标楷体</ms-select-option>
+                        <ms-select-option :widget="{value:'FangSong'}">仿宋</ms-select-option>
+                        <ms-select-option :widget="{value:'KaiTi'}">楷体</ms-select-option>
+                        <ms-select-option :widget="{value:'FangSong_GB2312'}">仿宋_GB2312</ms-select-option>
+                        <ms-select-option :widget="{value:'KaiTi_GB2312'}">楷体_GB2312</ms-select-option>
+                    </ms-select>
+                </li>
+                <li class="li font-size">
+                    <ms-select id="font-size" :widget="{value:@fontSizeSelect,panelClassName:@canvasId+'-panel-size',onChange:@handleSizeChange}">
+                        <ms-select-option :widget="{value:'12'}">12</ms-select-option>
+                        <ms-select-option :widget="{value:'14'}">14</ms-select-option>
+                        <ms-select-option :widget="{value:'16'}">16</ms-select-option>
+                        <ms-select-option :widget="{value:'18'}">18</ms-select-option>
+                        <!-- <ms-select-option :widget="{value:'22'}">22</ms-select-option> -->
+                        <ms-select-option :widget="{value:'24'}">24</ms-select-option>
+                        <ms-select-option :widget="{value:'36'}">36</ms-select-option>
+                    </ms-select>
+                </li>
+                <li class="li font-bold" :click="@onClick('bold')" :class="[@isBold ? 'boldActive':'']">
+                    <span class="fa fa-bold" title="加粗"></span>
+                </li>
+                <li class="li font-italic" :click="@onClick('italic')" :class="[@isItalic ? 'italicActive':'']">
+                    <span class="fa fa-italic" title="斜体"></span>
+                </li>
+                <li class="li font-color">
+                    <input type="color" ms-attr="{id:@canvasId+'canvasColor'}">
+                </li>
+            </ul>
+            <div :visible=="@rectangleStyleShow" class="rectangle-color" :css="{left:(@width-230)+'px'}">
+                <div class="c rectangle-show">
+                    <img ms-attr="{src:@rectangleUrl}"/>
+                </div>
+                <div class="c rectangle-border" id="rectangleBorder">
+                    <div class="b activeBorder" :click="@rectangleBorder('1')">
+                        <div class="b-1"></div>
+                    </div>
+                    <div class="b" :click="@rectangleBorder('2')">
+                        <div class="b-2"></div>
+                    </div>
+                    <div class="b" :click="@rectangleBorder('3')">
+                        <div class="b-3"></div>
+                    </div>
+                </div>
+                <div class="c rectangle-c">
+                    <input type="color" ms-attr="{id:@canvasId+'rectangleColor'}" >
+                </div>
+            </div>
+            <div :visible=="@circleStyleShow" class="rectangle-color" :css="{left:(@width-230)+'px'}">
+                <div class="c rectangle-show">
+                    <img ms-attr="{src:@circleUrl}"/>
+                </div>
+                <div class="c rectangle-border" id="circleBorder">
+                    <div class="b activeBorder" :click="@circleBorder('1')">
+                        <div class="b-1"></div>
+                    </div>
+                    <div class="b" :click="@circleBorder('2')">
+                        <div class="b-2"></div>
+                    </div>
+                    <div class="b" :click="@circleBorder('3')">
+                        <div class="b-3"></div>
+                    </div>
+                </div>
+                <div class="c rectangle-c">
+                    <input type="color" ms-attr="{id:@canvasId+'circleColor'}" >
+                </div>
+            </div>
+            <div :visible=="@arrowStyleShow" class="arrow-color" :css="{left:(@width-128)+'px'}">
+                <div class="c arrow-show">
+                    <img ms-attr="{src:@arrowUrl}"/>
+                </div>
+                <div class="c arrow-c">
+                    <input type="color" ms-attr="{id:@canvasId+'arrowColor'}">
+                </div>
+            </div>
+            <div ms-attr="{id:@canvasId+'labelText'}" style="color:black;line-height:1.2;white-space:nowrap;top:0px;left:0px;position:absolute;display:block;visibility:hidden;"></div>
+        </div>
+        <div :if="@wordShow" class="ms-canvas-word" :css="{width:@width+2,display:(@dyImgShow ? 'none':'block')}">
+            <div class="tpdy-jyaj">
+                <div class="jyaj"><span>简要案情：</span></div>
+                <div class="jyaj-textarea"><textarea class="" ms-attr="{value:@jyaq}"></textarea></div>
+            </div>
+            <div class="tpdy-xx">
+                <div class="bar rs">
+                    <span>办案人：</span>
+                    <span class="downline"></span>
+                </div>
+                <div class="jzr rs">
+                    <span>见证人：</span>
+                    <span class="downline"></span>
+                </div>
+                <div class="zzr rs">
+                    <span>指证人：</span>
+                    <span class="downline"></span>
+                </div>
+            </div>
+        </div>
+        <div :if="@wordShow" class="ms-canvas-word" :css="{width:'100%',display:(@dyImgShow ? 'block':'none')}">
+                <div class="tpdy-jyaj">
+                    <div class="jyaj"><span class="wordSpan">简要案情：</span></div>
+                    <div class="jyaj-textarea"><textarea class="" ms-attr="{value:@jyaq}"></textarea></div>
+                </div>
+                <div class="tpdy-xx">
+                    <div class="bar rs">
+                        <span class="wordSpan">办案人：</span>
+                        <span class="downline"></span>
+                    </div>
+                    <div class="jzr rs">
+                        <span class="wordSpan">见证人：</span>
+                        <span class="downline"></span>
+                    </div>
+                    <div class="zzr rs">
+                        <span class="wordSpan">指证人：</span>
+                        <span class="downline"></span>
+                    </div>
+                </div>
+            </div>    
+    </div>
+</template>

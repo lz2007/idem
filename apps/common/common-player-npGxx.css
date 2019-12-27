@@ -1,0 +1,210 @@
+#gxx_ocx {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.ocx_player {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 30px;
+}
+
+#gxx_ocx .update_web {
+    color: #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    padding: 8px;
+}
+
+.gxx_player_controll {
+    width: 100%;
+    height: 30px;
+    background-color: #000000;
+    position: absolute;
+    bottom: 0;
+}
+
+.gxx_player_controll a {
+    cursor: pointer;
+}
+
+.gxx_player_controll .play_speed {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    color: #358dcc;
+    padding-left: 5px;
+    font-size: 12px;
+}
+
+#ocx_playControll {
+    width: 305px;
+    height: 100%;
+    margin: 0 auto;
+    padding-top: 3px;
+}
+#ocx_playControll.audio-class {
+    width: 195px;
+}
+
+#ocx_playControll a {
+    margin-left: 15px;
+}
+
+#btn_pause {
+    display: none;
+}
+
+.gxx_player_controll .volume_control {
+    width: 145px;
+    height: 30px;
+    float: left;
+    margin-left: 5px;
+}
+
+.gxx_player_controll .volume_control .volume_progress {
+    width: 100px;
+    height: 30px;
+    margin-left: 10px;
+    float: left;
+    position: relative;
+}
+
+.gxx_player_controll .volume_control .v_white_line {
+    width: 95px;
+    height: 5px;
+    margin: 14px 0;
+    background-color: #676868;
+    position: absolute;
+    z-index: 1;
+}
+
+.gxx_player_controll .volume_control .v_blue_line {
+    width: 42px;
+    height: 5px;
+    margin: 14px 0;
+    background-color: #fff;
+    position: absolute;
+    z-index: 2;
+}
+
+.gxx_player_controll .volume_control .circle_span {
+    cursor: pointer;
+    color: #fff;
+    position: absolute;
+    top: 9px;
+    left: -6px;
+    z-index: 2;
+}
+
+.gxx_player_controll .volume_control .voice,
+.gxx_player_controll .volume_control .mute {
+    cursor: pointer;
+    display: block;
+    width: 22px;
+    height: 22px;
+    float: left;
+    margin-top: 3px;
+}
+
+.gxx_player_controll .volume_control .voice {
+    display: block;
+    background: url(/static/image/sszh-lxhf/sound.png?__sprite) no-repeat;
+}
+
+.gxx_player_controll .volume_control .mute {
+    display: none;
+    background: url(/static/image/sszh-lxhf/mute.png?__sprite) no-repeat;
+}
+
+.gxx_player_controll .volume_control .circle_span {
+    left: 42px;
+}
+
+.gxx_player_controll .function_key {
+    width: 70px;
+    height: 31px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding-top: 4px;
+}
+
+.gxx_player_controll .function_key a {
+    float: left;
+}
+
+.gxx_player_controll .function_key .downloadBtn {
+    margin-right: 22px;
+}
+
+.gxx_player_controll .function_key .downloadBtn img {
+    width: 22px;
+    height: 22px;
+}
+
+.player_dialog_class .modal-body {
+    color: #536b82;
+}
+
+.player_dialog_class .modal-footer {
+    padding-top: 0 !important;
+    border-top: 0 !important;
+}
+
+.player_dialog_class .bootbox-body span {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+}
+
+.player_dialog_class .modal-footer .btn-primary {
+    float: left;
+}
+
+.player_dialog_class .modal-footer .btn-default {
+    float: right;
+    margin-right: 5px !important;
+}
+
+.player_dialog_class.dialog_small .modal-footer .btn-primary {
+    display: none;
+}
+
+.player_dialog_class.dialog_small .modal-footer .btn-default {
+    margin-right: 100px !important;
+    width: 80px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    padding: 0 !important;
+}
+
+.player_dialog_class.dialog_big .bootbox-body span {
+    text-align: left;
+    font-size: 14px;
+    margin: 4px 0;
+}
+
+.player_dialog_class.dialog_big .bootbox-body .tip-text {
+    font-size: 12px;
+}
+
+.player_dialog_class.dialog_big .bootbox-body .tip-text .fa-info-circle {
+    color: #E09E1F;
+    margin-right: 5px;
+}
+
+.player_dialog_class.dialog_big .modal-footer .btn-primary {
+    /* display: none; */
+    margin-left: 50px !important;
+}
+
+.player_dialog_class.dialog_big .modal-footer .btn-default {
+    margin-right: 50px !important;
+}

@@ -1,0 +1,80 @@
+<template>
+    <div class="tyywglpt tyyw-form-box tyyw-form-box-lxxzrw">
+        <!-- 顶部表单 begin -->
+        <div class="tyywglpt-search-box">
+            <xmp is="ms-form" :widget="{$form:@$searchForm,type:'search',inline:true}">
+                <ms-form-item :widget="{label: '部门:'}" :class="'form-item'" :css="{marginLeft: '16'}">
+                    <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'tree-select-wrap-1', getSelected:@getSelected, onChange:@handleTreeChange}"></ms-tree-selecting>
+                </ms-form-item>
+
+                <ms-form-item :widget="{label: '办案区:'}" :class="'form-item'">
+                    <ms-select :widget="{col:'comic'}">
+                        <ms-select-option :widget="{value:'no'}">不限</ms-select-option>
+                    </ms-select>
+                </ms-form-item>
+
+                <ms-form-item :widget="{label: '下载状态:'}" :class="'form-item'">
+                    <ms-select :widget="{col:'comic'}">
+                        <ms-select-option :widget="{value:'no'}">不限</ms-select-option>
+                        <ms-select-option :widget="{value:'success'}">成功</ms-select-option>
+                        <ms-select-option :widget="{value:'falid'}">失败</ms-select-option>
+                        <ms-select-option :widget="{value:'downing'}">正在下载</ms-select-option>
+                    </ms-select>
+                </ms-form-item>
+                <br />
+                <ms-form-item :widget="{label: '任务指派时间:'}" :class="['form-item', 'labelLg']">
+                    <ms-select :widget="{col:'comic'}">
+                        <ms-select-option :widget="{value:'no'}">不限</ms-select-option>
+                        <ms-select-option :widget="{value:'weekend'}">本周</ms-select-option>
+                        <ms-select-option :widget="{value:'month'}">本月</ms-select-option>
+                        <ms-select-option :widget="{value:'sometime'}">一段时间</ms-select-option>
+                    </ms-select>
+                </ms-form-item>
+
+                <button type="button" class="btn btn-query" :click="@search">查询</button>
+            </xmp>
+        </div>
+
+        <!-- 上传情况 begin -->
+        <!-- <div class="tyywglpt-tool-bar">
+                查询列表
+        </div>
+         -->
+        <!-- 表格数据begin -->
+        <div class="tyywglpt-list-panel">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <li class="col-4 first-item">序号</li>
+                    <li class="col-10">归属部门</li>
+                    <li class="col-10">办案区/功能室</li>
+                    <li class="col-10">案件编号/涉案人</li>
+                    <li class="col-5">下载速率</li>
+                    <li class="col-5">下载状态</li>
+                    <li class="col-8">录像时长</li>
+                    <li class="col-8">录像大小</li>
+                    <li class="col-15">任务指派时间</li>
+                    <li class="col-15">任务完成时间</li>
+                    <li class="col-10 last-item">下载错误原因</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@list.length == 0" class="list-null">暂无数据</li>
+                <li :for="($index, item) in @list">
+                    <div class="col-4 first-item">{{$index+1}}</div>
+                    <div class="col-10">{{@item.orgName | fillterEmpty}}</div>
+                    <div class="col-10">{{@item.orgName | fillterEmpty}}</div>
+                    <div class="col-10">{{@item.orgName | fillterEmpty}}</div>
+                    <div class="col-5">{{@item.orgName | fillterEmpty}}KB/S</div>
+                    <div class="col-5">{{@item.orgName | fillterEmpty}}KB/S</div>
+                    <div class="col-8">{{@item.orgName | fillterEmpty}}</div>
+                    <div class="col-8">{{@item.orgName | fillterEmpty}}</div>
+                    <div class="col-15">{{@item.orgName | fillterEmpty}}</div>
+                    <div class="col-15">{{@item.orgName | fillterEmpty}}</div>
+                    <div class="col-10">{{@item.orgName | fillterEmpty}}</div>
+                </li>
+            </ul>
+        </div>
+        <!-- 页码 -->
+        <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@onChangePage}"></ms-pages>
+    </div>
+</template>

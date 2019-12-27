@@ -1,0 +1,53 @@
+<template>
+    <div class="result-table">
+        <div class="black-box" :mouseup="dragEnd">
+            <div class="table-mask"></div>
+            <table cellspacing="0" cellpadding="0" class="result">
+                <colgroup :if="@isDoubleRow">
+                    <col :if="@needSelection" :css="{display : isHideSelectionTd ? 'none' : ''}" />
+                    <col :for="(index, ele) in columns" :class="[(@needSelection ?'col-'+(index + 2):'col-'+(index + 1))]" :css="{display : (ele.isInnerTable || ele.isHideTd) ? 'none' : ''}"
+                    />
+                </colgroup>
+                <tbody :mousemove="dragMove | prevent | throttle">
+                    <tr class="table-header" :mousemove="isDragFn | prevent | throttle" :mousedown="dragStart">
+                        <td :if="@needSelection" :visible="!@isHideSelectionTd" :class="[(needSelection ? 'col-1':'')]" :attr="{rowspan : @isDoubleRow ? '2' : '1'}">
+                            <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}"></ms-checkbox>
+                        </td>
+                        <td :for="(index, ele) in @columns" :if="!ele.isSecondRow" :visible="!ele.isHideTd " :attr="{ rowspan: ele.rowspan, colspan: ele.colspan, tdindex: index}"
+                            :class="[@needSelection ? (ele.isInnerTable ? ('inner-table col-' + (index + 2)) : ('col-' + (index + 2))) 
+                            : (ele.isInnerTable ? ('inner-class col-' + (index + 1)) : ('col-' + (index + 1)))]">
+                            <!-- <span> -->
+                            {{ele.title}}
+                            <!-- </span> -->
+                        </td>
+                    </tr>
+                    <tr :if="@isDoubleRow" class="table-second-header" :mousemove="isDragFn | prevent | throttle" :mousedown="dragStart">
+                        <td :for="(index, ele) in @columns" :if="ele.isSecondRow" :visible="!ele.isHideTd" :attr="{ rowspan: ele.rowspan, colspan: ele.colspan, tdindex: index}">
+                            <span>
+                                {{ele.title}}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="table-data" :for="($index, record) in @data">
+                        <td :if="@needSelection" :visible="!isHideSelectionTd">
+                            <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1,onChange:function(){@handleCheck(arguments[0].target.checked,record)}}"></ms-checkbox>
+                        </td>
+                        <td :for="col in columns" :if="!col.isInnerTable" :visible="!col.isHideTd" :mouseenter="@popover($event, col.isPopover)"
+                            :mouseleave="@hidePopover($event, col.isPopover)" ms-html="col.template">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="no-result-table" :if="!@data.length" :visible="!@loading">
+                <tr class="table-data no-list">
+                    <td>暂无数据</td>
+                </tr>
+
+            </table>
+            <div class="table-index-loading" :if="@loading ">
+                <span class="loadingSpan">结果加载中</span>
+            </div>
+        </div>
+    </div>
+</template>

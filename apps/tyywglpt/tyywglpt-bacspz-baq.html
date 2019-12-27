@@ -1,0 +1,76 @@
+<template>
+    <div class="bacspz-baq">
+        <div class="xzbaq">
+            <button class="btn" :class="@selectedRowsLength > 0 && 'disabled'" :click="@addbaq">新增办案区</button>
+        </div>
+        <div class="tyywglpt-list-panel" style="top: 150px;">
+            <ul class="tyywglpt-list-header">
+                <li class="col-5 first-item">
+                    <input type="checkbox" id="checkall" :duplex-checked="@checkAll" data-duplex-changed="@handleCheckAll($event)">
+                    <label for="checkall" :class="[@checkAll ? 'check_selected' : 'check_unselected']"></label>
+                </li>
+                <li class="col-10">序号</li>
+                <li class="col-15">操作</li>
+                <li class="col-20">办案区名称</li>
+                <li class="col-25">办案区归属单位</li>
+                <li class="col-15">关联摄像机</li>
+                <li class="col-10">办案区排序</li>
+            </ul>
+            <ul class="tyywglpt-list-content">
+                <li :if="@list.length == 0" class="list-null">暂无数据</li>
+                <li :for="($index, item) in @list">
+                    <div class="col-5 first-item">
+                        <input type="checkbox" :attr="{'id':$index}" :duplex-checked="item.checked" data-duplex-changed="@handleCheck($index,item,$event)">
+                        <label :attr="{'for':$index}" :class="[item.checked ? 'check_selected' : 'check_unselected']"></label>
+                    </div>
+                    <div class="col-10">{{((@current - 1) * @pageSize) + $index+1}}</div>
+                    <div class="col-15">
+                        <a class="oparate" :click="@handleModify(item)">修改</a>
+                        <a  class="oparate" :click="@handleDelete(item)">删除</a>
+                        <span :if="@authority.OPT_SHOW"> - </span>
+                    </div>
+                    <div class="col-20" :attr="{'title':item.name || ''}">{{@item.name | fillterEmpty}}</div>
+                    <div class="col-25" :attr="{'title':item.org || ''}">{{@item.org | fillterEmpty}}</div>
+                    <div class="col-15" :attr="{'title':item.canmera || ''}">{{@item.canmera | fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.sort || ''}">{{@item.sort | fillterEmpty}}</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="baqplsc">
+            <input class="btn btn-tool" :class="@selectedRowsLength < 1 && 'disabled'" type="button" value="批量删除" :click="@handleBatchDelete" />
+        </div>
+        <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent}"></ms-pages>
+
+        <!--新增修改办案区弹窗-->
+        <div :controller="baqmodal" class="baqmodal">
+            <xmp :widget="{is:'common-ms-modal', modalSelector:'#baqmodal' ,title:@titlename, modalWidth:340, modalHeight: 160, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="baqmodal">
+                    <div class="inlineArea">
+                        <label>办案区名称:&#12288;</label>
+                        <input class="form-control" type="text" :duplex="@name">
+                    </div>
+                    <div class="inlineArea">
+                        <label>办案区归属单位:&#12288;</label>
+                        <select class="form-control":duplex="@org">
+                            <option>国迈</option>
+                            <option>第三方</option>
+                        </select>
+                    </div>
+                    <div class="inlineArea">
+                        <label>办案区排序:&#12288;</label>
+                        <input type="text" class="form-control" :duplex="@number">
+                    </div>
+                </div>
+            </xmp>
+        </div>
+        <!-- 删除弹窗 -->
+        <div :controller="deletemodal" class="deletemodal">
+            <xmp :widget="{is:'common-ms-modal',modalSelector:'#baqdelete' ,modalWidth:300, modalHeight: 80, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="baqdelete">
+                    <p class="message">是否删除记录？</p>
+                </div>
+            </xmp>
+        </div>
+    </div>
+</template>

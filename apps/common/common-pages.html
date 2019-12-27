@@ -1,0 +1,25 @@
+<template>
+    <div>
+        <div class="com-pages" :if="@total!=0 && @languageSelect_pages">
+            <span class="cmp-pageSize">每页{{pageSize}}条</span>
+            <span class="cmp-total" :if="!@overLimit">，共{{total}}条记录</span>
+            <span class="cmp-limit" :if="@overLimit">，大于{{total}}条记录</span>
+            <span class="btn hp" :class="@current == 1 && 'disabeld'" :click="@homePage">首页</span>
+            <span class="btn prev" :class="@current == 1 && 'disabeld'" :click="@prevPage">上一页</span>
+            <a class="cmp-cp" href="javascript:void(0)">{{current}}/{{pageTotal}}</a>
+            <span class="btn next" :class="@current == @pageTotal && 'disabeld'" :click="@nextPage">下一页</span>
+            <span class="btn ep" :class="@current == @pageTotal && 'disabeld'" :click="@endPage">尾页</span>
+        </div>
+
+        <div class="com-pages pagesEN" :if="@total!=0 && !@languageSelect_pages">
+            <!-- <span class="cmp-pageSize">{{pageSize}} Per page</span> -->
+            <!-- <span class="cmp-total" :if="!@overLimit">, {{total}} records</span> -->
+            <!-- <span class="cmp-limit" :if="@overLimit">, more than {{total}} records</span> -->
+            <span class="btn hp" :class="@current == 1 && 'disabeld'" :click="@homePage">First</span>
+            <span class="btn prev" :class="@current == 1 && 'disabeld'" :click="@prevPage">Previous</span>
+            <a class="cmp-cp" href="javascript:void(0)">{{current}}/{{pageTotal}}</a>
+            <span class="btn next" :class="@current == @pageTotal && 'disabeld'" :click="@nextPage">Next</span>
+            <span class="btn ep" :class="@current == @pageTotal && 'disabeld'" :click="@endPage">Last</span>
+        </div>
+    </div>
+</template>

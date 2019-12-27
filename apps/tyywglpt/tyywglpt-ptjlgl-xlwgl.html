@@ -1,0 +1,40 @@
+<!-- 统一运维管理平台--平台级联管理-下联管理 -->
+<template>
+    <div class="tyywglpt tyywglpt-ptjlgl-xlwgl">
+        <!-- 按钮 -->
+        <div class="tyywglpt-tool-bar">
+            <div class="tyywglpt-tool-bar-inner">
+                <input type="button" value="添加" :click="@handleAdd" class="btn btn-tool" :class="@selectedRowsLength !== 0 && 'disabled'">
+                <input type="button" value="修改" :click="@handleModify" class="btn btn-tool" :class="@selectedRowsLength !== 1 && 'disabled'">
+                <input type="button" value="删除" :click="@handleDelete" class="btn btn-tool" :class="@selectedRowsLength < 1 && 'disabled'">
+                <input type="button" value="订阅管理" :click="@handleAccount" class="btn btn-tool" :class="@selectedRowsLength !== 1 && 'disabled'">
+            </div>
+        </div>
+
+        <!-- 表格 -->
+        <div class="ptjlgl-slwgl-table">
+            <ms-comtable :widget="{current:@pagination.current,pageSize:@pagination.pageSize,loading:@loading,data:@list,actions:@actions,onChange:selectChange,panelCss:{position: 'absolute',bottom: 60,top: 146,left: 8,right: 8}}">
+                <ms-comtable-header :widget="{dataIndex:'id',type:'selection',colwidth:'5%'}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'序号',type:'index',colwidth:'5%',popover:true}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'平台ID',dataIndex:'address',colwidth:'10%',popover:true}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'平台名称',dataIndex:'province',colwidth:'10%',isHide:false,popover:true}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'平台类型',dataIndex:'province',colwidth:'10%',isHide:false,popover:true}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'平台厂商',dataIndex:'province',colwidth:'10%',isHide:false,popover:true}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'平台版本',dataIndex:'province',colwidth:'10%',isHide:false,popover:true}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'对接协议',dataIndex:'province',colwidth:'10%',isHide:false,popover:true}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'平台地址',dataIndex:'province',colwidth:'10%',isHide:false,popover:true}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'视图启用',dataIndex:'province',colwidth:'10%',isHide:false,popover:true}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'平台说明',dataIndex:'province',colwidth:'10%',isHide:false,popover:true}"></ms-comtable-header>
+            </ms-comtable>
+        </div>
+
+        <!-- 批量删除 -->
+        <div class="bottom-tool-bar">
+            <input class="btn btn-tool" :class="[(!@checkedIsSource || @selectedRowsLength < 1) && 'disabled']" type="button"
+                value="批量删除" :click="@handleBatchDelete">
+        </div>
+
+        <!-- 分页 -->
+        <ms-pages :widget="{total:@pagination.total,pageSize:@pagination.pageSize,current:@pagination.current,getCurrent:@getCurrent}"></ms-pages>
+    </div>
+</template>

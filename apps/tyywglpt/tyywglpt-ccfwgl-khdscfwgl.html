@@ -1,0 +1,169 @@
+<template>
+    <article  class="khdscfwgl tyywglpt-ccfwgl">
+        <div  class="common-btn  queryTable">
+            <xmp :widget="{is:'ms-form',$form:@$form,inline:true}">
+                <ms-form-item :widget="{label:'归属机构:'}" :class="'form-item'">
+                    <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'tree-select-wrap-1', getSelectedValue:@getSelected,onChange:@handleTreeChange}"></ms-tree-selecting>
+                </ms-form-item>
+            </xmp>
+            <button   class="btn" :click="@querySearch()">查询</button>
+        </div>
+          <!--按钮组-->
+          <div class="ccfwgl-btn-group  common-btn">
+            <button type="button" :click="@handleAddClick()">添加</button>
+            <button type="button" :click="@handleDeleteClick()">删除</button>
+            <button type="button" :click="@handleMethodClick()" :class="{disabled:@btnDisabled}">存储策略</button>
+            <button type="button" :click="@handleAnalysisClick()" :class="{disabled:@btnDisabled}">存储分析</button>
+        </div>
+          <!--查看弹框-->
+          <div :controller="ccfwglLookDialog">
+            <ms-dialog :widget="{$innerVm: 'ccfwglLookDialog', show: @show, onCancel: @handleCancel, onOk: @handleOk,okText:'确定'}">
+                <div slot="body" ms-skip class="  commonDialog ccfwgl">
+                    <div class="row"><label for="">服务名称:</label><input type="text" class="form-control "  disabled  :duplex="@json.name"></div>
+                    <div class="row"><label for="">IP:</label><input type="text"  class="form-control" disabled :duplex="@json.ip"></div>
+                    <div  class="row"><label for="">归属机构:</label><input type="text"  class="form-control" disabled :duplex="@json.belong"></div>
+                    <div  class="row"><label for="">PORT:</label><input type="text"  class="form-control" disabled :duplex="@json.port"></div>
+                    <div  class="row"><label for="">账户:</label><input type="text"  class="form-control" disabled :duplex="@json.account"></div>
+                    <div  class="row"><label for="">密码:</label><input type="text"  class="form-control" disabled :duplex="@json.password"></div>
+                    <div class="path"><label for="">上传路径:</label><input type="text"  class="form-control" disabled :duplex="@json.uploadUrl"></div>
+                    <div class="path"><label for="">下载路径:</label><input type="text"  class="form-control" disabled :duplex="@json.downloadUrl"></div>
+                    <div class="path"><label for="">点播路径:</label><input type="text"  class="form-control" disabled :duplex="@json.pointPlayUrl"></div>
+                    <div class="clear"></div>
+                </div>
+            </ms-dialog>
+        </div>
+           <!--添加弹框-->
+           <div :controller="ccfwglAddDialog">
+            <ms-dialog :widget="{$innerVm: 'ccfwglAddDialog', show: @show, onCancel: @handleCancel, onOk: @handleOk,okText:'确定'}">
+                <div slot="body" ms-skip class=" commonDialog ccfwgl">
+                    <div class="row"><label for="">服务名称:</label><input type="text" class="form-control" :duplex="@json.name"></div>
+                    <div class="row"><label for="">IP:</label><input type="text"  class="form-control" :duplex="@json.ip"></div>
+                    <div class="row">
+                        <xmp :widget="{is:'ms-form',$form:@$form,inline:true}">
+                            <ms-form-item :widget="{label:'归属机构:'}" :class="'form-item'">
+                                <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'tree-select-wrap-2', getSelectedValue:@getSelectedValue}"></ms-tree-selecting>
+                            </ms-form-item>
+                        </xmp>  
+                    </div>
+                    <div  class="row"><label for="">PORT:</label><input type="text"  class="form-control" :duplex="@json.port"></div>
+                    <div  class="row"><label for="">账户:</label><input type="text"  class="form-control" :duplex="@json.account"></div>
+                    <div  class="row"><label for="">密码:</label><input type="text"  class="form-control" :duplex="@json.password"></div>
+                    <div class="path "><label for="">上传路径:</label><input type="text"  class="form-control" :duplex="@json.uploadUrl"></div>
+                    <div class="path "><label for="">下载路径:</label><input type="text"  class="form-control" :duplex="@json.downloadUrl"></div>
+                    <div class="path "><label for="">点播路径:</label><input type="text"  class="form-control" :duplex="@json.pointPlayUrl"></div>
+                    <div class="clear"></div>
+                </div>
+            </ms-dialog>
+        </div>
+          <!--修改弹框-->
+          <div :controller="ccfwglModifyDialog">
+            <ms-dialog :widget="{$innerVm: 'ccfwglModifyDialog', show: @show, onCancel: @handleCancel, onOk: @handleOk,okText:'确定'}">
+                <div slot="body" ms-skip class="commonDialog ccfwgl">
+                    <div class="row"><label for="">服务名称:</label><input type="text" class="form-control" :duplex="@json.name"></div>
+                    <div class="row"><label for="">IP:</label><input type="text"  class="form-control" :duplex="@json.ip"></div>
+                    <div class="row">
+                        <xmp :widget="{is:'ms-form',$form:@$form,inline:true}">
+                            <ms-form-item :widget="{label:'归属机构:'}" :class="'form-item'">
+                                <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'tree-select-wrap-2', getSelectedValue:@getSelectedValue}"></ms-tree-selecting>
+                            </ms-form-item>
+                        </xmp>  
+                    </div>
+                    <div  class="row"><label for="">PORT:</label><input type="text"  class="form-control" :duplex="@json.port"></div>
+                    <div  class="row"><label for="">账户:</label><input type="text"  class="form-control" :duplex="@json.account"></div>
+                    <div  class="row"><label for="">密码:</label><input type="text"  class="form-control" :duplex="@json.password"></div>
+                    <div class="path "><label for="">上传路径:</label><input type="text"  class="form-control" :duplex="@json.uploadUrl"></div>
+                    <div class="path "><label for="">下载路径:</label><input type="text"  class="form-control" :duplex="@json.downloadUrl"></div>
+                    <div class="path "><label for="">点播路径:</label><input type="text"  class="form-control" :duplex="@json.pointPlayUrl"></div>
+                    <div class="clear"></div>
+                </div>
+            </ms-dialog>
+        </div>
+          <!-- 删除弹框 -->
+          <div :controller="delete">
+            <ms-dialog :widget="{$innerVm: 'delete', show: @show, onCancel: @handleCancel, onOk: @handleOk,okText:@okText}">
+                <div slot="body" ms-skip>
+                    <div>确定删除&nbsp&nbsp{{deleteCount}}&nbsp&nbsp项吗？</div>
+                </div>
+            </ms-dialog>
+        </div>
+          <!--存储策略弹框-->
+          <div :controller="ccfwglMethodDialog">
+            <ms-dialog :widget="{$innerVm: 'ccfwglMethodDialog', show: @show, onCancel: @handleCancel, onOk: @handleOk,okText:'确定',size:'small'}">
+                <div slot="body" ms-skip class="commonDialog ccfwgl ">
+                    <div  class="methodDialog  form-group">
+                        <label for="">普通视音频存储期限:</label><input type="text" :duplex="@ordinaryVideo" class="form-control">&nbsp;&nbsp;天
+                        <label for="">执法视音频存储期限:</label><input type="text" :duplex="@markVideo" class="form-control">&nbsp;&nbsp;天
+                    </div>
+                </div>
+            </ms-dialog>
+        </div>
+         <!--列表-->
+         <!-- <div class="ccfwgl-table">
+            <table class="table table-bordered ">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" :duplex-checked="@checkAll" data-duplex-changed="@handleCheckAll($event)"></th>
+                        <th>操作</th>
+                        <th>服务名称</th>
+                        <th>IP</th>
+                        <th>PORT</th>
+                        <th>所属机构</th>
+                        <th>在线状态</th>
+                        <th>总容量</th>
+                        <th>剩余容量</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ms-for="($index,item) in @tableData"  :class="{'selected':item.active,'unselected':!item.active}">
+                        <td><input type="checkbox" :duplex-checked="item.checked" data-duplex-changed="@handleCheck($index,item,$event)"></td>
+                        <td><a href="javascript:void(0)" :click="@handleLookClick ($index,item)">查看</a><a href="javascript:void(0)"
+                                :click="@handleModifyClick ($index,item)">修改</a>
+                        </td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.ip}}</td>
+                        <td>{{item.port}}</td>
+                        <td>{{item.orgName}}</td>
+                        <td>{{item.status==1 ? online : offline}}</td>
+                        <td>{{item.totalCapacity}}</td>
+                        <td>{{item.remainCapacity}}</td>
+
+                    </tr>
+                    <tr :visible="@noData" ><td colspan="9">暂无数据</td></tr>
+                </tbody>
+            </table> -->
+            <div  class="ccfwgl-commom-table">
+            <ul  class="table-head">
+                    <li>    
+                            <span class="col-10"><input type="checkbox" :duplex-checked="@checkAll" data-duplex-changed="@handleCheckAll($event)"></span>
+                            <span class="col-10">服务名称</span>
+                            <span class="col-10">IP</span>
+                            <span class="col-10">PORT</span>
+                            <span class="col-10">所属机构</span>
+                            <span class="col-10">在线状态</span>
+                            <span class="col-10">总容量</span>
+                            <span class="col-10">剩余容量</span>
+                            <span class="col-20">操作</span>
+                    </li>
+                    
+                </ul>
+                <ul  class="table-body">
+                    <li ms-for="($index,item) in @tableData"  :class="{'selected':item.active,'unselected':!item.active}">
+                            <span class="col-10"><input type="checkbox" :duplex-checked="item.checked" data-duplex-changed="@handleCheck($index,item,$event)"></span>
+                            <span class="col-10">{{item.name}}</span>
+                            <span class="col-10">{{item.ip}}</span>
+                            <span class="col-10">{{item.port}}</span>
+                            <span class="col-10">{{item.orgName}}</span>
+                            <span class="col-10">{{item.status==1 ? online : offline}}</span>
+                            <span class="col-10">{{item.totalCapacity}}</span>
+                            <span class="col-10">{{item.remainCapacity}}</span>
+                            <span class="col-20 "><a href="javascript:void(0)" :click="@handleLookClick ($index,item)">查看</a><a href="javascript:void(0)"
+                                :click="@handleModifyClick ($index,item)">修改</a>
+                            </span>
+                        </li>
+                        <li :visible="@noData" ><span style="width:100%">暂无数据</span></li>
+                        
+                </ul>
+                </div>
+        <ms-pages  :widget="{total:@total,onChange:@handlePageChange,current:@currentPage}"></ms-pages>
+    </article>
+</template>

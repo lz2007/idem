@@ -1,0 +1,77 @@
+<template>
+	<div class="common-sszh-side-bar" :class="[@extra_class ? 'sszhSideBar_en' : '']">
+		<div class="side-bar-main">
+			<!-- <div :if="!@extra_class"> -->
+			<div>
+				<xmp is="ms-form" :widget="{$form:@$Form,type:'search',inline:true}">
+					<div class="search-box">
+						<ms-form-item :widget="{label: ''}" :class="['device-type-type', @extra_class ? 'device-type-type-en' : '']">
+							<ms-select
+								:widget="{col:'type', value:[@devType], options:typeOptions,onChange:@handledevTypeChange}">
+							</ms-select>
+						</ms-form-item>
+
+						<ms-form-item :widget="{label: ''}" :class="['device-type-search', @extra_class ? 'device-type-search-en' : '']">
+							<input type="text" class="form-control" :duplex="@searchText" :blur="@onBlur"
+								:changed="@handleTypeValue" name="search" ms-attr="{title: @search_type_title, placeholder:sidebar_txt.placeholder}"
+								:keydown="onBindKeyDown" :keyup="@type_input_enter">
+						</ms-form-item>
+
+						<ul class="searchInfo" :if="searchIng && !searchData.length">
+							<li class="text-center" :if="isLoading">
+								{{sidebar_txt.loading}}
+							</li>
+
+							<li class="text-center" :if="noData">
+								{{sidebar_txt.noResult}}
+							</li>
+						</ul>
+
+						<!-- 查询list -->
+						<ul class="searchInfo" :if="(searchData.length>0)" :scroll="@scrollItem">
+							<li :for="($index,item) in searchData">
+								<ms-tree :widget="{tree: [@item], onSelect: @onSelectTree}"></ms-tree>
+							</li>
+						</ul>
+
+						<!-- <div class="dev-type-wrap">
+							<p>{{sidebar_txt.deviceType}}</p>
+							<ul>
+								<li class="type-dev" :class="!isTypeDSJ && 'disactive'" :click="handleType('DSJ')"></li>
+								<li class="type-car" :class="!isTypeCZSL && 'disactive'" :click="handleType('CZSL')">
+								</li>
+								<li class="type-fastDomeCameras" :class="!isTypeKSBK && 'disactive'"
+									:click="handleType('KSBK')"></li>
+								<li class="type-drone" :class="!isTypeWRJ && 'disactive'" :click="handleType('WRJ')">
+								</li>
+							</ul>
+						</div> -->
+					</div>
+				</xmp>
+			</div>
+
+			<!-- 只看在线 -->
+			<div class="check-container">
+				<label :attr="{'for':'just-online-checkbox-'+ pollTreeId}"
+					:class="[@isJustOnline ? 'check_selected' : 'check_unselected']"></label>
+				<input type="checkbox" :attr="{'id':'just-online-checkbox-'+ pollTreeId}"
+					:duplex-checked="@isJustOnline" data-duplex-changed="@handleCheckJustOnline">
+				<label :attr="{'for':'just-online-checkbox-'+pollTreeId}">{{sidebar_txt.onlyLive}}</label>
+			</div>
+
+			<!-- 只看已选 -->
+			<div class="check-container" :if="owner == 'sszhxt-spjk-polltree'">
+				<label :attr="{'for':'just-select-checkbox-'+ pollTreeId}"
+					:class="[@isJustSelect ? 'check_selected' : 'check_unselected']"></label>
+				<input type="checkbox" :attr="{'id':'just-select-checkbox-'+ pollTreeId}"
+					:duplex-checked="@isJustSelect" data-duplex-changed="@handleCheckJustSelect">
+				<label :attr="{'for':'just-select-checkbox-'+pollTreeId}">{{sidebar_txt.onlyChoose}}</label>
+			</div>
+
+			<div class="ztree-container" :css="{height:@containerH}">
+				<ul :attr="{id:pollTreeId}" class="ztree"></ul>
+			</div>
+
+		</div>
+	</div>
+</template>

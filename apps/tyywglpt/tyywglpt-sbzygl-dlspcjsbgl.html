@@ -1,0 +1,411 @@
+<!-- 统一运维管理平台--设备资源管理--多路视频采集设备管理  -->
+<!-- caojiacong -->
+<template>
+    <div class="tyywglpt dlspcjsbgl" :controller="dlspcjsbgl-vm">
+        <div class="tyywglpt-search-box" :if="@authority.SEARCH">
+            <ms-form :widget="{$form:@$form,inline:true}">
+                <div>
+                    <ms-form-item :widget="{label:'所属部门:'}" :class="'form-item'">
+                        <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'dlspcjsbgl-tree-select-1', getSelected:@getSelected, selectedKey:@dataJson ? @dataJson.orgId : '', selectedTitle:@dataJson ? @dataJson.orgName : '', onChange:@handleTreeChange, extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                    </ms-form-item>
+                    <!-- 设备类型和设备厂商不联动，设备类型和设备厂商决定产品型号(注释不要放到ms-form内的最开始，否则将解析出错)  -->
+                    <ms-form-item :widget="{label: '设备厂商:'}" :class="['form-item', (@manufacturerOptions.length === 0 && 'disabled')]">
+                        <ms-select :widget="{col:'manufacturer', value:[@getDefaultManu(manufacturerOptions,dataJson)], displayValue:'暂无可选的设备厂商', options:@manufacturerOptions, onChange:@handleManuChange}">
+                        </ms-select>
+                    </ms-form-item>
+                    <ms-form-item :widget="{label:'设备类型:'}" :class="['form-item', (@typeOptions.length === 0 && 'disabled')]">
+                        <ms-select :widget="{col:'type', value:[@getDefaultType(typeOptions,dataJson)], displayValue:'暂无可选的设备类型', options:@typeOptions, onChange:@handleTypeChange}">
+                        </ms-select>
+                    </ms-form-item>
+                    <ms-form-item :widget="{label: '设备型号:'}" :class="['form-item', (@modelOptions.length === 0 && 'disabled')]">
+                        <ms-select :widget="{col:'model', value:[@getDefaultModel(modelOptions, isManuOrTypeSelectMode, dataJson)], displayValue:'暂无可选的设备型号', options:@modelOptions}">
+                        </ms-select>
+                    </ms-form-item>
+                </div>
+                <div class="search-line-second">
+                    <ms-form-item :widget="{label:'设备状态:'}" :class="['form-item', (@statusOptions.length === 0 && 'disabled')]">
+                        <ms-select :widget="{col:'status', value:[@getDefaultStatus(statusOptions, dataJson)], displayValue:'暂无可选的设备状态', options:@statusOptions}">
+                        </ms-select>
+                    </ms-form-item>
+                    <ms-form-item :widget="{label:'注册时间:'}" :class="'form-item duration-item'">
+                        <ms-select :widget="{col:'time', value:[@dataJson ? @dataJson.timeMode : 1], onChange:@handleTimeChange}">
+                            <ms-select-option :widget="{value:1}">本周</ms-select-option>
+                            <ms-select-option :widget="{value:2}">本月</ms-select-option>
+                            <ms-select-option :widget="{value:3}">自定义时间</ms-select-option>
+                        </ms-select>
+                    </ms-form-item>
+                    <div :visible="@isDuration" class="duration-container">
+                        <ms-form-item>
+                            <ms-datepicker :widget="{
+                                col:'beginTime',
+                                placeholder:'请选择开始日期',
+                                value: @beginTime,
+                            }"></ms-datepicker>
+                        </ms-form-item>
+                        <span class="date-line">-</span>
+                        <ms-form-item>
+                            <ms-datepicker :widget="{
+                                col:'endTime',
+                                placeholder:'请选择结束日期',
+                                value: @endTime
+                            }"></ms-datepicker>
+                        </ms-form-item>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-query" :click="@query">查询</button>
+            </ms-form>
+        </div>
+        <div class="tyywglpt-tool-bar">
+            <div class="tyywglpt-tool-bar-inner">
+                <input :if="@authority.REGISTRY" type="button" value="注册" :click="@handleRegister" class="btn btn-tool" :class="@selectedRowsLength !== 0 && 'disabled'">
+               <!-- <button :if="@authority.BATCHREGISTRY" id="fileupload" class="btn btn-tool disabled"
+                    :click="@showDownLoadTip" disabled>批量注册</button>-->
+            </div>
+        </div>
+        <div class="tyywglpt-list-panel">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <li class="col-4 first-item">
+                        <input type="checkbox" id="checkall" :duplex-checked="@checkAll" data-duplex-changed="@handleCheckAll($event)">
+                        <label for="checkall" :class="[@checkAll ? 'check_selected' : 'check_unselected']"></label>
+                    </li>
+                    <li class="col-4">序号</li>
+                    <li class="col-6">操作</li>
+                    <li class="col-10">所属部门</li>
+                    <li class="col-8">设备类型</li>
+                    <li class="col-8">设备厂商</li>
+                    <li class="col-6">设备型号</li>
+                    <li class="col-8">设备名称</li>
+                    <li class="col-16">国标编号</li>
+                    <li class="col-8">录像存储服务</li>
+                    <li class="col-6">在线状态</li>
+                    <li class="col-6">设备状态</li>
+                    <li class="col-10 last-item">注册时间</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@loading" class="list-loading">
+                    <span>结果加载中</span>
+                </li>
+                <li :if="@isNull" class="list-null">暂无数据</li>
+                <li :if="!@loading && !isNull" :for="($index, item) in @list">
+                    <div class="col-4 first-item">
+                        <input type="checkbox" :attr="{'id':$index}" :duplex-checked="item.checked" data-duplex-changed="@handleCheck($index,item,$event)">
+                        <label :attr="{'for':$index}" :class="[item.checked ? 'check_selected' : 'check_unselected']"></label>
+                    </div>
+                    <div class="col-4">{{((@current - 1) * @pageSize) + $index+1}}</div>
+                    <div class="col-6">
+                        <a :if="@authority.MODIFY" class="oparate" :class="[item.platformGbcode && 'disabled']" :click="@handleModify(item)">修改</a>
+                        <a :if="@authority.DELETE" class="oparate last-operate" :class="[item.platformGbcode && 'disabled']" :click="@handleDelete(item)">删除</a>
+                        <span :if="@authority.OPT_SHOW"> - </span>
+                    </div>
+                    <div class="col-10" :attr="{'title':item.orgName || '', 'data-toggle':'popover'}">{{@item.orgName | fillterEmpty}}</div>
+                    <div class="col-8" :attr="{'title':item.type || '', 'data-toggle':'popover'}">{{@item.type | fillterEmpty}}</div>
+                    <div class="col-8" :attr="{'title':item.manufacturer || '', 'data-toggle':'popover'}">{{@item.manufacturer | fillterEmpty}}</div>
+                    <div class="col-6" :attr="{'title':item.model || '', 'data-toggle':'popover'}">{{@item.model | fillterEmpty}}</div>
+                    <div class="col-8" :attr="{'title':item.name || '', 'data-toggle':'popover'}">{{@item.name | fillterEmpty}}</div>
+                    <div class="col-16" :attr="{'title':item.gbcode || '','data-toggle':'popover'}">{{@item.gbcode | fillterEmpty}}</div>
+                    <div class="col-8" :attr="{'title': '-', 'data-toggle':'popover'}">-</div>
+                    <div class="col-6" :class="[item.online !== 1 && 'isoffline']" :attr="{'title':item.onlineStatus || '','data-toggle':'popover'}">{{@item.onlineStatus | fillterEmpty}}</div>
+                    <div class="col-6" :attr="{'title':item.statusName || '','data-toggle':'popover'}">{{item.statusName | fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.registerTime || '','data-toggle':'popover'}">{{@item.registerTime | fillterEmpty}}</div>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-tool-bar">
+            <input :if="@authority.DELETE" class="btn btn-tool" :class="[(!@checkedIsSource || @selectedRowsLength < 1) && 'disabled']"
+                type="button" value="批量删除" :click="@handleBatchDelete">
+        </div>
+        <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent}"></ms-pages>
+        <!-- 注册弹窗 -->
+        <div :controller="dlspcjsbgl-register-vm" class="sbzygl-modal dlspcjsbgl-modal-register">
+            <xmp :widget="{is:'common-ms-modal', title:'注册', modalSelector:'#dlspcjsbgl-modal-register', modalWidth:800, modalHeight: auto, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="dlspcjsbgl-modal-register">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <div class="modal-title">设备信息</div>
+                        <ms-form-item :class="['form-item form-item-lg',((!@validJson.gbcode || !@validJson.gbcodeUnique) ? 'has-error' : '')]">
+                            <label>
+                                <i>* </i>国标编号:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.gbcode}" :duplex="@inputJson.gbcode" :focus="@handleFocus('gbcode',$event)"
+                                    :blur="@handleFormat('gbcode',@gbcodeReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('gbcode',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.gbcode">
+                                <i class="fa fa-info-circle"></i>支持数字与字母组合，长度只能为20位（当前长度为{{@inputJson.gbcode.length}}）</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.gbcode">请输入正确的国标编号</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.gbcodeUnique">请输入唯一的国标编号</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item form-item-lg',!@validJson.orgId && 'has-error']">
+                            <label>
+                                <i>* </i>所属部门:</label>
+                            <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, selectedKey:@orgId, selectedTitle: @orgName, wrapId: 'dlspcjsbgl-tree-select-2', getSelected:@getSelected, onChange:@handleTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                            <div class="form-tip invalid-tip" :if="!@validJson.orgId">请选择所属部门</div>
+                        </ms-form-item>
+                        <!-- 设备类型和设备厂商不联动，设备类型和设备厂商决定产品型号 -->
+                        <ms-form-item :class="['form-item', !@validJson.type && 'has-error', (@typeOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>设备类型:</label>
+                            <ms-select :widget="{col:'type', value:[@defaultType], displayValue:'暂无可选的设备类型', options:@typeOptions, onChange:@handleDeviceTypeChange}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.type">请选择设备类型</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item', !@validJson.manufacturer && 'has-error']">
+                            <label>设备厂商:</label>
+                            <!-- ms-search-select组件的源码在aaps/common/common-search-select.js -->
+                            <ms-search-select :widget="{owner:'manufacturer', searchLabel:@inputJson.manufacturer,options:@manufacturerOptions,getSearchLabel:getSearchLabel,getSelected:getSearchSelected,onFocus:@handleSearchSelectFocus,onBlur:@handleSearchSelectFormat}"></ms-search-select>
+                            <div class="form-tip valid-tip" :if="@showJson.manufacturer">
+                                <i class="fa fa-info-circle"></i>仅支持中英文组合</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.manufacturer">{{@inputJson.manufacturer.length > 32 ? '最多只可输入32位字符' : '请输入/选择正确的设备厂商'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.name && 'has-error']">
+                            <label>
+                                <i>* </i>设备名称:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.name}" :duplex="@inputJson.name" :focus="@handleFocus('name',$event)"
+                                    :blur="@handleFormat('name',null,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('name',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.name">{{@inputJson.name.length > 30 ? '最多只可输入30位字符' : '请输入设备名称'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item model-item', !@validJson.model && 'has-error']">
+                            <label>设备型号:</label>
+                            <!-- ms-search-select组件的源码在aaps/common/common-search-select.js -->
+                            <ms-search-select :widget="{owner:'model', searchLabel:@inputJson.model,options:@modelOptions,getSearchLabel:getSearchLabel,getSelected:getSearchSelected,onFocus:@handleSearchSelectFocus,onBlur:@handleSearchSelectFormat}"></ms-search-select>
+                            <div class="form-tip valid-tip" :if="@showJson.model">
+                                <i class="fa fa-info-circle"></i>支持中英文，数字及 - 的组合</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.model">{{@inputJson.model.length > 32 ? '最多只可输入32位字符' : '请输入/选择正确的设备型号'}}</div>
+                        </ms-form-item>
+                        <div class="modal-title">
+                            <span>通道信息</span>
+                            <input class=" channel-btn btn" type="button" value="新增通道" :click="@handleAddChannel">
+                        </div>
+                        <div class="channel-panel">
+                            <div :if="!@getChannelListLength(channelList)" class="channel-list-null" :class="!@validJson.channel && 'channel-error'">暂无通道，至少需要有一个通道，请新增！</div>
+                            <div class="channel-list-panel" :if="@getChannelListLength(channelList)">
+                                <ul class="channel-list-header" :class="[@channelList.length > 3 && 'has-scroll']">
+                                    <li class="col-10 first-item">通道索引</li>
+                                    <li class="col-35">
+                                        <i>* </i>国标编号</li>
+                                    <li class="col-30">
+                                        <i>* </i>通道名称</li>
+                                    <li class="col-15">控制类型</li>
+                                    <li class="col-10">操作</li>
+                                </ul>
+                                <ul class="channel-list-content">
+                                    <li :for="($index, item) in @channelList">
+                                        <div class="col-10 first-item col-item">
+                                            {{$index+1}}
+                                        </div>
+                                        <div class="col-35 col-item">
+                                            <div class="form-item" :class="[(!item.validJson.gbcode || !item.validJson.gbcodeUnique) ? 'has-error' : '']">
+                                                <div class="has-icon">
+                                                    <input type="text" class="form-control" :attr="{title:item.gbcode}" :duplex="item.gbcode" :focus="@handleChannelFocus(item,'gbcode',$event)"
+                                                        :blur="@handleChannelFormat(item, 'gbcode', @gbcodeReg, null, $event)">
+                                                    <i class="fa fa-close" :visible="false" :mousedown="@handleChannelClear(item,'gbcode',$event)|prevent"></i>
+                                                </div>
+                                                <div class="form-tip valid-tip" :if="item.showJson.gbcode">
+                                                    <i class="fa fa-info-circle"></i>当前长度为{{item.gbcode.length}}</div>
+                                                <div class="form-tip invalid-tip" :if="!item.validJson.gbcode">请输入正确的国标编号</div>
+                                                <div class="form-tip invalid-tip" :if="!item.validJson.gbcodeUnique">请输入唯一的国标编号</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-30 col-item">
+                                            <div class="form-item" :class="[(!item.validJson.name || !item.validJson.nameUnique) && 'has-error']">
+                                                <div class="has-icon">
+                                                    <input type="text" class="form-control" :attr="{title:item.name}" :duplex="item.name" :focus="@handleChannelFocus(item, 'name',$event)"
+                                                        :blur="@handleChannelFormat(item, 'name', null, 15, $event)">
+                                                    <i class="fa fa-close" :visible="false" :mousedown="@handleChannelClear(item, 'name',$event)|prevent"></i>
+                                                </div>
+                                                <div class="form-tip invalid-tip" :if="!item.validJson.name">{{item.name.length > 15 ? '最多只可输入15位字符' : '请输入通道名称'}}</div>
+                                                <div class="form-tip invalid-tip" :if="!item.validJson.nameUnique">当前设备已有该通道名称</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-15 col-item">
+                                            <div class="form-item">
+                                                <ms-select :widget="{value:['normal']}" :class="['control-type-' + item.index]">
+                                                    <ms-select-option :widget="{value:'normal'}">普通</ms-select-option>
+                                                    <ms-select-option :widget="{value:'cloud'}">云台</ms-select-option>
+                                                </ms-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-10 col-item">
+                                            <i class="operate fa fa-close" :click="@handleDeleteChannel(item)"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="channel-tips" :if="@getChannelListLength(channelList)">
+                                <p>
+                                    <i class="fa fa-info-circle"></i>国标编号支持数字与字母组合，长度只能为20位</p>
+                                <p>
+                            </div>
+                        </div>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+        <!-- 修改弹窗 -->
+        <div :controller="dlspcjsbgl-modify-vm" class="sbzygl-modal dlspcjsbgl-modal-modify">
+            <xmp :widget="{is:'common-ms-modal', title:'修改', modalSelector:'#dlspcjsbgl-modal-modify', modalWidth:820, show:@show, ifokBtn: !@isDump, cancelText: @isDump ? '关闭' : '取消', okDisabled:@allotLoading, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="dlspcjsbgl-modal-modify">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <ms-form-item :class="['form-item', (@statusOptions.length === 0 && 'disabled')]">
+                            <label>设备状态:</label>
+                            <ms-select :widget="{col:'status', value:[@selectedRowsData.length > 0 ? @selectedRowsData[0]['status'] : ''], displayValue:'暂无可选的设备状态', options:@statusOptions}">
+                            </ms-select>
+                        </ms-form-item>
+                        <div class="modal-title">设备信息</div>
+                        <ms-form-item :class="['form-item form-item-lg',!@validJson.gbcode && 'has-error']">
+                            <label>
+                                <i>* </i>国标编号:</label>
+                            <div class="has-icon has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.gbcode}" :duplex="@inputJson.gbcode" disabled>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.gbcode">国标编号不能为空</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item form-item-lg disabled-select',!@validJson.orgId && 'has-error']">
+                            <label>
+                                <i>* </i>所属部门:</label>
+                            <ms-tree-selecting :widget="{tree:@orgData, disabledSelect: true, showSearch:true, selectedKey:@orgId, selectedTitle: @orgName, wrapId: 'dlspcjsbgl-tree-select-3', getSelected:@getSelected, onChange:@handleTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                            <div class="form-tip invalid-tip" :if="!@validJson.orgId">所属部门不能为空</div>
+                        </ms-form-item>
+                        <!-- 设备类型和设备厂商不联动，设备类型和设备厂商决定产品型号 -->
+                        <ms-form-item :class="['form-item', !@validJson.type && 'has-error', (@typeOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>设备类型:</label>
+                            <ms-select :widget="{col:'type', value:[@selectedRowsData.length > 0 ? @selectedRowsData[0]['type'] : ''], displayValue:'暂无可选的设备类型', options:@typeOptions, onChange:@handleDeviceTypeChange}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.type">请选择设备类型</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item', !@validJson.manufacturer && 'has-error']">
+                            <label>设备厂商:</label>
+                            <!-- ms-search-select组件的源码在aaps/common/common-search-select.js -->
+                            <ms-search-select :widget="{owner:'manufacturer', searchLabel:@inputJson.manufacturer,options:@manufacturerOptions,getSearchLabel:getSearchLabel,getSelected:getSearchSelected,onFocus:@handleSearchSelectFocus,onBlur:@handleSearchSelectFormat}"></ms-search-select>
+                            <div class="form-tip valid-tip" :if="@showJson.manufacturer">
+                                <i class="fa fa-info-circle"></i>仅支持中英文组合</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.manufacturer">{{@inputJson.manufacturer.length > 32 ? '最多只可输入32位字符' : '请输入/选择正确的设备厂商'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.name && 'has-error']">
+                            <label>
+                                <i>* </i>设备名称:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.name}" :duplex="@inputJson.name" :focus="@handleFocus('name',$event)"
+                                    :blur="@handleFormat('name',null,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('name',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.name">{{@inputJson.name.length > 30 ? '最多只可输入30位字符' : '请输入设备名称'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item model-item', !@validJson.model && 'has-error']">
+                            <label>设备型号:</label>
+                            <!-- ms-search-select组件的源码在aaps/common/common-search-select.js -->
+                            <ms-search-select :widget="{owner:'model', searchLabel:@inputJson.model, options:@modelOptions,getSearchLabel:getSearchLabel,getSelected:getSearchSelected,onFocus:@handleSearchSelectFocus,onBlur:@handleSearchSelectFormat}"></ms-search-select>
+                            <div class="form-tip valid-tip" :if="@showJson.model">
+                                <i class="fa fa-info-circle"></i>支持中英文，数字及 - 的组合</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.model">{{@inputJson.model.length > 32 ? '最多只可输入32位字符' : '请输入/选择正确的设备型号'}}</div>
+                        </ms-form-item>
+                        <div class="modal-title">
+                            <span>通道信息</span>
+                            <input class="channel-btn btn" type="button" value="新增通道" :click="@handleAddChannel">
+                        </div>
+                        <div class="channel-panel">
+                            <div :if="!@getChannelListLength(channelList)" class="channel-list-null" :class="!@validJson.channel && 'channel-error'">暂无通道，至少需要有一个通道，请新增！</div>
+                            <div class="channel-list-panel" :if="@getChannelListLength(channelList)">
+                                <ul class="channel-list-header" :class="[@channelList.length > 3 && 'has-scroll']">
+                                    <li class="col-10 first-item">通道索引</li>
+                                    <li class="col-35">
+                                        <i>* </i>国标编号</li>
+                                    <li class="col-30">
+                                        <i>* </i>通道名称</li>
+                                    <li class="col-15">控制类型</li>
+                                    <li class="col-10">操作</li>
+                                </ul>
+                                <ul class="channel-list-content">
+                                    <li :for="($index, item) in @channelList" data-for-rendered="@renderedCallback">
+                                        <div class="col-10 first-item col-item">
+                                            {{$index+1}}
+                                        </div>
+                                        <div :if="item.id" class="col-35 col-item">
+                                            <div class="form-item" :class="[!item.validJson.gbcode ? 'has-error' : '']">
+                                                <div class="has-icon has-icon-disabled">
+                                                    <input type="text" class="form-control" :attr="{title:item.gbcode}" :duplex="item.gbcode" :focus="@handleChannelFocus(item,'gbcode',$event)"
+                                                        :blur="@handleChannelFormat(item, 'gbcode', @gbcodeReg, null, $event)"
+                                                        disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div :if="!item.id" class="col-35 col-item">
+                                            <div class="form-item" :class="[(!item.validJson.gbcode || !item.validJson.gbcodeUnique) ? 'has-error' : '']">
+                                                <div class="has-icon">
+                                                    <input type="text" class="form-control" :attr="{title:item.gbcode}" :duplex="item.gbcode" :focus="@handleChannelFocus(item,'gbcode',$event)"
+                                                        :blur="@handleChannelFormat(item, 'gbcode', @gbcodeReg, null, $event)">
+                                                    <i class="fa fa-close" :visible="false" :mousedown="@handleChannelClear(item,'gbcode',$event)|prevent"></i>
+                                                </div>
+                                                <div class="form-tip valid-tip" :if="item.showJson.gbcode">
+                                                    <i class="fa fa-info-circle"></i>当前长度为{{item.gbcode.length}}</div>
+                                                <div class="form-tip invalid-tip" :if="!item.validJson.gbcode">请输入正确的国标编号</div>
+                                                <div class="form-tip invalid-tip" :if="!item.validJson.gbcodeUnique">请输入唯一的国标编号</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-30 col-item">
+                                            <div class="form-item" :class="[(!item.validJson.name || !item.validJson.nameUnique)&& 'has-error']">
+                                                <div class="has-icon">
+                                                    <input type="text" class="form-control" :attr="{title:item.name}" :duplex="item.name" :focus="@handleChannelFocus(item, 'name',$event)"
+                                                        :blur="@handleChannelFormat(item, 'name', null, 15, $event)">
+                                                    <i class="fa fa-close" :visible="false" :mousedown="@handleChannelClear(item, 'name',$event)|prevent"></i>
+                                                </div>
+                                                <div class="form-tip invalid-tip" :if="!item.validJson.name">{{item.name.length > 15 ? '最多只可输入15位字符' : '请输入通道名称'}}</div>
+                                                <div class="form-tip invalid-tip" :if="!item.validJson.nameUnique">当前设备已有该通道名称</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-15 col-item">
+                                            <div class="form-item">
+                                                <ms-select :widget="{value:[item.controlType],onChange:@handleControlChange}" :class="['control-type-' + item.index]">
+                                                    <ms-select-option :widget="{value:'normal'}">普通</ms-select-option>
+                                                    <ms-select-option :widget="{value:'cloud'}">云台</ms-select-option>
+                                                </ms-select>
+                                            </div>
+                                        </div>
+                                        <div class="col-10 col-item">
+                                            <i class="operate fa fa-close" :click="@handleDeleteChannel(item)"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="channel-tips" :if="@getChannelListLength(channelList)">
+                                <p>
+                                    <i class="fa fa-info-circle"></i>国标编号支持数字与字母组合，长度只能为20位
+                                </p>
+                                <input class="channel-btn btn" style="margin-right: 0;" type="button" value="保存通道" :class="!@isChannelChange && 'disabled'" :click="@handleSaveChannel">
+                            </div>
+                        </div>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 删除弹窗 -->
+        <div :controller="dlspcjsbgl-delete-vm" class="sbzygl-modal sbzygl-modal-tip sbzygl-modal-delete">
+            <xmp :widget="{is:'common-ms-modal', title:'确定删除', modalSelector:'#dlspcjsbgl-modal-delete', btnalign:'center', modalWidth:300, modalHeight: 80, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <p :if="!@isBatch" class="tip-text" id="dlspcjsbgl-modal-delete">是否确定删除该项数据？</p>
+                <p :if="@isBatch" class="tip-text" id="dlspcjsbgl-modal-delete">是否确定删除选中的{{@selectedRowsLength}}条数据？</p>
+            </xmp>
+        </div>
+
+        <!-- 保存通道弹窗 -->
+        <div :controller="zfygl-channeltip-vm" class="sbzygl-modal sbzygl-modal-tip sbzygl-modal-channeltip">
+            <xmp :widget="{is:'common-ms-modal', title:'提示', modalSelector:'#zfygl-modal-channeltip', drag:true, btnalign:'center', modalWidth:310, modalHeight:80, show:@show,ifcancelBtn:false,onOk:@handleOk}">
+                <p class="tip-text" id="zfygl-modal-channeltip">您对通道信息做了变更，请先保存通道</p>
+            </xmp>
+        </div>
+
+        <!-- 下载提醒 -->
+        <ms-download-tip :widget="{show:@downloadTipShow,plugLink:'/static/flash_player.zip',getShowStatus:getShowStatus}">
+            <div>
+                <p>批量注册功能需要Flash插件的支持，您未安装Flash插件，是否下载？</p>
+                <p class="tip-text">
+                    <i class="fa fa-info-circle"></i>下载完成后请关闭浏览器安装</p>
+            </div>
+        </ms-download-tip>
+    </div>
+</template>

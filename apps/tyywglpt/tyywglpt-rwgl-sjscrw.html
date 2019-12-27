@@ -1,0 +1,132 @@
+<template>
+    <div class="tyywglpt sjscrw">
+        <!-- 顶部表单 begin -->
+        <div class="tyywglpt-search-box" :if="@authority.SEARCH">
+            <xmp is="ms-form" :widget="{$form:@$searchForm,inline:true}">
+                <!-- 所属机构影响所属采集工作站 -->
+                <ms-form-item :widget="{label: '所属机构:'}" :class="'form-item'">
+                    <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'tree-select-wrap-1', selectedKey:@dataJson ? @dataJson.orgId : '', selectedTitle:@dataJson ? @dataJson.orgName : '', onChange:@orgTreeChange, extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                </ms-form-item>
+                <ms-form-item :widget="{label: '所属采集工作站:', value: [@value]}" :class="['form-item label-lg', (@getWorkStationData.length === 0 && 'disabled')]">
+                    <ms-select :widget="{col:'station', showSearch:true, justSearchLabel:true, value:[@getDefaultWorkStation(getWorkStationData, isStationSelectMode, dataJson)], displayValue:'暂无可选采集工作站', options: @getWorkStationData, onChange:@handleWsChange}"></ms-select>
+                </ms-form-item>
+                <ms-form-item :widget="{label: '任务状态:'}" :class="['form-item', (@getTaskStatusData.length === 0 && 'disabled')]">
+                    <ms-select :widget="{col:'taskStatus',value:[@getDefaultStatus(getTaskStatusData, dataJson)], displayValue:'暂无任务状态', options: @getTaskStatusData,onChange:@handleStatusChange}"></ms-select>
+                </ms-form-item>
+                <ms-form-item :visible="showStatusReason" :widget="{label: '失败原因:'}" :class="['form-item', (@getFailReasonData.length === 0 && 'disabled')]">
+                    <ms-select :widget="{col:'failReason',value:[@getDefaultReason(getFailReasonData, isFailTypeSelectMode, dataJson)], displayValue:'暂无失败原因', options: @getFailReasonData}">
+                    </ms-select>
+                </ms-form-item>
+                <div class="search-line-second">
+                    <ms-form-item :widget="{label:'文件名称:'}" :class="'form-item'">
+                        <div class="has-icon-input-wrap">
+                            <input type="text" class="form-control" ms-duplex="@fileName" :keypress="@enterClick" :focus="@handleFileNameFocus" :blur="@handleFileNameBlur"
+                                :attr="{title: @fileName}">
+                            <span class="fa fa-close" :mousedown="@handleClear|prevent" :visible="false"></span>
+                        </div>
+                    </ms-form-item>
+                    <ms-form-item :widget="{label:'任务产生时间:'}" :class="'form-item label-lg'">
+                        <ms-select :widget="{col:'time', value:[@dataJson ? @dataJson.timeMode : 1], onChange:@handleTimeChange}">
+                            <ms-select-option :widget="{value:1}">本周</ms-select-option>
+                            <ms-select-option :widget="{value:2}">本月</ms-select-option>
+                            <ms-select-option :widget="{value:3}">自定义时间</ms-select-option>
+                        </ms-select>
+                    </ms-form-item>
+                    <div :visible="@isDuration" class="duration-container">
+                        <ms-form-item :widget="{label:'开始时间:'}" :class="'form-item'">
+                            <ms-datepicker :widget="{
+                                col:'startTime',
+                                placeholder:'请选择开始时间',
+                                value: @startTime,
+                            }"></ms-datepicker>
+                        </ms-form-item>
+                        <ms-form-item :widget="{label:'结束时间:'}" :class="'form-item'">
+                            <ms-datepicker :widget="{
+                                col:'endTime',
+                                placeholder:'请选择结束时间',
+                                value: @endTime
+                            }"></ms-datepicker>
+                        </ms-form-item>
+                    </div>
+                </div>
+                <button :if="@authority.SEARCH" type="button" class="btn btn-query" :click="@query">查询</button>
+            </xmp>
+        </div>
+
+        <!-- 上传情况 begin -->
+        <div class="tyyw-describe-bar">
+            <div :visible="false">
+                任务总数：
+                <span>{{@totalTask}}个</span>
+                已上传文件总数：
+                <span>{{@totalFinished}}个</span>
+                待上传任务数：
+                <span>{{@totalQueue}}个</span>
+                已失败任务数：
+                <span>{{@totalFail}}个</span>
+            </div>
+        </div>
+
+        <div class="tyywglpt-tool-bar" :if="@authority.RESET">
+            <input type="button" value="重启任务" class="btn btn-tool" :class="resetIsDisabled(checkedIsFailed,selectedRowsLength)" :click="@beginTaskAgain">
+        </div>
+
+        <!-- 表格数据begin -->
+        <div class="tyywglpt-list-panel">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <li class="col-3 first-item">
+                        <input type="checkbox" id="checkall" :duplex-checked="@checkAll" data-duplex-changed="@handleCheckAll($event)">
+                        <label for="checkall" :class="[@checkAll ? 'check_selected' : 'check_unselected']"></label>
+                    </li>
+                    <li class="col-4">序号</li>
+                    <li class="col-10">所属机构</li>
+                    <li class="col-10">所属采集工作站</li>
+                    <li class="col-8">文件名称</li>
+                    <li class="col-8">任务状态</li>
+                    <li class="col-11">任务产生时间</li>
+                    <li class="col-11">任务开始时间</li>
+                    <li class="col-11">任务结束时间</li>
+                    <li class="col-6">平均速度</li>
+                    <li class="col-12">失败原因</li>
+                    <li class="col-6 last-item">重试次数</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@loading" class="list-loading">
+                    <span>结果加载中</span>
+                </li>
+                <li :if="@isNull" class="list-null">暂无数据</li>
+                <li :if="!@loading && !@isNull" :for="($index, item) in @list">
+                    <div class="col-3 first-item">
+                        <input type="checkbox" :attr="{'id':$index}" :duplex-checked="item.checked" data-duplex-changed="@handleCheck(item.status,item,$event)">
+                        <label :attr="{'for':$index}" :class="[item.checked ? 'check_selected' : 'check_unselected']"></label>
+                    </div>
+                    <div class="col-4">{{((current-1)*pageSize+1)+$index}}</div>
+
+                    <div class="col-10" :attr="{'title':item.orgName || '','data-toggle':'popover'}">{{item.orgName | fillterEmpty}}</div>
+                    <!-- 0在线 1离线 -->
+                    <div class="col-10" :attr="{'title':(item.workstationName + (item.isWorkstationOnline===0 ? '(在线)':'(离线)')) || '','data-toggle':'popover'}">
+                        <span :class="item.isWorkstationOnline===0 ? 'online':'notOnline'"></span>{{@item.workstationName | fillterEmpty}}</div>
+                    <div class="col-8" :attr="{'title':item.filename || '','data-toggle':'popover'}">{{item.filename | fillterEmpty}}</div>
+                    <div class="col-8" :class="[item.status === 5 && 'isFailed']" :attr="{'title':item.statusDes || '','data-toggle':'popover'}">{{item.statusDes | fillterEmpty}}</div>
+                    <div class="col-11" :attr="{'title':item.createTime || '','data-toggle':'popover'}">{{item.createTime | fillterEmpty}}</div>
+                    <div class="col-11" :attr="{'title':item.startTime || '','data-toggle':'popover'}">{{item.startTime | fillterEmpty}}</div>
+                    <div class="col-11" :attr="{'title':item.endTime || '','data-toggle':'popover'}">{{item.endTime | fillterEmpty}}</div>
+                    <div class="col-6" :attr="{'title':item.averageSpeed || '','data-toggle':'popover'}">{{item.averageSpeed}}</div>
+                    <div class="col-12" :attr="{'title':item.failReason || '','data-toggle':'popover'}">{{item.failReason | fillterEmpty}}</div>
+                    <div class="col-6" :attr="{'title':item.retryTime || '','data-toggle':'popover'}">{{item.retryTime | fillterEmpty}}</div>
+                </li>
+            </ul>
+        </div>
+        <!-- 页码 -->
+        <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@onChangePage,getCurrent:@getCurrent}"></ms-pages>
+
+        <!-- 重启任务确认弹框 -->
+        <div :controller="sjscrw-beginTaskAgain-vm" class="sjscrw-modal-restart">
+            <xmp :widget="{is:'common-ms-modal', modalSelector:'#sjscrw-modal-restart', btnalign:'center', modalWidth:300, modalHeight: 80, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <p class="tip-text" id="sjscrw-modal-restart">是否重启已选择的任务？</p>
+            </xmp>
+        </div>
+    </div>
+</template>

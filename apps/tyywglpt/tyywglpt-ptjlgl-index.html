@@ -1,0 +1,288 @@
+<!-- 统一运维管理平台--平台级联管理 -->
+<!-- caojiacong -->
+<template>
+    <div class="tyywglpt ptjlgl" :controller="ptjlgl-vm">
+        <div class="tyywglpt-tool-bar">
+            <div class="tyywglpt-tool-bar-inner">
+                <input :if="@authority.CREATE" type="button" value="添加" :click="@handleAdd" class="btn btn-tool" :class="@selectedRowsLength !== 0 && 'disabled'">
+                <input :if="@authority.MODIFY" type="button" value="修改" :click="@handleModify" class="btn btn-tool" :class="@selectedRowsLength !== 1 && 'disabled'">
+                <input :if="@authority.DELETE" type="button" value="删除" :click="@handleDelete" class="btn btn-tool" :class="@selectedRowsLength < 1 && 'disabled'">
+                <input :if="@authority.DELETE" type="button" value="账号管理" :click="@handleAccount" class="btn btn-tool" :class="@selectedRowsLength !== 1 && 'disabled'">
+            </div>
+        </div>
+        <div class="tyywglpt-list-panel">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <li class="col-5 first-item">
+                        <input type="checkbox" id="checkall" :duplex-checked="@checkAll" data-duplex-changed="@handleCheckAll($event)">
+                        <label for="checkall" :class="[@checkAll ? 'check_selected' : 'check_unselected']"></label>
+                    </li>
+                    <li class="col-5">序号</li>
+                    <li class="col-15">平台ID</li>
+                    <li class="col-10">平台名称</li>
+                    <li class="col-10">平台类型</li>
+                    <li class="col-10">平台厂商</li>
+                    <li class="col-10">平台版本</li>
+                    <li class="col-10">对接协议</li>
+                    <li class="col-10">平台地址</li>
+                    <li class="col-15 last-item">平台说明</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@loading" class="list-loading">
+                    <span>结果加载中</span>
+                </li>
+                <li :if="@isNull" class="list-null">暂无数据</li>
+                <li :if="!@loading && !@isNull" :for="($index, item) in @list">
+                    <div class="col-5 first-item">
+                        <input type="checkbox" :attr="{'id':$index}" :duplex-checked="item.checked" data-duplex-changed="@handleCheck($index,item,$event)">
+                        <label :attr="{'for':$index}" :class="[item.checked ? 'check_selected' : 'check_unselected']"></label>
+                    </div>
+                    <div class="col-5">{{((@current - 1) * @pageSize) + $index+1}}</div>
+                    <div class="col-15" :attr="{'title':item.id || '','data-toggle':'popover'}">{{@item.id | fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.name || '','data-toggle':'popover'}">{{@item.name | fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.type || '','data-toggle':'popover'}">{{@item.type | fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.manufacturer || '','data-toggle':'popover'}">{{@item.manufacturer | fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.version || '','data-toggle':'popover'}">{{@item.version | fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.protocol || '','data-toggle':'popover'}">{{@item.protocol | fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.addr || '','data-toggle':'popover'}">{{@item.addr | fillterEmpty}}</div>
+                    <div class="col-15" :attr="{'title':item.description || '','data-toggle':'popover'}">{{@item.description | fillterEmpty}}</div>
+                </li>
+            </ul>
+        </div>
+        <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent}"></ms-pages>
+        <!-- 添加弹窗 -->
+        <div :controller="ptjlgl-add-vm" class="sbzygl-modal ptjlgl-modal ptjlgl-modal-add">
+            <xmp :widget="{is:'common-ms-modal', title:'添加', modalSelector:'#ptjlgl-modal-add', modalWidth:700, modalHeight: auto, btnalign:'center',show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="ptjlgl-modal-add">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <ms-form-item :class="['form-item',!@validJson.name && 'has-error']">
+                            <label>
+                                <i>* </i>平台名称:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.name}" :duplex="@inputJson.name" :focus="@handleFocus('name',$event)"
+                                    :blur="@handleFormat('name',null,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('name',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.name">{{@inputJson.name.length > 30 ? '最多只可输入30位字符' : '请输入平台名称'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.ip && 'has-error']">
+                            <label>
+                                <i>* </i>平台IP:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.ip}" :duplex="@inputJson.ip" :focus="@handleFocus('ip',$event)"
+                                    :blur="@handleFormat('ip',@ipReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('ip',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.ip">
+                                <i class="fa fa-info-circle"></i>支持0~255的数字与.的组合</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.ip">请输入正确的平台IP</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item', !@validJson.type && 'has-error', (@typeOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>平台类型:</label>
+                            <ms-select :widget="{col:'type', value:[@defaultType], displayValue:'暂无可选的平台类型', options:@typeOptions}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.type">请选择平台类型</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.port && 'has-error']">
+                            <label>
+                                <i>* </i>平台端口:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.port}" :duplex="@inputJson.port" :focus="@handleFocus('port',$event)"
+                                    :blur="@handleFormat('port',@portReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('port',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.port">
+                                <i class="fa fa-info-circle"></i>支持0~65535的整数</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.port">请输入正确的平台端口</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item', !@validJson.manufacturer && 'has-error', (@manuOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>平台厂商:</label>
+                            <ms-select :widget="{col:'manufacturer', value:[@defaultManu], displayValue:'暂无可选的平台厂商', options:@manuOptions}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.manufacturer">请选择平台厂商</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item', !@validJson.protocol && 'has-error', (@protocolOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>对接协议:</label>
+                            <ms-select :widget="{col:'protocol', value:[@defaultProtocol], displayValue:'暂无可选的对接协议', options:@protocolOptions}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.protocol">请选择对接协议</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.version && 'has-error']">
+                            <label>
+                                <i>* </i>平台版本:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.version}" :duplex="@inputJson.version" :focus="@handleFocus('version',$event)"
+                                    :blur="@handleFormat('version',@versionReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('version',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.version">
+                                <i class="fa fa-info-circle"></i>支持英文、数字下划线_、中线-、小数点.的组合</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.version">{{@inputJson.version.length > 30 ? '最多只可输入30位字符' : '请输入正确的平台版本'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item form-item-lg',!@validJson.id && 'has-error']">
+                            <label>
+                                <i>* </i>平台ID:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.id}" :duplex="@inputJson.id" :focus="@handleFocus('id',$event)"
+                                    :blur="@handleFormat('id',@idReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('id',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.id">
+                                <i class="fa fa-info-circle"></i>支持数字与字母组合</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.id">请输入正确的平台ID</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item form-item-lg textarea-item',!@validJson.description && 'has-error']">
+                            <label>
+                                <i>* </i>平台说明:</label>
+                            <div class="has-icon">
+                                <textarea class="form-control" :attr="{title:@inputJson.description}" :duplex="@inputJson.description" :focus="@handleFocus('description',$event)"
+                                    :blur="@handleFormat('description',@descriptionReg,$event)"></textarea>
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('description',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.description">请输入平台说明</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+        <!-- 修改弹窗 -->
+        <div :controller="ptjlgl-modify-vm" class="sbzygl-modal ptjlgl-modal ptjlgl-modal-modify">
+            <xmp :widget="{is:'common-ms-modal', title:'修改', modalSelector:'#ptjlgl-modal-modify', modalWidth:700, modalHeight: auto, btnalign:'center',show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="ptjlgl-modal-modify">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <ms-form-item :class="['form-item',!@validJson.name && 'has-error']">
+                            <label>
+                                <i>* </i>平台名称:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.name}" :duplex="@inputJson.name" :focus="@handleFocus('name',$event)"
+                                    :blur="@handleFormat('name',null,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('name',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.name">{{@inputJson.name.length > 30 ? '最多只可输入30位字符' : '请输入平台名称'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.ip && 'has-error']">
+                            <label>
+                                <i>* </i>平台IP:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.ip}" :duplex="@inputJson.ip" :focus="@handleFocus('ip',$event)"
+                                    :blur="@handleFormat('ip',@ipReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('ip',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.ip">
+                                <i class="fa fa-info-circle"></i>支持0~255的数字与.的组合</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.ip">请输入正确的平台IP</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item', !@validJson.type && 'has-error', (@typeOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>平台类型:</label>
+                            <ms-select :widget="{col:'type', value:[@defaultType], displayValue:(@typeOptions.length === 0 ? '暂无可选的平台类型': @unMatchJson.type), options:@typeOptions}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.type">请选择平台类型</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.port && 'has-error']">
+                            <label>
+                                <i>* </i>平台端口:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.port}" :duplex="@inputJson.port" :focus="@handleFocus('port',$event)"
+                                    :blur="@handleFormat('port',@portReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('port',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.port">
+                                <i class="fa fa-info-circle"></i>支持0~65535的整数</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.port">请输入正确的平台端口</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item', !@validJson.manufacturer && 'has-error', (@manuOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>平台厂商:</label>
+                            <ms-select :widget="{col:'manufacturer', value:[@defaultManu], displayValue:(@manuOptions.length === 0 ? '暂无可选的平台厂商': @unMatchJson.manu), options:@manuOptions}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.manufacturer">请选择平台厂商</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item', !@validJson.protocol && 'has-error', (@protocolOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>对接协议:</label>
+                            <ms-select :widget="{col:'protocol', value:[@defaultProtocol], displayValue:(@protocolOptions.length === 0 ? '暂无可选的对接协议': @unMatchJson.protocol), options:@protocolOptions}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.protocol">请选择对接协议</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.version && 'has-error']">
+                            <label>
+                                <i>* </i>平台版本:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.version}" :duplex="@inputJson.version" :focus="@handleFocus('version',$event)"
+                                    :blur="@handleFormat('version',@versionReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('version',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.version">
+                                <i class="fa fa-info-circle"></i>支持英文、数字下划线_、中线-、小数点.的组合</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.version">{{@inputJson.version.length > 30 ? '最多只可输入30位字符' : '请输入正确的平台版本'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item form-item-lg',!@validJson.id && 'has-error']">
+                            <label>
+                                <i>* </i>平台ID:</label>
+                            <div class="has-icon has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.id}" :duplex="@inputJson.id" disabled>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.id">平台ID不能为空</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item form-item-lg textarea-item',!@validJson.description && 'has-error']">
+                            <label>
+                                <i>* </i>平台说明:</label>
+                            <div class="has-icon">
+                                <textarea class="form-control" :attr="{title:@inputJson.description}" :duplex="@inputJson.description" :focus="@handleFocus('description',$event)"
+                                    :blur="@handleFormat('description',@descriptionReg,$event)"></textarea>
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('description',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.description">请输入平台说明</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+        <!-- 删除弹窗 -->
+        <div :controller="ptjlgl-delete-vm" class="sbzygl-modal sbzygl-modal-tip ptjlgl-modal-delete">
+            <xmp :widget="{is:'common-ms-modal', title:'确定删除', modalSelector:'#ptjlgl-del-body', drag:true, btnalign:'center', modalWidth:300, modalHeight:80, show:@show,onOk:@handleOk,onCancel:@handleCancel}">
+                <div id="ptjlgl-del-body">
+                    <p class="tip-text">是否确定删除选中的{{@selectedRowsLength}}条数据？</p>
+                </div>
+            </xmp>
+        </div>
+        <!-- 账号管理弹窗 -->
+        <div :controller="ptjlgl-account-vm" class="sbzygl-modal ptjlgl-modal ptjlgl-modal-account" :class="@hasAllot ? 'has-extra-btn' : ''">
+            <xmp :widget="{is:'common-ms-modal', title:'平台账号配置', modalSelector:'#ptjlgl-modal-account', modalWidth:400, modalHeight: auto, btnalign:'center',okText:(@hasAllot ? '修改' : '分配') ,show:@show, ifextraBtn:(@hasAllot ? true : false), extraText:'删除账号', onOk:@handleOk, onCancel:@handleCancel,onExtra:@handleExtra}">
+                <div id="ptjlgl-modal-account">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <ms-form-item :class="['form-item',!@validJson.account && 'has-error']">
+                            <label>
+                                <i>* </i>账号:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.account}" :duplex="@inputJson.account" :focus="@handleFocus('account',$event)"
+                                    :blur="@handleFormat('account',@accountReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('account',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.account">
+                                <i class="fa fa-info-circle"></i>支持中英文与数字的组合</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.account">{{@inputJson.account.length > 30 ? '最多只可输入30位字符' : '请输入账号'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.password && 'has-error']">
+                            <label>
+                                <i>* </i>密码:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.password}" :duplex="@inputJson.password" :focus="@handleFocus('password',$event)"
+                                    :blur="@handleFormat('password',@passwordReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('password',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.password">
+                                <i class="fa fa-info-circle"></i>支持非中文字符，长度为6~30位</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.password">{{@inputJson.password.length > 30 ? '最多只可输入30位字符' : '请输入正确格式的密码'}}</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+    </div>
+</template>

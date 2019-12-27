@@ -1,0 +1,26 @@
+<template>
+	<div class="tree-select-wrap" :attr="{id:@wrapId}">
+		<div class="form-control tree-select-form" :click="@handleClick">
+			<span class="tree-select-selected" :attr="{title:@selectedTitle}" :css="{visibility:!@visible ? 'visible':'hidden'}">{{@selectedTitle}}</span>
+			<input class="tree-select-search" name="search" type="text" autocomplete="off" :duplex="@searchValue" :keyup="@handelSearchByAjax"
+			 :css="{visibility:(@showSearch && @visible && @treeData.length > 0)?'visible':'hidden'}" />
+			<!-- 该input框是用来防止在[name=search]框中按回车而刷新页面的问题 -->
+			<input type="text" style="display:none" />
+			<i :visible="@treeData.length !== 0" class="ane-tree-select-arrow" :class="@visible ? 'caret-up' : 'caret-down'"></i>
+		</div>
+		<div :visible="@visible && @noMatch" class="no-match">{{@select_txt.noRecord}}</div>
+		<div :visible="@treeData.length === 0" class="no-data" :attr="{title: @select_txt.noDep}">{{@select_txt.noDep}}</div>
+		<div :visible="@visible && !@noMatch && treeData.length > 0" :css="{width:@width,height:@height}" class="tree-panel">
+			<!-- 包含子部门 -->
+			<div class="included_dep" :click="@includedClick" :if="@branchShow">
+				<img :attr="{src:@includedImg}">{{@select_txt.branch}}
+			</div>
+			<xmp is="ms-tree" :visible="@isShowTreeOresult" :widget="{checkable: false,tree: @treeData, expandedKeys: @expandedKeys,onSelect:@onSelect,beforeExpand:@beforeExpand}"></xmp>
+			<ul class="treeSearchResult" :visible="!@isShowTreeOresult">
+				<li :for="($index, item) in @searchData" :click="@onSelect(item['node'].key, item)">{{item.node.orgName}}</li>
+			</ul>
+			<iframe :if="hasIframe" :css="{width:@iframeWidth,height:@iframeHeight}" src="about:blank" frameBorder="0"
+			 marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%;z-index:-1; filter:alpha(opacity=0);"></iframe>
+		</div>
+	</div>
+</template>

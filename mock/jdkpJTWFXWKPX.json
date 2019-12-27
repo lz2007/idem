@@ -1,0 +1,63 @@
+{
+    "code": 0,
+    "msg": "成功！",
+    "data": [
+      {
+        "code": "LEVAM_SGCLKP_ZQPDZFJLY",
+        "name": "正确佩戴执法记录仪",
+        "desc": "没有描述",
+        "order": 1,
+        "createdTime": 1524710446000,
+        "createBy": "admin"
+      },
+      {
+        "code": "LEVAM_SGCLKP_YSPZLZSYX",
+        "name": "音视频资料真实有效 ",
+        "desc": "没有描述",
+        "order": 2,
+        "createdTime": 1524710446000,
+        "createBy": "admin"
+      },
+      {
+        "code": "LEVAM_SGCLKP_GZQLYRW",
+        "name": "告知权利与任务 ",
+        "desc": "没有描述",
+        "order": 3,
+        "createdTime": 1524710446000,
+        "createBy": "admin"
+      },
+      {
+        "code": "LEVAM_SGCLKP_SLGJCJ",
+        "name": "摄录关键场景 ",
+        "desc": "没有描述",
+        "order": 4,
+        "createdTime": 1524710446000,
+        "createBy": "admin"
+      },
+      {
+        "code": "LEVAM_SGCLKP_ZFGCWMYY",
+        "name": "执法过程文明用语",
+        "desc": "没有描述",
+        "order": 5,
+        "createdTime": 1524710446000,
+        "createBy": "admin"
+      },
+      {
+        "code": "LEVAM_SGCLKP_YSPZLWZWJJPJ",
+        "name": "音视频资料完整，无剪辑拼接 ",
+        "desc": "没有描述",
+        "order": 6,
+        "createdTime": 1524710446000,
+        "createBy": "admin"
+      },
+      {
+        "code": "LEVAM_SGCLKP_ZFGCWWFXW",
+        "name": "执法过程无违法行为 ",
+        "desc": "没有描述",
+        "order": 7,
+        "createdTime": 1524710446000,
+        "createBy": "admin"
+      }
+    ]
+  }
+  

@@ -1,0 +1,192 @@
+{
+  "headers": {
+    "ret": 0,
+    "msg": "请求成功"
+  },
+  "body": {
+    "appShortcut": [
+      {
+        "id": 1,
+        "title": "地图指挥",
+        "icon": "map.png",
+        "color": null,
+        "type": "/gmvcsrtc/map/command/index.action",
+        "url": "/gmvcsrtc/system/index.action",
+        "table_": "0",
+        "show_": false,
+        "model": 1,
+        "code": "omm1000"
+      },
+      {
+        "id": 2,
+        "title": "视频监控",
+        "icon": "videomonitor.png",
+        "color": null,
+        "type": "/gmvcsrtc/video/monitor/index.action",
+        "url": "/gmvcsrtc/system/index.action",
+        "table_": "2",
+        "show_": false,
+        "model": 1,
+        "code": "omm2000"
+      },
+      {
+        "id": 3,
+        "title": "录像回放",
+        "icon": "videoreplay.png",
+        "color": null,
+        "type": "/gmvcsrtc/video/replay/index.action",
+        "url": "/gmvcsrtc/system/index.action",
+        "table_": "2",
+        "show_": false,
+        "model": 1,
+        "code": "omm3000"
+      },
+      {
+        "id": 4,
+        "title": "轨迹查询",
+        "icon": "trackquery.png",
+        "color": null,
+        "type": "/gmvcsrtc/track/query/index.action",
+        "url": "/gmvcsrtc/system/index.action",
+        "table_": "3",
+        "show_": false,
+        "model": 1,
+        "code": "omm4000"
+      },
+      {
+        "id": 5,
+        "title": "告警管理",
+        "icon": "warring.png",
+        "color": null,
+        "type": "/gmvcsrtc/sos/manage/index.action",
+        "url": "/gmvcsrtc/system/index.action",
+        "table_": "4",
+        "show_": false,
+        "model": 1,
+        "code": "omm5000"
+      },
+      {
+        "id": 6,
+        "title": "集群对讲",
+        "icon": "clusterIntercom.png",
+        "color": null,
+        "type": "/gmvcsrtc/cluster/intercom/index.action",
+        "url": "/gmvcsrtc/system/index.action",
+        "table_": "0",
+        "show_": false,
+        "model": 1,
+        "code": "omm6000"
+      },
+      {
+        "id": 7,
+        "title": "音视频库",
+        "icon": "audioandvideo.png",
+        "color": null,
+        "type": "/gmvcsmedia/system/audioAndVideoData/index.action",
+        "url": "/gmvcsmedia/system/index.action",
+        "table_": "0",
+        "show_": false,
+        "model": 1,
+        "code": "omm0010"
+      },
+      {
+        "id": 8,
+        "title": "执法档案",
+        "icon": "lawfile.png",
+        "color": null,
+        "type": "/gmvcsmedia/system/lawEnforcementRecord/index.action",
+        "url": "/gmvcsmedia/system/index.action",
+        "table_": "1",
+        "show_": false,
+        "model": 1,
+        "code": "omm0020"
+      },
+      {
+        "id": 9,
+        "title": "统计分析",
+        "icon": "statisticanalysis.png",
+        "color": null,
+        "type": "/gmvcsmedia/system/countAnalysis/index.action",
+        "url": "/gmvcsmedia/system/index.action",
+        "table_": "2",
+        "show_": false,
+        "model": 1,
+        "code": "omm0030"
+      },
+      {
+        "id": 10,
+        "title": "日志管理",
+        "icon": "logmanage.png",
+        "color": null,
+        "type": "/gmvcsmedia/system/logManage/index.action",
+        "url": "/gmvcsmedia/system/index.action",
+        "table_": "3",
+        "show_": false,
+        "model": 1,
+        "code": "omm0050"
+      },
+      {
+        "id": 11,
+        "title": "监督考评",
+        "icon": "supervision.png",
+        "color": null,
+        "type": "/gmvcsmedia/system/superviseEvaluation/index.action",
+        "url": "/gmvcsmedia/system/index.action",
+        "table_": "0",
+        "show_": false,
+        "model": 1,
+        "code": "omm0040"
+      }
+    ],
+    "mgrShortcut": [
+      {
+        "id": 12,
+        "title": "设备管理",
+        "icon": "sys-dev.png",
+        "color": null,
+        "type": "/gmvcsomm/system/deviceManage/index.action",
+        "url": "/gmvcsomm/system/index.action",
+        "table_": "0",
+        "show_": false,
+        "model": 2,
+        "code": "omm0100"
+      },
+      {
+        "id": 13,
+        "title": "存储管理",
+        "icon": "storagenanager.png",
+        "color": null,
+        "type": "/gmvcsomm/system/storageManage/index.action",
+        "url": "/gmvcsomm/system/index.action",
+        "table_": "1",
+        "show_": false,
+        "model": 2,
+        "code": "omm0200"
+      },
+      {
+        "id": 14,
+        "title": "用户管理",
+        "icon": "sys-user.png",
+        "color": null,
+        "type": "/gmvcsomm/system/userManage/index.action",
+        "url": "/gmvcsomm/system/index.action",
+        "table_": "2",
+        "show_": false,
+        "model": 2,
+        "code": "omm0300"
+      },
+      {
+        "id": 15,
+        "title": "系统配置管理",
+        "icon": "gaoyun-mgr.png",
+        "color": null,
+        "type": "/security",
+        "url": "/security",
+        "table_": "1",
+        "show_": false,
+        "model": 2,
+        "code": "omm0000"
+      }
+    ]
+  }
+}

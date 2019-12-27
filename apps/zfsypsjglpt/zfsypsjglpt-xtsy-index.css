@@ -1,0 +1,236 @@
+.zfsypsjglpt-xtsy {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #e4e4e4;
+}
+
+.zfsypsjglpt-xtsy-title {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 15px;
+    vertical-align: middle;
+    background-color: #f3f5f7;
+}
+
+.zfsypsjglpt-xtsy-title span {
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+    color: #536b82;
+    font-weight: bold;
+}
+
+.zfsypsjglpt-xtsy-info {
+    width: 100%;
+    padding: 20px 30px;
+}
+
+.zfsypsjglpt-xtsyInfoDetail {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+.zfsypsjglpt-xtsyInfoDetail span {
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+    color: #536b82;
+}
+
+.zfsypsjglpt-xtsy .account {
+    padding: 0 15px;
+    font-weight: bold;
+    color: #0476C5;
+}
+
+.zfsypsjglpt-xtsy .info-icon {
+    display: inline-block;
+    width: 44px;
+    vertical-align: top;
+    text-align: center;
+    padding-top: 8px;
+}
+
+.zfsypsjglpt-xtsy .info-icon img {
+    width: 36px;
+    height: 44px;
+}
+
+.zfsypsjglpt-xtsy .info-content {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.zfsypsjglpt-xtsy-situation {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+    color: #536b82;
+}
+
+.zfsypsjglpt-xtsy-situation .situation-count {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.zfsypsjglpt-xtsy-situation-today,
+.zfsypsjglpt-xtsy-situation-month,
+.zfsypsjglpt-xtsy-situation-year {
+    width: 33%;
+    text-align: left;
+    display: inline-block;
+    height: 148px;
+    border: 1px solid #e4e4e4;
+    border-bottom: 5px solid rgb(0, 153, 255);
+}
+
+.zfsypsjglpt-xtsy-situation-today {
+    float: left;
+    border-bottom: 5px solid rgb(0, 201, 102);
+}
+
+.zfsypsjglpt-xtsy-situation-year {
+    float: right;
+    border-bottom: 5px solid rgb(0, 204, 204)
+}
+
+.zfsypsjglpt-xtsy-situation-today .situation-count {
+    color: rgb(0, 201, 102);
+}
+
+.zfsypsjglpt-xtsy-situation-month .situation-count {
+    color: rgb(0, 153, 255);
+}
+
+.zfsypsjglpt-xtsy-situation-year .situation-count {
+    color: rgb(0, 204, 204);
+}
+
+.zfsypsjglpt-xtsy-situation-today div,
+.zfsypsjglpt-xtsy-situation-month div,
+.zfsypsjglpt-xtsy-situation-year div {
+    text-align: center;
+}
+
+.situation-three-con span {
+    display: inline-block;
+    width: 33%;
+}
+
+.position-left {
+    float: left;
+}
+
+.position-right {
+    float: right;
+}
+
+.text-align-left {
+    text-align: left !important;
+}
+
+.text-align-right {
+    text-align: right !important;
+}
+
+.situation-three-con span:first-child {
+    float: left;
+}
+
+.situation-three-con span:last-child {
+    float: right;
+}
+
+.zfsypsjglpt-xtsy-situation>div>p {
+    padding-left: 24px;
+    padding-top: 5px;
+}
+
+#zfypjzxsc {
+    height: 90%;
+}
+
+.zfsypsjglpt-xtsy-linepic {
+    height: 300px;
+    border: 1px solid #e4e4e4;
+    margin: 8px 0px;
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+    color: #536b82;
+}
+
+.zfsypsjglpt-xtsy-linepic>p {
+    text-align: left;
+    padding: 11px 15px 0px 24px;
+}
+
+.zfsypsjglpt-xtsy-rate .xtsy-rate-model {
+    display: inline-block;
+    width: 25%;
+    text-align: center;
+    height: 195px;
+    overflow: hidden;
+}
+
+.xtsy-rate-model div {
+    width: 98%;
+    border: 1px solid #e4e4e4;
+    height: 100%;
+    position: relative;
+    text-align: center;
+}
+
+.xtsy-rate-model div img {
+    width: 85px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
+.zfsypsjglpt-xtsy-rate .xtsy-rate-model div {
+    display: inline-block;
+    text-align: center;
+}
+
+.zfsypsjglpt-xtsy-rate .m23 {
+    margin-left: 23px;
+}
+
+.zfsypsjglpt-xtsy-rate>div>div>p {
+    text-align: left;
+    padding: 11px 15px 0px 24px;
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+    color: #536b82;
+}
+
+.xtsy-rate-model>div>div {
+    border: none;
+    /* width: 100%; */
+    /* margin: 0 auto;
+    position: relative;  */
+}
+
+.xtsy-rate-model>div>div>div {
+    overflow: inherit !important;
+}
+
+.xtsy-rate-model canvas {
+    /* width: 50% !important; */
+    position: absolute;
+    top: -37px !important;
+}
+
+/* #bmjd-rate>div,
+#bmgl-rate>div,
+#bmbz-rate>div,
+#bmcc-rate>div {
+    width: 100%;
+    height: 100%;
+}
+
+#zfypjzxsc>div {
+    width: 100%;
+} */

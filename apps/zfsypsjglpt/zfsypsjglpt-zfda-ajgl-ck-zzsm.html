@@ -1,0 +1,21 @@
+<template>
+        <div id="printview">
+            <div>
+                <div  class="print_left" :visible="@zjzzsm_show" ms-html="@zjzzsm"></div>
+                <div  class="print_left" :visible="@zjlysm_show" ms-html="@zjlysm"></div>
+                <div  class="print_left" :visible="@gpmfsm_show" ms-html="@gpmfsm"></div>
+                <div  class="print_left" :visible="@gpbasm_show" ms-html="@gpbasm"></div>
+                <div class="print_right">
+                    <button id="zjzzsm" class="dark-btn" :click="@changeTab">证据制作说明</button>
+                    <br>
+                    <button id="zjlysm" class="dark-btn" :click="@changeTab">证据来源说明</button>
+                    <br>
+                    <button id="gpmfsm" class="dark-btn" :click="@changeTab">光盘密封说明</button>
+                    <br>
+                    <button id="gpbasm" class="dark-btn" :click="@changeTab">光盘办案说明</button>
+                    <br>
+                    <button class="print_btn" :click="@print('dasdasd')">打印当前页</button>
+                </div>
+            </div>
+        </div>
+    </template>

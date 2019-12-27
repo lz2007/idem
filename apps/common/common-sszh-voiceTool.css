@@ -1,0 +1,82 @@
+.sszhvoiceTool .voice-bar-wrap {
+    position: absolute;
+    /*top: -10px;*/
+    /*left: -5px;*/
+    width: 32px;
+    height: 140px;
+    padding-top: 38px;
+    z-index: 10;
+}
+.sszhvoiceTool .voice-bar-wrap .sound {
+    position: absolute;
+    width: 21px;
+    height: 21px;
+    top: 10px;
+    left: 5px;
+}
+.sszhvoiceTool .sound {
+    background: url(/static/image/sszhxt/sound.png?__sprite) 0 0 no-repeat;
+}
+.sszhvoiceTool .sound:hover {
+    background: url(/static/image/sszhxt/soundhover.png?__sprite) 0 0 no-repeat;
+}
+.sszhvoiceTool .sound-bar {
+    position: relative;
+    height: 100%;
+    padding: 10px 0 20px;
+    font-size: 12px;
+    text-align: center;
+    color: #536b82;
+    background: #fff;
+    border: 1px solid #dfe4e7;
+    border-radius: 3px;
+    z-index: 10;
+}
+.sszhvoiceTool.sound-bar .outer-triangle {
+    top: -12px;
+    margin-left: -6px;
+    border-width: 6px;
+    border-bottom-color: #dfe4e7;
+}
+.sszhvoiceTool .sound-bar .triangle {
+    position: absolute;
+    /*top: 100px;*/
+    left: 50%;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    border-style: solid;
+    border-color: transparent;
+}
+.sszhvoiceTool .sound-bar .inner-triangle {
+    top: -10px;
+    margin-left: -5px;
+    border-width: 5px;
+    border-bottom-color: #ccccd1;
+}
+.sszhvoiceTool .sound-level-wrap {
+    position: relative;
+    width: 8px;
+    height: 100%;
+    margin: 0 auto;
+    border-radius: 10px;
+    background: #eff4f8;
+}
+.sszhvoiceTool .sound-level {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: #33cc00;
+    border-radius: 10px;
+}
+.sszhvoiceTool .sound-bar .sound-num {
+    position: absolute;
+    width: 100%;
+    height: 18px;
+    line-height: 18px;
+    left: 0;
+    bottom: 0;
+    font-size: 10px;
+    text-align: center;
+}

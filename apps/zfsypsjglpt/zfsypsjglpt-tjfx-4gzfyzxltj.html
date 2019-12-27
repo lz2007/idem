@@ -1,0 +1,67 @@
+<template>
+    <div class="tjfx-4gzfyzxltj">
+        <div class="zfyzxltj-search group">
+            <div class="search-org search" :if="@authority.SEARCH">
+                <label>所属部门：</label>
+                <div :controller="zfyzxltj-org-select" class="zfyzxltj-org-select">
+                    <ms-tree-select :widget ="{treeData:@dataTree,multiple:false,value:@depName,expandedKeys: @expandedKeys,onChange:@selectfuc} "></ms-tree-select>
+                </div>
+            </div>
+            <div class="search-obj search" :if="@authority.SEARCH">
+                <label>统计对象：</label>
+                <div :controller="zfyzxltj-obj-select" class="zfyzxltj-obj-select">
+                    <ms-select :widget="{value:@selValue,options:@options,onChange:@haldeChange}"></ms-select>
+                </div>
+            </div>
+            <div class="search-startTime search" :if="@authority.SEARCH">
+                <label>开始时间：</label>
+                <div class="zfyzxltj-startTime-select" :controller="zfyzxltj-startTime-select">
+                    <ms-datepicker :class="@isStartTime ? ['input_error']:''" :widget="{onChange:@handleChange, placeholder:'请选择开始时间', value:@selValue, showTime: false, endDate:@endDate}"></ms-datepicker>
+                    <div :if="@isStartTime" class="zfyzxltj_start_time_tip">
+                        <span :class="['zfyzxltj_tip']">
+                            <i class="fa fa-exclamation-circle">&nbsp;开始时间不能为空</i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="search-endTime search" :if="@authority.SEARCH">
+                <label>结束时间：</label>
+                <div class="zfyzxltj-endTime-select" :controller="zfyzxltj-endTime-select">
+                    <ms-datepicker :class="@isEndTime ? ['input_error']:''" :widget="{onChange:@handleChange, placeholder:'请选择结束时间', value:@selValue, showTime: false, endDate:@endDate}"></ms-datepicker>
+                    <div :if="@isEndTime" class="zfyzxltj_start_time_tip">
+                        <span :class="['zfyzxltj_tip']">
+                            <i class="fa fa-exclamation-circle">&nbsp;结束时间不能为空</i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <button type="button"  class="search-exportBtn" :click="@zfyzxltj_exportFnc" :if="authority.EXPORT"><span>导出</span></button>  
+            <button type="button"  class="search-btn" :click="@zfyzxltj_searchFnc" :if="@authority.SEARCH"><span>查询</span></button>  
+        </div>
+        <div class="zfyzxltj-content" :controller="zfyzxltj-table">
+            <div :if="@tableShowByPerson">
+                <ms-table-saika :class="['zfyzxltj-tabCont']" :widget="{data:@remoteList,currentPage:@current,prePageSize:@pageSize,loading:@loading,isTitle:true}"> 
+                    <ms-table-header :widget="{title:'序号', type:'index',className:'indexCol'}" ></ms-table-header>
+                    <ms-table-header :widget="{title:'所属部门',dataIndex:'orgName',className:'orgCol'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'警员',dataIndex:'userName',className:'userName'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'在线天数（天）',dataIndex:'onlineTime',className:'onlineTime'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'在线率（在线时长/规定时长*100%）',dataIndex:'onlineRate'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'在线总时长（时：分：秒）',dataIndex:'onlineTotalTime'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'平均每天在线时长（在线总时长/在线天数）',dataIndex:'preOnlineTime'}"></ms-table-header>
+                </ms-table-saika>
+            </div>
+            <div :if="@tableShowByOrg">
+                <ms-table-saika :class="['zfyzxltj-tabCont']" :widget="{data:@remoteList,currentPage:@current,prePageSize:@pageSize,loading:@loading,isTitle:true}"> 
+                    <ms-table-header :widget="{title:'序号', type:'index',className:'indexCol' }" ></ms-table-header>
+                    <ms-table-header :widget="{title:'所属部门',dataIndex:'orgName',className:'orgCol'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'执法仪配发数',dataIndex:'zfypfs'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'在线天数（天）',dataIndex:'onlineTime',className:'onlineTime'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'在线率（在线时长/规定时长*100%）',dataIndex:'onlineRate'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'在线总时长（时：分：秒）',dataIndex:'onlineTotalTime'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'平均每天在线时长（在线总时长/在线天数）',dataIndex:'preOnlineTime'}"></ms-table-header>
+                </ms-table-saika>
+            </div>
+            <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent}"></ms-pages>
+        </div>
+    </div>
+</template>

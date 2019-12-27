@@ -1,0 +1,34 @@
+<template>
+    <div class="xtpzgl_xtcd">
+        <div class="sidebar_tree" :controller="xtcd_tree">
+            <ms-tree :widget="{tree: @xtcd_tdata, expandedKeys: @expandedKeys, onSelect: @selectfuc}"></ms-tree>
+        </div>
+        <div class="drag_space"></div>
+        <div class="search_box">
+            <div class="btn_box">
+                <a class="import_btn" :click="import_menu">导入菜单</a>
+            </div>
+        </div>
+        <div class="xtpzgl_xtcd_table" :controller="xtpzgl_xtcd_table">
+            <ms-table :widget="{data: @xtcd_table_data, actions: @actions, pagination: @table_pagination, onChange: @handleTableChange}">
+                <ms-table-header :widget="{title:'序号', type:'index'}"></ms-table-header>
+                <ms-table-header :widget="{title:'权限名', dataIndex:'menuName'}"></ms-table-header>
+                <ms-table-header :widget="{title:'权限编码', dataIndex:'menuCode'}"></ms-table-header>
+                <ms-table-header :widget="{title:'权限描述 ', dataIndex:'menuText'}"></ms-table-header>
+                <ms-table-header :widget="{title:'序号', dataIndex:'orderNo'}"></ms-table-header>
+            </ms-table>
+        </div>
+
+        <!--导入菜单-->
+        <div class="import">
+            <ms-dialog :widget="{$innerVm: 'import_dialog', okText: '确认', show: @import_show, onCancel: @dialogCancel, onOk: @dialogOk}">
+                <div slot="body" ms-skip class="dialog_item">
+                    <span>导入菜单文件:</span>
+                    <ms-upload :widget="{action: @fileUploadUrl, listType: 'text-list', onChange: @handleChange}">
+                        <i class="fa fa-upload"></i>选择文件
+                    </ms-upload>
+                </div>
+            </ms-dialog>
+        </div>
+    </div>
+</template>

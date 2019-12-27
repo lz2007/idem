@@ -1,0 +1,9 @@
+<template>
+	<div :controller='menubar_vm' class="menubar_wrap" ms-visible="showPage">
+		<div class="menubar_cont">
+			<ul>
+				<li ms-for="el in @item" class="menubar_li active"><a class="barlink" :click="@showCrp" href="javascript: void(0);">{{@el.title}}</a></li>
+			</ul>
+		</div>
+	</div>
+</template>

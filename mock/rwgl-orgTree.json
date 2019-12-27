@@ -1,0 +1,272 @@
+{
+    "code": 0,
+    "msg": "成功！",
+    "data": [
+        {
+            "orgId": "666",
+            "orgCode": "666",
+            "orgName": "xxx局12",
+            "childs": [
+                {
+                    "orgId": "GMO1100000020171106133922ff2fffffe",
+                    "orgCode": "234",
+                    "orgName": "34243",
+                    "childs": [],
+                    "orderNo": 32,
+                    "path": "/666/234",
+                    "updateTime": 1509946762000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171028111627f8afffff2",
+                    "orgCode": "aa",
+                    "orgName": "dasdaddsas",
+                    "childs": [],
+                    "orderNo": 454,
+                    "path": "/666/320",
+                    "updateTime": 1509947793000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171114170937ff6ffffff",
+                    "orgCode": "212",
+                    "orgName": "2121",
+                    "childs": [],
+                    "orderNo": 221212212,
+                    "path": "/666/212",
+                    "updateTime": 1510650577000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171114140009ff9ffffef",
+                    "orgCode": "long999",
+                    "orgName": "long999",
+                    "childs": [],
+                    "orderNo": 999,
+                    "path": "/666/long999",
+                    "updateTime": 1510639209000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171028101837f8afffffc",
+                    "orgCode": "we6666",
+                    "orgName": "we6666",
+                    "childs": [],
+                    "orderNo": 2431241,
+                    "path": "/666/we666",
+                    "updateTime": 1510639327000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171114135805ff9fffff6",
+                    "orgCode": "long222",
+                    "orgName": "long222",
+                    "childs": [],
+                    "orderNo": 222,
+                    "path": "/666/long222",
+                    "updateTime": 1510639085000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171114140102ff9ffffec",
+                    "orgCode": "long2222",
+                    "orgName": "long2222",
+                    "childs": [],
+                    "orderNo": 2222,
+                    "path": "/666/long2222",
+                    "updateTime": 1510639263000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171114135948ff9fffff0",
+                    "orgCode": "long888",
+                    "orgName": "long888",
+                    "childs": [],
+                    "orderNo": 888,
+                    "path": "/666/long888",
+                    "updateTime": 1510639189000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171114135933ff9fffff1",
+                    "orgCode": "long777",
+                    "orgName": "long777",
+                    "childs": [],
+                    "orderNo": 777,
+                    "path": "/666/long777",
+                    "updateTime": 1510639173000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171114140122ff9ffffeb",
+                    "orgCode": "long3333",
+                    "orgName": "long3333",
+                    "childs": [],
+                    "orderNo": 3333,
+                    "path": "/666/long3333",
+                    "updateTime": 1510639282000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171114175118ff6fffffe",
+                    "orgCode": "213",
+                    "orgName": "3213",
+                    "childs": [],
+                    "orderNo": 21321323,
+                    "path": "/666/213",
+                    "updateTime": 1510653079000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171114135859ff9fffff3",
+                    "orgCode": "long555",
+                    "orgName": "long555",
+                    "childs": [],
+                    "orderNo": 555,
+                    "path": "/666/long555",
+                    "updateTime": 1510639140000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171028102257f8afffff5",
+                    "orgCode": "uzi6",
+                    "orgName": "uzi6",
+                    "childs": [],
+                    "orderNo": 4324,
+                    "path": "/666/uzi",
+                    "updateTime": 1509694261000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171029095941f88fffffe",
+                    "orgCode": "124",
+                    "orgName": "研发1114214",
+                    "childs": [
+                        {
+                            "orgId": "GMO1100000020171114154114ff9ffffe9",
+                            "orgCode": "5555555",
+                            "orgName": "研发",
+                            "childs": [],
+                            "orderNo": 124,
+                            "path": "/666/124/5555555",
+                            "updateTime": 1510645274000,
+                            "dutyRange": null,
+                            "extend": null
+                        }
+                    ],
+                    "orderNo": 214,
+                    "path": "/666/124",
+                    "updateTime": 1510105508000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171114140026ff9ffffee",
+                    "orgCode": "long1000",
+                    "orgName": "long1000",
+                    "childs": [],
+                    "orderNo": 1000,
+                    "path": "/666/long1000",
+                    "updateTime": 1510639227000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171029100121f88fffffd",
+                    "orgCode": "long",
+                    "orgName": "研发3331",
+                    "childs": [],
+                    "orderNo": 1,
+                    "path": "/666/long111",
+                    "updateTime": 1510585284000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171114144321ff9ffffea",
+                    "orgCode": "long4444",
+                    "orgName": "long4444",
+                    "childs": [],
+                    "orderNo": 4444,
+                    "path": "/666/long4444",
+                    "updateTime": 1510641802000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171114140045ff9ffffed",
+                    "orgCode": "long1111",
+                    "orgName": "long1111",
+                    "childs": [],
+                    "orderNo": 1111,
+                    "path": "/666/long1111",
+                    "updateTime": 1510639246000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171114135841ff9fffff4",
+                    "orgCode": "long444",
+                    "orgName": "long444",
+                    "childs": [],
+                    "orderNo": 444,
+                    "path": "/666/long444",
+                    "updateTime": 1510639122000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171107140058fe6ffffff",
+                    "orgCode": "ttetete",
+                    "orgName": "ttetete12",
+                    "childs": [],
+                    "orderNo": 12,
+                    "path": "/666/ttetete",
+                    "updateTime": 1510197413000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171107145546fe6fffffe",
+                    "orgCode": "23214",
+                    "orgName": "32112",
+                    "childs": [],
+                    "orderNo": 123321,
+                    "path": "/666/23214",
+                    "updateTime": 1510037747000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO1100000020171114135914ff9fffff2",
+                    "orgCode": "long666",
+                    "orgName": "long666",
+                    "childs": [],
+                    "orderNo": 666,
+                    "path": "/666/long666",
+                    "updateTime": 1510639154000,
+                    "dutyRange": null,
+                    "extend": null
+                }
+            ],
+            "orderNo": 666,
+            "path": "/666",
+            "updateTime": 1509694936000,
+            "dutyRange": "123",
+            "extend": "123"
+        }
+    ]
+}

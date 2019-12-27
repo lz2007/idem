@@ -1,0 +1,7 @@
+.common_player_gm a:hover,
+.common_player_gm a {
+    display: block;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+}

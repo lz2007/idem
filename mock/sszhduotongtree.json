@@ -1,0 +1,39 @@
+{
+    "code": 0,
+    "data": {
+        "currentElements": {
+            "totalCount": 100,
+            "currentPage": 1,
+            "pageSize": 10,
+            "1": [
+                {
+                    "gbcode": "1",
+                    "online" : 0,
+                    "rid": 212,
+                    "orgRid":313,
+                    "usercode": 6,
+                    "username":"小猪佩奇",
+                    "devtype": 1
+                },
+                {
+                    "gbcode": "2",
+                    "online" : 0,
+                    "rid": 2112,
+                    "orgRid":313,
+                    "usercode": 6,
+                    "username":"小猪佩奇",
+                    "devtype": 2
+                },
+                {
+                    "gbcode": "3",
+                    "online" : 0,
+                    "rid": 212,
+                    "orgRid":313,
+                    "usercode": 6,
+                    "username":"小猪佩奇",
+                    "devtype": 3
+                }
+            ]
+        }
+    }
+}

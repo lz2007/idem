@@ -1,0 +1,37 @@
+<template>
+ <div>
+		<div class="left-wrap">
+				<h5 class="title">{{@settings.leftTitle}}</h5>
+				<div class="left-content">
+					<div class="search-input-wrap">
+						<input type="text" :duplex="@searchInputValue" :attr="{placeholder:@settings.searchPlaceHolder}" ms-keypress="@handleSearchEnter($event)">
+						<i class="fa fa-search" :click="@handleSearchClick"></i>
+					</div>
+					<div class="org-group" id="ccfwglassign">
+						<!-- <ms-tree :widget="{checkable: false,tree: @orgData,beforeExpand:@handleBeforeExpand,checkedKeys: @checkedKeys, expandedKeys: @expandedKeys,onSelect:@handleSelect,onDblClick:@handleDblClick}"></ms-tree> -->
+						<xmp is="ms-tree" :widget="{checkable: false,tree: @orgData,beforeExpand:@handleBeforeExpand,checkedKeys: @checkedKeys, expandedKeys: @expandedKeys,onSelect:@handleSelect,onDblClick:@handleDblClick}"></xmp>
+						
+					</div>
+				</div>
+			</div>
+			<div class="middle-wrap">
+				<!-- <div  :class="[@rightDisabled ? 'disabled' : '','fa','fa-angle-right']"  :click="@handleToRight()"></div>
+				<div  :class="[@leftDisabled ? 'disabled' : '','fa','fa-angle-left']"  :click="@handleToLeft()"></div> -->
+				<div class="ywzx-assign-right"  :click="@handleToRight()"></div>
+				<div class="ywzx-assign-left"  :click="@handleToLeft()"></div>
+			</div>
+			<div class="right-wrap">
+				<h5 class="title">{{@settings.rightTitle}}</h5>
+				<div class="right-content">
+					<div :visible="@resultsGroup.length==0" class="rightItemsNull">{{@settings.rightEmptyTip}}</div>
+					<dl :for="($index,item) in @resultsGroup">
+						<dt><i :class="[@item.isIconCollapse ? 'collapse' : 'expand']" :click="@handleCollapseExpand($index)"></i><em></em><a>{{item.parentName}}</a><span class="fa faClose" :click="@handleDeleteClick($index)"></span></dt>
+						<dd   :for="($$index,childItem) in @item.children"  :class="[@childItem.active ? 'active' : '']"  :click="@handleRightItemClick($$index,$index,$event)" :dblclick="@handleRightItemDbClick($$index,$index,$event)"  ms-effect="{is:'assign-collapse', action:item.action}">
+							<i ></i><a :attr="{title:childItem.name}">{{childItem.name}}</a>
+                            <span class="fa faClose" :click="@handleSingleDeleteClick($index,$$index)"></span>
+                        </dd>
+					</dl>
+				</div>
+			</div>
+ </div>
+</template>

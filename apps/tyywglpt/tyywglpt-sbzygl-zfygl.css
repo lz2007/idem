@@ -1,0 +1,204 @@
+/* 统一运维管理平台--设备资源管理--执法仪管理
+caojiacong */
+
+.zfygl .tyywglpt-search-box .form-inline {
+    top: 0;
+}
+
+.zfygl .search-line-second .form-item {
+    margin-bottom: 0;
+}
+
+/* 尽量减少宽度让注册时间选中一段时间时，多出来的两个时间框不会掉到第三行 */
+
+/* .zfygl .tyywglpt-search-box label{
+    width: 60px;
+}
+.zfygl .tyywglpt-search-box .form-item{
+    width: 245px;
+} */
+
+.zfygl .tyywglpt-search-box .label-lg {
+    width: 288px;
+}
+
+.zfygl .tyywglpt-search-box .label-lg label {
+    width: 103px;
+}
+
+.zfygl .duration-container {
+    display: inline-block;
+}
+
+.zfygl .form-item.duration-item {
+    margin-right: 15px;
+}
+
+.zfygl .duration-container .form-control {
+    height: 30px;
+}
+
+.zfygl .date-line {
+    margin: 0 4px;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+}
+
+.zfygl .tyywglpt-list-panel {
+    top: 244px;
+}
+
+.zfygl-modal-register .com-modal-modal-body,
+.zfygl-modal-modify .com-modal-modal-body {
+    padding: 0 100px;
+}
+
+.zfygl-modal-register .modal-title,
+.zfygl-modal-modify .modal-title {
+    margin-left: -100px;
+    margin-right: -100px;
+}
+
+.zfygl-modal-register .allot-type-btn,
+.zfygl-modal-modify .allot-type-btn {
+    width: 80px;
+    position: absolute;
+    left: 16px;
+}
+
+.zfygl-modal-register .allot-container,
+.zfygl-modal-modify .allot-container {
+    height: 150px;
+}
+
+.zfygl-modal-register .form-inline .form-item-lg,
+.zfygl-modal-modify .form-inline .form-item-lg {
+    width: 100%;
+}
+
+.zfygl-modal-register .form-item-lg .form-control,
+.zfygl-modal-modify .form-item-lg .form-control {
+    width: 495px;
+}
+
+.zfygl-modal-register .form-item-lg .has-icon .form-control,
+.zfygl-modal-modify .form-item-lg .has-icon .form-control {
+    width: 461px;
+}
+
+/* 采集站定向升级 */
+
+.sbzygl-modal-direct .com-modal-modal-body {
+    padding: 20px 50px;
+    font-size: 14px;
+}
+
+.sbzygl-modal-direct .form-inline .form-item {
+    width: 400px;
+}
+
+.sbzygl-modal-direct .form-item .form-control {
+    width: 280px;
+}
+
+.sbzygl-modal-direct .com-modal-modal-body label {
+    width: auto;
+    text-align: left;
+}
+
+.sbzygl-modal-direct .checkbox-group {
+    width: 500px;
+    height: 150px;
+    overflow: hidden;
+}
+
+.sbzygl-modal-direct .checkbox-group .device-list,
+.sbzygl-modal-direct .checkbox-group .model-list {
+    height: 120px;
+    overflow: auto;
+    margin-left: -4px\0;
+}
+
+.sbzygl-modal-direct .checkbox-group .null {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.sbzygl-modal-direct .checkbox-group li {
+    display: inline-block;
+    width: 110px;
+    height: 24px;
+    line-height: 24px;
+    margin-right: 10px;
+}
+
+.sbzygl-modal-direct .checkbox-group li .select-label {
+    width: 12px;
+    height: 12px;
+}
+
+.sbzygl-modal-direct .checkbox-group li label {
+    width: 78px;
+    font-weight: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sbzygl-modal-direct .checkbox-group li input {
+    width: 0;
+    display: none;
+    display: inline-block\0;
+}
+
+.sbzygl-modal-direct .check_selected {
+    background: url(/static/image/tyywglpt/check_selected.png?__sprite);
+}
+
+.sbzygl-modal-direct .check_unselected {
+    background: url(/static/image/tyywglpt/check_unselected.png?__sprite);
+}
+
+.sbzygl-modal-direct .checkbox-group .list-loading {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: url(/static/image/tyywglpt/loading.gif) center center no-repeat;
+}
+
+.sbzygl-modal-direct .list-loading span {
+    width: 100%;
+    position: absolute;
+    top: 54%;
+    left: 0;
+    text-align: center;
+}
+
+/* 远程配置更新 */
+
+.zfygl-modal-remote-update .com-modal-modal-body {
+    padding-top: 16px;
+}
+
+.zfygl-modal-remote-update .form-inline .form-item {
+    width: 320px;
+}
+
+.zfygl-modal-remote-update .form-item label {
+    width: 130px;
+}
+
+.zfygl-modal-remote-update .form-item .form-tip {
+    padding-left: 135px;
+}
+
+.zfygl-modal-remote-update .form-inline .form-item-lg {
+    width: 100%;
+}
+
+.zfygl-modal-remote-update .form-item-lg .has-icon .form-control {
+    width: 485px;
+}

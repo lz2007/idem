@@ -1,0 +1,711 @@
+/* ------------------------公共开始------------------------ */
+
+.tyywglpt {
+    font-family: "Microsoft YaHei", serif;
+    color: #536b82;
+}
+
+.tyywglpt p {
+    margin: 0;
+}
+
+.tyywglpt .btn {
+    padding: 0;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 0;
+}
+
+.tyywglpt .btn:focus {
+    outline: none;
+}
+
+.tyywglpt .btn-normal {
+    width: 120px;
+    height: 30px;
+    background: #0078d7;
+}
+
+.tyywglpt .btn-normal:hover {
+    background: #0057a1;
+}
+
+.tyywglpt .com-pages {
+    bottom: 22px;
+}
+
+/* .tyywglpt .enable-copy-item input.form-control{
+    text-overflow: initial;
+} */
+
+.col-2 {
+    width: 2%;
+}
+
+.col-3 {
+    width: 3%;
+}
+
+.col-4 {
+    width: 4%;
+}
+
+.col-5 {
+    width: 5%;
+}
+
+.col-6 {
+    width: 6%;
+}
+
+.col-7 {
+    width: 7%;
+}
+
+.col-8 {
+    width: 8%;
+}
+
+.col-9 {
+    width: 9%;
+}
+
+.col-10 {
+    width: 10%;
+}
+
+.col-11 {
+    width: 11%;
+}
+
+.col-12 {
+    width: 12%;
+}
+
+.col-13 {
+    width: 13%;
+}
+
+.col-14 {
+    width: 14%;
+}
+
+.col-15 {
+    width: 15%;
+}
+
+.col-16 {
+    width: 16%;
+}
+
+.col-17 {
+    width: 17%;
+}
+
+.col-18 {
+    width: 18%;
+}
+
+.col-19 {
+    width: 19%;
+}
+
+.col-20 {
+    width: 20%;
+}
+
+.col-21 {
+    width: 21%;
+}
+
+.col-22 {
+    width: 22%;
+}
+
+.col-23 {
+    width: 23%;
+}
+
+.col-24 {
+    width: 24%;
+}
+
+.col-25 {
+    width: 25%;
+}
+
+.col-26 {
+    width: 26%;
+}
+
+.col-27 {
+    width: 27%;
+}
+
+.col-28 {
+    width: 28%;
+}
+
+.col-29 {
+    width: 29%;
+}
+
+.col-30 {
+    width: 30%;
+}
+
+.col-35 {
+    width: 35%;
+}
+
+.col-40 {
+    width: 40%;
+}
+
+/* ------------------------公共结束------------------------ */
+
+/*------------------------ 搜索栏开始----------------------------- */
+
+.tyywglpt-search-box {
+    position: relative;
+    padding: 9px 8px;
+    margin-top: 8px;
+    background: #f2f2f2;
+    /* border: 1px solid #e4e4e4; */
+}
+
+.tyywglpt-search-box .form-inline {
+    position: relative;
+    top: 5px;
+}
+
+.tyywglpt-search-box .form-inline .form-item {
+    width: 250px;
+    /*该宽度适用于五个字以下的label，特殊情况请在自己的页面内覆盖*/
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 20px;
+}
+
+.tyywglpt-search-box .form-item label {
+    width: 65px;
+    /*该宽度适用于五个字的以下label，特殊情况请在自己的页面内覆盖*/
+    display: inline-block;
+    margin-right: 5px;
+    text-align: right;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.tyywglpt-search-box .form-item .form-control {
+    display: inline-block;
+    width: 180px;
+    height: 30px;
+    line-height: 30px;
+    color: #536b82;
+    padding: 0 20px 0 12px;
+    vertical-align: middle;
+}
+
+.tyywglpt-search-box .ane-select-selected {
+    /*为了在ie中垂直居中*/
+    padding: 0;
+    top: -1px;
+}
+
+.tyywglpt-search-box .ane-select-arrow,
+.tyywglpt-search-box .ane-tree-select-arrow {
+    top: 4px;
+}
+
+.tyywglpt-search-box .form-inline .ane-datepicker {
+    width: 180px;
+    display: inline-block;
+}
+
+.tyywglpt-search-box .btn-query {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 30px;
+    margin-left: 40px;
+    background: #fd8702;
+}
+
+.tyywglpt-search-box .btn-query:hover {
+    background: #db7400;
+}
+
+.tyywglpt-search-box .form-item .fa-close {
+    position: absolute;
+    top: 6px;
+    right: 5px;
+    font-size: 16px;
+    color: #536b82;
+    cursor: pointer;
+}
+
+/* ie8 输入框文字过长时padding-left,padding-right失效处理 */
+
+.tyywglpt-search-box .has-icon-input-wrap {
+    display: inline-block;
+    padding-left: 12px;
+    padding-right: 20px;
+    border: 1px solid #d1d0d0;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.tyywglpt-search-box .has-icon-input-wrap input.form-control {
+    border: none;
+    width: 146px;
+    height: 28px;
+    padding: 0;
+}
+
+/*------------------------ 搜索栏结束----------------------------- */
+
+/*------------------------ 功能栏开始----------------------------- */
+
+.tyywglpt-tool-bar {
+    height: 30px;
+    line-height: 30px;
+    padding-left: 1px;
+    margin: 8px 0;
+    /* background: #0078d7;
+    border: 1px solid #0078d7; */
+}
+
+.tyywglpt-tool-bar .btn-tool {
+    width: 100px;
+    height: 30px;
+    line-height: 14px;
+    margin-right: 12px;
+    background: #0053ba;
+    vertical-align: top;
+}
+
+.tyywglpt-tool-bar .btn-tool-lg {
+    width: 130px;
+}
+
+.tyywglpt-tool-bar .btn-tool:hover {
+    background: #0053ba;
+}
+
+.tyywglpt-tool-bar .btn-file>input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    font-size: 23px;
+    cursor: pointer;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    direction: ltr;
+}
+
+.tyywglpt-tool-bar .btn-file>span {
+    line-height: 30px;
+}
+
+.tyywglpt-tool-bar .disabled {
+    background: #d4d7d9;
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+.tyywglpt-tool-bar .disabled:hover {
+    background: #d4d7d9;
+}
+
+/*------------------------ 功能栏结束----------------------------- */
+
+/*------------------------ 描述栏开始----------------------------- */
+
+.tyyw-describe-bar {
+    color: #0078d7;
+    background: #f3f5f7;
+    font-weight: bold;
+    margin: 8px 0;
+    padding-left: 8px;
+}
+
+.tyyw-describe-bar div {
+    line-height: 30px;
+    height: 30px;
+}
+
+.tyyw-describe-bar span {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+/*------------------------ 描述栏结束----------------------------- */
+
+/*------------------------ 列表开始----------------------------- */
+
+.tyywglpt-list-panel {
+    position: absolute;
+    bottom: 60px;
+    top: 214px;
+    left: 8px;
+    right: 8px;
+    font-size: 14px;
+    color: #2c3640;
+    text-align: center;
+}
+
+.tyywglpt-list-panel input {
+    display: none;
+    width: 0;
+    display: inline-block\0;
+}
+
+.tyywglpt-list-panel .list-loading {
+    position: relative;
+    height: 100%;
+    text-align: center;
+    background: #f7f7f7 url(/static/image/tyywglpt/loading.gif) center center no-repeat;
+}
+
+.tyywglpt-list-panel .list-loading:hover {
+    background: #f7f7f7 url(/static/image/tyywglpt/loading.gif) center center no-repeat;
+}
+
+.tyywglpt-list-panel .list-loading span {
+    width: 100%;
+    position: absolute;
+    top: 52%;
+    left: 0;
+}
+
+.tyywglpt-list-panel .list-null {
+    text-align: center;
+}
+
+.tyywglpt-list-panel .check_selected,
+.tyywglpt-list-panel .check_unselected {
+    width: 12px;
+    height: 12px;
+    margin: 0;
+}
+
+.tyywglpt-list-panel .check_selected {
+    background: url(/static/image/tyywglpt/check_selected.png?__sprite) 0 0 no-repeat;
+}
+
+.tyywglpt-list-panel .check_unselected {
+    background: url(/static/image/tyywglpt/check_unselected.png?__sprite) 0 0 no-repeat;
+}
+
+.tyywglpt-list-header {
+    width: 100%;
+    background: #e0e7ed;
+    white-space: nowrap;
+    text-align: left;
+    padding-right: 17px;
+    color: #12151e;
+}
+
+.tyywglpt-list-header-wrap {
+    width: 100%;
+    margin-top: -34px;
+    background: #e0e7ec;
+    overflow: hidden;
+    /* border: 1px solid #a5b4bd; */
+}
+
+.tyywglpt-list-header li {
+    display: inline-block;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    background: #e0e7ec;
+    border-left: 1px solid #fff;
+    position: relative;
+}
+
+/* .tyywglpt-list-header li:hover {
+    background: #337ab7;
+} */
+
+/* ie不支持伪元素的cursor */
+
+/* .tyywglpt-list-header li:after {
+    content: "";
+    cursor: e-resize;
+    width: 10px;
+    height: 32px;
+    position: absolute;
+    right: -5px;
+    z-index: 1;
+}
+
+.tyywglpt-list-header li.last-item:after {
+    display: none;
+} */
+
+.tyywglpt-list-content {
+    height: 100%;
+    min-height: 44px;
+    overflow: auto;
+    background: #f7f7f7;
+    border: 1px solid #e0e7ec;
+    border-top: none;
+    white-space: nowrap;
+    color: #2c3640;
+}
+
+.tyywglpt-list-content li {
+    height: 44px;
+    line-height: 44px;
+    text-align: left;
+}
+
+.tyywglpt-list-content div {
+    display: inline-block;
+    padding: 0 4px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* border-left: 1px solid #e0e7ec; */
+}
+
+.tyywglpt-list-content li.list-no-scroll-x {
+    /* border-bottom: 1px solid #e0e7ec; */
+}
+
+.tyywglpt-list-content li.list-no-scroll-x:nth-child(even) {
+    background: #fafbfc;
+}
+
+.tyywglpt-list-content li.list-no-scroll-x:nth-child(odd) {
+    background: #ffffff;
+}
+
+.tyywglpt-list-content li.list-no-scroll-x:hover {
+    background: #E6E6E6;
+}
+
+.tyywglpt-list-content li.list-has-scroll-x div {
+    border-bottom: 1px solid #e0e7ec;
+}
+
+.tyywglpt-list-content li.list-has-scroll-x:hover div {
+    background-color: #E6E6E6;
+}
+
+.tyywglpt-list-content .oparate {
+    color: #0419dc;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.tyywglpt-list-content .oparate.disabled {
+    color: #d4d7d9;
+    cursor: not-allowed;
+}
+
+.tyywglpt-list-content .oparate.last-operate {
+    margin-right: 0;
+}
+
+.tyywglpt-list-panel .first-item {
+    border-left: none;
+}
+
+.tyywglpt-list-content .isoffline,
+.tyywglpt-list-content .isFailed,
+.tyywglpt-list-content .isDrop {
+    color: red;
+}
+
+.tyywglpt_vm .popover-title {
+    display: none;
+}
+
+/*------------------------ 列表结束----------------------------- */
+
+/* 批量删除按钮样式 */
+
+.bottom-tool-bar .btn-tool {
+    width: 100px;
+    height: 30px;
+    margin-right: 10px;
+    background: #0053ba;
+    position: absolute;
+    bottom: 22px;
+    margin-top: 8px;
+}
+
+.bottom-tool-bar .btn-tool.disabled {
+    background: #d4d7d9;
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+.bottom-tool-bar .btn-tool:hover {
+    background: #0053ba;
+}
+
+.bottom-tool-bar .btn-tool.disabled:hover {
+    background: #d4d7d9;
+}
+
+.sbsjrz .tyywglpt-search-box .form-inline .form-item {
+    width: 270px;
+}
+
+.sbsjrz .tree-select-wrap .form-control.tree-select-form {
+    width: 100%;
+}
+
+.sbsjrz .tyywglpt-list-panel {
+    left: 1px;
+}
+
+.sbsjrz .tyywglpt-search-box .form-item label {
+    display: inline-block;
+    margin-top: 4px;
+    vertical-align: middle;
+    font-family: "microsoft yahei";
+    font-size: 14px;
+    color: #2c3640;
+    font-weight: normal;
+    margin-right: 1%;
+}
+
+.sbsjrz .tyywglpt-search-box .form-inline .form-item {
+    width: 200px;
+}
+
+.sbsjrz .lbl-dep {
+    width: 270px;
+}
+
+.sbsjrz .lbl-dep label {
+    width: 85px;
+}
+
+.sbsjrz .lbl-dep .tree-select-wrap {
+    width: 53%;
+}
+
+.sbsjrz .lbl-upload label {
+    width: 92px;
+}
+
+.sbsjrz .sjbgl-sbsjzt label {
+    width: 96px;
+}
+
+.sbsjrz .lbl-mod .ane-select-search-field {
+    width: 84px;
+}
+
+.sbsjrz .lbl-sta .ane-select-search-field {
+    width: 80px;
+}
+
+.sbsjrz .lbl-upload {
+    width: 376px !important;
+}
+
+.sbsjrz .sjbgl-sbsjzt {
+    width: 380px !important;
+}
+
+.sbsjrz .lbl-upload .ane-datepicker {
+    width: 133px;
+}
+
+.sbsjrz .list-null {
+    width: 100% !important;
+}
+
+.sbsjrz .tyywglpt-search-box .form-inline .lbl-mod {
+    width: 162px;
+}
+
+.sbsjrz .tyywglpt-search-box .form-inline .lbl-sta {
+    width: 155px;
+}
+
+.sbsjrz .tyywglpt-search-box .btn-query {
+    right: 35px;
+}
+
+.sbsjrz .captureTime {
+    width: 150px;
+    display: inline-block;
+}
+
+.sbsjrz .captureTime .time {
+    display: inline-block;
+    width: 48%;
+    border: 1px solid #b8c5d3;
+    border-radius: 2px;
+    font-size: 10px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.sbsjrz .captureTime .thisWeek {
+    margin-right: 4%;
+}
+
+.sbsjrz .captureTime .thisWeek.active,
+.sbsjrz .captureTime .thisMonth.active {
+    border: 1px solid #1055b3;
+    color: #1055b3;
+}
+
+.sbsjrz .tyywglpt-search-box .lbl-mod label {
+    width: 48px;
+}
+
+.sbsjrz .tyywglpt-search-box .lbl-sta label {
+    width: 38px;
+}
+
+.sbsjrz .tyywglpt-search-box .lbl-mod .form-control {
+    width: 68%;
+}
+
+.sbsjrz .tyywglpt-search-box .lbl-sta .form-control {
+    width: 72%;
+}
+
+.sbsjrz .tyywglpt-search-box .btn-query {
+    background: #1055b3 !important;
+}
+
+.sbsjrz .tyywglpt-search-box .ane-select-selected {
+    width: 72%;
+    padding: 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sbsjrz .tyywglpt-search-box {
+    margin-right: 8px;
+    margin-top: 0px;
+    background: #fff;
+}
+
+.sbsjrz_state {
+    width: 125px !important;
+}
+
+.sbsjrz_Model {
+    width: 133px !important;
+}

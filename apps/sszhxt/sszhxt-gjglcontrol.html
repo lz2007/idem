@@ -1,0 +1,152 @@
+<template>
+    <div class="sxzhxt-gjglcontrol">
+
+        <div class="header">
+            <span class="tetx">{{@gjglcontrol_txt.viewing}}：{{perInfoDetail.sosPerson}}</span>
+            <span class="tetx btn-return" :click="@back()">{{@gjglcontrol_txt.return}}</span>
+        </div>
+
+        <div class=" gjglcontrol-box">
+                <div class="vedio-wrap">
+                    <div class="video" id="video-ocx" :visible="isNotIE">
+                        <!-- <img src="/static/image/sszhxt-gjgl/u230.png" alt=""> -->
+                        <!-- <span>该浏览器暂不支持ocx播放视频</span> -->
+                        <span>{{@gjglcontrol_txt.doesNnotSupportOCX}}</span>
+                    </div>
+                    <!--<object id="video-ocxobject" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9" width="100%" height="400px" :visible="!isNotIE"></object>-->
+                    <!--<object :if="!@isie" id="video-ocxobject"  CLSID="{455791d4-4095-4fz70-b2b3-f5c424f25ad9}"  TYPE="application/x-itst-activex" Event_OcxEventProxy="_onOcxEventProxy" width="100%" height="400px"></object>-->
+                    <embed  :if="!@isie"  id="video-ocxobject"  type="application/npGSVideoPlugin-plugin" name="npGSVideoPlugin"  width="100%" height="400">
+                    <object :if="@isie" id="video-ocxobject" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9" width="100%" height="400px"></object>
+                    <div class="video-tool-wrap"  :visible="@showPlayToolbar">
+                        <ul class="video-tool-bar" >
+                            <li class="video-speed">
+                                <span>{{@gjglcontrol_txt.cpr}}{{@speed}}x</span>
+                            </li>
+                            <li>
+                                <span class="fa fa-step-backward":attr="{title:@common_txt.backward}" :click="@handleStepPre"></span>
+                            </li>
+                            <li>
+                                <span class="fa fa-fast-backward":attr="{title:@common_txt.slowPlay}" :click="@handleSlower"></span>
+                            </li>
+                            <li>
+                                <span class="fa" :class="@playing ? 'fa-pause' : 'fa-play'":attr="{ 'title':@playing? @common_txt.pause : @common_txt.play}" :click="@handlePlay"></span>
+                            </li>
+                            <li>
+                                <span class="fa fa-stop" :attr="{title:@common_txt.stop}" :click="@handleStop"></span>
+                            </li>
+                            <li>
+                                <span class="fa fa-fast-forward" :attr="{title:@common_txt.fastPlay}" :click="@handleFaster"></span>
+                            </li>
+                            <li>
+                                <span class="fa fa-step-forward" :attr="{title:@common_txt.forward}" :click="@handleStepNext"></span>
+                            </li>
+                            <li :visible="@showPlayStatus" class="playStatusPos">
+                                <span>{{@gjglcontrol_txt.play_video}} <i>{{@vedioIndex}}&nbsp;</i><span>({{@vedioIndex + '/' + @vedioTotal}})</span></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div  :controller="gjglMapVm">
+                    <button type="button" class="btn btn-primary diaoduBtn" :click="addFun" :visible="@diaoduBtnToggle">{{diaoduBtnText}}</button>
+                    <!-- 地图展示 begin -->
+                    <!--<div class="dzwl-map" id="gjgl-map"></div>-->
+
+                    <!-- 语音呼叫 -->
+                    <div :controller="sszhyyth" :visible="@sszhyytoggle">
+                        <div class="sszhyyth" id="sszhyyth" style="left: 50px;top: 45px;z-index:999;left: 50%;top: 200px;bottom: 0px;">
+                            <p class="sszhyythtitle" id="sszhyythtitle" style="cursor: unset">
+                                <span>{{@sszhthjy}}</span>
+                                <span class="fa fa-times sszhyythclose" :click="@closesszhhyyth"></span>
+                                <span class="fa fa-minus sszhyythminimize" :click="@hidesszhyythaction"></span>
+                            </p>
+                            <div class="sszhyythcontent">
+                                <div style="margin-right: 15px;text-align: right;">
+                                    <label :class="[@signal<50?(@signal<15?'xhbad':'xhbetter'):'xhgood']"></label>
+                                    <span :class="[@signal<50?(@signal<15?'sszhspxhwzbad':'sszhspxhwzbetter'):'sszhspxhwzgood']">{{xhword}}</span>
+                                </div>
+                                <div class="sszhyythimg">
+                                    <img src="../../static/image/sszhxt-sszh/u301.png">
+                                    <p></p>
+                                    <p>{{@gjglcontrol_txt.voice_call}}</p>
+                                    <p class="sszhyythtimecount">{{@sszhyythtime}}</p>
+                                </div>
+                                <!--<button class="btn" :click="@slience">静音</button>-->
+                                <button class="btn btn-danger" :click="@closesszhhyyth">{{@common_txt.hangup}}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 语音呼叫最小化 -->
+                    <div class="" :visible="@sszhyyMinToggle" :click="@expandYyhj()" ms-html="@sszhthperson" style="position:absolute;left: 50%;bottom: 0px;width: 250px;height: 35px;z-index: 100;top: 475px;">
+                    </div>
+                </div>
+
+        </div>
+        <!--<iframe style="width: 50%;height:400px;position: absolute;top: 118px;background-color: rgba(55, 55, 55, .6);"></iframe>-->
+        <div class="titleInfo">
+            <input type="button" ms-duplex="@gjglcontrol_txt.details" class="detail-btn"/>
+        </div>
+
+        <div class="footer" :css="@isRealTimeView  ? {height:'200px'} : {height:''}">
+            <!-- <div class="row">
+                <div class="col-lg-3">
+                    <div class="info">
+                        <p>告警时间：{{perInfoDetail.time}}</p>
+                        <p>警员/警号：{{perInfoDetail.sosPerson}}</p>
+                        <p>设备ID：{{perInfoDetail.sosDeviceId}}</p>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="info">
+                        <p>经度：{{perInfoDetail.longitude}}</p>
+                        <p>纬度：{{perInfoDetail.latitude}}</p>
+                    </div>
+                </div>
+                <div class="col-lg-1" :if="@dealWArningToggle">
+                    <div class="infoContent">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <p :if="@areadyHandle">处理情况:{{perInfoDetail.handleStatus}}</p><span>处理意见:</span>
+                                <div  :if="!@areadyHandle">
+                                    <textarea class="form-control" rows="2"  ms-duplex="@handleSosContent"></textarea><br />
+                                    <button type="button" class="btn btn-primary common-bg" :click="dealWarning">处理告警</button>
+                                </div>
+                                <p :if="@areadyHandle">{{perInfoDetail.opinion || "暂无"}}</p>
+                             
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div> -->
+            <ol class="sos-detail">
+                <li><h5>{{@gjglcontrol_txt.sos_time}}</h5><span :attr="{title:@perInfoDetail.time} | formatTitleDate2">{{perInfoDetail.time | date("yyyy-MM-dd HH:mm:ss")}}</span></li>
+                <li><h5>{{@gjglcontrol_txt.longitude}}</h5><span :attr="{title:@perInfoDetail.longitude}">{{perInfoDetail.longitude}}</span></li>
+                <li><h5>{{@gjglcontrol_txt.sosPerson}}</h5><span :attr="{title:@perInfoDetail.sosPerson}">{{perInfoDetail.sosPerson}}</span></li>
+                <li><h5>{{@gjglcontrol_txt.latitude}}</h5><span :attr="{title:@perInfoDetail.latitude}">{{perInfoDetail.latitude}}</span></li>
+                <li><h5>{{@gjglcontrol_txt.gbcode}}</h5><span :attr="{title:@perInfoDetail.gbcode}">{{perInfoDetail.gbcode}}</span></li>
+                <li  class="deal-condition"><h5>{{@gjglcontrol_txt.Status}}</h5><span :attr="{title:@perInfoDetail.handleStatus}">{{perInfoDetail.handleStatus}}</span></li>
+                <li class="deal-opinion"><h5>{{@gjglcontrol_txt.SosContent}}</h5> 
+                    <div  :if="!@areadyHandle" class="sos-detail-aready" :class="[@extra_class_dialog ? '' : 'sos-detail-aready-zhcn']">
+                        <textarea class="form-control" rows="2"  ms-duplex="@handleSosContent"></textarea><br />
+                        <button type="button" class="btn btn-primary common-bg" :click="dealWarning">{{@gjglcontrol_txt.handling_alarms}}</button>
+                    </div>
+                    <span :if="@areadyHandle" :class="[!@perInfoDetail.opinion && 'opionionSpanWidth']" :attr="{title:@perInfoDetail.opinion || ''}">{{perInfoDetail.opinion || ""}}</span>
+                </li>
+            </ol>
+        </div>
+        <iframe id='lala' src="about:blank"  marginheight="0" marginwidth="0" style="display: none; position:absolute; visibility:inherit; top:257px;left:643px;width:300px; height:200px;z-index:992;opacity:1;filter:alpha(opacity=0);background: #fff;" frameborder="0"></iframe>
+        <!--确定处理告警弹框 -->
+        <div class="deal-warning-dialog"  :controller="gjgl-dealWarning-vm" >
+            <xmp :widget="{is:'common-ms-modal', modalSelector:'#zfygl-modal-delete',title:@title, btnalign:'center',drag:@drag, modalWidth:300, modalHeight: 80, show:@show, onOk:@handleOk, onCancel:@handleCancel,extramove:@extramove,extraChromeHandle:@extraChromeHandle,okText: @gjglcontrol_txt.confirm, cancelText:@gjglcontrol_txt.cancel}">
+                <p class="tip-text" id="zfygl-modal-delete">{{@gjglcontrol_txt.suretip}}</p>
+                <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%; height:100%;z-index:-1;opacity:0;filter:alpha(opacity=0);"></iframe>
+            </xmp>
+        </div>
+        <ms-download-tip :widget="{show:@downloadTipShow}">
+            <div>
+                <p>{{@tipText}}<br/><span :if="@showtip">{{@common_txt.downloadConfirm}}</span></p>
+                <p class="tip-text"><i class="fa fa-info-circle"></i>{{common_txt.rebootBrowser}}</p>
+            </div>
+        </ms-download-tip>
+    </div>
+</template>

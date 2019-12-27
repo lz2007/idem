@@ -1,0 +1,130 @@
+<template>
+    <div class="zfsypsjglpt_en_tjfx">
+        <a class="return_btn" :click="@returnBtn" :if="@crumbsArr.length > 1"><i class="back_icon"></i>{{@tjfx_txt.back}}</a>        
+        <div class="search_box">
+            <div class="dataFormBox">
+                <!-- 执勤部门 -->
+                <span class="searchTitle">{{@tjfx_txt.department}}</span>
+                <div class="dep_tree" :controller="tjfx_tree">
+                    <ms-tree-selecting :widget="{tree: @yspk_data, showSearch: true, wrapId: 'zfyps-tree-select', getSelected: @getSelected, selectedKey: @tree_key ? @tree_key : '', selectedTitle: @tree_title ? @tree_title : '', onChange: @select_change, extraExpandHandle: @extraExpandHandle, clickBranchBack:@clickBranchBack, includedStatus:@included_status}"></ms-tree-selecting>
+                </div>
+            </div>
+
+            <!-- <div class="dataFormBox" :controller="tjfx_time_range_1" :if="@selectTab == '0'">
+                <span class="searchTitle">{{@tjfx_txt.takenDateandTime}}</span>
+                <div class="timePanel" :controller="tjfx_startTime_1">
+                    <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'', value:@tjfx_startTime_1, showTime: false, endDate:@endDate, direction: 'down', languageSelect: @extra_class ? 'en' : ''}"></ms-datepicker>
+                </div>
+                <div class="timePanel" :controller="tjfx_endTime_1" style="margin:0 8px;">
+                    <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'', value:@tjfx_endTime_1, showTime: false, endDate:@endDate, direction: 'down', languageSelect: @extra_class ? 'en' : ''}"></ms-datepicker>
+                </div>
+
+                <a class="dateControl week" :click="@weekClick" :class="@dataBtnActive && @btnClickActive ? 'dataBtnActive' : ''">{{@tjfx_txt.week}}</a>
+                <a class="dateControl month" :click="@monthClick" :class="@dataBtnActive && !@btnClickActive ? 'dataBtnActive' : ''">{{@tjfx_txt.month}}</a>
+            </div> -->
+            <!-- 查询 -->
+            <!-- <a class="common_search_btn" :if="(@selectTab == '0' && @opt_tjfx.authority.SLQKTJSEARCH) || (@selectTab == '1' && @opt_tjfx.authority.ZCTJSEARCH)"
+                :click="@searchBtn">{{@tjfx_txt.query}}</a> -->
+                <a class="common_search_btn" :if="@opt_tjfx.authority.ZCTJSEARCH" :click="@searchBtn">{{@tjfx_txt.query}}</a>
+        </div>
+        <div class="tjfx_table" :controller="zfsypsjglpt_tjfx_table">
+            <div :class="['tjfx_tabCont']" :controller="tjfx_table" id="tjfx_table">
+
+                <div :class="['table-index', 'deviceTable']">
+                    <div class="table-index-thead-fixed">
+                        <ul class="tjfx_table_parent" :css="{paddingRight:@paddingRight}">
+                            <li parent="1" class="col-4">
+                                <span style="visibility: hidden;">{{@tjfx_txt.tableNo}}</span>
+                            </li>
+                            <li parent="2" class="col-18">
+                                <span style="visibility: hidden;">{{@tjfx_txt.department}}</span>
+                            </li>
+                            <li parent="3" class="col-18">
+                                <span style="visibility: hidden;">{{@tjfx_txt.quantityPolice}}</span>
+                            </li>
+                            <li parent="4" class="col-24">
+                                <span style="visibility: hidden;">{{@tjfx_txt.bodyCameras}}</span>
+                            </li>
+                            <li parent="5" class="col-36">
+                                <span>{{@tjfx_txt.dockingStation}}</span>
+                            </li>
+                        </ul>
+                        <ul class="table-index-thead tjfx_table_son" :css="{paddingRight:@paddingRight}">
+                            <li data-order="1" son="1" class="col-4">
+                                <span class="tjfx_table_son_span">{{@tjfx_txt.tableNo}}</span>
+                            </li>
+                            <li data-order="2" son="2" class="col-18">
+                                <span class="tjfx_table_son_span">{{@tjfx_txt.department}}</span>
+                            </li>
+                            <li data-order="3" son="3" class="col-18">
+                                <span class="tjfx_table_son_span">{{@tjfx_txt.quantityPolice}}</span>
+                            </li>
+                            <li data-order="4" son="4" class="col-24">
+                                <span class="tjfx_table_son_span">{{@tjfx_txt.bodyCameras}}</span>
+                            </li>
+                            <!-- <li data-order="4" son="4" class="col-24 tjfx_table_down">{{@tjfx_txt.quantity}}</li> -->
+                            <!-- <li data-order="5" son="4" class="col-12 tjfx_table_down">{{@tjfx_txt.distributionRate}}</li> -->
+                            <li data-order="5" son="5" class="col-12 tjfx_table_down">{{@tjfx_txt.quantity}}</li>
+                            <li data-order="6" son="5" class="col-12 tjfx_table_down">{{@tjfx_txt.totalCapacity}}</li>
+                            <li data-order="7" son="5" class="col-12 tjfx_table_down">{{@tjfx_txt.averageStorage}}</li>
+                        </ul>
+                    </div>
+                    <ul class="table-index-tbody">
+                        <!-- 暂无数据 -->
+                        <li class="list-null" :if="!@data.length">{{@tjfx_txt.noRecords}}</li>
+                        <li :for="($index, record) in @data">
+                            <div class="tbody col-4">
+                                <div class="table-cont" :attr="record['index'] && (record['index'] != '-') ? {rel:'drevil',tdval:record['index']}:''">
+                                    {{record['index']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-18">
+                                <div class="table-cont" :attr="record['orgName'] && (record['orgName'] != '-') ? {rel:'drevil',tdval:record['orgName']}:''">
+                                    <a class="check_dep" :click="@handle('check_click', 'space', record, $index)">
+                                        {{record['orgName']}}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="tbody col-18">
+                                <div class="table-cont" :attr="record['orgUserTotal'] && (record['orgUserTotal'] != '-') ? {rel:'drevil',tdval:record['orgUserTotal']}:''">
+                                    {{record['orgUserTotal']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-24">
+                                <div class="table-cont" :attr="record['countTotal'] && (record['countTotal'] != '-') ? {rel:'drevil',tdval:record['countTotal']}:''">
+                                    {{record['countTotal']}}
+                                </div>
+                            </div>
+                            <!-- <div class="tbody col-12">
+                                <div class="table-cont" :attr="record['allotRatio'] && (record['allotRatio'] != '-') ? {rel:'drevil',tdval:record['allotRatio']}:''">
+                                    {{record['allotRatio']}}
+                                </div>
+                            </div> -->
+                            <div class="tbody col-12">
+                                <div class="table-cont" :attr="record['workstationTotal'] && (record['workstationTotal'] != '-') ? {rel:'drevil',tdval:record['workstationTotal']}:''">
+                                    {{record['workstationTotal']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-12">
+                                <div class="table-cont" :attr="record['spaceTotal'] && (record['spaceTotal'] != '-') ? {rel:'drevil',tdval:record['spaceTotal']}:''">
+                                    {{record['spaceTotal']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-12">
+                                <div class="table-cont" :attr="record['spacePerDsjUser'] && (record['spacePerDsjUser'] != '-') ? {rel:'drevil',tdval:record['spacePerDsjUser']}:''">
+                                    {{record['spacePerDsjUser']}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="table-index-loading" :if="@loading">
+                        <span class="loadingSpan">{{@tjfx_txt.loading}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="yspk_page">
+                <ms-pages :widget="{total:@table_pagination.total, pageSize:@table_pagination.pageSize, current:@table_pagination.current, onChange:@handlePageChange, getCurrent:@getCurrent, overLimit:@page_type}"></ms-pages>
+            </div>
+        </div>
+    </div>
+</template>

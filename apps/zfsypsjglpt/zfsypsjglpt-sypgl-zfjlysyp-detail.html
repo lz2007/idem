@@ -1,0 +1,307 @@
+<template>
+    <div class="zfsypsjglpt_yspk_zfypsjj_detail" :class="@detailClass">
+        <div class="zfyps_xq">
+            <div class="item_info">
+                <!-- <span class="fileName" :attr="{title: @media_info.fileName}">正在查看：{{@media_info.fileName}}</span>
+                <span class="orgName" :attr="{title: @media_info.orgName}">执勤部门：{{@media_info.orgName}}</span>
+                <span class="name_id" :attr="{title: @media_info.name_id}">拍摄民警：{{@media_info.name_id}}</span> -->
+                <span :attr="{title: @media_info.showTitle}">{{@media_info.showTitle}}</span>
+
+                <a class="return_btn" :click="@returnBtn"><i class="back_icon"></i>{{@sypgl_txt.back}}</a>
+            </div> 
+            <div class="item_content">
+                <div class="web_player" id="web_player">
+                    <div class="zfyps_timeout" :if="@show_timeout" :class="extra_class ? '' : 'zfyps_timeout_en'">
+                        <!-- 文件已过期 -->
+                        <span>{{@sypgl_txt.expiredDocuments}}</span>
+                    </div>
+                    <div class="zfyps_video" :if="@show_GMPlayer">
+                        <!-- h5播放器 -->
+                        <!-- <ms-h5-player :widget="{src: @play_url, special_id:'zfyps', media_type:@media_type, downloadUrl:@download_url}"></ms-h5-player>                         -->
+                        <!-- ocx播放器 -->
+                        <ms-player :widget="{media_type:@media_type, src: @play_url, special_id:'zfyps', player_width:@web_width, player_height:@web_height, play_status:@play_status, is_play:@is_play, dialog_status:@dialog_status, downloadShow:@downloadShow, download_url:@download_url}"></ms-player>
+                    </div>
+                    <div class="media_img" :if="@show_img">
+                        <!-- <img :attr="{src: @play_url}" :if="@media_no_img" /> -->
+                        <div class="media_img_show" :if="@media_no_img">
+                            <ms-pic-player :widget="{src: @play_url, playerID:'zfyps', preview_w:'450', preview_h:'250'}"></ms-pic-player>
+                        </div>
+                        <div class="media_no_img" :if="!@media_no_img">
+                            <img src="/static/image/zfsypsjglpt/pic_img.png" />
+                            <!-- 抱歉，由于网络、数据等原因，图片暂时无法查看 -->
+                            <span>{{@sypgl_txt.sorryTips}}</span>
+                        </div>
+                    </div>
+                    <div class="media_other" :if="@show_other">
+                        <img src="/static/image/zfsypsjglpt/other_img.png" class="gm_other_img">
+                        <!-- 无法查看该类型文件，请下载到本地查看 -->
+                        <span>{{@sypgl_txt.unableFile}}</span>
+                    </div>
+                    <!-- <a class="common_fun_btn download_btn" :class="[@unClick_media ? 'disabled' : '']" :click="@download"
+                        :if="@opt_detail.authority.DOWNLOAD">{{@sypgl_txt.download}}</a> -->
+                </div>
+                <div class="relation_info" :controller="relation_info_jj" :class="[@isTrackInfo ? '':'relation_listT']">
+                    <div class="zfjlysyp-detail-content" :if="@isTrackInfo">
+                        <ms-gjdw-map :widget="{ajaxData: @mapAjaxData, mapShow: @list_index_3, mapStyle: @mapStyle}"></ms-gjdw-map>
+                    </div>
+                    <div class="relation_list relation_tag" :if="@opt_detail.authority.BZXX">
+                        <div class="mark_title"> {{@sypgl_txt.mark}}
+                            <!-- 编辑 -->
+                            <a class="common_fun_btn save_btn" :click="@edit_btn" :if="@edit_save" :class="[@show_timeout? 'disabled':'']" :attr="@show_timeout?{title: @sypgl_txt.cannotedit} : {}">{{@sypgl_txt.edit}}</a>
+                            <!-- 保存 -->
+                            <a class="common_fun_btn save_btn" :click="@save_btn" :if="!@edit_save" :class="[@save_disabled? '':'disabled', @show_timeout? 'disabled':'']" :attr="@show_timeout?{title: @sypgl_txt.cannotedit} : {}">{{@sypgl_txt.save}}</a>
+                        </div>
+                        <div class="dataFormBox dataFormBox_width">
+                            <!-- 采集地点 -->
+                            <span>{{@sypgl_txt.takenPlace}}：</span>
+                            <div class="locality_panel" :class="[@collection_site_disabled || @show_timeout ? 'locality_panel_disabled':'']">
+                                <input type="text" ms-duplex="@collection_site" :class="['form-control-input', 'collection_site']"
+                                    :attr="@collection_site_disabled || @show_timeout ? {title: @collection_site, disabled: 'disabled'} : {title: @collection_site}"
+                                    :focus="@input_focus('locality')" :blur="@input_blur('locality')" :keyup="@input_area">
+                                <span class="fa fa-close zfyps_right_close close_locality" :mousedown="@close_click('locality')"
+                                    :if="@zfyps_close_locality"></span>
+                            </div>
+                        </div>
+                        <div :class="@jutimiaoshuClass">
+                            <!-- 备注 -->
+                            <span>{{@sypgl_txt.remarks}}：</span>
+                            <textarea ms-duplex="@zfyps_area" class="zfyps_area" :keyup="@input_area" :attr="@zfyps_area_disabled || @show_timeout ? {title: @zfyps_area, disabled: 'disabled'} : {title: @zfyps_area}"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="media_info" :class="[@isTrackInfo ? '':'media_infoT']">
+                    <div class="media_title">
+                        <!-- 媒体信息 -->
+                        <span>{{@sypgl_txt.mediaInformation}}</span>
+                    </div>
+                    <div class="media_content" id="media_content">
+                        <div class="panel_info">
+                            <!-- 拍摄时间 -->
+                            <label class="label_title">{{@sypgl_txt.takenDateandTime}}：</label>
+                            <div class="label_div_content label_div_content_en">
+                                <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@media_info.startTime}}</label>
+                            </div>
+                            <!-- 关联媒体 -->
+                            <!-- <label class="label_title" :if="!@extra_class">{{@sypgl_txt.associationMedia}}：</label>
+                            <div class="label_div_content" :if="!@extra_class">
+                                <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@media_info.key_media}}</label>
+                            </div> -->
+                            <!-- 导入时间 -->
+                            <label class="label_title">{{@sypgl_txt.importTime}}：</label>
+                            <div class="label_div_content">
+                                <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@media_info.importTime}}</label>
+                            </div>
+                        </div>
+                        <div class="panel_info">
+                            <!-- 拍摄民警 -->
+                            <label class="label_title">{{@sypgl_txt.shootingPolice}}：</label>
+                            <div class="label_div_content" :class="[@extra_class? 'shootingPolice':'']">
+                                <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@media_info.name_id}}</label>
+                            </div>
+                            <!-- 存储位置 -->
+                            <label class="label_title">{{@sypgl_txt.storageLocation}}：</label>
+                            <div class="label_div_content">
+                                <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@media_info.saveSite}}</label>
+                            </div>
+                        </div>
+
+                        <div class="panel_info big_panel" :controller="change_time_jj">
+                            <!-- 岗位名称 -->
+                            <!-- <label class="label_title">{{@sypgl_txt.jobName}}：</label>
+                            <div class="label_div_content" :class="[@extra_class? 'jobName':'']">
+                                <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@media_info.jobType}}</label>
+                            </div> -->
+                            <div>
+                                <!-- 存储天数 -->
+                                <label style="float: left;" class="label_title">{{@sypgl_txt.storageDay}}：</label>
+                                <label style="float: left;" :if="@modify_toggle">{{@media_info.saveTime}}</label>
+                                <ms-select :widget="{col: 'con', options:@time_type_options, value: @time_type, onChange: @onChangeT}"
+                                    :class="['selectInput', (@modify_toggle ? 'zfyps_item_hide':'zfyps_item_show')]"></ms-select>
+
+                                <!-- 取消 -->
+                                <a class="media_btn" :if="!@mediaBtn" :click="cancelBtn"></a>
+                                <!-- 更改 -->
+                                <a class="media_btn" :if="@opt_detail.authority.CHECK_GG" :class="[@mediaBtn ? 'zfyps_item_show':'zfyps_item_hide', @unClick_media ? 'disabled' : '']"
+                                    :click="modifyBtn"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--提示弹窗-->
+        <div class="zfyps_detail_tips_dialog">
+            <ms-dialog :widget="{$innerVm: 'zfyps_detail_tips_dialog', okText: @okTxt, cancelText: @cancelText, className: 'zfyps_dialog_common', show: @zfyps_dialog_show, onCancel: @dialogCancel, onOk:@dialogOk, isMove:true, width:@zfyps_dialog_width, height:@zfyps_dialog_height, move_return:@move_return}">
+                <div slot="body" ms-skip>
+                    <!-- <iframe id="iframe_zfyps" src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:-53px;left:0px;width:100%; height:218px;z-index:-1; filter:alpha(opacity=0);"></iframe> -->
+                    <span :class="[@txt_rows ? 'rows_most' : 'rows_single']">{{@dialog_txt}}</span>
+                </div>
+            </ms-dialog>
+        </div>
+
+        <!--提示弹窗-->
+        <div class="zfyps_detail_add_dialog">
+            <ms-dialog :widget="{$innerVm: 'zfyps_detail_add_dialog', okText: @okTxt, cancelText: @addCancel, className: @extra_class ? 'zfyps_dialog_common add_rel_dialog add_rel_dialog_en' : 'zfyps_dialog_common add_rel_dialog', show: @add_rel_dialog, onCancel: @add_dialogCancel, onOk:@add_dialogOk, isMove:true, width:@zfyps_dialog_width, height:@zfyps_dialog_height, move_return:@move_return}">
+                <div slot="body" ms-skip>
+                    <div class="search_box">
+                        <!-- <div class="search_box" :if="@opt_detail.authority.SEARCH"> -->
+                        <div class="hBox">
+                            <div class="dataFormBox dataTreeBox">
+                                <span>{{@dailog_txt.department}}：</span>
+                                <div class="dep_tree" :controller="zfysyp_add_rel_tree">
+                                    <ms-tree-selecting :widget="{tree: @yspk_data, showSearch: true, wrapId: 'zfyps-tree-select', getSelected: @getSelected, selectedKey: @tree_key ? @tree_key : '', selectedTitle: @tree_title ? @tree_title : '', onChange: @select_change, extraExpandHandle: @extraExpandHandle}"></ms-tree-selecting>
+                                </div>
+                            </div>
+
+                            <div class="dataRadioBox" :controller="zfyps_detail_time_range">
+                                <span class="span_large">{{@time_txt}}</span>
+                                <ms-select :widget="{col: 'con', options:@time_range_options, value: @time_range, onChange: @onChangeTR}"
+                                    :class="['formInput']"></ms-select>
+
+                                <div class="dataTimeBox" :if="@select_time">
+                                    <!-- <span class="dataTimeBox_span">开始时间：</span> -->
+                                    <div class="zfyps-timePanel" :controller="zfyps_detail_startTime">
+                                        <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'请选择开始时间', value:@zfyps_detail_startTime, showTime: false, endDate:@endDate, direction: 'down', languageSelect: @extra_class ? 'en' : ''}"></ms-datepicker>
+                                        <!-- <div class="zfyps_tip_box zfyps_start_time_tip">
+                                            <span :class="['zfyps_tip']" :css="{display:@start_null}">
+                                                <i class="fa fa-exclamation-circle">&nbsp;开始时间不能为空</i>
+                                            </span>
+                                        </div> -->
+                                    </div>
+                                    <!-- <span class="dataTimeBox_span" style="margin-left: 55px;">结束时间：</span> -->
+                                    <span style="float:left; height:28px; line-height:28px;">-</span>
+                                    <div class="zfyps-timePanel" :controller="zfyps_detail_endTime">
+                                        <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'请选择结束时间', value:@zfyps_detail_endTime, showTime: false, endDate:@endDate, direction: 'down', languageSelect: @extra_class ? 'en' : ''}"></ms-datepicker>
+                                        <!-- <div class="zfyps_tip_box zfyps_end_time_tip">
+                                            <span :class="['zfyps_tip']" :css="{display:@end_null}">
+                                                <i class="fa fa-exclamation-circle">&nbsp;结束时间不能为空</i>
+                                            </span>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hBox">
+                            <div class="dataFormBox" :controller="dialog_zflx_type">
+                                <!-- 执法类型 -->
+                                <span>{{@dailog_txt.lawType}}：</span>
+                                <ms-select :widget="{col: 'con', options:@zf_type_options, value: @zf_type, onChange: @onChangeT}"
+                                    :class="['formInput']"></ms-select>
+                            </div>
+                            <div class="dataFormBox">
+                                <span class="span_large">{{@dailog_txt.nameID}}：</span>
+                                <div class="add_dialog_input_panel">
+                                    <input type="text" ms-duplex="@police_check" class="form-control-input policeId"
+                                        :keyup="@name_input_enter" :attr="{title: @police_check}" :focus="@input_focus('policeId')"
+                                        :blur="@input_blur('policeId')">
+                                    <span class="zfyps_right_close" :mousedown="@close_click('policeId')" :if="@zfyps_close_policeId"></span>
+                                </div>
+                                <!-- <div class="zfyps_tip_box">
+                                    <span :class="['zfyps_tip']" :css="{display:@name_format}">
+                                        <i class="fa fa-exclamation-circle">请输入正确的格式</i>
+                                    </span>
+                                </div> -->
+                            </div>
+                            <div class="dataFormBox">
+                                <span class="numClass">{{@handle_txt}}</span>
+                                <div class="add_dialog_input_panel">
+                                    <input type="text" ms-duplex="@handle_num" class="form-control-input handle_num"
+                                        :keyup="@name_input_enter" :attr="{title: @handle_num}" :focus="@input_focus('handle_num')"
+                                        :blur="@input_blur('handle_num')">
+                                    <span class="fa fa-close zfyps_right_close" :mousedown="@close_click('handle_num')"
+                                        :if="@zfyps_close_handleNum"></span>
+                                </div>
+                                <!-- <div class="zfyps_tip_box">
+                                    <span :class="['zfyps_tip']" :css="{display:@name_format}">
+                                        <i class="fa fa-exclamation-circle">请输入正确的格式</i>
+                                    </span>
+                                </div> -->
+                            </div>
+                            <a class="common_fun_btn" :click="@searchBtn">{{@dailog_txt.query}}</a>
+                        </div>
+                    </div>
+
+                    <div class="zfysyp_detail_table" :controller="zfysyp_detail_table">
+                        <div :class="['zfyps_detail_tabCont']">
+                            <div :controller="zfysyp_detail_table_in" :class="['table-index']" id="zfysyp_detail_table_in">
+                                <div class="table-index-thead-fixed">
+                                    <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                                        <li data-order="1" class="col-5">
+                                            <ms-checkbox :widget="{checked:@isAllChecked, onChange:@handleCheckAll}"></ms-checkbox>
+                                        </li>
+                                        <li data-order="2" class="col-5">序号</li>
+                                        <li data-order="3" :class="[@table_list_3_class]">姓名/警号</li>
+                                        <li data-order="4" :class="[@table_list_4_class]">{{@table_list_4}}</li>
+                                        <li data-order="5" :class="[@table_list_5_class]">{{@table_list_5}}</li>
+                                        <li data-order="6" :class="[@table_list_6_class]">{{@table_list_6}}</li>
+                                        <li data-order="7" :class="[@table_list_7_class]">{{@table_list_7}}</li>
+                                        <li data-order="8" :class="[@table_list_status_8 ? 'table_list_show' : 'table_list_hide', @table_list_8_class]">{{@table_list_8}}</li>
+                                        <li data-order="9" :class="[@table_list_status_9 ? 'table_list_show' : 'table_list_hide', @table_list_9_class]">{{@table_list_9}}</li>
+                                    </ul>
+                                </div>
+
+                                <ul class="table-index-tbody">
+                                    <li class="list-null" :if="!@data.length && !@loading">{{@dailog_txt.noRecords}}</li>
+                                    <li :for="($index, record) in @data">
+                                        <div class="tbody col-5 table-index-checkbox">
+                                            <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1, onChange:function(){@handleCheck(arguments[0].target.checked, record)}}"></ms-checkbox>
+                                        </div>
+                                        <div class="tbody col-5">
+                                            <div class="table-cont">{{(@currentPage - 1) * @prePageSize + $index + 1}}</div>
+                                        </div>
+                                        <div class="tbody" :class="[@table_list_3_class]">
+                                            <div class="table-cont" :attr="record['name_id'] && (record['name_id'] != '-') ? {rel:'drevil',tdval:record['name_id']}:''">
+                                                {{record['name_id']}}
+                                            </div>
+                                        </div>
+                                        <div class="tbody" :class="[@table_list_4_class]">
+                                            <div class="table-cont" :attr="record['table_list_4_txt'] && (record['table_list_4_txt'] != '-') ? {rel:'drevil',tdval:record['table_list_4_txt']}:''">
+                                                {{record['table_list_4_txt']}}
+                                            </div>
+                                        </div>
+                                        <div class="tbody" :class="[@table_list_5_class]">
+                                            <div class="table-cont" :attr="record['table_list_5_txt'] && (record['table_list_5_txt'] != '-') ? {rel:'drevil',tdval:record['table_list_5_txt']}:''">
+                                                {{record['table_list_5_txt']}}
+                                            </div>
+                                        </div>
+                                        <div class="tbody" :class="[@table_list_6_class]">
+                                            <div class="table-cont" :attr="record['table_list_6_txt'] && (record['table_list_6_txt'] != '-') ? {rel:'drevil',tdval:record['table_list_6_txt']}:''">
+                                                {{record['table_list_6_txt']}}
+                                            </div>
+                                        </div>
+                                        <div class="tbody" :class="[@table_list_7_class]">
+                                            <div class="table-cont" :attr="record['table_list_7_txt'] && (record['table_list_7_txt'] != '-') ? {rel:'drevil',tdval:record['table_list_7_txt']}:''">
+                                                {{record['table_list_7_txt']}}
+                                            </div>
+                                        </div>
+                                        <div class="tbody" :class="[@table_list_status_8 ? 'table_list_show' : 'table_list_hide', @table_list_8_class]">
+                                            <div class="table-cont" :attr="record['table_list_8_txt'] && (record['table_list_8_txt'] != '-') ? {rel:'drevil',tdval:record['table_list_8_txt']}:''">
+                                                {{record['table_list_8_txt']}}
+                                            </div>
+                                        </div>
+                                        <div class="tbody" :class="[@table_list_status_9 ? 'table_list_show' : 'table_list_hide', @table_list_9_class]">
+                                            <div class="table-cont" :attr="record['table_list_9_txt'] && (record['table_list_9_txt'] != '-') ? {rel:'drevil',tdval:record['table_list_9_txt']}:''">
+                                                {{record['table_list_9_txt']}}
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="table-index-loading" :if="@loading">
+                                    <span class="loadingSpan">{{@dailog_txt.loading}}</span>
+                                </div>
+                                <!-- <div :if="!@loading && !@data.length" class="noData">暂无数据</div> -->
+                            </div>
+                        </div>
+                        <div class="yspk_page">
+                            <ms-pages :widget="{total:@table_pagination.total, pageSize:@table_pagination.pageSize, current:@table_pagination.current, onChange:@handlePageChange, getCurrent:@getCurrent, overLimit:@page_type}"></ms-pages>
+                        </div>
+                    </div>
+
+                    <a class="common_fun_btn add_rel_btn" :click="@add_rel_btn" :class="[@selected_arr.length > 0 ? '' : 'disabled']">{{@dailog_txt.ok}}</a>
+                </div>
+            </ms-dialog>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,88 @@
+.khqktj-qzpz .panel .panel-body {
+    padding: 20px 15px 20px 15px;
+    line-height: 2;
+    /* white-space: nowrap; */
+}
+
+.khqktj-qzpz .rate-input-wrap {
+    margin-right: 10px;
+}
+
+.khqktj-qzpz .rate-input-wrap div.up-input input {
+    width: 52px!important;
+}
+
+.khqktj-qzpz .rate-input-wrap:first-child div.up-input input {
+    width: 104px!important;
+}
+
+.khqktj-qzpz .rate-input-wrap {
+    width: 142px;
+}
+
+.khqktj-qzpz .rate-input-wrap div.up-input span {
+    margin-left: 14px;
+}
+
+.khqktj-qzpz .rate-main-wrap .rate-tips {
+    left: 0;
+    white-space: nowrap;
+}
+
+.min-width-class-khqktj-qzpz {
+    min-width: 1532px;
+}
+
+.qzpz-wrap .qzpz-tabs {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.qzpz-wrap .qzpz-tabs li {
+    display: inline-block;
+    height: 40px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 40px;
+    color: #536b82;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.qzpz-wrap .qzpz-tabs li:hover {
+    background: rgb(238, 238, 238);
+    position: relative;
+}
+
+.qzpz-wrap .qzpz-tabs .activeTabs {
+    border-bottom: 2px solid #05599a;
+    color: #05599a;
+    font-size: 14px;
+    font-weight: bold;
+}
+.qzpz-wrap .params-wrap {
+    display: inline-block;
+    margin-right: 60px;
+}
+.qzpz-wrap .params-wrap h5 {
+    text-align: center;
+}
+.qzpz-wrap .params-wrap h6 {
+    margin: 0;
+    margin-top: 3px;
+    position: absolute;
+}
+.qzpz-wrap .params-wrap .form-control {
+    width: 60px;
+    height: 24px;
+    line-height: 24PX;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 10px;
+    text-align: center;
+    padding: 0;
+}
+.qzpz-wrap .params-wrap  .fa-exclamation-circle{
+    color: #d2403d;
+}

@@ -1,0 +1,65 @@
+.browser-upgrate-tips {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background-color: #ff0000;
+}
+
+.browser-upgrate-tips p,
+.browser-upgrate-tips button {
+    text-align: center;
+    color: #fff;
+    margin: 8px;
+}
+
+.browser-upgrate-tips .download-btn {
+    text-align: center;
+    margin-bottom: 8px;
+    padding-top: 4px;
+}
+
+.browser-upgrate-tips p:first-child {
+    font-size: 18px;
+}
+
+.browser-upgrate-tips .download-btn button {
+    width: 100px;
+    height: 30px;
+    display: inline-block;
+    line-height: 18px;
+    margin: 0;
+    border: 2px solid #fff;
+    padding: 4px !important;
+    outline: 0;
+    background-color: #ff0000;
+}
+
+.browser-upgrate-tips .download-btn button:hover {
+    width: 100px;
+    height: 30px;
+    display: inline-block;
+    line-height: 18px;
+    margin: 0;
+    border: 2px solid #ececec;
+    color: #ececec;
+    padding: 4px !important;
+    outline: 0;
+    background-color: #ff0000;
+}
+
+.browser-upgrate-tips .fa-close {
+    color: #fff;
+    cursor: pointer;
+}
+
+.browser-upgrate-tips .fa-close:hover {
+    color: #ececec;
+}
+
+.browser-upgrate-tips .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}

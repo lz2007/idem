@@ -1,0 +1,156 @@
+<!-- 统一运维管理平台--设备资源管理--设备型号管理---执法仪管理 -->
+<!-- caojiacong -->
+<template>
+    <div class="tyywglpt cjzxhgl" :controller="cjzxhgl-vm">
+        <div class="tyywglpt-search-box" :if="@authority.SEARCH">
+            <!-- 设备厂商影响设备型号 -->
+            <!-- 此处的设备厂商/型号包含已废弃的(注释不要放到ms-form内的最开始，否则将解析出错)  -->
+            <ms-form :widget="{$form:@$form,inline:true}">
+                <ms-form-item :widget="{label: '设备厂商:'}" :class="['form-item', (@manufacturerOptions.length === 0 && 'disabled')]">
+                    <ms-select :widget="{col:'manufacturer', value:[@getDefaultManu(manufacturerOptions,dataJson)], displayValue:'暂无可选的设备厂商', options:@manufacturerOptions, onChange:@handleManuChange}">
+                    </ms-select>
+                </ms-form-item>
+                <ms-form-item :widget="{label: '设备型号:'}" :class="['form-item', (@modelOptions.length === 0 && 'disabled')]">
+                    <ms-select :widget="{col:'model', value:[@getDefaultModel(modelOptions, isManuSelectMode, dataJson)], displayValue:'暂无可选的设备型号', options:@modelOptions, onChange:@handleModelChange}">
+                    </ms-select>
+                </ms-form-item>
+                <ms-form-item :widget="{label:'状态:'}" :class="['form-item']">
+                    <ms-select :widget="{col:'status', value:[@dataJson ? @dataJson.status : 'null']}">
+                        <ms-select-option :widget="{value: 'null'}">不限</ms-select-option>
+                        <ms-select-option :widget="{value: '1'}">正常</ms-select-option>
+                        <ms-select-option :widget="{value: '0'}">废弃 </ms-select-option>
+                    </ms-select>
+                </ms-form-item>
+                <button type="button" class="btn btn-query" :click="@query">查询</button>
+            </ms-form>
+        </div>
+        <div class="tyywglpt-tool-bar">
+            <div class="tyywglpt-tool-bar-inner">
+                <input :if="@authority.CREATE" type="button" value="新增" :click="@handleAdd" class="btn btn-tool" :class="@selectedRowsLength !== 0 && 'disabled'">
+                <input :if="@authority.EDIT" type="button" value="编辑" :click="@handleEdit" class="btn btn-tool" :class="@selectedRowsLength !== 1 && 'disabled'">
+            </div>
+        </div>
+        <div class="tyywglpt-list-panel">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <li class="col-5 first-item">
+                        <input type="checkbox" id="checkall" :duplex-checked="@checkAll" data-duplex-changed="@handleCheckAll($event)">
+                        <label for="checkall" :class="[@checkAll ? 'check_selected' : 'check_unselected']"></label>
+                    </li>
+                    <li class="col-5">序号</li>
+                    <li class="col-20">设备厂商</li>
+                    <li class="col-20">设备型号</li>
+                    <li class="col-20">添加时间</li>
+                    <li class="col-15">添加人</li>
+                    <li class="col-15 last-item">状态</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@loading" class="list-loading">
+                    <span>结果加载中</span>
+                </li>
+                <li :if="@isNull" class="list-null">暂无数据</li>
+                <li :if="!@loading && !isNull" :for="($index, item) in @list">
+                    <div class="col-5 first-item">
+                        <input type="checkbox" :attr="{'id':$index}" :duplex-checked="item.checked" data-duplex-changed="@handleCheck($index,item,$event)">
+                        <label :attr="{'for':$index}" :class="[item.checked ? 'check_selected' : 'check_unselected']"></label>
+                    </div>
+                    <div class="col-5">{{((@current - 1) * @pageSize) + $index+1}}</div>
+                    <div class="col-20" :attr="{'title':item.manufacturerName || '', 'data-toggle':'popover'}">{{@item.manufacturerName | fillterEmpty}}</div>
+                    <div class="col-20" :attr="{'title':item.workstationCode || '', 'data-toggle':'popover'}">{{@item.workstationCode | fillterEmpty}}</div>
+                    <div class="col-20" :attr="{'title':item.createdTimeFormat || '','data-toggle':'popover'}">{{@item.createdTimeFormat | fillterEmpty}}</div>
+                    <div class="col-15" :attr="{'title':item.creatorName || '','data-toggle':'popover'}">{{@item.creatorName | fillterEmpty}}</div>
+                    <div class="col-15" :class="[item.status !== 1 && 'isDrop']" :attr="{'title':item.statusName || '','data-toggle':'popover'}">{{@item.statusName | fillterEmpty}}</div>
+                </li>
+            </ul>
+        </div>
+        <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent}"></ms-pages>
+        <!-- 新增弹窗 -->
+        <div :controller="cjzxhgl-add-vm" class="sbzygl-modal sbxhgl-model cjzxhgl-modal-add">
+            <xmp :widget="{is:'common-ms-modal', title:'新增', modalSelector:'#cjzxhgl-modal-add', modalWidth:400, modalHeight: auto, btnalign:'center',show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="cjzxhgl-modal-add">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <ms-form-item :class="['form-item manu-item',!@validJson.manufacturerName && 'has-error']">
+                            <label>
+                                <i>* </i>设备厂商:</label>
+                            <!-- ms-search-select组件的源码在aaps/common/common-search-select.js -->
+                            <ms-search-select :widget="{searchLabel:@inputJson.manufacturerName,isIcon:false,options:@manufacturerOptions,getSearchLabel:getSearchLabel,getSelected:@getSelected,onFocus:@handleManuFocus,onBlur:@handleManuFormat}"></ms-search-select>
+                            <div class="form-tip valid-tip" :if="@showJson.manufacturerName">
+                                <i class="fa fa-info-circle"></i>仅支持中英文组合</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.manufacturerName">{{@inputJson.manufacturerName.length > 32 ? '最多只可输入32位字符' : '请输入/选择正确的设备厂商'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.workstationCode && 'has-error']">
+                            <label>
+                                <i>* </i>设备型号:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.workstationCode}" :duplex="@inputJson.workstationCode" :focus="@handleFocus('workstationCode',$event)"
+                                    :blur="@handleFormat('workstationCode',@modelReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('workstationCode',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.workstationCode">
+                                <i class="fa fa-info-circle"></i>支持中英文，数字及 - 的组合</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.workstationCode">{{@inputJson.workstationCode.length > 32 ? '最多只可输入32位字符' : '请输入正确的设备型号'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.disOrder && 'has-error']">
+                            <label>
+                                <i>* </i>排序:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.disOrder}" :duplex="@inputJson.disOrder" :focus="@handleFocus('disOrder',$event)"
+                                    :blur="@handleFormat('disOrder',@orderReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('disOrder',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.disOrder">
+                                <i class="fa fa-info-circle"></i>仅支持不大于9位的非0正整数</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.disOrder">请输入正确的排序</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+        <!-- 编辑弹窗 -->
+        <div :controller="cjzxhgl-edit-vm" class="sbzygl-modal sbxhgl-model cjzxhgl-modal-edit">
+            <xmp :widget="{is:'common-ms-modal', title:'编辑', modalSelector:'#cjzxhgl-modal-edit', modalWidth:400, modalHeight: auto, btnalign:'center',show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="cjzxhgl-modal-edit">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <ms-form-item :class="['form-item disabled-select manu-item',!@validJson.manufacturer && 'has-error']">
+                            <label>
+                                <i>* </i>设备厂商:</label>
+                            <input type="text" class="form-control" :attr="{title:@inputJson.manufacturerName}" :duplex="@inputJson.manufacturerName"
+                                disabled>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.manufacturer">设备厂商不能为空</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.workstationCode && 'has-error']">
+                            <label>
+                                <i>* </i>设备型号:</label>
+                            <div class="has-icon has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.workstationCode}" :duplex="@inputJson.workstationCode" disabled>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.workstationCode">设备型号不能为空</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.disOrder && 'has-error']">
+                            <label>
+                                <i>* </i>排序:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.disOrder}" :duplex="@inputJson.disOrder" :focus="@handleFocus('order',$event)"
+                                    :blur="@handleFormat('disOrder',@orderReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('disOrder',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.disOrder">
+                                <i class="fa fa-info-circle"></i>仅支持不大于9位的非0正整数</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.disOrder">请输入正确的排序</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item', !@validJson.status && 'has-error']">
+                            <label>
+                                <i>* </i>状态:</label>
+                            <ms-select :widget="{col:'status', value:[@selectedRowsData.length > 0 ? @selectedRowsData[0]['status'] : '']}">
+                                <ms-select-option :widget="{value: '1'}">正常</ms-select-option>
+                                <ms-select-option :widget="{value: '0'}">废弃 </ms-select-option>
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.status">请选择状态</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,271 @@
+/* 报废情况下的下拉框 */
+
+.form-item.disabled-select .ane-select-selected {
+    color: #536b82;
+}
+
+.form-item.disabled-select .form-control {
+    cursor: not-allowed;
+    background: #ddd;
+}
+
+.form-item.disabled-select .ane-select-arrow,
+.form-item.disabled-select .ane-tree-select-arrow {
+    display: none !important;
+}
+
+.form-item.disabled .ane-select-selected {
+    color: #ccc;
+}
+
+.form-item.disabled .form-control {
+    cursor: not-allowed;
+}
+
+.form-item.disabled .ane-select-arrow {
+    display: none;
+}
+
+/* #noty_bottomRight_layout_container .noty_message{
+    text-align: center !important;
+}  */
+
+.sbzygl-modal {
+    font-size: 14px;
+}
+
+.sbzygl-modal .com-modal-modal-body {
+    padding-top: 0;
+}
+
+.sbzygl-modal label {
+    width: 103px;
+    text-align: right;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 5px;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+
+.sbzygl-modal label i {
+    color: red;
+}
+
+.sbzygl-modal .form-inline .form-item {
+    display: inline-block;
+    width: 288px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.sbzygl-modal .form-item .form-control {
+    display: inline-block;
+    width: 180px;
+    height: 30px;
+    padding: 0 12px;
+    line-height: 30px;
+    color: #536b82;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.sbzygl-modal .form-item input.form-control,
+.sbzygl-modal .form-item textarea.form-control {
+    padding: 0 20px 0 12px;
+}
+
+.sbzygl-modal .form-item textarea {
+    resize: none;
+}
+
+.sbzygl-modal .form-item .has-icon {
+    display: inline-block;
+    position: relative;
+    padding: 0 30px 0 12px;
+    border: 1px solid #d1d0d0;
+    border-radius: 2px;
+    background: #fff;
+    width: 180px;
+}
+
+.sbzygl-modal .form-item .has-icon input,
+.sbzygl-modal .form-item .has-icon textarea {
+    width: 146px;
+    height: 28px;
+    padding: 0;
+    border: none;
+}
+
+.sbzygl-modal .form-item .has-icon input:focus,
+.sbzygl-modal .form-item .has-icon textarea:focus {
+    border: none;
+    box-shadow: none;
+}
+
+.sbzygl-modal .form-item .has-icon .fa-close {
+    position: absolute;
+    top: 6px;
+    right: 5px;
+    font-size: 16px;
+    color: #536b82;
+    cursor: pointer;
+}
+
+.sbzygl-modal .has-error .has-icon {
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    border-color: #a94442;
+}
+
+.sbzygl-modal .form-item .has-icon-disabled,
+.sbzygl-modal .form-item input[disabled] {
+    color: #536b82;
+    background: #ddd;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.sbzygl-modal .form-item .form-tip {
+    position: absolute;
+    width: 100%;
+    padding-left: 110px;
+    text-align: left;
+}
+
+.sbzygl-modal .form-item .form-tip.tip-md {
+    width: 120%;
+}
+
+.sbzygl-modal .form-item .fa-info-circle {
+    color: #E09E1F;
+    margin-right: 5px;
+}
+
+.sbzygl-modal .form-item .invalid-tip {
+    color: #d2403d;
+}
+
+.sbzygl-modal .ane-select-selection .ane-select-selected {
+    padding: 0;
+    line-height: 30px;
+}
+
+.sbzygl-modal .ane-select-arrow,
+.sbzygl-modal .ane-tree-select-arrow {
+    top: 4px;
+}
+
+.sbzygl-modal .form-inline .textarea-item .fa-close {
+    top: 0;
+}
+
+.sbzygl-modal .modal-title {
+    margin: -1px -16px 10px;
+    height: 30px;
+    padding-left: 16px;
+    font-size: 12px;
+    color: #828282;
+    line-height: 30px;
+    background: #f6f6f6;
+    border: 1px solid #e4e4e4;
+}
+
+/* ------------- 提示弹框开始 -------------*/
+
+.sbzygl-modal-tip .tip-text {
+    height: 80px;
+    line-height: 80px;
+    font-size: 16px;
+    color: #536b82;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.sbzygl-modal-tip .com-modal-modal-footer {
+    text-align: center;
+}
+
+/* ------------- 提示弹框结束 -------------*/
+
+/* ------------- 升级弹框开始 -------------*/
+
+.sbzygl-modal-update .update-package-list {
+    height: 260px;
+    overflow: auto;
+    font-size: 14px;
+}
+
+.sbzygl-modal-update .update-title {
+    width: 100%;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-size: 14px;
+    color: #c1c1c1;
+}
+
+.sbzygl-modal-update .update-package-list li {
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+
+.sbzygl-modal-update .com-modal-modal-body .update-title span,
+.sbzygl-modal-update .update-package-list li div {
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sbzygl-modal-update .update-package-list .oparate {
+    color: #0419dc;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.sbzygl-modal-update .update-package-list input {
+    width: 0;
+    display: none;
+    display: inline-block\0;
+}
+
+.sbzygl-modal-update .select-label {
+    width: 12px;
+    height: 12px;
+}
+
+.sbzygl-modal-update .radio_selected {
+    background: url(/static/image/tyywglpt/check_selected.png?__sprite);
+}
+
+.sbzygl-modal-update .radio_unselected {
+    background: url(/static/image/tyywglpt/check_unselected.png?__sprite);
+}
+
+/* ------------- 升级弹框结束 -------------*/
+
+/* 查看 */
+
+.sbzygl-modal-look .com-modal-modal-body {
+    padding-top: 16px;
+    font-size: 14px;
+    color: #536b82;
+}
+
+.sbzygl-modal-look .com-modal-modal-body div {
+    height: 100%;
+    overflow: auto;
+    word-wrap: break-word;
+}
+
+/* 型号管理页面弹窗 */
+
+.sbxhgl-model .com-modal-modal-body form {
+    padding-top: 16px;
+    margin-left: 10px;
+}

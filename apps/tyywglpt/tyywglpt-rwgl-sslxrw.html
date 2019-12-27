@@ -1,0 +1,53 @@
+<template>
+    <div class="tyywglpt tyyw-form-box">
+        <!-- 顶部表单 begin -->
+        <div class="tyywglpt-search-box">
+            <xmp is="ms-form" :widget="{$form:@$searchForm,type:'search',inline:true}">
+                <ms-form-item :widget="{label: '所属机构:'}" :class="'form-item'">
+                    <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'tree-select-wrap-1', getSelected:@getSelected, onChange:@handleTreeChange}"></ms-tree-selecting>
+                </ms-form-item>
+
+                <ms-form-item :widget="{label: '录像类型:'}" :class="'form-item'">
+                    <ms-select :widget="{col:'comic'}">
+                        <ms-select-option :widget="{value:'no'}">不限</ms-select-option>
+                        <ms-select-option :widget="{value:'4gzfy'}">4G执法仪</ms-select-option>
+                        <ms-select-option :widget="{value:'baqsp'}">办案区视频</ms-select-option>
+                    </ms-select>
+                </ms-form-item>
+
+                <button type="button" class="btn btn-query" :click="@search">查询</button>
+            </xmp>
+        </div>
+
+        <!-- 上传情况 begin -->
+        <!-- <div class="tyywglpt-tool-bar">
+            查询列表
+        </div> -->
+
+        <!-- 表格数据begin -->
+        <div class="tyywglpt-list-panel">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <li class="col-20 first-item">序号</li>
+                    <li class="col-20">所属机构</li>
+                    <li class="col-20">录像类型</li>
+                    <li class="col-20">任务开始时间</li>
+                    <li class="col-20 last-item">已执行时长</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@list.length == 0" class="list-null">暂无数据</li>
+                <li :for="($index, item) in @list">
+                    <div class="col-20 first-item">{{$index+1}}</div>
+                    <div class="col-20">{{@item.orgName | fillterEmpty}}</div>
+                    <div class="col-20">{{@item.orgName | fillterEmpty}}</div>
+                    <div class="col-20">{{@item.orgName | fillterEmpty}}</div>
+                    <div class="col-20">{{@item.orgName | fillterEmpty}}</div>
+                </li>
+            </ul>
+        </div>
+        <!-- 页码 -->
+        <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@onChangePage}"></ms-pages>
+
+    </div>
+</template>

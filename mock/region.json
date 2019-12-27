@@ -1,0 +1,134 @@
+{
+    "tree1":[
+            {
+                "key": 1, 
+                "title": "重庆", 
+                "children": []
+            },
+            {
+                "key": 2, 
+                "title": "四川", 
+                "children": [
+                    {
+                        "key": 4, 
+                        "title": "成都", 
+                        "children": []
+                    },
+                    {
+                        "key": 5, 
+                        "title": "绵阳", 
+                        "children": []
+                    },
+                    {
+                        "key": 6, 
+                        "title": "攀枝花", 
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "key": 3, 
+                "title": "浙江", 
+                "children": [
+                    {
+                        "key": 7, 
+                        "title": "杭州", 
+                        "children": []
+                    },
+                    {
+                        "key": 8, 
+                        "title": "温州", 
+                        "children": []
+                    }
+            ]}
+    ],
+    "tree2":[
+        {
+            "key": 1, 
+            "title": "重庆2", 
+            "children": []
+        },
+        {
+            "key": 2, 
+            "title": "四川2", 
+            "children": [
+                {
+                    "key": 4, 
+                    "title": "成都2", 
+                    "children": []
+                },
+                {
+                    "key": 5, 
+                    "title": "绵阳2", 
+                    "children": []
+                },
+                {
+                    "key": 6, 
+                    "title": "攀枝花2", 
+                    "children": []
+                }
+            ]
+        },
+        {
+            "key": 3, 
+            "title": "浙江2", 
+            "children": [
+                {
+                    "key": 7, 
+                    "title": "杭州2", 
+                    "children": []
+                },
+                {
+                    "key": 8, 
+                    "title": "温州2", 
+                    "children": []
+                }
+        ]}
+    ],
+    "tree3":[
+        {
+            "value": 4, 
+            "label": "显示 4", 
+            "disabled": false
+        },
+        {
+            "value": 5, 
+            "label": "显示 5",
+            "disabled": false
+        }
+    ],
+    "tree4":[
+        {
+            "value": 1, 
+            "label": "重庆4", 
+            "disabled": false
+        },
+        {
+            "value": 2, 
+            "label": "四川4",
+            "disabled": false
+        },
+        {
+            "value": 3, 
+            "label": "浙江4",
+            "disabled": false
+        }
+    ],
+    "tree5":[
+        {
+            "value": 1, 
+            "label": "重庆5", 
+            "disabled": false
+        },
+        {
+            "value": 2, 
+            "label": "四川5",
+            "disabled": false
+        },
+        {
+            "value": 3, 
+            "label": "浙江5",
+            "disabled": false
+        }
+    ]
+}

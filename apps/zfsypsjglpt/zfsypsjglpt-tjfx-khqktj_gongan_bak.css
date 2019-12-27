@@ -1,0 +1,369 @@
+.zfsypsjglpt_jdkp_zhkp {
+    width: 100%;
+    position: relative;
+}
+
+.zfsypsjglpt_jdkp_zhkp .search_box {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    border: 1px solid #e4e4e4;
+    background-color: #f3f5f7;
+    padding-bottom: 7px;
+}
+
+.zfsypsjglpt_jdkp_zhkp .hBox {
+    width: 100%;
+    height: 45px;
+    padding-left: 10px;
+}
+
+.zfsypsjglpt_jdkp_zhkp .search_box span.span_cls {
+    float: left;
+    display: inline-block;
+    height: 28px;
+    line-height: 28px;
+    max-width: 100%;
+    margin-bottom: 5px;
+    color: #536b82;
+}
+
+.zfsypsjglpt_jdkp_zhkp .search_box .hBox>.dataFormBox>span,
+.zfsypsjglpt_jdkp_zhkp .search_box .hBox>.dataRadioBox>span {
+    font-weight: bold;
+}
+
+.zfsypsjglpt_jdkp_zhkp .dataFormBox {
+    width: 295px;
+    display: inline;
+    float: left;
+}
+
+.zfsypsjglpt_jdkp_zhkp .dataTimeBox {
+    width: 555px;
+    float: left;
+    /* margin-left: 5px; */
+}
+
+.zfsypsjglpt_jdkp_zhkp .dataTimeBox>span {
+    font-weight: bold;
+}
+
+.zfsypsjglpt_jdkp_zhkp .dataTimeBox .zhkp-dataRight .ane-datepicker .form-control {
+    height: 28px;
+    line-height: 14px;
+}
+
+.zfsypsjglpt_jdkp_zhkp .ane-radio input[type=radio]+.text,
+.dialog_zfyps .ane-radio input[type=radio]+.text {
+    line-height: 34px;
+}
+
+.zhkp-dataRight {
+    display: inline-block;
+    vertical-align: middle;
+    width: 178px;
+    height: 28px;
+    margin-right: 3px;
+    /* margin-left: 5px; */
+    float: left;
+}
+
+.zfsypsjglpt_jdkp_zhkp .dataFormBox .formInput,
+.zfsypsjglpt_jdkp_zhkp .timeSelect {
+    width: 178px;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 12px;
+    color: #536b82;
+}
+
+.zfsypsjglpt_jdkp_zhkp .dataFormBox .ane-tree-select .ane-tree-select-arrow,
+.zfsypsjglpt_jdkp_zhkp .dataFormBox .ane-select .ane-select-arrow,
+.zfsypsjglpt_jdkp_zhkp .dataRadioBox .ane-select .ane-select-arrow {
+    top: 4px;
+    color: #536b82;
+}
+
+.zfsypsjglpt_jdkp_zhkp .dataFormBox .ane-tree-select-selection .ane-tree-select-selected,
+.zfsypsjglpt_jdkp_zhkp .dataRadioBox .ane-select-selection .ane-select-selected,
+.zfsypsjglpt_jdkp_zhkp .dataFormBox .ane-select-selection .ane-select-selected {
+    top: -2px;
+    height: 28px;
+    line-height: 28px;
+}
+
+.zfsypsjglpt_jdkp_zhkp .hBox .zhkp_tip_box .zhkp_tip,
+.qzpz-wrap .zhkp_tip {
+    font-size: 12px;
+    line-height: 13px;
+    height: 14px;
+    margin-bottom: 0;
+    color: #d2403d;
+}
+
+.qzpz-wrap .tips-wrap {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    width: 150px;
+    text-align: right;
+}
+
+.zfsypsjglpt_jdkp_zhkp .dataTimeBox .zhkp-dataRight .ane-datepicker input.input_error {
+    border-color: #d2403d !important;
+}
+
+.zfsypsjglpt_jdkp_zhkp em {
+    float: left;
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin-top: 1px;
+    margin-right: 5px;
+}
+
+.zfsypsjglpt_jdkp_zhkp .btn-wrap {
+    position: absolute;
+    top: 8px;
+    right: 0;
+}
+
+.zfsypsjglpt_jdkp_zhkp .common_search_btn:hover {
+    background-color: #DB7400;
+}
+
+.zfsypsjglpt_jdkp_zhkp .common_search_btn {
+    float: right;
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
+    background-color: #fd8702;
+}
+
+.zfsypsjglpt_jdkp_zhkp .weight_setting_btn {
+    float: right;
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
+    background-color: #0078d7;
+}
+
+.zfsypsjglpt_jdkp_zhkp .weight_setting_btn:hover {
+    background-color: #0057A1;
+}
+
+.zfsypsjglpt_jdkp_zhkp .common_export_btn {
+    float: right;
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
+    background-color: #0078d7;
+}
+
+.zfsypsjglpt_jdkp_zhkp .common_export_btn:hover {
+    background-color: #0057A1;
+}
+
+
+.zhkp_tabCont {
+    position: absolute;
+    bottom: 30px;
+    top: 140px;
+    right: 0px;
+    left: 0;
+}
+
+.zhkp_tabCont .table-saika .fixed-table-saika-tbody .table>tbody>tr:first-child td>div.trigon {
+    top: 1px !important;
+}
+
+.zhkp_tabCont .table-saika .table-saika-text-color {
+    color: #0979d0;
+}
+
+.zhkp_tabCont .table-index .table-index-tbody li .tbody {
+    position: relative;
+}
+
+
+/* 分页样式 */
+
+.zfsypsjglpt_jdkp_zhkp .zhkp_page {
+    position: absolute;
+    width: 99%;
+    height: 30px;
+    bottom: -9px;
+}
+
+.zfsypsjglpt_jdkp_zhkp .zhkp_page .pagebar {
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+.zfsypsjglpt_jdkp_zhkp .zhkp_page .com-pages {
+    right: -17px;
+}
+
+
+/* 分页样式end */
+
+
+/* xx率计算描述弹窗样式 */
+
+.zhkp-tips .modal-header {
+    height: 50px;
+    line-height: 50px;
+    background-color: #0078D7;
+    color: #fff;
+    border-color: #0078D7;
+    cursor: move;
+}
+
+.zhkp-tips .modal-body p {
+    font-size: 14px;
+    font-weight: normal;
+    color: #536b82;
+    font-weight: normal;
+}
+
+.zfsypsjglpt_jdkp_zhkp .search_box .tips-img {
+    position: absolute;
+    right: 20px;
+    top: 65px;
+}
+
+.zfsypsjglpt_jdkp_zhkp .search_box .tips-img:hover {
+    cursor: pointer;
+}
+
+
+/* 表格样式 */
+
+.table-index .col-2 {
+    width: 2%;
+}
+
+.table-index .col-3 {
+    width: 3%;
+}
+
+.table-index .col-4 {
+    width: 4%;
+}
+
+.table-index .col-5 {
+    width: 5%;
+}
+
+.table-index .col-8 {
+    width: 8%;
+}
+
+.table-index .col-9 {
+    width: 9%;
+}
+
+.table-index .col-10 {
+    width: 10%;
+}
+
+.table-index .col-12 {
+    width: 12%;
+}
+
+.table-index .col-15 {
+    width: 15%;
+}
+
+.table-index .col-20 {
+    width: 20%;
+}
+
+.table-index .col-30 {
+    width: 30%;
+}
+
+.table-index .col-40 {
+    width: 40%;
+}
+
+.zfsypsjglpt_jdkp_zhkp .table-index .trigon {
+    width: 0;
+    height: 0;
+    border-color: #009900 transparent;
+    border-width: 10px 0 0 10px;
+    border-style: solid;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 9;
+    /* 屏蔽绿色角标 */
+    display: none;
+}
+
+.td-text-color {
+    color: #0979d0;
+}
+
+.zfsypsjglpt_jdkp_zhkp .search_box span.span_cls {
+    float: left;
+    display: inline-block;
+    height: 28px;
+    width: 76px;
+    text-align: right;
+    line-height: 28px;
+    max-width: 100%;
+    margin-bottom: 5px;
+    color: #536b82;
+}
+
+
+
+/*tree-select start*/
+
+.zfsypsjglpt_jdkp_zhkp .tree-select-wrap .ztree span {
+    height: 21px;
+    line-height: 21px;
+}
+
+.zfsypsjglpt_jdkp_zhkp .tree-select-wrap {
+    width: 60%;
+}
+
+.zfsypsjglpt_jdkp_zhkp .dep_tree .form-control,
+.zfsypsjglpt_jdkp_zhkp .dep_tree span {
+    height: 28px;
+    line-height: 28px;
+    color: #536b82;
+}
+
+.zfsypsjglpt_jdkp_zhkp .tree-select-wrap .fa {
+    top: 4px;
+    color: #536b82;
+}
+
+.zfsypsjglpt_jdkp_zhkp .tree-select-wrap .ztree li a.curSelectedNode {
+    border: none;
+}
+
+.zfsypsjglpt_jdkp_zhkp .tree-select-wrap .tree-select-search {
+    width: 100%;
+    padding-right: 7px;
+}
+
+
+/*tree-select end*/

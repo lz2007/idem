@@ -1,0 +1,1033 @@
+.yhgl-total {
+    margin: 0px auto;
+    padding: 8px 0px 0px 0px;
+    height: 100%;
+    width: 100%;
+    font-family: "microsoft yahei";
+}
+
+.yhgl-total ::-ms-clear {
+    display: none;
+}
+
+.ane-tree-select-dropdown {
+    width: 240px !important;
+    height: 300px !important;
+}
+
+.curSelectedNode span {
+    color: #536b82 !important;
+}
+
+.ane-tree-select-dropdown span {
+    color: #536b82;
+    font-size: 14px;
+}
+
+/* *****************************************查询样式******************************************* */
+
+.yhgl-search {
+    width: 100%;
+    height: 60px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #F4F5F7;
+    margin-bottom: 8px;
+    border: 1px solid #E9E9EB;
+}
+
+.yhgl-dataIpt {
+    width: 200px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 13px;
+}
+
+.yhgl-dataIpt-check {
+    width: 105px;
+    height: 30px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 13px;
+    margin-right: 20px;
+    /* margin-left: 10px; */
+}
+
+.yhgl-checkbox-label {
+    font-weight: normal;
+    color: #536b82;
+    cursor: pointer;
+    user-select: none;
+}
+
+.yhgl-checkbox-label>img {
+    margin-bottom: 2px;
+    margin-right: 2px;
+}
+
+/* .yhgl-dataIpt-btn {
+    width: 120px;
+    height: 26px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 13px;
+    margin-left: 10px;
+    color: #fff;
+    border-radius: 2px;
+} */
+/* .yhgl-dataIpt-btn > input{
+    height: 26px;
+    width: 120px;
+    background-color: #FD8703;
+    border-radius: 2px;
+    border: 1px solid #FD8703;
+    display: inline-block;
+}
+.yhgl-dataIpt-btn > span{
+    vertical-align: middle;
+    margin-left: -71px;
+    margin-bottom: 20px;
+    display: inline-block;
+    line-height: 26px;
+    height: 20px;
+} */
+.yhgl-dataIpt-btn {
+    width: 120px;
+    height: 30px;
+    float: right;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 13px;
+    margin-left: 10px;
+    background-color: #FD8702;
+    color: #fff;
+    border-radius: 2px;
+    border: 1px solid #FD8702;
+}
+
+.yhgl-dataIpt-btn span {
+    color: #fff !important;
+}
+
+.yhgl-dataIpt-btn:hover {
+    background-color: #DB7400;
+    border-color: #DB7400;
+}
+
+.yhgl-dataSpan {
+    font-weight: normal;
+    display: inline-block;
+    display: inline-block;
+    margin-top: 18px;
+    vertical-align: middle;
+    font-family: "microsoft yahei";
+    font-size: 14px;
+    color: #536b82;
+    font-weight: bold;
+}
+
+.yhglRight {
+    margin-right: 20px;
+    font-weight: normal;
+}
+
+.yhgl-iptPoliceNum {
+    display: inline-block;
+    height: 30px;
+    width: 200px;
+    padding-left: 12px;
+    padding-right: 0px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background-color: #fff;
+    border: 1px solid #d1d0d0;
+    border-radius: 2px;
+    color: #536B82;
+    /* -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; */
+}
+
+.yhgl-iptPoliceNum input {
+    border: none;
+    border-color: #fff;
+    width: 166px;
+    height: 22px;
+    line-height: 22px;
+    vertical-align: middle;
+}
+
+.yhgl-iptPoliceNum input:focus {
+    border: none;
+    outline: none;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(249, 250, 251, 0.6);
+}
+
+.yhgl-iptPoliceNum-focus {
+    border-width: 1px;
+    border-color: #84bbf2;
+    border-width: 1px;
+    box-shadow: #bce2ff 0px 0px 8px;
+    -moz-box-shadow: #bce2ff 0px 0px 8px;
+    -webkit-box-shadow: #bce2ff 0px 0px 8px;
+}
+
+.yhgl-search .form-control {
+    height: 30px;
+    padding: 6px 12px;
+    border-radius: 2px;
+}
+
+.yhgl-dataIpt ul li {
+    margin-top: -2px;
+    color: #536B82;
+}
+
+.yhgl-dataIpt .ane-tree-select .ane-tree-select-arrow {
+    top: 3px;
+}
+
+.yhgl-dataIpt .ane-select .ane-select-arrow {
+    top: 3px;
+}
+
+.yhgl-dataIpt .tree-select-wrap {
+    width: 100%;
+}
+
+.yhgl-total .yhgl-dataIpt .tree-select-wrap .tree-select-selected {
+    top: 5px;
+    color: #536B82;
+}
+
+.yhgl-dataIpt .tree-select-wrap .tree-select-search {
+    outline: none;
+    border: none;
+    color: #536B82;
+    height: 20px;
+    margin-top: 4px;
+}
+
+.yhgl-dataIpt .tree-select-wrap .fa {
+    top: 5px;
+}
+
+.yhgl-dataIpt .tree-select-wrap .treeSearchResult li:hover {
+    /* text-decoration: underline;
+    color: #0078D7; */
+    background-color: #DFF1FF;
+}
+
+.yhgl-checkbox-ipt {
+    margin-left: 10px;
+}
+
+.yhgl-search input[type="radio"] {
+    margin: 10px 0 10px 0;
+    cursor: pointer;
+}
+
+.yhgl-search input[type="checkbox"] {
+    width: 11px;
+    margin: 8px 0 8px 0;
+    cursor: pointer;
+    opacity: 0;
+    filter: Alpha(opacity=0);
+    outline: none;
+    /* visibility: hidden; */
+    /* background:url('/static/image/xtpzgl-yhgl/selectNo.png?__sprite') no-repeat; */
+}
+
+.yhgl-iptPoliceNum-clear {
+    /* position: absolute;
+    left: 954px;
+    top: 23px; */
+    display: inline-block;
+    width: 20px;
+    height: 22px;
+    vertical-align: middle;
+    line-height: 22px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    color: #536C80;
+}
+
+/* *****************************************导航菜单样式******************************************* */
+
+.yhgl-menu {
+    width: 100%;
+    height: 30px;
+    /* border: 1px solid #0078D7; */
+    margin-bottom: 8px;
+    /* background-color: #0078D7; */
+}
+
+.yhgl-menu ul {
+    list-style: none;
+}
+
+.yhgl-menu ul li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 10px;
+    /* margin-top: 5px; */
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+    background-color: #1c9bff;
+}
+
+.yhgl-menu ul li:hover {
+    background-color: #107DDA;
+}
+
+.yhglMenu-label {
+    display: block;
+    font-weight: normal;
+    font-family: "HiraginoSansGB-W3", sans-serif;
+    font-size: 14px;
+    color: #fff;
+    vertical-align: middle;
+    line-height: 30px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.yhglMenu-img {
+    text-align: center;
+    height: 22px;
+    width: 22px;
+    margin-left: 15px;
+}
+
+.yhgl-btnBg {
+    background-color: #D4D7D9 !important;
+    cursor: not-allowed;
+}
+
+.yhgl-btnBg>label {
+    cursor: not-allowed;
+}
+
+
+/* *****************************************表格信息样式******************************************* */
+
+.yhgl-tabCont {
+    position: absolute;
+    bottom: 37px;
+    top: 148px;
+    right: 8px;
+    left: 8px;
+}
+
+.yhgl-tabCont .selected {
+    background-color: #F4F5F7;
+}
+
+.yhgl-tabCont table tr {
+    cursor: pointer;
+}
+
+.yhgl-tabCont table tbody tr:hover {
+    /* background-color: #F4F5F7; */
+    background-color: #E6E6E6;
+}
+
+
+/* *****************************************底部分页样式******************************************* */
+
+.yhgl-pagination {
+    height: 30px;
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 5px;
+    /* background-color: #E8EDF1; */
+}
+
+.yhgl-pagination li {
+    float: right;
+    margin-right: 10px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+.yhgl-pagination .pagination-num {
+    height: 20px;
+    margin-bottom: 5px;
+    vertical-align: bottom;
+    clear: both;
+}
+
+
+/* ****************************************修改/重写公共全局样式**************************************** */
+
+.ane-tree-select-dropdown .ztree {
+    height: 300px;
+    overflow: auto;
+}
+
+.yhgl-total .pagebar {
+    background-color: #E8EDF1;
+    border: 0px;
+    right: 8px;
+    left: 8px;
+}
+
+.yhgl-total .ane-checkbox .ane-checkbox-checked .text {
+    display: inline-block;
+    /* content: "\F00C";
+    background-color: #f5f8fc;
+    border-color: #333333; */
+    background-image: url('/static/image/xtpzgl-yhgl/selectYes.png?__sprite');
+    background-repeat: no-repeat;
+    min-height: 12px;
+    min-width: 12px;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.yhgl-total .ane-checkbox .ane-checkbox-check .text {
+    border-width: 0px;
+    background-image: url('/static/image/xtpzgl-yhgl/selectNo.png?__sprite');
+    background-repeat: no-repeat;
+    min-height: 12px;
+    min-width: 12px;
+    width: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.yhgl-total .ane-checkbox-inner-ie span {
+    display: inline-block !important;
+}
+
+.yhgl-total .ane-checkbox input[type="checkbox"]:checked+.text::before {
+    display: none;
+}
+
+.yhgl-total .ane-checkbox input[type="checkbox"]+.text::before {
+    display: none;
+}
+
+.yhgl-total .ane-checkbox input[type=checkbox] {
+    width: 0px;
+}
+
+.yhgl-modal-backdrop {
+    filter: alpha(opacity=20) !important;
+    opacity: 0.2 !important;
+}
+
+.glyphicon-ok:before {
+    content: " ";
+}
+
+/* *****************************************弹窗样式*********************************************** */
+
+/* 新增用户弹窗 */
+.yhgl-addUser .modal-header {
+    height: 50px;
+    line-height: 50px;
+    background-color: #0078D7;
+    color: #fff;
+    border-color: #0078D7;
+    cursor: move;
+}
+
+.yhgl-addUser .modal-header .close {
+    font-weight: normal;
+}
+
+.yhgl-addUser .modal-content {
+    border-radius: 0px;
+    width: 690px;
+    height: 570px;
+}
+
+.yhgl-addUser .modal-content .modal-title {
+    font-size: 16px;
+}
+
+.yhgl-addUser-modalFooter {
+    text-align: right;
+    height: 60px;
+    padding: 0px 40px 30px 40px;
+}
+
+.yhgl-nextStep {
+    width: 80px;
+    height: 30px;
+    background-color: #0078D7;
+    color: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    border: 1px solid #0078D7;
+}
+
+.yhgl-nextStep:hover,
+.yhgl-preStep:hover,
+.yhgl-finish:hover {
+    background-color: #0057A1;
+}
+
+.yhgl-preStep {
+    width: 80px;
+    height: 30px;
+    background-color: #0078D7;
+    color: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    margin-right: 10px;
+    border: 1px solid #0078D7;
+}
+
+.yhgl-finish {
+    width: 80px;
+    height: 30px;
+    background-color: #0078D7;
+    color: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    border: 1px solid #0078D7;
+}
+
+
+/* 编辑用户弹窗 */
+.yhgl-editUser .modal-header {
+    height: 50px;
+    line-height: 50px;
+    background-color: #0078D7;
+    color: #fff;
+    border-color: #0078D7;
+    cursor: move;
+}
+
+.yhgl-editUser .modal-header .close {
+    font-weight: normal;
+}
+
+.yhgl-editUser .modal-content {
+    border-radius: 0px;
+    width: 690px;
+    height: 570px;
+}
+
+.yhgl-editUser .modal-content .modal-title {
+    font-size: 16px;
+}
+
+.yhgl-editUser-modalFooter {
+    text-align: right;
+    height: 60px;
+    padding: 0px 40px 30px 40px;
+}
+
+.yhgl-editUser .mgrEor {
+    color: red;
+    display: inline-block;
+    width: 300px;
+    float: left;
+}
+
+.yhgl-editUser .footerHtml {
+    width: 100%;
+    display: inline-block;
+}
+
+/* 管理范围弹窗 */
+.yhgl-mgrScopes .modal-header {
+    height: 50px;
+    line-height: 50px;
+    background-color: #0078D7;
+    color: #fff;
+    border-color: #0078D7;
+    cursor: move;
+}
+
+.yhgl-mgrScopes .modal-header .close {
+    font-weight: normal;
+}
+
+.yhgl-mgrScopes .bootbox-body {
+    padding: 0 30px;
+}
+
+.yhgl-mgrScopes .mgrScopes-dialog {
+    height: 438px;
+    overflow-y: auto;
+}
+
+.yhgl-mgrScopes .yhgl-mgrScopes-modalFooter {
+    text-align: right;
+    height: 50px;
+    padding: 0px 40px 20px 40px;
+}
+
+.yhgl-mgrScopes .ztree * {
+    font-size: 14px;
+    color: #536C80;
+}
+
+.yhgl-mgrScopes .mgrEor {
+    color: red;
+    display: inline-block;
+    width: 300px;
+    float: left;
+}
+
+.yhgl-mgrScopes .footerHtml {
+    width: 200px;
+    display: inline-block;
+}
+
+/* 删除用户弹窗 */
+.yhgl-deleteUser .modal-header {
+    height: 50px;
+    line-height: 50px;
+    background-color: #0078D7;
+    color: #fff;
+    border-color: #0078D7;
+    cursor: move;
+}
+
+.yhgl-deleteUser .modal-header .close {
+    font-weight: normal;
+}
+
+.yhgl-deleteUser .modal-content {
+    border-radius: 0px;
+}
+
+.yhgl-deleteUser .modal-content .modal-title {
+    font-size: 16px;
+}
+
+.yhgl-deleteDialog-cont {
+    width: 100%;
+    height: 50px;
+    text-align: center;
+}
+
+.yhgl-deleteDialog-cont>span {
+    vertical-align: middle;
+    line-height: 50px;
+    font-size: 16px;
+    /* font-weight: bold; */
+    color: #536C80;
+    font-family: "microsoft yahei", sans-serif;
+}
+
+.yhgl-deleteBtn {
+    height: 50px;
+    padding-top: 15px;
+    text-align: center;
+}
+
+.yhgl-deleteBtn-ok {
+    width: 80px;
+    height: 30px;
+    background-color: #0078D7;
+    color: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    margin-right: 20px;
+    border: 1px solid #0078D7;
+}
+
+.yhgl-deleteBtn-no {
+    width: 80px;
+    height: 30px;
+    background-color: #0078D7;
+    color: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    border: 1px solid #0078D7;
+}
+
+.yhgl-deleteBtn-ok:hover,
+.yhgl-deleteBtn-no:hover {
+    background-color: #0057A1;
+}
+
+/* 导入用户弹窗 */
+.yhgl-importUser {
+    width: 520px;
+}
+
+.yhgl-importUser ::-ms-clear {
+    display: none;
+}
+
+.yhgl-importUser .modal-header .close {
+    font-weight: normal;
+}
+
+.yhgl-importUser .modal-content {
+    width: 520px;
+    height: 240px;
+    border-radius: 0px;
+}
+
+.yhgl-importUser .modal-content .modal-title {
+    font-size: 16px;
+}
+
+.yhgl-importUser .modal-header {
+    height: 50px;
+    line-height: 50px;
+    background-color: #0078D7;
+    color: #fff;
+    border-color: #0078D7;
+    cursor: move;
+}
+
+.yhgl-importUser .modal-footer {
+    border: 0px;
+}
+
+.yhgl-importUser .yhgl-importUserDialog {
+    padding: 7px 0px 0px 20px;
+}
+
+.yhgl-importUser .yhgl-importUserData {
+    height: 30px;
+}
+
+.yhgl-importUser .yhgl-importUserData-top {
+    margin-top: 15px;
+}
+
+.yhgl-importUser .yhgl-importUserDataLabel {
+    font-weight: bold;
+    color: #536B82;
+    font-size: 14px;
+    margin-bottom: 0px;
+    line-height: 30px;
+}
+
+.yhgl-importUser .yhgl-importUserDataRadio {
+    display: inline-block;
+    line-height: 30px;
+}
+
+.yhgl-importUser .yhgl-importUserDataRadio .ane-radio {
+    width: 100px;
+    display: inline-block;
+}
+
+.yhgl-importUser .yhgl-importUserDataRadio .radio {
+    width: 100px;
+    display: inline-block;
+}
+
+.yhgl-importUser .yhgl-importUserDataRadio .ane-radio input[type="radio"]:checked+.text::before {
+    display: none;
+}
+
+.yhgl-importUser .yhgl-importUserDataRadio .ane-radio input[type="radio"]+.text::before {
+    display: none;
+}
+
+.yhgl-importUser .ane-radio-inner-ie span {
+    display: inline-block !important;
+}
+
+.yhgl-importUser .ane-radio input[type=radio]+.text:before {
+    display: none;
+}
+
+.yhgl-importUser .yhgl-importUserDataRadio .ane-radio input[type="radio"] {
+    width: 0px;
+    margin-top: 0px !important;
+}
+
+.yhgl-importUser .yhgl-importUserDataRadio .ane-radio .check {
+    top: 1px;
+    margin-right: 5px;
+    background-image: url(/static/image/xtpzgl-yhgl/radio-check.png?__sprite);
+    background-repeat: no-repeat;
+    line-height: 30px;
+    min-height: 12px;
+    min-width: 12px;
+}
+
+.yhgl-importUser .yhgl-importUserDataRadio .ane-radio .checked {
+    top: 1px;
+    margin-right: 5px;
+    background-image: url(/static/image/xtpzgl-yhgl/radio-checked.png?__sprite);
+    background-repeat: no-repeat;
+    line-height: 30px;
+    min-height: 12px;
+    min-width: 12px;
+}
+
+.yhgl-importUser .yhgl-importUserDataIpt {
+    display: inline-block;
+    width: 244px;
+    height: 30px;
+    line-height: 28px;
+    padding-left: 12px;
+    border-radius: 2px;
+    border: 1px solid #d1d0d0;
+    color: #536C80;
+    background-color: #fff;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.yhgl-importUser .yhgl-importUserDataIpt:focus {
+    border-color: #84bbf2;
+    border-width: 1px;
+    box-shadow: #bce2ff 0px 0px 8px;
+    -moz-box-shadow: #bce2ff 0px 0px 8px;
+    -webkit-box-shadow: #bce2ff 0px 0px 8px;
+}
+
+.yhgl-importUser .yhgl-importUserDataFile {
+    width: 120px;
+    height: 30px;
+    display: inline-block;
+    margin-left: -120px;
+    filter: alpha(opacity=0);
+    opacity: 0;
+}
+
+.yhgl-importUser .yhgl-importUserDataFile:hover {
+    background-color: #0057A1;
+    border-color: #0057A1;
+    color: #fff;
+}
+
+.yhgl-importUser .yhgl-importUserDataBtn {
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    display: inline-block;
+    margin-left: 12px;
+    background-color: #0078D7;
+    color: #fff;
+    border-color: #0078D7;
+    border: 0px;
+    border-radius: 2px;
+}
+
+.yhgl-importUser .yhgl-importUserDataBtn:hover {
+    background-color: #0057A1;
+    color: #fff;
+    border: 0px;
+    border-radius: 2px;
+}
+
+.yhgl-importUser .modal-footer .btn {
+    width: 120px;
+    height: 30px;
+    background-color: #0078D7;
+    border-color: #0078D7;
+    border-radius: 2px;
+    border-width: 0px;
+    color: #fff;
+}
+
+.yhgl-importUser .modal-footer .btn:hover {
+    background-color: #0057A1;
+    color: #fff;
+    border: 0px;
+    border-radius: 2px;
+}
+
+.yhgl-importUser .modal-footer .btn-default {
+    margin-right: 22px;
+    margin-left: 13px;
+}
+
+.yhgl-importUserDataRadio .ane-radio label {
+    color: #536C80;
+}
+
+/* 设置角色范围弹窗 */
+
+.yhgl-roleDialog-title {
+    margin-bottom: 10px;
+}
+
+.yhgl-setRole {
+    font-family: "Microsoft YaHei";
+    color: #536C80;
+}
+
+.yhgl-setRole label {
+    color: #536C80;
+}
+
+.yhgl-setRole .modal-content {
+    border-radius: 0px;
+    width: 500px;
+    height: 400px;
+}
+
+.yhgl-setRoleArea-modalFooter {
+    text-align: right;
+    height: 60px;
+    padding: 10px 40px 20px 40px;
+}
+
+.yhgl-setRole .modal-content .modal-title {
+    font-size: 16px;
+}
+
+.yhgl-setRole .modal-header {
+    height: 50px;
+    line-height: 50px;
+    background-color: #0078D7;
+    color: #fff;
+    border-color: #0078D7;
+    cursor: move;
+}
+
+.yhgl-setRole .modal-header .close {
+    font-weight: normal;
+}
+
+.yhgl-setRole .modal-body {
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 15px;
+    height: 275px;
+}
+
+.yhgl-setRole .modal-body .checkbox-group {
+    overflow: auto;
+    height: 260px;
+}
+
+.yhgl-setRole .modal-body .checkbox-group .ane-checkbox {
+    display: block;
+    text-align: left;
+}
+
+.yhgl-setRole .modal-body .checkbox-group .ane-checkbox input[type="checkbox"]+.text::before {
+    display: none;
+}
+
+.yhgl-setRole .modal-body .checkbox-group .ane-checkbox input[type="checkbox"]:checked+.text::before {
+    display: none;
+}
+
+.yhgl-setRole .modal-body .checkbox-group .ane-checkbox .ane-checkbox-check .text {
+    background-image: url(/static/image/xtpzgl-yhgl/selectNo.png?__sprite);
+    background-repeat: no-repeat;
+    line-height: 12px;
+    min-height: 12px;
+    min-width: 12px;
+    margin-right: 8px;
+}
+
+.yhgl-setRole .modal-body .checkbox-group .ane-checkbox .ane-checkbox-checked .text {
+    background-image: url(/static/image/xtpzgl-yhgl/selectYes.png?__sprite);
+    background-repeat: no-repeat;
+    line-height: 12px;
+    min-height: 12px;
+    min-width: 12px;
+    margin-right: 8px;
+}
+
+.yhgl-setRole .ane-checkbox-inner-ie span {
+    display: inline-block !important;
+}
+
+.yhgl-setRole .ane-checkbox input[type=checkbox] {
+    width: 0px;
+    margin-top: 0px !important;
+}
+
+.yhgl-setRole .modal-body .checkbox-group .ane-checkbox label {
+    font-size: 14px;
+}
+
+.yhgl-setRole-all {
+    width: 0;
+    padding: 0;
+    height: 0;
+    border: 0;
+    margin: 0;
+}
+
+.yhgl-setRole-allLabel .setRoleCheck {
+    display: inline-block;
+    background-image: url(/static/image/xtpzgl-yhgl/selectNo.png?__sprite);
+    background-repeat: no-repeat;
+    line-height: 12px;
+    min-height: 12px;
+    min-width: 12px;
+    margin-right: 8px;
+}
+
+.yhgl-setRole-allLabel .setRoleChecked {
+    display: inline-block;
+    background-image: url(/static/image/xtpzgl-yhgl/selectYes.png?__sprite);
+    background-repeat: no-repeat;
+    line-height: 12px;
+    min-height: 12px;
+    min-width: 12px;
+    margin-right: 8px;
+}
+
+.yhgl-setRole-allLabel {
+    font-weight: normal;
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+    color: #536C80;
+}
+
+/* 批量删除按钮样式 */
+
+.yhgl-total .del-btn-pos {
+    position: absolute;
+    left: 20px;
+    bottom: 0px;
+}
+
+.yhgl-total .del-all-btn {
+    cursor: pointer;
+    float: right;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    background-color: #1c9bff;
+    text-align: center;
+    /* border: 1px solid #b4b4bb; */
+    border-radius: 2px;
+}
+
+.yhgl-total .del-all-btn:hover {
+    background-color: #107dda;
+    color: #fff;
+}
+
+.yhgl-total .del-btn-disabled {
+    cursor: not-allowed;
+    background-color: #d4d7d9;
+    color: #fff;
+}
+
+.yhgl-total .del-btn-disabled:hover {
+    cursor: not-allowed;
+    background-color: #d4d7d9;
+    color: #fff;
+}
+
+.yhgl-total .table-saika .table>tbody>tr>td {
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

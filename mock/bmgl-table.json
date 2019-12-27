@@ -1,0 +1,179 @@
+[
+  {
+    "children": [
+
+    ],
+    "dutyRange": null,
+    "iconCls": "dept",
+    "id": 4,
+    "name": "海珠区大队",
+    "orderNum": 4,
+    "orgCode": "qdsasd",
+    "orgIsDelete": 0,
+    "parentOrg": {
+      "children": [
+        {
+          "children": [
+
+          ],
+          "dutyRange": null,
+          "iconCls": "dept",
+          "id": 2,
+          "name": "天河区大队",
+          "orderNum": 2,
+          "orgCode": "1234501",
+          "orgIsDelete": 0,
+          "parentOrg": null,
+          "path": "1#2",
+          "updateTime": "2017-07-18 02:39:44"
+        },
+        {
+          "children": [
+
+          ],
+          "dutyRange": null,
+          "iconCls": "dept",
+          "id": 3,
+          "name": "番禺区大队",
+          "orderNum": 3,
+          "orgCode": "2222",
+          "orgIsDelete": 0,
+          "parentOrg": null,
+          "path": "1#3",
+          "updateTime": "2017-08-08 05:55:04"
+        },
+        null
+      ],
+      "dutyRange": "",
+      "iconCls": "dept",
+      "id": 1,
+      "name": "广州市公安局",
+      "orderNum": 1,
+      "orgCode": "12345",
+      "orgIsDelete": 0,
+      "parentOrg": null,
+      "path": "1",
+      "updateTime": "2017-07-18 02:39:03"
+    },
+    "path": "1#4",
+    "updateTime": "2017-08-29 03:22:53"
+  },
+  {
+    "children": [
+
+    ],
+    "dutyRange": null,
+    "iconCls": "dept",
+    "id": 3,
+    "name": "番禺区大队",
+    "orderNum": 3,
+    "orgCode": "2222",
+    "orgIsDelete": 0,
+    "parentOrg": {
+      "children": [
+        {
+          "children": [
+
+          ],
+          "dutyRange": null,
+          "iconCls": "dept",
+          "id": 2,
+          "name": "天河区大队",
+          "orderNum": 2,
+          "orgCode": "1234501",
+          "orgIsDelete": 0,
+          "parentOrg": null,
+          "path": "1#2",
+          "updateTime": "2017-07-18 02:39:44"
+        },
+        null,
+        {
+          "children": [
+
+          ],
+          "dutyRange": null,
+          "iconCls": "dept",
+          "id": 4,
+          "name": "番禺区大队",
+          "orderNum": 4,
+          "orgCode": "qdsasd",
+          "orgIsDelete": 0,
+          "parentOrg": null,
+          "path": "1#4",
+          "updateTime": "2017-08-29 03:22:53"
+        }
+      ],
+      "dutyRange": "",
+      "iconCls": "dept",
+      "id": 1,
+      "name": "广州市公安局",
+      "orderNum": 1,
+      "orgCode": "12345",
+      "orgIsDelete": 0,
+      "parentOrg": null,
+      "path": "1",
+      "updateTime": "2017-07-18 02:39:03"
+    },
+    "path": "1#3",
+    "updateTime": "2017-08-08 05:55:04"
+  },
+  {
+    "children": [
+
+    ],
+    "dutyRange": null,
+    "iconCls": "dept",
+    "id": 2,
+    "name": "天河区大队",
+    "orderNum": 2,
+    "orgCode": "1234501",
+    "orgIsDelete": 0,
+    "parentOrg": {
+      "children": [
+        null,
+        {
+          "children": [
+
+          ],
+          "dutyRange": null,
+          "iconCls": "dept",
+          "id": 3,
+          "name": "11122",
+          "orderNum": 3,
+          "orgCode": "2222",
+          "orgIsDelete": 0,
+          "parentOrg": null,
+          "path": "1#3",
+          "updateTime": "2017-08-08 05:55:04"
+        },
+        {
+          "children": [
+
+          ],
+          "dutyRange": null,
+          "iconCls": "dept",
+          "id": 4,
+          "name": "dsadsd",
+          "orderNum": 4,
+          "orgCode": "qdsasd",
+          "orgIsDelete": 0,
+          "parentOrg": null,
+          "path": "1#4",
+          "updateTime": "2017-08-29 03:22:53"
+        }
+      ],
+      "dutyRange": "",
+      "iconCls": "dept",
+      "id": 1,
+      "name": "广州市公安局",
+      "orderNum": 1,
+      "orgCode": "12345",
+      "orgIsDelete": 0,
+      "parentOrg": null,
+      "path": "1",
+      "updateTime": "2017-07-18 02:39:03"
+    },
+    "path": "1#2",
+    "updateTime": "2017-07-18 02:39:44"
+  }
+]

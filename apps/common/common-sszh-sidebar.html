@@ -1,0 +1,58 @@
+<template>
+	<div class="common-sszh-side-bar" :class="[@extra_class ? 'sszhSideBar_en' : '']">
+		<div class="side-bar-main">
+			<!-- <div :if="!@extra_class">
+				<xmp is="ms-form" :widget="{$form:@$Form,type:'search',inline:true}">
+					<ms-form-item :widget="{label: '设备类型：'}" :class="['device-type-select']">
+						<ms-select :widget="{col:'devType', value:[@devType], onChange:@handledevTypeChange}">
+							<ms-select-option :widget="{value:'all'}">不限</ms-select-option>
+							<ms-select-option :widget="{value:'0'}">执法记录仪</ms-select-option>
+							<ms-select-option :widget="{value:'1'}">快速布控设备</ms-select-option>
+							<ms-select-option :widget="{value:'2'}">车载移动执法设备</ms-select-option>
+							<ms-select-option :widget="{value:'3'}">警用无人机</ms-select-option>
+						</ms-select>
+					</ms-form-item>
+				</xmp>
+			</div> -->
+			<!-- <div :if="@extra_class">
+				<xmp is="ms-form" :widget="{$form:@$Form,type:'search',inline:true}">
+					<ms-form-item :widget="{label: 'Device Type：'}" :class="['device-type-select']">
+						<ms-select :widget="{col:'devType', value:[@devType], onChange:@handledevTypeChange}">
+							<ms-select-option :widget="{value:'all'}">All</ms-select-option>
+							<ms-select-option :widget="{value:'0'}">BWC</ms-select-option>
+							<ms-select-option :widget="{value:'1'}">Wireless Camera</ms-select-option>
+							<ms-select-option :widget="{value:'2'}">Vehicle Camera</ms-select-option>
+							<ms-select-option :widget="{value:'3'}">UAV</ms-select-option>
+						</ms-select>
+					</ms-form-item>
+				</xmp>
+			</div> -->
+
+			<div class="input-group"  :if ="@useSearch" :class="[@inputStatus === 0 && 'input-tip',@inputStatus === 1 && 'input-error']">
+				<div class="has-icon-input-wrap">
+					<input type="text" class="form-control" ms-duplex="@keyword" :focus="@handleSearchInputFocus" :blur="@handleSearchInputBlur"
+					 :keyup="@handleQuickSearch">
+					<i class="input-close" :visible="false" :mousedown="@handleKeyClear|prevent"></i>
+				</div>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" :click="@handleSearch"></button>
+				</span>
+			</div>
+			<div :if="!@isJustParent" class="check-container">
+				<label :attr="{'for':'just-online-checkbox'}" :class="[@isJustOnline ? 'check_selected' : 'check_unselected']"></label>
+				<input type="checkbox" :attr="{'id':'just-online-checkbox'}" :duplex-checked="@isJustOnline" data-duplex-changed="@handleCheckJustOnline">
+				<!-- <label :attr="{'for':'just-online-checkbox'}">{{@sidebar_txt.onlyLive + '('+@onlineDeviceNum+'/'+@deviceNum+')'}}</label> -->
+				<label :attr="{'for':'just-online-checkbox'}">{{@sidebar_txt.onlyLive}}</label>
+				
+			</div>
+			<div :if="@spjkBool" class="check-container">
+				<label :attr="{'for':'just-choose-checkbox'}" :class="[@isJustChoose ? 'check_selected' : 'check_unselected']"></label>
+				<input type="checkbox" :attr="{'id':'just-choose-checkbox'}" :duplex-checked="@isJustChoose" data-duplex-changed="@handleCheckJustChoose">
+				<label :attr="{'for':'just-choose-checkbox'}">{{@sidebar_txt.onlyChoose}}</label>
+			</div>
+			<div class="ztree-container">
+				<ul id="poll-tree" class="ztree"></ul>
+			</div>
+		</div>
+	</div>
+</template>

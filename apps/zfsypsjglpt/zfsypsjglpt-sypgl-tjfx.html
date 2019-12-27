@@ -1,0 +1,106 @@
+<template>
+    <div class="zfsypsjglpt_en_tjfx">
+        <a class="return_btn" :click="@returnBtn" :if="@crumbsArr.length > 1"><i class="back_icon"></i>{{@tjfx_txt.back}}</a>        
+        <div class="search_box">
+            <div class="dataFormBox">
+                <!-- 执勤部门 -->
+                <span class="searchTitle">{{@tjfx_txt.department}}</span>
+                <div class="dep_tree" :controller="tjfx_tree_1">
+                    <ms-tree-selecting :widget="{tree: @yspk_data, showSearch: true, wrapId: 'zfyps-tree-select', getSelected: @getSelected, selectedKey: @tree_key ? @tree_key : '', selectedTitle: @tree_title ? @tree_title : '', onChange: @select_change, extraExpandHandle: @extraExpandHandle}"></ms-tree-selecting>
+                </div>
+            </div>
+
+            <div class="dataFormBox" :controller="tjfx_time_range">
+                <span class="searchTitle">{{@tjfx_txt.takenDateandTime}}</span>
+                <div class="timePanel" :controller="tjfx_startTime">
+                    <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'', value:@tjfx_startTime, showTime: false, endDate:@endDate, direction: 'down', languageSelect: @extra_class ? 'en' : ''}"></ms-datepicker>
+                </div>
+                <div class="timePanel" :controller="tjfx_endTime" style="margin:0 8px;">
+                    <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'', value:@tjfx_endTime, showTime: false, endDate:@endDate, direction: 'down', languageSelect: @extra_class ? 'en' : ''}"></ms-datepicker>
+                </div>
+
+                <a class="dateControl week" :click="@weekClick" :class="@weekActive ? 'dataBtnActive' : ''">{{@tjfx_txt.week}}</a>
+                <a class="dateControl month" :click="@monthClick" :class="@monthActive ? 'dataBtnActive' : ''">{{@tjfx_txt.month}}</a>
+            </div>
+            <!-- 查询 -->
+                <a class="common_search_btn" :if="@opt_tjfx.authority.SLQKTJSEARCH" :click="@searchBtn('btnSeach')">{{@tjfx_txt.query}}</a>
+        </div>
+        <div class="tjfx_table" :controller="zfsypsjglpt_tjfx_table_1">
+            <div :class="['tjfx_tabCont']" :controller="tjfx_table_1" id="tjfx_table_1">
+                <div :class="['table-index', 'recordingTable']">
+                    <div class="table-index-thead-fixed">
+                        <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                            <li data-order="1" class="col-5">{{@tjfx_txt.tableNo}}</li>
+                            <li data-order="2" class="col-27">{{@tjfx_txt.department}}</li>
+                            <li data-order="3" class="col-17">{{@tjfx_txt.quantityCurrentPolice}}</li>
+                            <li data-order="4" class="col-17">{{@tjfx_txt.quantityBodyCameras}}</li>
+                            <li data-order="5" class="col-17">{{@tjfx_txt.quantityVideos}}</li>
+                            <li data-order="6" class="col-17">{{@tjfx_txt.totalVideoSize}}</li>
+                            <!-- <li data-order="7" class="col-20">{{@tjfx_txt.over24}}</li>
+                            <li data-order="8" class="col-10">{{@tjfx_txt.timelyImportRate}}</li>
+                            <li data-order="9" class="col-10">{{@tjfx_txt.usageRate}}</li> -->
+                        </ul>
+                    </div>
+                    <ul class="table-index-tbody">
+                        <li class="list-null" :if="!@data.length && !@loading">{{@tjfx_txt.noRecords}}</li>
+                        <li :for="($index, record) in @data">
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['index'] && (record['index'] != '-') ? {rel:'drevil',tdval:record['index']}:''">
+                                    {{record['index']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-27">
+                                <div class="table-cont" :attr="record['orgName'] && (record['orgName'] != '-') ? {rel:'drevil',tdval:record['orgName']}:''">
+                                    <a class="check_dep" :click="@handle('check_click', 'space', record, $index)">
+                                        {{record['orgName']}}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="tbody col-17">
+                                <div class="table-cont" :attr="record['dqrs'] && (record['dqrs'] != '-') ? {rel:'drevil',tdval:record['dqrs']}:''">
+                                    {{record['dqrs']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-17">
+                                <div class="table-cont" :attr="record['zfys'] && (record['zfys'] != '-') ? {rel:'drevil',tdval:record['zfys']}:''">
+                                    {{record['zfys']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-17">
+                                <div class="table-cont" :attr="record['zfysps'] && (record['zfysps'] != '-') ? {rel:'drevil',tdval:record['zfysps']}:''">
+                                    {{record['zfysps']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-17">
+                                <div class="table-cont" :attr="record['zfyspzdx'] && (record['zfyspzdx'] != '-') ? {rel:'drevil',tdval:record['zfyspzdx']}:''">
+                                    {{record['zfyspzdx']}}
+                                </div>
+                            </div>
+                            <!-- <div class="tbody col-20">
+                                <div class="table-cont" :attr="record['over24fileNum'] && (record['over24fileNum'] != '-') ? {rel:'drevil',tdval:record['over24fileNum']}:''">
+                                    {{record['over24fileNum']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['jsdrl'] && (record['jsdrl'] != '-') ? {rel:'drevil',tdval:record['jsdrl']}:''">
+                                    {{record['jsdrl'] | showPercent}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['zfysyl'] && (record['zfysyl'] != '-') ? {rel:'drevil',tdval:record['zfysyl']}:''">
+                                    {{record['zfysyl'] | showPercent}}
+                                </div>
+                            </div> -->
+                        </li>
+                    </ul>
+                    <div class="table-index-loading" :if="@loading">
+                        <span class="loadingSpan">{{@tjfx_txt.loading}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="yspk_page">
+                <ms-pages :widget="{total:@table_pagination.total, pageSize:@table_pagination.pageSize, current:@table_pagination.current, onChange:@handlePageChange, getCurrent:@getCurrent, overLimit:@page_type}"></ms-pages>
+            </div>
+        </div>
+    </div>
+</template>

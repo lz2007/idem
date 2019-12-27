@@ -1,0 +1,168 @@
+<template>
+    <div class="znsb_rlbk" :class="[@extra_class ? 'znsb_rlbk_en' : '']">
+        <div class="search_box">
+            <div class="hBox" style="padding-top: 11px;">
+                <div class="dataFormBox dataTreeBox">
+                    <span>{{@rlbk_language.department}}：</span>
+                    <div class="dep_tree" :controller="rlbk_tree">
+                        <ms-tree-selecting :widget="{tree: @tree_data, showSearch: true, wrapId: 'rlbk-tree-select', getSelected: @getSelected, selectedKey: @tree_key ? @tree_key : '', selectedTitle: @tree_title ? @tree_title : '', onChange: @select_change, extraExpandHandle: @extraExpandHandle}"></ms-tree-selecting>
+                    </div>
+                    <div class="included_dep" :click="@included_dep_click">
+                        <img :attr="{src:@included_dep_img}">{{@rlbk_language.branch}}
+                    </div>
+                </div>
+                <div class="dataFormBox" :controller="rlbk_man_category">
+                    <span>{{@rlbk_language.staffType}}：</span>
+                    <ms-select :widget="{col: 'con', options:@category_options, value: @category_val, onChange: @onChangeT}"
+                        :class="['formInput']"></ms-select>
+                </div>
+                <div class="dataFormBox">
+                    <span>{{@rlbk_language.nameId}}：</span>
+                    <div class="rlbk_input_panel">
+                        <input type="text" ms-duplex="@police_id" class="form-control-input police_id" :keyup="@name_input_enter"
+                            id="police_id" :attr="{title: @police_id_title, placeholder: @police_id_title}" :focus="@input_focus('police_id')"
+                            :blur="@input_blur('police_id')">
+                        <span class="fa fa-close rlbk_right_close" :mousedown="@close_click('police_id')" :if="@police_id_close"></span>
+                    </div>
+                </div>
+                <div class="dataFormBox">
+                    <span>{{@rlbk_language.identifiedPerson}}：</span>
+                    <div class="rlbk_input_panel">
+                        <input type="text" ms-duplex="@police_name" class="form-control-input police_name" :keyup="@name_input_enter"
+                            id="police_name" :attr="{title: @police_name_title, placeholder: @police_name_title}"
+                            :focus="@input_focus('police_name')" :blur="@input_blur('police_name')">
+                        <span class="fa fa-close rlbk_right_close" :mousedown="@close_click('police_name')" :if="@police_name_close"></span>
+                    </div>
+                </div>
+                <a class="common_search_btn" :click="@searchBtn" :if="@opt_rlbk.authority.SEARCH">{{@rlbk_language.searchBtn}}</a>
+            </div>
+
+            <div class="hBox" style="padding-top: 6px;">
+                <div class="dataFormBox formFlag" :controller="rlbk_man_type">
+                    <span>{{@rlbk_language.personType}}：</span>
+                    <ms-select :widget="{col: 'con', options:@type_options, value: @type_val, onChange: @onChangeT}"
+                        :class="['formInput']"></ms-select>
+                </div>
+                <div class="dataRadioBox" :controller="rlbk_time_range">
+                    <span>{{@rlbk_language.shootTime}}：</span>
+                    <ms-select :widget="{col: 'con', options:@time_range_options, value: @time_range, onChange: @onChangeTR}"
+                        :class="['formInput']"></ms-select>
+                    <div class="dataTimeBox" :if="@select_time">
+                        <div class="rlbk-dataRight" :controller="rlbk_startTime">
+                            <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'请选择开始时间', value:@rlbk_startTime, showTime: false, endDate:@endDate, direction: 'down', languageSelect: @extra_class ? 'en' : ''}"></ms-datepicker>
+                        </div>
+                        <span style="float:left; height:28px; line-height:28px; margin: 0 5px;">-</span>
+                        <div class="rlbk-dataRight" :controller="rlbk_endTime">
+                            <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'请选择结束时间', value:@rlbk_endTime, showTime: false, endDate:@endDate, direction: 'down', languageSelect: @extra_class ? 'en' : ''}"></ms-datepicker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="rlbk-table" :if="!@extra_class">
+            <ms-comtable :widget="{id:'znsb-rlbk-table', loading:@loading, data:@table_list, actions:@actions, panelCss:{position: 'absolute',bottom: 60,top: 100,left: 8,right: 8}}">
+                <ms-comtable-header :widget="{title:'序号', dataIndex:'table_index', colwidth:'5%', popover:true}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'操作', dataIndex:'name_id', colwidth:'7%'}">
+                    <span :controller="opt_rlbk">
+                        <span :class="['check_action']" :click="handle('check')" :skip :if="@authority.CHECK">查看</span>
+                        <span :if="@authority.OPT_SHOW">-</span>
+                    </span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'执法部门', popover:true, colwidth:'15%'}">
+                    <span :skip>{{record.orgName | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'人员类别', popover:true, colwidth:'7%'}">
+                    <span :skip>{{record.policeTypeName | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'姓名/警号', popover:true, colwidth:'15%'}">
+                    <span :skip>{{record.name_id | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'被识别人', popover:true, colwidth:'10%'}">
+                    <span :skip>{{record.personName | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'性别', popover:true, colwidth:'5%'}">
+                    <span :skip>{{record.sex | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'人员类型', colwidth:'8%', popover:true}">
+                    <span :skip>{{record.personTypeName | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'拍摄时间', colwidth:'15%', popover:true}">
+                    <span :skip>{{record.time | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'图像对比', dataIndex:'name_id', colwidth:'8%'}">
+                    <span :class="['comparison_img']" :click="handle('comparison')" :skip>
+                        <img src="/static/image/sszhxt-znsb/comparison_img.png">
+                    </span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'相似度', colwidth:'5%', popover:true}">
+                    <span :skip>{{record.personSimilarity | numberShowPercent}}</span>
+                </ms-comtable-header>
+            </ms-comtable>
+        </div>
+
+        <div class="rlbk-table" :if="@extra_class">
+            <ms-comtable :widget="{id:'znsb-rlbk-table', loading:@loading, data:@table_list, actions:@actions, panelCss:{position: 'absolute',bottom: 60,top: 100,left: 8,right: 8}}">
+                <ms-comtable-header :widget="{title:'S/N', dataIndex:'table_index', colwidth:'5%', popover:true}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'Operation', dataIndex:'name_id', colwidth:'7%'}">
+                    <span :controller="opt_rlbk">
+                        <span :class="['check_action']" :click="handle('check')" :skip :if="@authority.CHECK">View</span>
+                        <span :if="@authority.OPT_SHOW">-</span>
+                    </span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'Department', popover:true, colwidth:'13%'}">
+                    <span :skip>{{record.orgName | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'Personnel Category', popover:true, colwidth:'7%'}">
+                    <span :skip>{{record.policeTypeName | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'Name/Police ID', popover:true, colwidth:'13%'}">
+                    <span :skip>{{record.name_id | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'Identified Person', popover:true, colwidth:'10%'}">
+                    <span :skip>{{record.personName | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'Gender', popover:true, colwidth:'5%'}">
+                    <span :skip>{{record.sex | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'Identified Person Classification', colwidth:'12%', popover:true}">
+                    <span :skip>{{record.personTypeName | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'Capture Time', colwidth:'15%', popover:true}">
+                    <span :skip>{{record.time | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'Image Contrast', dataIndex:'name_id', colwidth:'8%'}">
+                    <span :class="['comparison_img']" :click="handle('comparison')" :skip>
+                        <img src="/static/image/sszhxt-znsb/comparison_img.png">
+                    </span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'Resemblance', colwidth:'5%', popover:true}">
+                    <span :skip>{{record.personSimilarity | numberShowPercent}}</span>
+                </ms-comtable-header>
+            </ms-comtable>
+        </div>
+
+        <ms-pages :widget="{total:@table_pagination.total, pageSize:@table_pagination.pageSize, current:@table_pagination.current, onChange:@handlePageChange, getCurrent:@getCurrent, overLimit:@page_type}"></ms-pages>
+
+        <!--弹窗-->
+        <div class="rlbk_dialog">
+            <ms-dialog :widget="{$innerVm: 'rlbk_dialog', className: 'rlbk_dialog_class', show: @rlbk_dialog_show, onCancel: @dialogCancel, isMove:true, width:1000, height:487}">
+                <div slot="body" ms-skip>
+                    <div class="scene">
+                        <span>{{@sceneImgTxt}}</span>
+                        <img :attr="{src:@scene_img}" onerror="javascript:this.src='../../static/image/sszhxt-znsb/rlbk_404_b.png';">
+                    </div>
+                    <div class="percent">
+                        <div id="show_percent" style="height:100%;"> </div>
+                        <span :class="[@extra_class_dialog ? 'percent_span_en' : 'percent_span']">{{@resemblance}}</span>
+                    </div>
+                    <div class="recognition">
+                        <span>{{@recognitionImgTxt}}</span>
+                        <img :attr="{src:@recognition_img}" onerror="javascript:this.src='../../static/image/sszhxt-znsb/rlbk_404_b.png';">
+                    </div>
+                </div>
+            </ms-dialog>
+        </div>
+    </div>
+</template>

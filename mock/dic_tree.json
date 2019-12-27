@@ -1,0 +1,35 @@
+{
+	"code": 0,
+	"msg": "成功！",
+	"data": [{
+		"appCode": "1gmvcs1uap",
+		"appName": "配置管理系统",
+		"appOrder": 1,
+		"dicTypes": [{
+			"dicTypeCode": "LEVAM_GWLB",
+			"dicTypeName": "岗位类别"
+		}]
+	}, {
+		"appCode": "1gmvcs1audio",
+		"appName": "执法视音频数据管理系统",
+		"appOrder": 4,
+		"dicTypes": [{
+			"dicTypeCode": "100",
+			"dicTypeName": "执法仪标注类型"
+		}, {
+			"dicTypeCode": "200",
+			"dicTypeName": "警情类别测试"
+		}, {
+			"dicTypeCode": "201",
+			"dicTypeName": "案件类别测试"
+		}]
+	}, {
+		"appCode": "1gmvcs1instruct",
+		"appName": "执法视音频实时应用系统",
+		"appOrder": 5,
+		"dicTypes": [{
+			"dicTypeCode": "103",
+			"dicTypeName": "4g实时录像标注信息"
+		}]
+	}]
+}

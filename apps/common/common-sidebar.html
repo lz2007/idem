@@ -1,0 +1,50 @@
+<template>
+    <div>
+        <ms-menu :widget="{menu:@menu,openKeys:@openKeys,selectedKeys:@selectedKeys,onClick:@handleMenuClick,onOpenChange:@handleOpenChange}"></ms-menu>
+        <div class="rylxksz">
+            <ms-dialog :widget="{$innerVm:'doc-dialog-rylxksz-bar', show:@dialogRylxkszShow, className:'rylxksz_dialog common_dialog', okText: '确定', cancelText: '取消',onCancel:@dialogRylxkszCel, onOk:@dialogRylxkszOk,height:440,width:450,isMove:true}">
+                <div slot="body" ms-skip>
+                    <div class="doc-dialog-rylxksz" :controller="doc-dialog-rylxksz-bar">
+                        <div class="type">
+                            <!-- <ms-sidebar-checkbox :widget="{
+                                    config:{
+                                        checked:checkedAll,
+                                        label:'人员类型库',
+                                        value:'ALL',
+                                    },
+                                    onChange:@handleChange
+                        }"></ms-sidebar-checkbox> -->
+                        <i class="fa" :click="@selectedAll" :class="[(checkedAll?'fa-check-square':'fa-square-o')]">
+                                <span :css="{marginLeft:14}">人员类型库</span>
+                            </i>
+                        </div>
+
+                        <ul>
+                            <li :for="($index,el) in personlistAll">
+                                <!-- <ms-sidebar-checkbox :widget="{
+                                    config:{
+                                        checked:el.enable,
+                                        label:el.name,
+                                        value:el.id,
+                                        index:$index
+                                    },
+                                    onChange:@handleChange
+                                }"></ms-sidebar-checkbox> -->
+                                <i class="fa" :click="@selectedOne(el,$index)" :class="[(el.enable?'fa-check-square':'fa-square-o')]">
+                                        <span :css="{marginLeft:14}">{{el.name}}</span>
+                                    </i>
+                            </li>
+                        </ul>
+
+                        <div class="threshold">
+                            <span>识别阀值：</span><input type="text" class="form-control" ms-duplex-number="threshold"><span>％（80%-100%）</span>
+                            <div class="info" :if="(80>threshold || threshold>100)">识别阀值不在设置范围内</div>
+                        </div>
+
+                    </div>
+                </div>
+            </ms-dialog>
+        </div>
+    </div>
+
+</template>

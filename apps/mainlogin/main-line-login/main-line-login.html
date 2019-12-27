@@ -1,0 +1,70 @@
+<template>
+    <div :controller="login_vm" class="ms-controller main-line-login">
+        <ms-browser-upgrade-tips :widget="{isLogin: true}"></ms-browser-upgrade-tips>
+        <div class="wrap">
+
+            <div class="bgimg">
+
+            </div>
+
+            <div class="titleLogo" :if="@hasLogo">
+                <img class="iconLogo" src="/static/image/configure-logo/login-logo.png" />
+            </div>
+
+            <!-- <div :if="@flag_lan" class="title" id="login-title" :class="[@hasLogo ? '' : 'no-logo']"></div> -->
+            <div class="title" id="login-title" :class="[@hasLogo ? '' : 'no-logo']"></div>
+
+            <form class="loginForm" method="post" action="j_security_check" autocomplete="off">
+                <div class="filter"></div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <img class="logo_username" src="/static/image/main-login/gerenzhongxin.png" />
+                        <input type="text" autocomplete="off" id="user_input" ms-duplex="@username" ms-keydown="@login | enter"
+                            :attr="{placeholder: @login_txt.inputName}" tabindex="1" class="form-control input_username">
+                    </div>
+                    <div class="tips_username">
+                        <span class="tips" :if="@uTipsFlag">{{uTipsText}}</span>
+                    </div>
+
+                    <div id="inputGroundTip" class="input-group">
+                        <img class="logo_password" src="/static/image/main-login/change_password.png" />
+                        <input type="password" autocomplete="off" id="psw_input" ms-duplex="@password" ms-keydown="@login | enter"
+                            :attr="{placeholder: @login_txt.inputPwd}" tabindex="2" class="form-control input_password">
+                    </div>
+                    <div class="tips_password">
+                        <span class="tips" :if="@pTipsFlag">{{pTipsText}}</span>
+                    </div>
+
+                    <div class="input-group" :if="@identifyCodeFlag">
+                        <input tabindex="3" autocomplete="off" id="identifyCode" type="text" ms-duplex="@identifyCode"
+                            ms-keydown="@login | enter" :attr="{placeholder: @login_txt.identifyCode}" class="form-control">
+                        <div class="identifyCodeGruop">
+                            <img class="identifyCodeImg" :click="@getIdentifyCodeImg" :attr="{src:@identifyCodeSrc}" />
+                            <img class="refreshImg" :click="@getIdentifyCodeImg" src="/static/image/main-login/shuaxin.png" /></div>
+                    </div>
+                    <div class="tips_verificationCode">
+                        <span class="tips" :if="@vTipsFlag">{{vTipsText}}</span>
+                    </div>
+
+
+                    <div class="btn_sub">
+                        <input id="btn_login" :click="@login" ms-keydown="@login | enter" type="button" class="btn btn-success btn-lg col-sm-12"
+                            :attr="{value: @login_txt.loginBtn}" />
+                    </div>
+
+                    <div class="btn_sub" :if="@singleSignOn">
+                        <input id="btn_pki_login" :click="@pki_login" type="button" class="btn btn-success btn-lg col-sm-12"
+                            value="PKI 登 录" />
+                    </div>
+                </div>
+            </form>
+
+            <p id="pHost">
+                <span>{{@copyRight}}</span>
+                <span>{{@version}}</span>
+                <span>{{@telephone}}</span>
+            </p>
+
+        </div>
+    </div>
+</template>

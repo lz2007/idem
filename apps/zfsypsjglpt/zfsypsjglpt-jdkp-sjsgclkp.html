@@ -1,0 +1,117 @@
+<template>
+    <div class="zfsypsjglpt_jdkp_sjsgclkp">
+        <div class="search_box" :if="@opt_sjsgclkp.authority.SEARCH">
+            <div class="hBox" style="padding-top: 10px;">
+                <div class="dataFormBox dataTreeBox">
+                    <span class="large_span">执勤部门：</span>
+                    <div class="dep_tree" :controller="sjsgclkp_tree">
+                        <ms-tree-selecting :widget="{tree: @sjsgclkp_data, showSearch: true, wrapId: 'sjsgclkp-tree-select', getSelected: @getSelected, selectedKey: @tree_key ? @tree_key : '', selectedTitle: @tree_title ? @tree_title : '', onChange: @select_change, extraExpandHandle: @extraExpandHandle}"></ms-tree-selecting>
+                    </div>
+                    <!-- <div class="included_dep" :click="@included_dep_click">
+                        <img :attr="{src:@included_dep_img}">包含子部门
+                    </div> -->
+                </div>
+                <div class="dataRadioBox" :controller="sjsgclkp_time_range">
+                    <span>违法时间：</span>
+                    <ms-select :widget="{col: 'con', options:@time_range_options, value: @time_range, onChange: @onChangeTR}" :class="['formInput']"></ms-select>
+
+                    <div class="dataTimeBox" :if="@select_time">
+                        <div class="sjsgclkp_timePanel" :controller="sjsgclkp_startTime">
+                            <ms-datepicker :widget="{onChange:@handleTimeChange, placeholder:'请选择开始时间', value:@sjsgclkp_startTime, showTime: false}"></ms-datepicker>
+                        </div>
+                        <span style="float:left; height:28px; line-height:28px;">-</span>
+                        <div class="sjsgclkp_timePanel" :controller="sjsgclkp_endTime">
+                            <ms-datepicker :widget="{onChange:@handleTimeChange, placeholder:'请选择结束时间', value:@sjsgclkp_endTime, showTime: false}"></ms-datepicker>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="common_search_btn" :if="@opt_sjsgclkp.authority.SEARCH" :click="@searchBtn">查询</a>
+            </div>
+            <div class="hBox" style="padding-top: 6px;">
+                <div class="dataFormBox">
+                    <span class="large_span">随机抽查数：</span>
+                    <input class="search_num" type="text" ms-duplex="@search_num" :keyup="@search_num_enter" :attr="{title: @search_num}">
+                    <span>条</span>
+                </div>
+            </div>
+        </div>
+        <div class="jdkp_sjsgclkp_table" :controller="jdkp_sjsgclkp_table">
+            <div :class="['sjsgclkp_tabCont']">
+                <div :controller="sjsgclkp_table" :class="['table-index']" id="sjsgclkp_table">
+                    <div class="table-index-thead-fixed">
+                        <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                            <li data-order="1" class="col-4">序号</li>
+                            <li data-order="2" class="col-6">操作</li>
+                            <li data-order="3" class="col-24">执勤部门</li>
+                            <li data-order="4" class="col-14">警员警号</li>
+                            <li data-order="5" class="col-13">事故时间</li>
+                            <li data-order="6" class="col-11">事故编号</li>
+                            <li data-order="7" class="col-11">事故地点</li>
+                            <li data-order="8" class="col-11">车牌号码</li>
+                            <li data-order="9" class="col-6">关联媒体</li>
+                        </ul>
+                    </div>
+                    <ul class="table-index-tbody">
+                        <li class="list-null" :if="!@data.length">暂无数据</li>
+                        <li :for="($index, record) in @data">
+                            <div class="tbody col-4">
+                                <div class="table-cont">{{(@currentPage - 1) * @prePageSize + $index + 1}}</div>
+                            </div>
+                            <div class="tbody col-6">
+                                <div class="table-cont">
+                                    <span>
+                                        <a class="check_Btn" :click="@handle('check_click', 'space', record, $index)" :if="@opt_sjsgclkp.authority.SEARCH">查看</a>
+                                        <span :if="@opt_sjsgclkp.authority.OPT_SHOW">-</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="tbody col-24">
+                                <div class="table-cont" :attr="record['orgName'] && (record['orgName'] != '-') ? {rel:'drevil',tdval:record['orgName']}:''">
+                                    {{record['orgName']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-14">
+                                <div class="table-cont" :attr="record['userName'] && (record['userName'] != '-') ? {rel:'drevil',tdval:record['userName']}:''">
+                                    {{record['userName']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-13">
+                                <div class="table-cont" :attr="record['sgfssj'] && (record['sgfssj'] != '-') ? {rel:'drevil',tdval:record['sgfssj']}:''">
+                                    {{record['sgfssj']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-11">
+                                <div class="table-cont" :attr="record['sgbh'] && (record['sgbh'] != '-') ? {rel:'drevil',tdval:record['sgbh']}:''">
+                                    {{record['sgbh']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-11">
+                                <div class="table-cont" :attr="record['sgdd'] && (record['sgdd'] != '-') ? {rel:'drevil',tdval:record['sgdd']}:''">
+                                    {{record['sgdd']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-11">
+                                <div class="table-cont" :attr="record['hphm'] && (record['hphm'] != '-') ? {rel:'drevil',tdval:record['hphm']}:''">
+                                    {{record['hphm']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-6">
+                                <div class="table-cont" :attr="record['relation'] && (record['relation'] != '-') ? {rel:'drevil',tdval:record['relation']}:''">
+                                    {{record['relation']}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="table-index-loading" :if="@loading">
+                        <span class="loadingSpan">结果加载中</span>
+                    </div>
+                    <!-- <div :if="!@loading && !@data.length" class="noData">暂无数据</div> -->
+                </div>
+            </div>
+            <div class="sjsgclkp_page">
+                <ms-pages :widget="{total:@table_pagination.total, pageSize:@table_pagination.pageSize, current:@table_pagination.current, onChange:@handlePageChange, getCurrent:@getCurrent, overLimit:@page_type}"></ms-pages>
+            </div>
+        </div>
+    </div>
+</template>

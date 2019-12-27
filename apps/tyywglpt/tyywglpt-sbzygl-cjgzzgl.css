@@ -1,0 +1,154 @@
+/* 统一运维管理平台--设备资源管理--采集工作站管理
+caojiacong */
+
+.cjgzzgl .tyywglpt-list-panel {
+    top: 214px;
+}
+
+.cjgzzgl .sbzygl-modal .form-inline .form-item {
+    width: 300px;
+}
+
+.cjgzzgl .sbzygl-modal .form-item .form-tip {
+    padding-left: 110px;
+}
+
+.cjgzzgl .sbzygl-modal .form-tip-admin {
+    width: 680px;
+}
+
+/* 策略配置弹窗开始 */
+
+.cjgzzgl-modal-ploysetting .form-inline {
+    width: 300px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.cjgzzgl-modal-ploysetting .tips {
+    height: 30px;
+    line-height: 30px;
+    color: #999;
+    text-align: left;
+}
+
+/* 策略配置弹窗结束 */
+
+/* 安全配置弹窗开始 */
+
+.cjgzzgl-modal-safesetting .com-modal-modal-body {
+    padding: 10px;
+}
+
+.cjgzzgl-modal-safesetting .com-modal-modal-body label {
+    font-weight: normal;
+    width: auto;
+    text-align: left;
+}
+
+.cjgzzgl-modal-safesetting .safesetting-form-group {
+    margin-bottom: 10px;
+}
+
+.cjgzzgl-modal-safesetting .type-title {
+    height: 30px;
+    line-height: 30px;
+    padding-left: 15px;
+    margin-bottom: 0;
+}
+
+.cjgzzgl-modal-safesetting .net-title {
+    display: block;
+}
+
+.cjgzzgl .cjgzzgl-modal-safesetting .form-item .form-tip {
+    padding-left: 178px;
+}
+
+.cjgzzgl-modal-safesetting .checkbox-group {
+    padding-left: 10px;
+}
+
+.cjgzzgl-modal-safesetting .checkbox-group li {
+    display: inline-block;
+    width: 142px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.cjgzzgl-modal-safesetting .checkbox-group .third-checkbox {
+    width: 110px;
+}
+
+.cjgzzgl-modal-safesetting .checkbox-group li input {
+    vertical-align: middle;
+    margin: 5px;
+}
+
+.cjgzzgl-modal-safesetting .safesetting-form-group input {
+    width: 0;
+    display: none;
+    display: inline-block\0;
+}
+
+.cjgzzgl-modal-safesetting .com-modal-modal-body .select-label {
+    width: 12px;
+    height: 12px;
+}
+
+.cjgzzgl-modal-safesetting .check_selected {
+    background: url(/static/image/tyywglpt/check_selected.png?__sprite);
+}
+
+.cjgzzgl-modal-safesetting .check_unselected {
+    background: url(/static/image/tyywglpt/check_unselected.png?__sprite);
+}
+
+.cjgzzgl-modal-safesetting .check_selected_some {
+    background: url(/static/image/tyywglpt/check_selected_some.png?__sprite);
+}
+
+.cjgzzgl-modal-safesetting .radio_selected {
+    background: url(/static/image/tyywglpt/radio_selected.png?__sprite);
+}
+
+.cjgzzgl-modal-safesetting .radio_unselected {
+    background: url(/static/image/tyywglpt/radio_unselected.png?__sprite);
+}
+
+.cjgzzgl-modal-safesetting .radio-group {
+    margin: 10px 0;
+}
+
+.cjgzzgl-modal-safesetting .radio-group div {
+    display: inline-block;
+    width: 142px;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.cjgzzgl-modal-safesetting .com-modal-modal-body .form-inline .form-item {
+    text-align: left;
+    width: 400px;
+}
+
+.cjgzzgl-modal-safesetting .com-modal-modal-body .form-inline .form-control {
+    width: 186px;
+}
+
+/* 安全配置弹窗结束 */
+
+.cjgzzgl .cjgzzgl-modal-register .form-inline .form-item-lg,
+.cjgzzgl .cjgzzgl-modal-modify .form-inline .form-item-lg {
+    width: 100%;
+}
+
+.cjgzzgl-modal-register .form-item-lg .form-control,
+.cjgzzgl-modal-modify .form-item-lg .form-control {
+    width: 499px;
+}
+
+.cjgzzgl-modal-register .form-item-lg .has-icon .form-control,
+.cjgzzgl-modal-modify .form-item-lg .has-icon .form-control {
+    width: 465px;
+}

@@ -1,0 +1,115 @@
+{
+	"code": 0,
+	"msg": "success！",
+	"data": {
+		"/gmvcs/instruct": {
+			"name": "MVMS",
+			"value": {
+				"INSTRUCT_MENU_GJCX": "Trace",
+				"INSTRUCT_FUNCTION_GJCX_SEARCH": "Query",
+				"INSTRUCT_MENU_GJGL": "Alarm",
+				"INSTRUCT_MENU_GJGL_GJCX": "Alarm",
+				"INSTRUCT_FUNCTION_GJGL_GJCX_CX": "Query",
+				"INSTRUCT_FUNCTION_SPJK_SEARCH": "Query",
+				"INSTRUCT_MENU_SSZH": "Command",
+				"INSTRUCT_FUNCTION_LXHF_SEARCH": "Query",
+				"INSTRUCT_FUNCTION_SSZH_SEARCH": "Query",
+				"INSTRUCT_MENU_SPJK": "Monitor",
+				"INSTRUCT_MENU_GJGL_GJDY_BC": "Ok",
+				"INSTRUCT_MENU_LXHF": "Playback",
+				"INSTRUCT_MENU_GJGL_GJDY": "Subscribe"
+			}
+		},
+		"/gmvcs/home": {
+			"name": "HOME",
+			"value": {
+				"INDEX_MENU_HOME": "Home"
+			}
+		},
+		"/gmvcs/audio": {
+			"name": "DEMS",
+			"value": {
+				"AUDIO_FUNCTION_TJFX_SLQKTJ_SEARCH_JJ": "Query",
+				"AUDIO_FUNCTION_SYPGL_ZFYSYP_CHECK_GG_JJ": "Change",
+				"AUDIO_MENU_TJFX_SLQKTJ_JJ": "Media Statistics",
+				"AUDIO_FUNCTION_SYPGL_ZFYSYP_DELETE_JJ": "Delete",
+				"AUDIO_FUNCTION_SYPGL_ZFYSYP_SEARCH_JJ": "Query",
+				"AUDIO_FUNCTION_TJFX_ZCTJ_SEARCH_JJ": "Query",
+				"AUDIO_MENU_TJFX_ZCTJ_JJ": "Quantity of User",
+				"AUDIO_MENU_SYPGL_ZFYSYP_JJ": "Media",
+				"AUDIO_FUNCTION_SYPGL_ZFYSYP_BZXX_JJ": "Marked",
+				"AUDIO_FUNCTION_SYPGL_ZFYSYP_CHECK_JJ": "Details",
+				"AUDIO_FUNCTION_SYPGL_ZFYSYP_DOWNLOAD_JJ": "Download",
+				"AUDIO_MENU_TJFX": "Statistics"
+			}
+		},
+		"/gmvcs/mangement": {
+			"name": "Mangement",
+			"value": {
+				"UOM_FUNCTION_CCFWGL_WJSCFW_CJGZZFP": "Storage Allocation",
+				"CAS_MENU_CZRZ": "Log",
+				"UOM_FUNCTION_CCFWGL_WJSCFW_CCCL": "Storage Days",
+				"UOM_FUNCTION_SBZYGL_ZFJLYGL_BATCHREGISTRY": "Import BWC",
+				"CAS_FUNC_CZRZ_SEARCH": "Query",
+				"UOM_FUNCTION_SBZYGL_ZFJLYGL_REGISTRY": "Add BWC",
+				"UOM_MENU_SQGL": "License",
+				"CAS_FUNC_GNQX_DELETE": "Delete Role",
+				"UOM_FUNCTION_CCFWGL_ZFYLXFW_SAVE": "Add",
+				"CAS_FUNC_YHGL_SEARCH": "Query",
+				"CAS_FUNC_GNQX_BCQX": "OK",
+				"UOM_FUNCTION_CCFWGL_WJSCFW_CHECK": "Details",
+				"CAS_FUNC_GNQX_EDIT": "Edit Role",
+				"UOM_FUNCTION_CCFWGL_WJSCFW_BATCHDELETE": "Batch Delete",
+				"CAS_FUNC_YHGL_CREATE": "Add User",
+				"UOM_FUNCTION_SBZYGL_ZFJLYGL_MODIFY": "Edit",
+				"UOM_MENU_CCFWGL_WJSCFW": "File upload service",
+				"UOM_FUNCTION_CCFWGL_WJSCFW_DELETE": "Delete",
+				"CAS_MENU_ORGANIZATION": "Organization",
+				"UOM_MENU_SBZYGL_CJGZZGL": "Docking Station",
+				"UOM_FUNCTION_CCFWGL_WJSCFW_SEARCH": "Query",
+				"CAS_MENU_GNQX": "Role",
+				"UOM_FUNCTION_SBZYGL_CJGZZGL_BATCHDELETE": "Batch Delete",
+				"CAS_FUNC_CZRZ_DCRZ": "Exprot log",
+				"UOM_FUNCTION_CCFWGL_WJSCFW_MODIFY": "Edit",
+				"UOM_FUNCTION_CCFWGL_ZFYLXFW_CHECK": "Details",
+				"CAS_FUNC_YHGL_EDIT": "Edit User",
+				"CAS_FUNC_YHGL_IMPORT": "Import User",
+				"CAS_FUNC_BMGL_DELETE": "Delete Department",
+				"CAS_FUNC_GNQX_CREATE": "Add Role",
+				"UOM_MENU_SBZYGL_ZFJLYGL": "BWC",
+				"UOM_FUNCTION_CCFWGL_ZFYLXFW_MODIFY": "Edit",
+				"UOM_FUNCTION_SBZYGL_CJGZZGL_CLPZ": "Storage Days",
+				"UOM_MENU_CCFWGL_ZFYLXFW": "Video storage service",
+				"UOM_FUNCTION_CCFWGL_WJSCFW_SAVE": "Add",
+				"UOM_FUNCTION_SBZYGL_CJGZZGL_AQPZ": "Security",
+				"CAS_FUNC_BMGL_CREATE": "Add Department",
+				"UOM_FUNCTION_CCFWGL_ZFYLXFW_SEARCH": "Query",
+				"CAS_FUNC_YHGL_EXPORT_TEMPLATE": "Export Template",
+				"UOM_FUNCTION_SBZYGL_CJGZZGL_REGISTRY": "Add",
+				"CAS_FUNC_YHGL_EXPORT": "Import User",
+				"UOM_FUNCTION_CCFWGL_ZFYLXFW_ZFJLYFP": "Storage Allocation",
+				"UOM_FUNCTION_CCFWGL_ZFYLXFW_BATCHDELETE": "Batch Delete",
+				"CAS_FUNC_YHGL_DELETE": "Delete User",
+				"UOM_MENU_CCFWGL": "Storage",
+				"UOM_FUNCTION_SBZYGL_CJGZZGL_SEARCH": "Query",
+				"UOM_FUNCTION_SBZYGL_CJGZZGL_DELETE": "Delete",
+				"UOM_FUNCTION_SBZYGL_CJGZZGL_MODIFY": "Edit",
+				"UOM_FUNCTION_CCFWGL_ZFYLXFW_CCCL": "Storage Days",
+				"UOM_FUNCTION_SBZYGL_ZFJLYGL_BATCHDELETE": "Batch Delete",
+				"UOM_FUNCTION_SBZYGL_ZFJLYGL_DELETE": "Delete",
+				"UOM_FUNCTION_CCFWGL_ZFYLXFW_DELETE": "Delete",
+				"UOM_FUNCTION_SBZYGL_ZFJLYGL_SEARCH": "Query",
+				"CAS_FUNC_BMGL_EDIT": "Edit Department"
+			}
+		},
+		"/gmvcs/workstation": {
+			"name": "Docking Station",
+			"value": {
+				"WORKSTATION_FUNCTION_SJSC": "Delete Data",
+				"WORKSTATION_MENU_CJGZZ": "Docking Station",
+				"WORKSTATION_FUNCTION_CKTRQX": "View Others",
+				"WORKSTATION_FUNCTION_SJDC": "Export Data"
+			}
+		}
+	}
+}

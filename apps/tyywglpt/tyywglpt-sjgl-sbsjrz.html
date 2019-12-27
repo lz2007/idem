@@ -1,0 +1,88 @@
+<template>
+    <div class="tyywglpt sbsjrz">
+        <!-- 顶部表单 begin -->
+        <div class="tyywglpt-search-box" :if="@authority.SEARCH">
+            <xmp is="ms-form" :widget="{$form:@$searchForm,inline:true}">
+                <ms-form-item :widget="{label:'所属部门:'}" :class="'form-item label-lg'">
+                    <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'sbsjrz-tree-select-1', getSelected:@getSelected, selectedKey:@dataJson ? @dataJson.orgId : '', selectedTitle:@dataJson ? @dataJson.orgName : '', onChange:@handleTreeChange, extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                </ms-form-item>
+                <ms-form-item :widget="{label: '设备类型:'}" :class="'form-item'">
+                    <ms-select :widget="{col:'deviceType', value:[@dataJson ? @dataJson.typeMode : 1], onChange:@handleTypeChange}">
+                        <ms-select-option :widget="{value: 1}">不限</ms-select-option>
+                        <!-- <ms-select-option :widget="{value: 2}">执法记录仪</ms-select-option> -->
+                        <ms-select-option :widget="{value: 3}">采集工作站 </ms-select-option>
+                    </ms-select>
+                </ms-form-item>
+                <ms-form-item :widget="{label: '升级状态:'}" :class="'form-item'">
+                    <ms-select :widget="{col:'updateStatus', value:[@dataJson ? @dataJson.updateMode : 1], onChange:@handleStatusChange}">
+                        <ms-select-option :widget="{value: 1}">不限</ms-select-option>
+                        <ms-select-option :widget="{value: 2}">升级完成</ms-select-option>
+                        <ms-select-option :widget="{value: 3}">未升级 </ms-select-option>
+                        <ms-select-option :widget="{value: 4}">升级失败 </ms-select-option>
+                    </ms-select>
+                </ms-form-item>
+                <ms-form-item :widget="{label: '升级时间:'}" :css="{width: '550'}" :class="'form-item'">
+                    <ms-datepicker :widget="{
+                                placeholder:'请选择开始时间',col:'beginTime',value:@beginTime,direction:'down',onChange:@handleStartTimeChange
+                            }"></ms-datepicker>
+                    -
+                    <ms-datepicker :widget="{
+                                placeholder:'请选择结束时间',col:'endTime',value:@endTime,direction:'down', onChange:@handleEndTimeChange
+                            }"></ms-datepicker>
+                </ms-form-item>
+                <button :if="@authority.SEARCH" type="button" class="btn btn-query" :click="@query">查询</button>
+            </xmp>
+        </div>
+
+        <!-- 表格数据begin -->
+        <div class="tyywglpt-list-panel">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <li class="col-5 first-item">序号</li>
+                    <li class="col-15">所属部门</li>
+                    <li class="col-10">设备类型</li>
+                    <li class="col-10">设备名称</li>
+                    <li class="col-15">国标编号</li>
+                    <li class="col-15">升级动态</li>
+                    <li class="col-20">升级时间</li>
+                    <li class="col-10 last-item">升级包版本</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@loading" class="list-loading">
+                    <span>结果加载中</span>
+                </li>
+                <li :if="@isNull" class="list-null">暂无数据</li>
+                <li :if="!@loading && !@isNull" :for="($index, item) in @list">
+                    <div class="col-5 first-item">{{((current-1)*pageSize+1)+$index}}</div>
+                    <div class="col-15" :attr="{'title':item.orgName  || '','data-toggle':'popover'}">{{@item.orgName | fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.deviceName  || '','data-toggle':'popover'}">{{@item.deviceName | fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.wsName  || '','data-toggle':'popover'}">{{@item.wsName | fillterEmpty}}</div>
+                    <div class="col-15" :attr="{'title':item.gbCode  || '','data-toggle':'popover'}">{{@item.gbCode | fillterEmpty}}</div>
+                    <div class="col-15" :class="[item.updateStatus === 2 && 'isFailed']" :attr="{'title':item.updateStatusName  || '','data-toggle':'popover'}">{{@item.updateStatusName | fillterEmpty}}</div>
+                    <div class="col-20" :attr="{'title':item.insertTime  || '','data-toggle':'popover'}">{{@item.insertTime}}</div>
+                    <div class="col-10" :attr="{'title':item.version  || '','data-toggle':'popover'}">{{@item.version | fillterEmpty}}</div>
+                </li>
+            </ul>
+        </div>
+        <!-- 页码 -->
+        <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@onChangePage,getCurrent:@getCurrent}"></ms-pages>
+        <!-- <div class="tyyw-table-content">
+            <div :controller="table_vm" class="tyyw-table-box">
+                <ms-table :widget="{data:@list,loading:@loading}">
+                    <ms-table-header :widget="{title:'序号',type:'index'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'设备',dataIndex:'deviceName'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'国际编号',dataIndex:'gbCode'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'升级动态',dataIndex:'updateStatusName'}"></ms-table-header>
+                    <ms-table-header :widget="{title:'升级时间'}"><span :skip>{{record.insertTime|date("yyyy-MM-dd HH:mm:ss")}}</span></ms-table-header>
+                    <ms-table-header :widget="{title:'升级版本',dataIndex:'version'}"></ms-table-header>
+                </ms-table>
+                <div class="nodata" :if="@list.length == 0">暂无数据</div>
+            </div>
+        </div> -->
+
+        <!-- <div class="pagebars" :if="@total > 0">
+            <ms-pages :widget="{total:@total,pageSize:@pageSize,onChange:@onChangePage}"></ms-pages>
+        </div> -->
+    </div>
+</template>

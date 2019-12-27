@@ -1,0 +1,202 @@
+<template>
+    <div class="zfsypsjglpt_yspk_zfyps">
+        <div class="search_box" :if="@opt.authority.SEARCH">
+            <div class="hBox" style="padding-top:10px;">
+                <div class="dataFormBox">
+                    <span class="span_large">所属部门：</span>
+                    <div class="dep_tree" :controller="yspk_tree">
+                        <!-- <ms-tree-select :widget="{treeData: @yspk_data, onChange: @select_change, value: @yspk_value, expandedKeys: @yspk_expandedKeys}"
+                            :class="['formInput']"></ms-tree-select> -->
+                        <ms-tree-selecting :widget="{tree: @yspk_data, showSearch: true, wrapId: 'zfyps-tree-select', getSelected: @getSelected, selectedKey: @tree_key ? @tree_key : '', selectedTitle: @tree_title ? @tree_title : '', onChange: @select_change, extraExpandHandle: @extraExpandHandle}"></ms-tree-selecting>
+                        <!-- <xmp is="ms-tree-select" :widget="{treeData: @yspk_data, onChange: @select_change, value: @yspk_value, expandedKeys: @yspk_expandedKeys}"
+                                :class="['formInput']"></xmp> -->
+                    </div>
+                </div>
+                <div class="dataFormBox" :controller="zfyps_time_type">
+                    <span>时间类型：</span>
+                    <ms-select :widget="{col: 'con', options:@time_type_options, value: @time_type, onChange: @onChangeT}" :class="['formInput']"></ms-select>
+                </div>
+                <div class="dataRadioBox" :controller="zfyps_time_range">
+                    <span>时间范围：</span>
+                    <ms-select :widget="{col: 'con', options:@time_range_options, value: @time_range, onChange: @onChangeTR}" :class="['formInput']"></ms-select>
+
+                    <div class="dataTimeBox" :if="@select_time">
+                        <!-- <span>开始时间：</span> -->
+                        <div class="zfyps-dataRight" :controller="zfyps_startTime">
+                            <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'请选择开始时间', value:@zfyps_startTime, showTime: false, endDate:@endDate}"></ms-datepicker>
+                            <div class="zfyps_tip_box zfyps_start_time_tip">
+                                <span :class="['zfyps_tip']" :css="{display:@start_null}">
+                                    <i class="fa fa-exclamation-circle">&nbsp;开始时间不能为空</i>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- <span style="margin-left:40px">结束时间：</span> -->
+                        <span style="float:left; height:28px; line-height:28px;">-</span>
+                        <div class="zfyps-dataRight" :controller="zfyps_endTime">
+                            <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'请选择结束时间', value:@zfyps_endTime, showTime: false, endDate:@endDate}"></ms-datepicker>
+                            <div class="zfyps_tip_box zfyps_end_time_tip">
+                                <span :class="['zfyps_tip']" :css="{display:@end_null}">
+                                    <i class="fa fa-exclamation-circle">&nbsp;结束时间不能为空</i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hBox" style="padding-top:6px;">
+                <div class="dataFormBox">
+                    <span class="span_large">姓名/警号：</span>
+                    <!-- <input type="text" ms-duplex="@police_check" class="formInput form-control" :keyup="@name_enter" :attr="{title: @police_check}" placeholder="支持姓名、警号查询"
+                            :class="[@name_format == 'inline-block' ? 'input_error' : '']"> -->
+                    <div class="zfyps_input_panel">
+                        <input type="text" ms-duplex="@police_check" class="form-control-input policeId" :keyup="@name_input_enter" :attr="{title: @search_policeId_title}"
+                            placeholder="支持姓名、警号查询" :focus="@input_focus('policeId')" :blur="@input_blur('policeId')">
+                        <span class="fa fa-close zfyps_right_close" :mousedown="@close_click('policeId')" :if="@zfyps_close_policeId"></span>
+                    </div>
+                    <div class="zfyps_tip_box">
+                        <span :class="['zfyps_tip']" :css="{display:@name_format}">
+                            <i class="fa fa-exclamation-circle">请输入正确的格式</i>
+                        </span>
+                    </div>
+                </div>
+                <div class="dataFormBox" :controller="file_logo">
+                    <span>重点标记：</span>
+                    <ms-select :widget="{col: 'file_logo', options:@file_options, value: @file_type, onChange: @onChangeF, extraClass: 'zfyps_zdbj'}"
+                        :class="['formInput']"></ms-select>
+                </div>
+                <div class="dataFormBox" :controller="media_type">
+                    <span>媒体类型：</span>
+                    <ms-select :widget="{col: 'media_type', options:@media_options, value: @media_type, onChange: @onChangeM}" :class="['formInput']"></ms-select>
+                </div>
+                <div class="dataFormBox">
+                    <span>关键词：</span>
+                    <!-- <input type="text" ms-duplex="@search_key" class="formInput form-control key_name" :keyup="@key_enter" :attr="{title: @search_key}"
+                            placeholder="支持部门、姓名警号查询" :class="[@key_format == 'inline-block' ? 'input_error' : '']"> -->
+                    <div class="zfyps_input_panel">
+                        <input type="text" ms-duplex="@search_key" class="form-control-input key_name" :keyup="@key_input_enter" :attr="{title: @search_key_title}"
+                            placeholder="支持案件编号、涉案人员、案件类别、标注类型、采集地点、受理单位查询" :focus="@input_focus('key')" :blur="@input_blur('key')">
+                        <span class="fa fa-close zfyps_right_close" :mousedown="@close_click('key')" :if="@zfyps_close_key"></span>
+                    </div>
+                    <div class="zfyps_tip_box">
+                        <span :class="['zfyps_tip']" :css="{display:@key_format}">
+                            <i class="fa fa-exclamation-circle">请输入正确的格式</i>
+                        </span>
+                    </div>
+                </div>
+                <a class="common_search_btn" :if="@opt.authority.SEARCH" :click="@searchBtn">查询</a>
+            </div>
+
+        </div>
+        <div class="zfsypsjglpt_yspk_zfyps_table" :controller="zfsypsjglpt_yspk_zfyps_table">
+            <div :class="['zfyps_tabCont']">
+                <div :controller="zfyps_table" :class="['table-index']" id="zfyps_table">
+                    <div class="table-index-thead-fixed">
+                        <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                            <li class="col-5" data-order="1">
+                                <ms-checkbox :widget="{checked:@isAllChecked, onChange:@handleCheckAll}"></ms-checkbox>
+                            </li>
+                            <li class="col-5" data-order="2">序号</li>
+                            <li class="col-10" data-order="3">操作</li>
+                            <li class="col-10" data-order="4">重点标记</li>
+                            <li class="col-7" data-order="5">媒体类型</li>
+                            <li class="col-12" data-order="6">所属部门</li>
+                            <li class="col-13" data-order="7">姓名/警号</li>
+                            <li class="col-15" data-order="8">拍摄时间</li>
+                            <li class="col-8" data-order="9">拍摄时长</li>
+                            <li class="col-15" data-order="10">导入时间</li>
+                        </ul>
+                    </div>
+
+                    <ul class="table-index-tbody">
+                        <li class="list-null" :if="!@data.length">暂无数据</li>
+
+                        <li :for="($index, record) in @data">
+                            <div class="tbody col-5 table-index-checkbox">
+                                <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1, onChange:function(){@handleCheck(arguments[0].target.checked, record)}}"></ms-checkbox>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont">{{(@currentPage - 1) * @prePageSize + $index + 1}}</div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont">
+                                    <span>
+                                        <a class="check_Btn" :click="@handle('check_click', 'space', record, $index)" :if="@opt.authority.CHECK">查看</a>
+                                        <a class="del_Btn" :click="@handle('del_click', 'space', record, $index)" :if="@opt.authority.DELETE">删除</a>
+                                        <span :if="@opt.authority.OPT_SHOW">-</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont">
+                                    <span :if="@record.is_rel">
+                                        <img :attr="{src:@record.rel_img, 'data-toggle':'tooltip', 'data-title-img-four':'业务关联'}" />
+                                    </span>
+                                    <span :if="@record.is_tag">
+                                        <img :attr="{src:@record.tag_img, 'data-toggle':'tooltip', 'data-title-img-four':'标注信息'}" />
+                                    </span>
+                                    <span :if="@record.is_imp">
+                                        <img :attr="{src:@record.imp_img, 'data-toggle':'tooltip', 'data-title-img-five':'执法仪标记'}" />
+                                    </span>
+                                    <span :if="@record.common_file" class="common_file">
+                                        <img :attr="{src:@record.common_file_img, 'data-toggle':'tooltip', 'data-title-img-four':'普通文件'}" /> - </span>
+                                </div>
+                            </div>
+                            <div class="tbody col-7">
+                                <div class="table-cont" :attr="record['type'] && (record['type'] != '-') ? {rel:'drevil',tdval:record['type']}:''">
+                                    {{record['type']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-12">
+                                <div class="table-cont" :attr="record['orgName'] && (record['orgName'] != '-') ? {rel:'drevil',tdval:record['orgName']}:''">
+                                    {{record['orgName']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-13">
+                                <div class="table-cont" :attr="record['name_id'] && (record['name_id'] != '-') ? {rel:'drevil',tdval:record['name_id']}:''">
+                                    {{record['name_id']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-15">
+                                <div class="table-cont" :attr="record['startTime'] && (record['startTime'] != '-') ? {rel:'drevil',tdval:record['startTime']}:''">
+                                    {{record['startTime']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-8">
+                                <div class="table-cont" :attr="record['duration'] && (record['duration'] != '-') ? {rel:'drevil',tdval:record['duration']}:''">
+                                    {{record['duration']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-15">
+                                <div class="table-cont" :attr="record['importTime'] && (record['importTime'] != '-') ? {rel:'drevil',tdval:record['importTime']}:''">
+                                    {{record['importTime']}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="table-index-loading" :if="@loading">
+                        <span class="loadingSpan">结果加载中</span>
+                    </div>
+                    <!-- <div :if="!@loading && !@data.length" class="noData">暂无数据</div> -->
+                </div>
+            </div>
+            <div class="yspk_page">
+                <ms-pages :widget="{total:@table_pagination.total, pageSize:@table_pagination.pageSize, current:@table_pagination.current, onChange:@handlePageChange, getCurrent:@getCurrent, overLimit:@page_type}"></ms-pages>
+            </div>
+            <div class="delete_all" :if="@delete_all_if">
+                <a class="common_fun_btn delete_all_btn" :class="[@selected_arr.length > 0 ? '':'disabled']" :click="@delete_all" :if="@opt.authority.DELETE">批量删除</a>
+            </div>
+        </div>
+
+        <!--zfyps公共弹窗-->
+        <div class="zfyps_common_dialog">
+            <ms-dialog :widget="{$innerVm: 'zfyps_common_dialog', okText: '确认', cancelText: @cancelText, className: 'zfyps_dialog_common', show: @zfyps_dialog_show, onCancel: @dialogCancel, onOk:@dialogOk, isMove:true, width:@zfyps_dialog_width, height:@zfyps_dialog_height}">
+                <div slot="body" ms-skip>
+                    <!-- <iframe id="iframe_zfyps" src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:-53px;left:0px;width:100%; height:218px;z-index:-1; filter:alpha(opacity=0);"></iframe> -->
+                    <span :class="[@txt_rows ? 'rows_most' : 'rows_single']">{{@dialog_txt}}</span>
+                </div>
+            </ms-dialog>
+        </div>
+
+    </div>
+</template>

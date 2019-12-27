@@ -1,0 +1,42 @@
+.common-ccfwglassign .rightreeli .rightspan{
+    font-size: 14px;
+    vertical-align: middle;
+}
+.common-ccfwglassign .rightreeli span{
+    float: none !important;
+}
+.common-ccfwglassign .rightreeli .spanorg{
+    width: 250px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.common-ccfwglassign .spanorg:before {
+    display: inline-block;
+    content: "";
+    background: url(/static/image/tyywglpt-ccfwgl/org.png?__sprite) no-repeat 0px -1px;
+    width: 22px;
+    height: 17px;
+    margin-top: 4px;
+    margin-left: -3px;
+}
+.common-ccfwglassign .rightreeli .fa-close{
+    color: #C42E2E;
+    vertical-align: bottom;
+    line-height: 18px;
+}
+.ccfwglAllocationDialog .right-content{
+    overflow-y: hidden;
+    position: relative;
+}
+.ccfwglAllocationDialog #righttree{
+    height: 350px;
+    overflow-y: auto;
+}
+.common-ccfwglassign .faClose{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    margin-left: -35px;
+    cursor: pointer;
+    background: url(/static/image/xtywgl/del.png?__sprite) center center no-repeat;     
+}

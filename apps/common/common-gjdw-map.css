@@ -1,0 +1,34 @@
+.common-gjdw-map {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 地图加载中蒙版 */
+.common-gjdw-map .backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    z-index: 999;
+    background: #000;
+    opacity: .7;
+}
+
+.common-gjdw-map .backdrop-loading {
+    width: 100%;
+    position: absolute;
+    top: 40%;
+    z-index: 1000;
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+}
+
+.common-gjdw-map .backdrop-loading .fa-spinner {
+    margin-right: 10px;
+}
+
+/* 地图加载中蒙版 end */

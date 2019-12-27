@@ -1,0 +1,39 @@
+/*统一运维管理平台--任务管理--自动关联服务
+caojiacong */
+
+.zdglfw .tyywglpt-list-panel {
+    top: 108px;
+}
+
+.zdglfw .offset-container .ane-select {
+    width: 120px;
+    margin-right: 10px;
+    margin-top: -2px;
+    padding: 0 20px 0 12px;
+    height: 24px;
+    line-height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.zdglfw .offset-container .ane-select-selected {
+    height: 24px;
+    line-height: 24px;
+}
+
+.zdglfw .offset-container .ane-select-arrow {
+    top: 2px;
+}
+
+.zdglfw .offset-container .btn-tool {
+    display: inline-block;
+    width: 60px;
+    height: 22px;
+    margin-top: -2px;
+    background: #1c9bff;
+    vertical-align: middle;
+}
+
+.zdglfw .offset-container .btn-tool:hover {
+    background: #107dda;
+}

@@ -1,0 +1,13 @@
+{
+    "code": 0,
+    "msg": "成功！",
+    "data": {
+      "orgName": "一级部门",
+      "userName": "超级管理员",
+      "createTime": 1524722533656,
+      "real": true,
+      "deduction": 10,
+      "comment": "应改正已指出错误，真正服务于民"
+    }
+  }
+  

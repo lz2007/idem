@@ -1,0 +1,204 @@
+<template>
+    <div class="zfsypsjglpt_yspk_zfyps_detail">
+        <div class="zfyps_xq">
+            <div class="item_info">
+                <span :attr="{title: @media_info.fileName}">正在查看：{{@media_info.fileName}}</span>
+                <a class="common_fun_btn return_btn" :click="@returnBtn">返回</a>
+            </div>
+            <div class="item_content">
+                <div class="web_player" id="web_player">
+                    <div class="zfyps_timeout" :if="@show_timeout">
+                        <span>文件已过期</span>
+                    </div>
+                    <div class="zfyps_video" :if="@show_GMPlayer">
+                        <!-- <ms-video :widget="{src: @play_url, special_id:'zfyps', media_type:@media_type}"></ms-video> -->
+                        <ms-player :widget="{src: @play_url, special_id:'zfyps', media_type:@media_type, player_width:@web_width, player_height:@web_height, player_left:@web_left, player_top:@web_top, play_status:@play_status, dialog_status:@dialog_status}"></ms-player>
+                    </div>
+                    <div class="media_img" :if="@show_img">
+                        <!-- <img :attr="{src: @play_url}" :if="@media_no_img" /> -->
+                        <div class="media_img_show" :if="@media_no_img">
+                            <ms-pic-player :widget="{src: @play_url, playerID:'zfyps', preview_w:'450', preview_h:'250'}"></ms-pic-player>
+                        </div>
+                        <div class="media_no_img" :if="!@media_no_img">
+                            <img src="/static/image/zfsypsjglpt/pic_img.png" />
+                            <span>抱歉，由于网络、数据等原因，图片暂时无法查看</span>
+                        </div>
+                    </div>
+                    <div class="media_other" :if="@show_other">
+                        <img src="/static/image/zfsypsjglpt/other_img.png" class="gm_other_img">
+                        <span>无法查看该类型文件，请下载到本地查看</span>
+                    </div>
+                    <a class="common_fun_btn download_btn" :class="[@unClick_media ? 'disabled' : '']" :click="@download" :if="@opt_detail.authority.DOWNLOAD">下载</a>
+                </div>
+                <div class="relation_info" :controller="relation_info_ul">
+                    <span class="relation_title">关联标注</span>
+                    <div class="toggle_btn">
+                        <a class="common_fun_btn" :class="[@rel_tag ? '' : 'rel_tag']" :if="@opt_detail.authority.GLXX" :click="@rel_btn">关联信息</a>
+                        <a class="common_fun_btn" :class="[@rel_tag ? 'rel_tag' : '', @unClick_media ? 'disabled' : '']" :if="@opt_detail.authority.BZXX"
+                            :click="@tag_btn">标注信息</a>
+                    </div>
+
+                    <ul class="relation_list" :if="@opt_detail.authority.GLXX && @rel_toggle">
+                        <li ms-for="el in @aj_data">
+                            <label>
+                                <span class="span_space"></span>
+                                <span class="label_text" :attr="{'data-toggle':'tooltip'}">{{@el.glbt}}</span>
+                                <img class="span_icon" :attr="{src: '/static/image/zfsypsjglpt/ajtb.png'}" />
+                            </label>
+                            <div class="relation_li_left">
+                                <label>案件编号：</label>
+                                <div class="list_li_content">
+                                    <label class="list_content" :attr="{'data-toggle':'tooltip'}">{{@el.ajbh}}</label>
+                                </div>
+                                <label>涉案人员：</label>
+                                <div class="list_li_content">
+                                    <label class="list_content" :attr="{'data-toggle':'tooltip'}">{{@el.rymc}}</label>
+                                </div>
+                                <label>案件类别：</label>
+                                <div class="list_li_content">
+                                    <label class="list_content" :attr="{'data-toggle':'tooltip'}">{{@el.ajlb}}</label>
+                                </div>
+                            </div>
+                            <div class="relation_li_right">
+                                <label style="width:66px; text-align:right;">案发时间：</label>
+                                <div class="list_li_content_big">
+                                    <label class="list_content_big" :attr="{'data-toggle':'tooltip'}">{{@el.afsj}}</label>
+                                </div>
+                                <label style="width:66px; text-align:right;">姓名/警号：</label>
+                                <div class="list_li_content_big">
+                                    <label class="list_content_big" :attr="{'data-toggle':'tooltip'}">{{@el.name_id}}</label>
+                                </div>
+                                <label style="width:66px; text-align:right;">受理单位：</label>
+                                <div class="list_li_content_big">
+                                    <label class="list_content_big" :attr="{'data-toggle':'tooltip'}">{{@el.sldw}}</label>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li ms-for="el in @jq_data">
+                            <label>
+                                <span class="span_space"></span>
+                                <span class="label_text" :attr="{'data-toggle':'tooltip'}">{{@el.glbt}}</span>
+                                <img class="span_icon" :attr="{src: '/static/image/zfsypsjglpt/jqtb.png'}" />
+                            </label>
+                            <div class="relation_li_left">
+                                <label>警情编号：</label>
+                                <div class="list_li_content">
+                                    <label class="list_content" :attr="{'data-toggle':'tooltip'}">{{@el.aqbh}}</label>
+                                </div>
+                                <label style="width:60px; text-align:right;">报警人：</label>
+                                <div class="list_li_content">
+                                    <label class="list_content" :attr="{'data-toggle':'tooltip'}">{{@el.bjrxm}}</label>
+                                </div>
+                                <label>警情类别：</label>
+                                <div class="list_li_content">
+                                    <label class="list_content" :attr="{'data-toggle':'tooltip'}">{{@el.aqlb}}</label>
+                                </div>
+                                <label>处警单位：</label>
+                                <div class="list_li_content">
+                                    <label class="list_content" :attr="{'data-toggle':'tooltip'}">{{@el.cjdw}}</label>
+                                </div>
+                            </div>
+                            <div class="relation_li_right">
+                                <label>报警时间：</label>
+                                <div class="list_li_content">
+                                    <label class="list_content" :attr="{'data-toggle':'tooltip'}">{{@el.bjsj}}</label>
+                                </div>
+                                <label>报警电话：</label>
+                                <div class="list_li_content">
+                                    <label class="list_content" :attr="{'data-toggle':'tooltip'}">{{@el.bjdh}}</label>
+                                </div>
+                                <label>事发地点：</label>
+                                <div class="list_li_content">
+                                    <label class="list_content" :attr="{'data-toggle':'tooltip'}">{{@el.sfdd}}</label>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="relation_list no_flag" :if="@opt_detail.authority.GLXX && @no_rel_tag">
+                        暂无关联信息
+                    </div>
+
+                    <div class="relation_list relation_tag" :if="@opt_detail.authority.BZXX && @tag_toggle">
+                        <div class="dataFormBox dataFormBox_tag" :controller="tag_type">
+                            <span>标注类型：</span>
+                            <input type="text" ms-duplex="@tag_label" :class="['formInput', 'form-control', (@edit_save ? 'zfyps_item_show' : 'zfyps_item_hide')]"
+                                :attr="{title: @tag_label, disabled: 'disabled'}">
+                            <ms-select :widget="{col: 'tag_type', options:@tag_options, value: @tag_type, onChange: @onChangeT}" :class="['formInput', (@edit_save ? 'zfyps_item_hide' : 'zfyps_item_show')]"></ms-select>
+                        </div>
+                        <div class="dataFormBox dataFormBox_width">
+                            <span>采集地点：</span>
+                            <div class="locality_panel" :class="[@collection_site_disabled ? 'locality_panel_disabled':'']">
+                                <input type="text" ms-duplex="@collection_site" :class="['form-control-input', 'collection_site']" :attr="@collection_site_disabled ? {title: @collection_site, disabled: 'disabled'} : {title: @collection_site}"
+                                    :focus="@input_focus('locality')" :blur="@input_blur('locality')" :keyup="@input_area">
+                                <span class="fa fa-close zfyps_right_close close_locality" :mousedown="@close_click('locality')" :if="@zfyps_close_locality"></span>
+                            </div>
+                        </div>
+                        <div class="mark_info">
+                            <span>备注：</span>
+                            <textarea ms-duplex="@zfyps_area" class="zfyps_area" :keyup="@input_area" :attr="@zfyps_area_disabled ? {title: @zfyps_area, disabled: 'disabled'} : {title: @zfyps_area}"></textarea>
+                        </div>
+                        <a class="common_fun_btn save_btn" :click="@edit_btn" :if="@edit_save">编辑</a>
+                        <a class="common_fun_btn save_btn" :click="@save_btn" :if="!@edit_save" :class="[@save_disabled? '':'disabled']">保存</a>
+                    </div>
+                </div>
+                <div class="media_info">
+                    <div class="media_title">
+                        <span>媒体信息</span>
+                    </div>
+                    <div class="media_content">
+                        <div class="panel_info">
+                            <label class="label_title">岗位名称：</label>
+                            <div class="label_div_content">
+                                <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@media_info.jobType}}</label>
+                            </div>
+                            <label class="label_title">拍摄民警：</label>
+                            <div class="label_div_content">
+                                <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@media_info.name_id}}</label>
+                            </div>
+                            <label class="label_title">拍摄时间：</label>
+                            <div class="label_div_content">
+                                <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@media_info.startTime}}</label>
+                            </div>
+                            <label class="label_title">导入时间：</label>
+                            <div class="label_div_content">
+                                <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@media_info.importTime}}</label>
+                            </div>
+                        </div>
+                        <div class="panel_info" :controller="change_time">
+                            <label class="label_title">存储位置：</label>
+                            <div class="label_div_content">
+                                <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@media_info.saveSite}}</label>
+                            </div>
+                            <label class="label_title">关联媒体：</label>
+                            <div class="label_div_content">
+                                <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@media_info.key_media}}</label>
+                            </div>
+                            <div>
+                                <label style="float: left;" class="label_title">存储天数：</label>
+                                <label :if="@modify_toggle">{{@media_info.saveTime}}</label>
+                                <ms-select :widget="{col: 'con', options:@time_type_options, value: @time_type, onChange: @onChangeT}" :class="['selectInput', (@modify_toggle ? 'zfyps_item_hide':'zfyps_item_show')]"></ms-select>
+                            </div>
+
+                        </div>
+                        <a class="common_fun_btn media_btn" :if="!@mediaBtn" :click="confirmBtn">确定</a>
+                        <a class="common_fun_btn media_btn" :if="@opt_detail.authority.CHECK_GG" :class="[@mediaBtn ? 'zfyps_item_show':'zfyps_item_hide', @unClick_media ? 'disabled' : '']"
+                            :click="modifyBtn">更改</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--zfyps公共弹窗-->
+        <div class="zfyps_common_dialog_detail">
+            <ms-dialog :widget="{$innerVm: 'zfyps_common_dialog_detail', okText: '确认', cancelText: @cancelText, className: 'zfyps_dialog_common', show: @zfyps_dialog_show, onCancel: @dialogCancel, onOk:@dialogOk, isMove:true, width:@zfyps_dialog_width, height:@zfyps_dialog_height, move_return:@move_return}">
+                <div slot="body" ms-skip>
+                    <!-- <iframe id="iframe_zfyps" src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:-53px;left:0px;width:100%; height:218px;z-index:-1; filter:alpha(opacity=0);"></iframe> -->
+                    <span :class="[@txt_rows ? 'rows_most' : 'rows_single']">{{@dialog_txt}}</span>
+                </div>
+            </ms-dialog>
+        </div>
+
+    </div>
+</template>

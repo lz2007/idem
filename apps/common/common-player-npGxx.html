@@ -1,0 +1,109 @@
+<template>
+    <div id="gxx_ocx" :css="{width:@player_width, height:@player_height}">
+        <div class="ocx_player" :if="@is_IE">
+            <object id="gxxPlayOcx" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9" width="100%" height="100%"></object>
+        </div>
+        <div class="ocx_player" :if="!@is_IE">
+            <embed type="application/npGSVideoPlugin-plugin" name="npGSVideoPlugin" id="npGSVideoPlugin" width="100%"
+                height="100%">
+        </div>
+        <div class="gxx_player_controll" :controller="gxx_player_controll">
+            <!-- <div class="play_speed">当前播放速率：{{@cur_speed}}x</div> -->
+            <div class="volume_control">
+                <a class="voice" :click="@voice"></a>
+                <a class="mute" :click="@mute"></a>
+                <div class="volume_progress">
+                    <div class="v_white_line" id="v_white_line"></div>
+                    <div class="v_blue_line"></div>
+                    <span class="fa fa-circle circle_span" id="v_circle_span"></span>
+                </div>
+            </div>
+            <div id="ocx_playControll" :class="[@media_type == 1 ? 'audio-class' : '']">
+                <!-- <a id="btn_backframe" title="单帧退">
+                    <i class="" aria-hidden="true">
+                        <img src="/static/image/zfsypsjglpt/frameQ_normal.png?__sprite">
+                    </i>
+                </a> -->
+                <!-- 后退 -->
+                <a id="btn_backward" :attr="{title: @player_txt.backwardTxt}">
+                    <i class="" aria-hidden="true">
+                        <img src="/static/image/sszh-lxhf/fast-backward.png?__sprite">
+                    </i>
+                </a>
+                <!-- <a id="btn_replay" title="重新播放">
+                    <i class="" aria-hidden="true">
+                        <img src="/static/image/zfsypsjglpt/cycle_normal.png?__sprite">
+                    </i>
+                </a> -->
+                <!-- 播放 -->
+                <a id="btn_play" :attr="{title: @player_txt.playTxt}">
+                    <i class="" aria-hidden="true">
+                        <img src="/static/image/sszh-lxhf/play.png?__sprite">
+                    </i>
+                </a>
+                <!-- 暂停 -->
+                <a id="btn_pause" :attr="{title: @player_txt.pauseTxt}">
+                    <i class="" aria-hidden="true">
+                        <img src="/static/image/sszh-lxhf/pause.png?__sprite">
+                    </i>
+                </a>
+                <!-- 停止 -->
+                <a id="btn_stop" :attr="{title: @player_txt.stopTxt}">
+                    <i class="" aria-hidden="true">
+                        <img src="/static/image/sszh-lxhf/stop.png?__sprite">
+                    </i>
+                </a>
+                <!-- 快进 -->
+                <a id="btn_forward" :attr="{title: @player_txt.forwardTxt}">
+                    <i class="" aria-hidden="true">
+                        <img src="/static/image/sszh-lxhf/fast-forward.png?__sprite">
+                    </i>
+                </a>
+                <!-- 单帧进 -->
+                <a id="btn_forframe" :attr="{title: @player_txt.forframeTxt}" :if="@media_type !== 1">
+                    <i class="" aria-hidden="true">
+                        <img src="/static/image/sszh-lxhf/step-forward.png?__sprite">
+                    </i>
+                </a>
+                <!-- 截图 -->
+                <a id="btn_screenshot" :attr="{title: @player_txt.screenshotTxt}" :if="@media_type !== 1">
+                    <i class="" aria-hidden="true">
+                        <img src="/static/image/sszh-lxhf/cut.png?__sprite">
+                    </i>
+                </a>
+                <a :attr="{title: @enlargeTip}" :click="@enlarge" style="margin-right:0px !important;" :if="@media_type !== 1">
+                    <i class="" aria-hidden="true">
+                        <img :attr="{src: @enlargeIcon}">
+                    </i>
+                </a>
+            </div>
+            <div class="function_key">
+                <!-- 下载 -->
+                <a class="downloadBtn" :attr="{title: @player_txt.downloadTxt}" :click="@download_click" :if="@downloadShow">
+                    <i class="" aria-hidden="true">
+                        <img src="/static/image/zfsypsjglpt/downloadVideo_icon.png?__sprite">
+                    </i>
+                </a>
+                <!-- 全屏 -->
+                <a :attr="{title: @player_txt.fullScreenTxt}" :click="@full_screen">
+                    <i class="" aria-hidden="true">
+                        <img src="/static/image/sszh-lxhf/full.png?__sprite">
+                    </i>
+                </a>
+            </div>
+
+        </div>
+
+        <!--player弹窗-->
+        <div class="player_dialog_panel">
+            <ms-dialog :widget="{$innerVm: 'player_dialog', okText: @player_txt.okText, cancelText: @cancelText, className: 'player_dialog_class', show: @player_dialog_show, onCancel: @dialogCancel, onOk:@dialogOk, isMove:true, width: @dialog_width, height: @dialog_height, move_return: @move_return}">
+                <div slot="body" ms-skip>
+                    <span>{{@close_txt}}</span>
+                    <span class="tip-text" :if="@showTip">
+                        <i class="fa fa-info-circle"></i>{{@player_txt.restartTip}}
+                    </span>
+                </div>
+            </ms-dialog>
+        </div>
+    </div>
+</template>

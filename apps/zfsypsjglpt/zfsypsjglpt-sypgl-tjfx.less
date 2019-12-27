@@ -1,0 +1,220 @@
+.zfsypsjglpt_en_tjfx {
+
+    .return_btn {
+        color: #ffffff;
+        // float: right;
+        position:absolute;
+        right:20px;
+        top:-56px;
+        z-index:99;
+        font-size: 16px;
+        height: 48px;
+        line-height: 48px;
+        margin-right: 20px;
+        cursor: pointer;
+
+        .back_icon {
+            background: url(/static/image/zfsypsjglpt/back_icon.png?__sprite)
+                no-repeat;
+            width: 28px;
+            height: 18px;
+            float: left;
+            margin-top: 13px;
+        }
+    }
+
+    .search_box {
+        width: 100%;
+        height: 75px;
+        color: #2c3640;
+        background-color: #fff;
+
+        .dataFormBox {
+            width: auto;
+            height: 100%;
+            float: left;
+            padding-top: 23px;
+            padding-left: 20px;
+
+            .form-control {
+                height: 28px;
+                line-height: 28px;
+                padding: 0 12px !important;
+            }
+
+            .searchTitle {
+                float: left;
+                height: 28px;
+                line-height: 28px;
+                margin-right: 8px;
+            }
+
+            .dep_tree {
+                width: 168px;
+                float: left;
+                margin-right: 20px;
+
+                span {
+                    // height: 28px;
+                    // line-height: 28px;
+                }
+            }
+
+            .timePanel {
+                vertical-align: middle;
+                width: 168px;
+                height: 28px;
+                line-height: 28px;
+                float: left;
+
+                .ane-datepicker-clear {
+                    display: none !important;
+                }
+            }
+        }
+
+        .dateControl {
+            float: left;
+            width: 80px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            background-color: #fff;
+            color: #607785;
+            cursor: pointer;
+            border: 1px solid #b5c5d5;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            -khtml-user-select: none;
+            user-select: none;
+            margin-left: 8px;
+
+            // &:hover,
+            &.dataBtnActive {
+                border: 1px solid #1055b3;
+                color: #1055b3;
+            }
+        }
+
+        .common_search_btn {
+            float: right;
+            width: 80px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            background-color: #1055b3;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 23px;
+            margin-right: 20px;
+            border-radius: 2px;
+
+            &:hover {
+                background-color: #0e4899;
+            }
+        }
+    }
+
+    .tjfx_table {
+        position: absolute;
+        left: 0px;
+        right: 0;
+        bottom: 0;
+        top: 62px;
+
+        .col-17 {
+            width: 17%;
+        }
+
+        .col-23 {
+            width: 23%;
+        }
+
+        .col-27 {
+            width: 27%;
+        }
+
+        .tjfx_tabCont {
+            position: absolute;
+            bottom: 81px;
+            top: 54px;
+            right: 0px;
+            left: 0;
+        }
+
+        .check_dep {
+            cursor: pointer;
+            color: #0419dc;
+        }
+
+        .recordingTable,
+        .deviceTable {
+            .tjfx_table_son {
+                li {
+                    border-top: none;
+                    overflow: visible !important;
+                }
+
+                .tjfx_table_down {
+                    border-top: 1px solid #f2f2f2;
+                }
+
+                .tjfx_table_son_span {
+                    position: relative;
+                    left: 0;
+                    right: 0;
+                    top: -14px;
+                    display: inline-block;
+                    width: 100%;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+            }
+
+            .table-index-loading {
+                top: 30px;
+                bottom: -30px;
+            }
+        }
+
+        .tjfx_table_parent {
+            width: 100%;
+            text-align: left;
+            background: #d9dfe7;
+            border: 0px;
+
+            & > li {
+                text-align: center;
+                border: 1px solid #f2f2f2;
+                min-width: 25px;
+            }
+
+            li {
+                display: inline-block;
+                height: 32px;
+                line-height: 32px;
+                vertical-align: middle;
+                background: #d9dfe7;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                border-left: 1px solid #ffffff;
+                border-bottom: none;
+                overflow: visible !important;
+                /* float: left; */
+
+                &:first-child {
+                    border-left: 1px solid #f2f2f2;
+                    // border-left: none;
+                }
+            }
+
+            li + li {
+                border-left: none;
+            }
+        }
+    }
+}

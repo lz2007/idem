@@ -1,0 +1,80 @@
+.sszhst-xxcj-rlcj  .rlcj-list-panel{
+    top:118px;
+}
+.sszhst-xxcj-rlcj  .rlcj-list-content{
+    padding:8px;
+    box-sizing: border-box;
+    width:100%;
+    height:100%;
+    background: #F3F5F7;
+    position: absolute;
+    top:8px;
+    bottom:45px;
+    overflow: auto;
+    /* min-height: 650px; */
+}
+.sszhst-xxcj-rlcj  .rlcj-list-content li.list-null{
+    width:100%;
+    
+}
+.sszhst-xxcj-rlcj  .rlcj-list-content li{
+    width:120px;
+    margin-right:6px;
+    height:182px;
+    float: left;
+    background: #F3F5F7;
+    position: relative;
+}
+.sszhst-xxcj-rlcj  .rlcj-list-content  .rlcjPic{
+    width:100%;
+    box-sizing: border-box;
+    height:135px;
+}
+.sszhst-xxcj-rlcj  .rlcj-list-content img{
+    display: block;
+    width: 120px;
+    height:135px;
+}
+.sszhst-xxcj-rlcj  .rlcj-detail{
+    height:auto;
+    width:100%;
+}
+.sszhst-xxcj-rlcj   .known  span{
+   display: inline-block;
+   text-align: center;
+   font-size: 10px;
+   position: relative;
+   top: -27px;
+   color: #fff;
+
+}
+.sszhst-xxcj-rlcj   .known-time{
+    text-align: center;
+    font-size:10px;
+    position: relative;
+    top:-38px;
+
+}
+.sszhst-xxcj-rlcj  .rlcj-detail .bar-bg,.sszhst-xxcj-rlcj  .rlcj-detail .in-bar{
+    width:120px;
+    height:14px;
+   
+}
+.sszhst-xxcj-rlcj  .rlcj-detail .bar-bg{
+    background: #0099FF;
+    position: relative;
+    margin:3px 0 ;
+}
+.sszhst-xxcj-rlcj  .rlcj-detail .in-bar{
+    position: absolute;
+    top:0;
+    left:0;
+    /* width:100px; */
+    background: #05599A;
+}
+/* 查看文件弹框 */
+.rlcj-video {
+    width:553px;
+    height:313px;
+    background: #000;
+}

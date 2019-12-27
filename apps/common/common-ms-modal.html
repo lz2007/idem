@@ -1,0 +1,36 @@
+<template>
+    <div class="com-modal" style="display:none">
+        <div class="com-modal-modal-mask" :visible="@show" ms-effect="{is:'my-fade-animation',stagger:0}"></div>
+        <div tabindex="-1" class="com-modal-modal-wrap " :visible="@show" ms-effect="{is:'my-zoom-animation',stagger:1.0}">
+            <div role="document" class="com-modal-modal" :css="{width:@modalWidth}">
+                <div class="com-modal-modal-content">
+                    <button aria-label="Close" class="com-modal-modal-close" :click="@cancelClick">
+                        <span class="com-modal-modal-close-x" :visible="@closeIconShow">
+                            <!-- <i class="fa fa-times"></i> -->
+                        </span>
+                    </button>
+                    <div class="com-modal-modal-header" :class="[@drapClass]" :mousedown="mousedown">
+                        <div class="com-modal-modal-title">{{title}}</div>
+                    </div>
+                    <div class="com-modal-modal-body" :css="{height:@modalHeight}">
+                        <slot></slot>
+                    </div>
+                    <div class="com-modal-modal-footer" :css="{'text-align':@btnalign}" :visible="@ifokBtn || @ifcancelBtn">
+                        <button type="button" class="com-modal-btn com-modal-btn-primary com-modal-btn-lg com-modal-btn-extra" :class="@extraDisabled && 'disabled'"
+                            :if="@ifextraBtn" :click="@extraClick">
+                            <span>{{extraText}}</span>
+                        </button>
+                        <button type="button" class="com-modal-btn com-modal-btn-primary com-modal-btn-lg com-modal-btn-ok" :class="@okDisabled && 'disabled'"
+                            :visible="@ifokBtn" :click="@okClick">
+                            <span>{{okText}}</span>
+                        </button>
+                        <button type="button" class="com-modal-btn com-modal-btn-ghost com-modal-btn-lg com-modal-btn-cancle" :class="@cancleDisabled && 'disabled'"
+                            :visible="@ifcancelBtn" :click="@cancelClick">
+                            <span>{{cancelText}}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

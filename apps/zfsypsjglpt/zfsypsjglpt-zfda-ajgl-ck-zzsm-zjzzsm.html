@@ -1,0 +1,124 @@
+<template>
+    <div id="zzsm" class="zjzzsm">
+        <div style="width: 10%;float: left;position: relative;">
+                <div class="zdx-top"></div>
+                <!-- <div class="zdx-mid"></div> -->
+                <div class="zdx-bottom"></div>
+                <div class="zdx"><p><span>装</span></p><p><span>订</span></p><p><span>线</span></p></div>
+        </div>
+        <div style="width: 90%;float: right">
+            <div class="print_title height_5p">
+                涉案视频资料及证据制作说明
+            </div>
+            <div class="height_10p">
+                <div class="divtd width_20 height_50 lh_50 b_b height_100p">
+                    持有人情况
+                </div>
+                <div class="divtd width_80 height_50 padding_5 b_b height_100p">
+                    <ms-textareas :widget="{css:@css,input:@cyrqk}"></ms-textareas>
+                </div>
+            </div>
+            <div class="height_35p">
+                <div class="divtd width_20 height_190 lh_190 b_b height_100p">
+                    视频资料情况
+                </div>
+                <div class="divtd width_80 height_190 b_t height_100p">
+                    <div class="height_20p">
+                        <div class="divtd width_20 height_50 b_l lh_50 b_b height_100p">
+                            来源
+                        </div>
+                        <div class="divtd width_80 height_50 padding_5 b_r height_100p">
+                            <ms-textareas :widget="{css:@css,input:@ly}"></ms-textareas>
+                        </div>
+                    </div>
+                    <div class="m_2 height_20p">
+                        <div class="divtd width_20 height_50 b_l lh_50 b_b height_100p">
+                            内容
+                        </div>
+                        <div class="divtd width_30 height_50 padding_5 b_b height_100p">
+                            <ms-textareas :widget="{css:@css,input:@nr}"></ms-textareas>
+                        </div>
+                        <div class="divtd width_20 height_50 b_l lh_50 b_b height_100p">
+                            视频属性
+                        </div>
+                        <div class="divtd width_30 height_50 padding_5 b_r height_100p">
+                            <ms-textareas :widget="{css:@css,input:@spsx}"></ms-textareas>
+                        </div>
+                    </div>
+                    <div class="m_2 height_60p">
+                        <div class="divtd width_20 height_91 b_l b_b lh_91 height_100p">
+                            资料特征
+                        </div>
+                        <div class="divtd width_30 height_91 padding_5 b_b height_100p">
+                            <ms-textareas :widget="{css:@css,input:@zltz}"></ms-textareas>
+                            <!-- <textarea ms-duplex="@zltz.value" id="zzsm_zltz" value='' :blur="@input_blur"></textarea> -->
+                        </div>
+                        <div class="divtd width_20 height_91 b_b lh_91 height_100p">
+                            制作方法
+                        </div>
+                        <div class="divtd width_30 height_91 padding_5 b_r b_b height_100p">
+                            <!-- <textarea ms-duplex="@zzff.value" id="zzsm_zzff" value='' :blur="@input_blur"></textarea> -->
+                            <ms-textareas :widget="{css:@css,input:@zzff}"></ms-textareas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="m_2 height_10p">
+                <div class="divtd width_20 height_99 lh_99 b_b height_100p">
+                    调取情况
+                </div>
+                <div class="divtd width_80 height_99 b_t b_b height_100p">
+                    <div class="height_50p">
+                        <div class="divtd width_20 height_50 b_t b_l lh_50 b_b height_100p">
+                            调取地点
+                        </div>
+                        <div class="divtd width_30 height_50 padding_5 b_t b_b height_100p">
+                            <ms-textareas :widget="{css:@css,input:@dqdd}"></ms-textareas>
+                        </div>
+                        <div class="divtd width_20 height_50 b_t lh_50 b_b height_100p">
+                            调取时间
+                        </div>
+                        <div class="divtd width_30 height_50 padding_5 b_r b_t height_100p">
+                            <!-- <ms-textareas :widget="{css:@css,input:@kpjg}"></ms-textareas> -->
+                            <ms-datepick :widget="{css:@css, input:@date}"></ms-datepick>
+                        </div>
+                    </div>
+                    <div class="m_2 height_50p">
+                        <div class="divtd width_20 height_50 b_l b_b lh_50 height_100p">
+                            复制件说
+                        </div>
+                        <div class="divtd width_80 height_50 padding_5 b_r height_100p">
+                            <ms-textareas :widget="{css:@css,input:@fzjs}"></ms-textareas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="height_10p">
+                <div class="divtd width_20 height_80 lh_80 b_b height_100p">
+                    备注
+                </div>
+                <div class="divtd width_80 height_80 padding_5 b_b height_100p">
+                    <ms-textareas :widget="{css:@css,input:@bz}"></ms-textareas>
+                </div>
+            </div>
+            <div class="height_10p">
+                <div class="divtd width_100 height_60 b_b height_100p">
+                    <span style="float: left;">原物持有人</span>
+                    <label class="nyr">年月日</label>
+                </div>
+            </div>
+            <div class="height_10p">
+                <div class="divtd width_100 height_60 b_b height_100p">
+                    <span style="float: left;">见证人</span>
+                    <label class="nyr">年月日</label>
+                </div>
+            </div>
+            <div class="height_10p">
+                <div class="divtd width_100 height_60 height_100p">
+                    <span style="float: left;">调取人</span>
+                    <label class="nyr">年月日</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

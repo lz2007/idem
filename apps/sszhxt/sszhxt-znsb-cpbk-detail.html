@@ -1,0 +1,79 @@
+<template>
+    <div class="znsb_cpbk_detail">
+        <div class="return_panel">
+            <a class="return_btn" :click="@returnBtn">返回</a>
+        </div>
+        <div class="scene">
+            <span>现场图片</span>
+            <img :attr="{src:@recognition_info.carRegImgFilePath}" onerror="javascript:this.src='../../static/image/sszhxt-znsb/cpbk_404.png';">
+            <!-- <img :attr="{src:@scene_img}" onerror="javascript:this.src='../../static/image/sszhxt-znsb/cpbk_404.png';"> -->
+        </div>
+        <div class="recognition_content">
+            <div class="recognition">
+                <span>识别内容</span>
+                <img :attr="{src:@scene_img}" onerror="javascript:this.src='../../static/image/sszhxt-znsb/cpbk_404.png';">
+                <!-- <img :attr="{src:@recognition_info.carRegImgFilePath}" onerror="javascript:this.src='../../static/image/sszhxt-znsb/cpbk_404.png';"> -->
+            </div>
+            <div class="recognition_panel">
+                <ul class="recognition_ul">
+                    <li ms-for="el in @recognition_list">
+                        <div :click="@recognition_list_click(@el.index)" style="width:100%; height:100%;">
+                            <span :class="['recognition_span']">{{@el.txt}}</span>
+                        </div>
+                    </li>
+                </ul>
+                <div class="recognition_label">
+                    <label class="label_title" :attr="{'data-toggle':'tooltip'}">{{@recognition_info.carDbName|isNull}}</label>
+                    <div class="label_left">
+                        <label>号牌号码：</label>
+                        <label :attr="{'data-toggle':'tooltip'}">{{@recognition_info.carNumber|isNull}}</label><br>
+                        <label>车辆类型：</label>
+                        <label :attr="{'data-toggle':'tooltip'}">{{@recognition_info.carTypeName|isNull}}</label><br>
+                        <label>所有人：</label>
+                        <label style="max-width:160px !important;" :attr="{'data-toggle':'tooltip'}">{{@recognition_info.carOwner|isNull}}</label><br>
+                        <label>使用性质：</label>
+                        <label :attr="{'data-toggle':'tooltip'}">{{@recognition_info.carUse == "0" ? "非运营" : "运营"}}</label>
+                    </div>
+                    <div class="label_right">
+                        <label>品牌型号：</label>
+                        <label :attr="{'data-toggle':'tooltip'}">{{@recognition_info.carBrand|isNull}}</label><br>
+                        <label>车辆识别代号：</label>
+                        <label style="max-width:118px !important;" :attr="{'data-toggle':'tooltip'}">{{@recognition_info.carIdCard|isNull}}</label><br>
+                        <label>发动机号码：</label>
+                        <label style="max-width:130px !important;" :attr="{'data-toggle':'tooltip'}">{{@recognition_info.carEngineNo|isNull}}</label><br>
+                        <label>有效期：</label>
+                        <label style="max-width:160px !important;" :attr="{'data-toggle':'tooltip'}">{{@recognition_info.carValid|isNull}}</label>
+                    </div>
+                    <label style="padding-left: 6px;">住址：</label>
+                    <label style="max-width:390px !important;" :attr="{'data-toggle':'tooltip'}">{{@recognition_info.carOwnerAddress|isNull}}</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="history">历史记录</div>
+        <div class="cpbk-detail-table">
+            <ms-comtable :widget="{id:'znsb-cpbk-detail-table', loading:@loading, data:@table_list, actions:@actions, panelCss:{position: 'absolute',bottom: 60,top: 100,left: 8,right: 8}}">
+                <ms-comtable-header :widget="{title:'序号', dataIndex:'table_index', colwidth:'5%', popover:true}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'操作', dataIndex:'name_id', colwidth:'10%'}">
+                    <span :class="['check_action']" :click="handle('check')" :skip>
+                        <img src="/static/image/sszhxt-znsb/location.png">
+                    </span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'执法部门', popover:true, colwidth:'25%'}">
+                    <span :skip>{{record.orgName | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'人员类别', popover:true, colwidth:'10%'}">
+                    <span :skip>{{record.policeTypeName | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'姓名/警号', popover:true, colwidth:'25%'}">
+                    <span :skip>{{record.name_id | isNull}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'拍摄时间', colwidth:'25%', popover:true}">
+                    <span :skip>{{record.time | isNull}}</span>
+                </ms-comtable-header>
+            </ms-comtable>
+        </div>
+
+        <ms-pages :widget="{total:@table_pagination.total, pageSize:@table_pagination.pageSize, current:@table_pagination.current, onChange:@handlePageChange, getCurrent:@getCurrent, overLimit:@page_type}"></ms-pages>
+    </div>
+</template>

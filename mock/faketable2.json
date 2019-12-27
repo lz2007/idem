@@ -1,0 +1,32 @@
+{
+    "code": 0,
+    "msg": "成功！",
+    "data": {
+        "totalPages": 1,
+        "totalElements": 1,
+        "currentPages": 0,
+        "perPages": 20,
+        "currentElements": [{
+            "wfbh": "VI0",
+            "orgCode": "GM000",
+            "orgName": "0号部门",
+            "userCode": "0",
+            "userName": "0号员工",
+            "idCard": "420582199902123212",
+            "jdsbh": "决定书编号0",
+            "wfsj": 1524642452000,
+            "dsr": "王五violation",
+            "jszh": "420582199902123212",
+            "hphm": "粤A88888",
+            "hpzlmc": "民用牌照",
+            "wfdz": "广州",
+            "wfxw": "闯红灯",
+            "relation": false,
+            "evaStatus": true,
+            "reviewStatus": true,
+            "evaResult": "0",
+            "reviewResult": "1",
+            "pzbh":1231456
+        }]
+    }
+}

@@ -1,0 +1,235 @@
+<template>
+    <div class="zfsypsjglpt_tjfx_glqktj_jjb">
+        <div class="search_box" :if="@opt_glqktj_jjb.authority.SEARCH">
+            <div class="hBox" style="padding-top: 10px;">
+                <div class="dataFormBox dataTreeBox">
+                    <span>执勤部门：</span>
+                    <div class="dep_tree" :controller="glqktj_jjb_tree">
+                        <ms-tree-selecting :widget="{tree: @glqktj_jjb_data, showSearch: true, wrapId: 'glqktj-jjb-tree-select', getSelected: @getSelected, selectedKey: @tree_key ? @tree_key : '', selectedTitle: @tree_title ? @tree_title : '', onChange: @select_change, extraExpandHandle: @extraExpandHandle}"></ms-tree-selecting>
+                    </div>
+                    <!-- <div class="included_dep" :click="@included_dep_click">
+                        <img :attr="{src:@included_dep_img}">包含子部门
+                    </div> -->
+                </div>
+                <!-- <div class="dataFormBox" :controller="glqktj_jjb_object_type">
+                    <span>统计对象：</span>
+                    <ms-select :widget="{col: 'con', options:@object_type_options, value: @object_type, onChange: @onChangeO}" :class="['formInput']"></ms-select>
+                </div> -->
+                <div class="dataFormBox" :controller="glqktj_jjb_man_type">
+                    <span>人员类别：</span>
+                    <ms-select :widget="{col: 'con', options:@man_type_options, value: @man_type, onChange: @onChangeT}" :class="['formInput']"></ms-select>
+                </div>
+
+                <a class="common_fun_btn" :if="@opt_glqktj_jjb.authority.EXPORT" :click="@importBtn">导出</a>
+                <a class="common_search_btn" :if="@opt_glqktj_jjb.authority.SEARCH" :click="@searchBtn">查询</a>
+            </div>
+            <div class="hBox" style="padding-top: 6px;">
+                <!-- <div class="dataFormBox" :controller="glqktj_jjb_man_type">
+                    <span>人员类别：</span>
+                    <ms-select :widget="{col: 'con', options:@man_type_options, value: @man_type, onChange: @onChangeT}" :class="['formInput']"></ms-select>
+                </div> -->
+                <div class="dataRadioBox" :controller="glqktj_jjb_time_range">
+                    <span>时间范围：</span>
+                    <ms-select :widget="{col: 'con', options:@time_range_options, value: @time_range, onChange: @onChangeTR}" :class="['formInput']"></ms-select>
+
+                    <div class="dataTimeBox" :if="@select_time">
+                        <div class="glqktj_jjb_timePanel" :controller="glqktj_jjb_startTime">
+                            <ms-datepicker :widget="{onChange:@handleTimeChange, placeholder:'请选择开始时间', value:@glqktj_jjb_startTime, showTime: false}"></ms-datepicker>
+                        </div>
+                        <span style="float:left; height:28px; line-height:28px;">-</span>
+                        <div class="glqktj_jjb_timePanel" :controller="glqktj_jjb_endTime">
+                            <ms-datepicker :widget="{onChange:@handleTimeChange, placeholder:'请选择结束时间', value:@glqktj_jjb_endTime, showTime: false}"></ms-datepicker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tjfx_glqktj_jjb_table" :controller="tjfx_glqktj_jjb_table">
+            <ms-org-breadcrumb :widget="{cid:'glqktj-breadcrumb',list: @breadcrumbList, handleclick: @breadcrumbClick}"></ms-org-breadcrumb>
+            <div :class="['glqktj_jjb_tabCont']">
+                <div :controller="glqktj_jjb_table" :class="['table-index']" id="glqktj_jjb_table">
+                    <div class="table-index-thead-fixed">
+                        <ul class="glqktj_jjb_table_parent" :css="{paddingRight:@paddingRight}">
+                            <li parent="1" class="col-4">
+                                <span style="visibility: hidden;">序号</span>
+                            </li>
+                            <li parent="2" :class="[@count_obj ? 'col-21' : 'col-15']">
+                                <span style="visibility: hidden;">执勤部门</span>
+                            </li>
+                            <li parent="3" class="col-6" :class="[@count_obj ? 'count_obj_hide' : 'count_obj_show']">
+                                <span style="visibility: hidden;">人员类别</span>
+                            </li>
+                            <li parent="4" class="col-6" :class="[@count_obj ? 'count_obj_hide' : 'count_obj_show']">
+                                <span style="visibility: hidden;">姓名/警号</span>
+                            </li>
+                            <li parent="5" class="col-15">
+                                <span>总体情况</span>
+                            </li>
+                            <li parent="6" class="col-15">
+                                <span>简易程序</span>
+                            </li>
+                            <li parent="7" class="col-15">
+                                <span>非现场处罚</span>
+                            </li>
+                            <li parent="8" class="col-15">
+                                <span>强制措施</span>
+                            </li>
+                            <li parent="9" class="col-15">
+                                <span>事故处理</span>
+                            </li>
+                        </ul>
+                        <ul class="table-index-thead glqktj_jjb_table_son" :css="{paddingRight:@paddingRight}">
+                            <li data-order="1" son="1" class="col-4">
+                                <span class="glqktj_jjb_table_son_span">序号</span>
+                            </li>
+                            <li data-order="2" son="2" :class="[@count_obj ? 'col-21' : 'col-15']">
+                                <span class="glqktj_jjb_table_son_span">执勤部门</span>
+                            </li>
+                            <li data-order="3" son="3" class="col-6" :class="[@count_obj ? 'count_obj_hide' : 'count_obj_show']">
+                                <span class="glqktj_jjb_table_son_span">人员类别</span>
+                            </li>
+                            <li data-order="4" son="4" class="col-6" :class="[@count_obj ? 'count_obj_hide' : 'count_obj_show']">
+                                <span class="glqktj_jjb_table_son_span">姓名/警号</span>
+                            </li>
+                            <li data-order="5" son="5" class="col-5 glqktj_jjb_table_down">执法总数量</li>
+                            <li data-order="6" son="5" class="col-5 glqktj_jjb_table_down">已关联总数量</li>
+                            <li data-order="7" son="5" class="col-5 glqktj_jjb_table_down">总关联率</li>
+
+                            <li data-order="8" son="6" class="col-5 glqktj_jjb_table_down">执法数量</li>
+                            <li data-order="9" son="6" class="col-5 glqktj_jjb_table_down">已关联数量</li>
+                            <li data-order="10" son="6" class="col-5 glqktj_jjb_table_down">关联率</li>
+
+                            <li data-order="11" son="7" class="col-5 glqktj_jjb_table_down">执法数量</li>
+                            <li data-order="12" son="7" class="col-5 glqktj_jjb_table_down">已关联数量</li>
+                            <li data-order="13" son="7" class="col-5 glqktj_jjb_table_down">关联率</li>
+
+                            <li data-order="14" son="8" class="col-5 glqktj_jjb_table_down">执法数量</li>
+                            <li data-order="15" son="8" class="col-5 glqktj_jjb_table_down">已关联数量</li>
+                            <li data-order="16" son="8" class="col-5 glqktj_jjb_table_down">关联率</li>
+
+                            <li data-order="17" son="9" class="col-5 glqktj_jjb_table_down">执法数量</li>
+                            <li data-order="18" son="9" class="col-5 glqktj_jjb_table_down">已关联数量</li>
+                            <li data-order="119" son="9" class="col-5 glqktj_jjb_table_down">关联率</li>
+
+                        </ul>
+                    </div>
+                    <ul class="table-index-tbody">
+                        <li class="list-null" :if="!@data.length">暂无数据</li>
+                        <li :for="($index, record) in @data">
+                            <div class="tbody col-4">
+                                <div class="table-cont">{{(@currentPage - 1) * @prePageSize + $index + 1}}</div>
+                            </div>
+                            <div class="tbody" :class="[@count_obj ? 'col-21' : 'col-15']">
+                                <div class="table-cont glqktjDeptTree" :attr="record['orgName'] && (record['orgName'] != '-') ? {rel:'drevil',tdval:record['orgName']}:''">
+                                    <a :click="@searchBtnFormTable(record, false)">{{record['orgName']}}</a>
+                                </div>
+                            </div>
+                            <div class="tbody col-6" :class="[@count_obj ? 'count_obj_hide' : 'count_obj_show']">
+                                <div class="table-cont" :attr="record['userName'] && (record['userName'] != '-') ? {rel:'drevil',tdval:record['userName']}:''">
+                                    {{record['userName']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-6" :class="[@count_obj ? 'count_obj_hide' : 'count_obj_show']">
+                                <div class="table-cont" :attr="record['userName'] && (record['userName'] != '-') ? {rel:'drevil',tdval:record['userName']}:''">
+                                    {{record['userName']}}
+                                </div>
+                            </div>
+
+                            <!-- 总体情况 -->
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['zfzsl'] && (record['zfzsl'] != '-') ? {rel:'drevil',tdval:record['zfzsl']}:''">
+                                    {{record['zfzsl']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['yglzsl'] && (record['yglzsl'] != '-') ? {rel:'drevil',tdval:record['yglzsl']}:''">
+                                    {{record['yglzsl']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['zgll'] && (record['zgll'] != '-') ? {rel:'drevil',tdval:record['zgll']}:''">
+                                    {{record['zgll']}}
+                                </div>
+                            </div>
+
+                            <!-- 简易程序 -->
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['jtwfzs'] && (record['jtwfzs'] != '-') ? {rel:'drevil',tdval:record['jtwfzs']}:''">
+                                    {{record['jycxzs']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['jtwfgls'] && (record['jtwfgls'] != '-') ? {rel:'drevil',tdval:record['jtwfgls']}:''">
+                                    {{record['jycxgls']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['jtwfgll'] && (record['jtwfgll'] != '-') ? {rel:'drevil',tdval:record['jtwfgll']}:''">
+                                    {{record['jycxgll']}}
+                                </div>
+                            </div>
+
+                            <!-- 非现场处罚 -->
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['sgclzs'] && (record['sgclzs'] != '-') ? {rel:'drevil',tdval:record['sgclzs']}:''">
+                                    {{record['fxccfzs']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['sgclgls'] && (record['sgclgls'] != '-') ? {rel:'drevil',tdval:record['sgclgls']}:''">
+                                    {{record['fxccfgls']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['sgclgll'] && (record['sgclgll'] != '-') ? {rel:'drevil',tdval:record['sgclgll']}:''">
+                                    {{record['fxccfgll']}}
+                                </div>
+                            </div>
+
+                            <!-- 强制措施 -->
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['sgclzs'] && (record['sgclzs'] != '-') ? {rel:'drevil',tdval:record['sgclzs']}:''">
+                                    {{record['qzcszs']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['sgclgls'] && (record['sgclgls'] != '-') ? {rel:'drevil',tdval:record['sgclgls']}:''">
+                                    {{record['qzcsgls']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['sgclgll'] && (record['sgclgll'] != '-') ? {rel:'drevil',tdval:record['sgclgll']}:''">
+                                    {{record['qzcsgll']}}
+                                </div>
+                            </div>
+
+                            <!-- 事故处理 -->
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['sgclzs'] && (record['sgclzs'] != '-') ? {rel:'drevil',tdval:record['sgclzs']}:''">
+                                    {{record['sgclzs']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['sgclgls'] && (record['sgclgls'] != '-') ? {rel:'drevil',tdval:record['sgclgls']}:''">
+                                    {{record['sgclgls']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['sgclgll'] && (record['sgclgll'] != '-') ? {rel:'drevil',tdval:record['sgclgll']}:''">
+                                    {{record['sgclgll']}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="table-index-loading" :if="@loading">
+                        <span class="loadingSpan">结果加载中</span>
+                    </div>
+                    <!-- <div :if="!@loading && !@data.length" class="noData">暂无数据</div> -->
+                </div>
+            </div>
+            <div class="glqktj_jjb_page">
+                <ms-pages :widget="{total:@table_pagination.total, pageSize:@table_pagination.pageSize, current:@table_pagination.current, onChange:@handlePageChange, getCurrent:@getCurrent, overLimit:@page_type}"></ms-pages>
+            </div>
+        </div>
+    </div>
+</template>

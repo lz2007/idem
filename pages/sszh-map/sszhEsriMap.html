@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="/node_modules/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="//172.16.5.63:8094/jsapi/3.14/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="//172.16.5.63:8094/jsapi/3.14/esri/css/esri.css">
+    <style type="text/css">
+        body, html, #allmap {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+
+        #allmap {
+            /*border: 1px solid #CCCCCC;*/
+        }
+
+        /*设备信息弹框*/
+        #allmap .esriPopup .titlePane {
+            background: #414f5c;
+            line-height: 40px;
+            height: 40px;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        #allmap .esriPopupWrapper .sizer .title {
+            font-size: 16px;
+            padding-left: 20px;
+        }
+
+        #allmap .esriPopupWrapper .sizer .maximize {
+            display: none;
+        }
+
+        #allmap .esriPopupWrapper .sizer .close {
+            top: 10px;
+            right: 20px;
+            background: url("/static/image/sszhxt/mapClose.png") no-repeat;
+            opacity: 1;
+            width: 20px;
+            height: 20px;
+        }
+
+        #allmap .esriPopupWrapper .sizer .actionsPane .actionList {
+            display: none;
+        }
+
+        #allmap .esriPopupWrapper .contentPane {
+            padding: 12px 40px 0 40px;
+            /* 去掉滚动条 */
+            max-height: 100% !important;
+        }
+
+        #allmap .esriPopupWrapper .infowindowcontainer p {
+            margin: 0 0 10px 0;
+        }
+
+        #allmap .esriSimpleSlider {
+            border: none;
+            border-radius: 0;
+        }
+
+        #allmap .esriSimpleSliderIncrementButton {
+            border-bottom: none;
+        }
+
+        #allmap .esriSimpleSliderIncrementButton span {
+            border-bottom: 1px solid #77838d;
+        }
+    </style>
+    <script type="text/javascript">
+        window.baseUrl = document.location.href.substring(0, document.location.href.lastIndexOf("/"));
+        window.selfUrl = baseUrl.substring(0, baseUrl.lastIndexOf("/"));
+        window.mapConfig = {
+            // server: 'http://10.10.9.240:8088',			    //本地8080端口瓦片地图地址 （此项不用配置，请于configService.js文件的mapConfig中配置）
+            //       apiPath: '10.10.9.95:8088',		                //JSAPI路径，默认为本机服务器IP。不能填写127.0.0.1|localhost 路径格式：IP(URL)+ /resources
+//        longitude: 113,									//地图默认中心坐标，经度(x),WGS-84(地球坐标系)
+//        latitude: 23,									//地图默认中心坐标，纬度(y),WGS-84(地球坐标系)
+            extendDir: ''										//map扩展目录，默认为空。用于可能map目录在不同层级的情况，如：/webapp
+        };
+        window.djConfig = {
+            parseOnLoad: true,
+            measureTotal: 0,
+            async: false,
+            modulePaths: {
+                "extras": "/static/vendor/map/jsLib/extras"
+            },
+            aliases: [
+                ['jQuery', '//172.16.5.63:8094/jsapi/3.14/jquery.js']
+            ],
+            deps: ["jQuery"]
+        };
+    </script>
+
+</head>
+<body>
+<div id="allmap"></div>
+</body>
+<script src="//172.16.5.63:8094/jsapi/3.14/jquery.js"></script>
+<script type="text/javascript" src="//172.16.5.63:8094/jsapi/3.14/init.js"></script>
+<script src="/static/js/sszhEsriMap.js"  type="text/javascript" charset="utf-8"></script>
+</html>

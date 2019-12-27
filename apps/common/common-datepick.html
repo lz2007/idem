@@ -1,0 +1,15 @@
+<template>
+        <div :css="@css" class="common-input">
+            <div class="common-input-container">
+                <label class="common-input-label" :attr="{title:@input.name.replace(':', '')}">
+                    {{@input.name}}:
+                </label>
+                <div class="common-input-input">
+                    <div class="common-input-inner">
+                        <ms-datepicker :widget="{onChange:@onChange, placeholder:@input.placeHolder, value:@input.time, showTime: @input.showTime, endDate:@input.endDate}"></ms-datepicker>
+                    </div>
+                </div>
+            </div>
+            <div class="common-input-alert" :visible="@alertShow">{{@input.placeHolder}}</div>
+        </div>
+    </template>

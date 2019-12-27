@@ -1,0 +1,62 @@
+
+.xzgns .btn{
+    width: 100px;
+    height: 32px;
+    margin-right: 10px;
+    padding: 4px;
+    background: #1c9bff;
+    color: #ffffff;
+}
+.xzgns .btn:hover {
+    background: #077CE1;
+}
+.xzgns .disabled{
+    background: #d4d7d9;
+    opacity: 1;
+}
+.xzgns .disabled:hover {
+    background: #d4d7d9;
+}
+.xzgns .btn:focus{
+    outline: none;
+}
+.bacspz-baqlb .oparate {
+    color: #0419dc;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.baqplsc .btn-tool{
+    position: absolute;
+    bottom: 0px;
+    padding: 5px;
+    width: 100px;
+    height: 30px;
+    background: #1c9bff;
+}
+.baqplsc .disabled{
+    background: #d4d7d9;
+    opacity: 1;
+}
+.baqplsc .btn-tool:focus{
+    outline: none;
+}
+.gnsmodal .inlineArea{
+    margin-bottom: 10px;
+    text-align: center;
+}
+.gnsmodal .inlineArea label{
+    font-size: 15px;
+    font-weight: normal;
+    color: #536b82;
+}
+.gnsmodal .inlineArea .form-control{
+    display: inline-block;
+    width: 170px;
+    height: 33px;
+}
+.deletemodal .message{
+    line-height: 50px;
+    font-size: 16px;
+    color: #000;
+    text-align: center;
+}

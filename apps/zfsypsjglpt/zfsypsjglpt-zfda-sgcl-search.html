@@ -1,0 +1,104 @@
+<template>
+    <div class="top-form">
+        <xmp is="ms-form" :widget="{$form:@$searchForm,inline:true}">
+
+            <div class="top-form-inline">
+                <span style="margin-left: 13px;">执勤部门:</span>
+                <div class="inline-component">
+                    <ms-tree-selecting :widget="{col:'orgPath',tree:@orgData, showSearch:true, wrapId: 'zfygl-tree-select-1', getSelected:@getSelected, selectedKey:@dataJson ? @dataJson.orgId : '', selectedTitle:@dataJson ? @dataJson.orgName : '', onChange:@handleTreeChange, extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+
+                    <i class="fa includeChild" :click="@clickincludeChild(el,key) | stop" :class="[(includeChild?'fa-check-square checked':'fa-square-o')]">
+                        <span class="text">包含子部门</span>
+                    </i>
+                </div>
+                <span class="bjsj">事故时间:</span>
+                <div class="inline-component">
+                    <ms-select :widget="{
+                                        col:'timeMode',
+                                        value: @timeMode,
+                                        onChange:@time_Change
+                                    }">
+                        <ms-select-option :widget="{value:1}">本周</ms-select-option>
+                        <ms-select-option :widget="{value:2}">本月</ms-select-option>
+                        <ms-select-option :widget="{value:3}">自定义时间</ms-select-option>
+                    </ms-select>
+                </div>
+
+                <div :visible="@isDuration" class="inline-component timeCover">
+                    <ms-form-item :widget="{label:'开始时间:'}" :class="'form-item'">
+                        <ms-datepicker :widget="{
+                                        col:'sgStartTime',
+                                        placeholder:'请选择开始时间',
+                                        value: @sgStartTime,
+                                    }"></ms-datepicker>
+                    </ms-form-item>
+                    <ms-form-item :widget="{label:'结束时间:'}" :class="'form-item'" :css="{'margin-left': '3px'}">
+                        <ms-datepicker :widget="{
+                                        col:'sgEndTime',
+                                        placeholder:'请选择结束时间',
+                                        value: @sgEndTime
+                                    }"></ms-datepicker>
+                    </ms-form-item>
+                </div>
+            </div>
+
+            <div class="top-form-inline">
+                <ms-form-item :widget="{label: '姓名/警号:'}" :css="{'margin-left': '-6px'}">
+                    <ms-input :widget="{col: 'userCode', value:@userCode}" :focus="@input_focus" :blur="@input_blur"></ms-input>
+                    <span class="fa fa-close zfda-sgcl-jtwf-right-close" :mousedown="(@userCode='')"></span>
+                </ms-form-item>
+                <span class="bjsj">处理时间:</span>
+                <div class="inline-component">
+                    <ms-select :widget="{
+                                        col:'timeMode2',
+                                        value: @timeMode2,
+                                        onChange:@time_Change2
+                                    }">
+                        <ms-select-option :widget="{value:1}">本周</ms-select-option>
+                        <ms-select-option :widget="{value:2}">本月</ms-select-option>
+                        <ms-select-option :widget="{value:3}">自定义时间</ms-select-option>
+                    </ms-select>
+                </div>
+
+                <div :visible="@isDuration2" class="inline-component timeCover">
+                    <ms-form-item :widget="{label:'开始时间:'}" :class="'form-item'">
+                        <ms-datepicker :widget="{
+                                        col:'clStartTime',
+                                        placeholder:'请选择开始时间',
+                                        value: @clStartTime,
+                                    }"></ms-datepicker>
+                    </ms-form-item>
+                    <ms-form-item :widget="{label:'结束时间:'}" :class="'form-item'" :css="{'margin-left': '3px'}">
+                        <ms-datepicker :widget="{
+                                        col:'clEndTime',
+                                        placeholder:'请选择结束时间',
+                                        value: @clEndTime
+                                    }"></ms-datepicker>
+                    </ms-form-item>
+                </div>
+            </div>
+
+            <div class="top-form-inline">
+                <ms-form-item :widget="{col:'ardess' ,label: '事故地点:'}">
+                    <ms-input :widget="{col: 'sgdd', value:@sgdd}" :focus="@input_focus" :blur="@input_blur"></ms-input>
+                    <span class="fa fa-close zfda-sgcl-jtwf-right-close" :mousedown="(@sgdd='')"></span>
+                </ms-form-item>
+                <ms-form-item :widget="{col: 'number',label: '事故编号:'}">
+                    <ms-input :widget="{col: 'sgbh', value:@sgbh}" :focus="@input_focus" :blur="@input_blur"></ms-input>
+                    <span class="fa fa-close zfda-sgcl-jtwf-right-close" :mousedown="(@sgbh='')"></span>
+                </ms-form-item>
+                <ms-form-item :widget="{col: 'guanlian',label: '关联媒体:'}">
+                    <ms-select :widget="{
+                                    col:'glmt',
+                                    value: [@glmt],
+                                }">
+                        <ms-select-option :widget="{value:'99'}">不限</ms-select-option>
+                        <ms-select-option :widget="{value:'1'}">已关联</ms-select-option>
+                        <ms-select-option :widget="{value:'0'}">未关联</ms-select-option>
+                    </ms-select>
+                </ms-form-item>
+            </div>
+            <a class="ajgl_search_btn" :click="@fromsearch | stop" ms-on-enter="@fromsearch">查询</a>
+        </xmp>
+    </div>
+</template>

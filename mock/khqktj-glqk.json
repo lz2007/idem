@@ -1,0 +1,41 @@
+{
+    "code": 0,
+    "msg": "成功！",
+    "data": {
+        "totalPages": 5,
+        "totalElements": 100,
+        "currentPages": 0,
+        "perPages": 20,
+        "currentElements": [{
+                "name": "一级部门",
+                "type": "部门",
+                "userCount": 70,
+                "fileCreateInfo": 56,
+                "videoCount": "1000",
+                "leCount": "1000",
+                "matchCount": "900",
+                "matchRate": "0.9000"
+            },
+            {
+                "name": "张三(10000)",
+                "type": "警员",
+                "userCount": 1,
+                "fileCreateInfo": "绑定",
+                "videoCount": "100",
+                "leCount": "100",
+                "matchCount": "90",
+                "matchRate": "0.9000"
+            },
+            {
+                "name": "李四(10000)",
+                "type": "辅警",
+                "userCount": 1,
+                "fileCreateInfo": "未绑定",
+                "videoCount": "-",
+                "leCount": "-",
+                "matchCount": "-",
+                "matchRate": "-"
+            }
+        ]
+    }
+}

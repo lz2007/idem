@@ -1,0 +1,76 @@
+<template>
+    <div class="sszhst-xxcj-rlcj">
+        <div class="sszhxt-tool-bar">
+            <ms-form :widget="{$form:@$form,inline:true}">
+                <div>
+                    <div  class="xxjctime-container">
+                        <ms-form-item :widget="{label:'开始时间:'}" :class="'form-item'">
+                                <ms-datepicker :widget="{
+                                        col:'beginTime',
+                                        placeholder:'年/月/日',
+                                        value: @beginTime,
+                                    }"></ms-datepicker>
+                            </ms-form-item>
+                    </div>
+                    <!-- <span class="date-line" >-&nbsp;&nbsp;</span> -->
+                    <div  class="xxjctime-container">
+                        <ms-form-item :widget="{label:'结束时间:'}" :class="'form-item'">
+                                <ms-datepicker :widget="{
+                                        col:'endTime',
+                                        placeholder:'年/月/日',
+                                        value: @endTime
+                                    }"></ms-datepicker>
+                            </ms-form-item>
+                     
+                    </div>
+                </div>
+                <div class="search-line-second">
+                    <ms-form-item :widget="{label:'识别率:'}" :class="'form-item'">
+                        <ms-select :widget="{col:'checkStatus', value:[1]}">
+                            <ms-select-option :widget="{value:1}">不限</ms-select-option>
+                            <ms-select-option :widget="{value:1}">大概:(10%~40%)</ms-select-option>
+                            <ms-select-option :widget="{value:2}">标准:(40%~80%)</ms-select-option>
+                            <ms-select-option :widget="{value:3}">精准:(80%~100%)</ms-select-option>
+                        </ms-select>
+                    </ms-form-item>
+
+                </div>
+                <button  type="button" class="btn btn-query" :click="@handleQuery">查询</button>
+            </ms-form>
+          </div>
+          <div class="sszhxt-list-panel rlcj-list-panel">
+              <ul class="  rlcj-list-content" >
+                  <li :visible="@noData" class="list-null">暂无数据</li>
+                  <li :for="($index, item) in @tableData">
+                      <div class="rlcjPic" :click="@handlePicClick">
+                          <img src="/static/image/sszhxt-xxcj/carPic.png" alt="车牌采集照片">
+                      </div>
+                      <div class="rlcj-detail">
+                          <div class="show-bar">
+                              <div class="bar-bg">
+                                 <div class="in-bar" :css="{width:(item.percent.slice(0,item.percent.length-1)/100 * 120)}"></div>
+                              </div>
+                               <div class="known">
+                                  <span>识别率:</span><span >{{@item.percent}}</span>
+                              </div> 
+                              <div class="known-time">
+                                  {{@item.time}}
+                              </div>
+                          </div>
+                      </div>
+                  </li>
+              </ul>
+          </div>
+          <!-- 查看文件弹框 -->
+          <div :controller="rlcjLookVideo">
+              <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.rlcj-video',drag:true,modalWidth:@modalWidth,show: @show,modalWidth:@modalWidth, onCancel: @handleCancel, onOk: @handleOk,ifokBtn:false,cancelText:@cancelText}">
+                      <div class="rlcj-video">
+                        <object id="cpcjPlayOcx" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9" width="100%" height="100%" style="display: block;"></object>
+                    </div>
+              </xmp>
+          </div>
+          <!-- 分页 -->
+          <ms-pages :widget="{total:@total,onChange:@handlePageChange,current:@currentPage,getCurrent:@getCurrent}"></ms-pages>
+          
+    </div>
+</template>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="/node_modules/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="/node_modules/ane/dist/ane.css" rel="stylesheet" />
+    <!--<link rel="stylesheet" href="http://10.10.9.95:8088/jsapi/3.14/dijit/themes/claro/claro.css">-->
+    <!--<link rel="stylesheet" href="http://10.10.9.95:8088/jsapi/3.14/esri/css/esri.css">-->
+    <script src="/static/mod.js"></script>
+    <!--[if lt IE 9]>
+    <script src="/static/polyfill/html5shiv.js"></script>
+    <script src="/static/polyfill/respond.src.js"></script>
+    <![endif]-->
+</head>
+
+<body :controller="sszhxt_vm" class="ms-controller" id="sszhxt">
+    <ms-browser-upgrade-tips></ms-browser-upgrade-tips>
+    <ms-common-layout :widget="{sideMenu: @menu, systemName:'sszhxt', menuCallback: @menuCallback, completed: @completed}">
+        <div class="ant-currentPage" ms-html="@currentPage"></div>
+    </ms-common-layout>
+    <div :class="@locationKey.slice(1) + '-map'" class="map-iframe-wrap">
+        <iframe name="mapIframe" id="mapIframe" frameborder="0" style="width: 100%;height: 100%"></iframe>
+    </div>
+    <!--实时指挥的城市列表，因为加载太慢了，所以放这里-->
+    <xmp :widget="{is:'common-sszh-mapcity'}"></xmp>
+    <!-- <div id="footer">
+        {{@copyRight}}
+        <br>
+        {{@telephone}}
+    </div> -->
+    <!-- 设置弹窗 3个 -->
+    <!-- <div :controller="editPassword">
+        <xmp :widget="{is:'ms-dialog', $innerVm:'editPwd', show:@show, width: 450, height: 350, onCancel:@editCancel, onOk:@editOk, okText:'提交', cancelText:'取消'}">
+            <ms-form :widget="{$form:@$editPwdForm}" slot="body" ms-skip>
+                <div id="changePwd">
+                    <div class="ipt-class">
+                        <label>原密码：</label>
+                        <ms-input :widget="{value:@record.oldPwd, type: 'password', col: 'oldPwd', onChange:@iputhandle, $rules: {required: true, message: '请输入旧密码'}}"></ms-input>
+                    </div>
+                    <div class="ipt-class">
+                        <label>新密码：</label>
+                        <ms-input :widget="{value:@record.newPwd, type: 'password', col: 'newPwd', onChange:@iputhandle, $rules: {required: true, message: '请输入新密码'}}"></ms-input>
+                    </div>
+                    <div class="ipt-class">
+                        <label>确认新密码：</label>
+                        <ms-input :widget="{value:@record.repPwd, type: 'password', col: 'repPwd', onChange:@iputhandle, $rules: {required: true, message: '请重复新密码'}}"></ms-input>
+                    </div>
+                    <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%; height:100%;z-index:-1;opacity:0;filter:alpha(opacity=0);"></iframe>
+                </div>
+            </ms-form> -->
+    <!-- 因为ocx会遮住弹框，要加上iframe才可以显示出来，所以重新定义底部 -->
+    <!-- <div slot="footer" class="modal-footer" ms-skip>
+                <a class="btn btn-default" :click="@editOk">提交</a>
+                <a class="btn btn-default" :click="@editCancel">取消</a>
+                <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%; height:100%;z-index:-1;opacity:0;filter:alpha(opacity=0);"></iframe>
+            </div>
+        </xmp>
+    </div> -->
+
+    <!-- 右上角弹窗组件 -->
+    <!-- <ms-header-operation></ms-header-operation> -->
+
+    <!-- <div :controller="logout_vm" class="logout_vm">
+        <xmp :widget="{is: 'ms-dialog', $innerVm: 'logout', show: @show_logout, width: 450, height: 195, onCancel: @cancelLogout, onOk: @handleLogout, okText:'退出'}">
+            <div slot="body" ms-skip>
+                <h5 :css="{'font-size': '16px', 'color': '#536b82'}" ms-text="@logoutMsg"></h5>
+                <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%; height:100%;z-index:-1;opacity:0;filter:alpha(opacity=0);"></iframe>
+            </div> -->
+    <!-- 因为ocx会遮住弹框，要加上iframe才可以显示出来，所以重新定义底部 -->
+    <!-- <div slot="footer" class="modal-footer" ms-skip>
+                <a class="btn btn-default" :click="@handleLogout">退出</a>
+                <a class="btn btn-default" :click="@cancelLogout">取消</a>
+                <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%; height:100%;z-index:-1;opacity:0;filter:alpha(opacity=0);"></iframe>
+            </div>
+        </xmp>
+    </div> -->
+    <iframe id="iframe_zfsyps" src="about:blank" marginheight="0" marginwidth="0" style="display:none; position:absolute; visibility:inherit; top:0;left:0;width:0; height:0;z-index:992;opacity:1;filter:alpha(opacity=0);background: #fff;"
+        frameborder="0"></iframe>
+    <iframe id="iframe_download" src="about:blank" marginheight="0" marginwidth="0" style="display:none; position:absolute; visibility:inherit; top:0;left:0;width:0; height:0;z-index:992;opacity:1;filter:alpha(opacity=0);background: #fff;"
+        frameborder="0"></iframe>
+    <div :controller="help_vm">
+        <xmp :widget="{is:'ms-dialog', $innerVm: 'help_inner_vm', show: @show, className:@extraClass, onCancel: @handleCancle, cancelText:@cancelText}">
+            <div slot="body" ms-skip>
+                <h5 :css="{'font-size': '16px'}" ms-text="@helpMsg"></h5>
+                <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%; height:100%;z-index:-1;opacity:0;filter:alpha(opacity=0);"></iframe>
+            </div>
+            <div slot="footer" class="modal-footer" ms-skip>
+                <a class="btn btn-default" :click="@handleClose">关闭</a>
+                <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%; height:100%;z-index:-1;opacity:0;filter:alpha(opacity=0);"></iframe>
+            </div>
+        </xmp>
+    </div>
+
+    <div class="sosContainer" :class="@locationKey.slice(1) + '-sos'">
+        <div id="alarmSlider" :class="@locationKey.slice(1) + '-sosBtn'" :click="@sosClick">
+            <img draggable="false" class="alarm-icon-animated" src="/static/image/sszhxt/alarm-icon.png?__sprite">
+        </div>
+        <!-- 以下class为sos-info的div 删除了 :class="@locationKey.slice(1) + '-sos-info'" -->
+        <div class="sos-info" :css="{display:(@sosInfoShow ? 'block':'none')}" style="z-index: 9999;">
+            <ul class="sos-info-menu" style="z-index: 22;">
+                <li :click="@sosMenuClick('service')" style="z-index: 99991;position: relative;">
+                    <span :class="(@sosMenuType == 'service') ? ['active'] : ['']">
+                        {{@sszhxt_language.workAlarm}}
+                    </span>
+                </li>
+                <li :click="@sosMenuClick('device')" style="z-index: 99991;position: relative;">
+                    <span :class="(@sosMenuType == 'device') ? ['active'] : ['']">
+                        {{@sszhxt_language.deviceAlarm}}
+                    </span>
+                </li>
+                <li :click="@sosMenuClick('status')" style="z-index: 99991;position: relative;">
+                    <span :class="(@sosMenuType == 'status') ? ['active'] : ['']">
+                        {{@sszhxt_language.stateAlarm}}
+                    </span>
+                </li>
+                <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:-36px;left:0px;width:100%; height:100%;z-index:1;opacity:0;filter:alpha(opacity=0);"></iframe>
+            </ul>
+            <div class="sos-info-content" style="z-index: 9999;">
+                <ul class="service-sos" :class="(@sosMenuType == 'service') ? ['activeInfo'] : ['']" style="z-index: 9999;">
+                    <!-- <li :if="!@extra_class">
+                        <span class="ul-sos-title" :click="@clickSosTitle($event)"><i class="rlbk-icon bk-icon hide"></i>{{@sszhxt_language.faceInfo}}</span>
+                        <ul>
+                            <li :for="($index,record) in @serviceFaceData" :click="@handelSOS(record)">
+                                <div class="li-div" style="width:115px;" :class="record['status'] == 0 ? 'sosWordColor' : '' ">{{record.sosType}}</div>
+                                <div class="li-div" style="width:100px;" :class="record['status'] == 0 ? 'sosWordColor' : '' ">{{record.userName}}<span>({{record.userCode}})</span></div>
+                                <div class="li-div" style="width:150px;" :class="record['status'] == 0 ? 'sosWordColor' : '' ">{{record.datetime
+                                    | date("yyyy-MM-dd HH:mm:ss")}}</div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li :if="!@extra_class">
+                        <span class="ul-sos-title" :click="@clickSosTitle($event)"><i class="cpbk-icon bk-icon hide"></i>{{@sszhxt_language.carInfo}}</span>
+                        <ul>
+                            <li :for="($index,record) in @serviceCarData" :click="@handelSOS(record)">
+                                <div class="li-div" style="width:100px;" :class="record['status'] == 0 ? 'sosWordColor' : '' ">{{record.sosType}}</div>
+                                <div class="li-div" style="width:100px;" :class="record['status'] == 0 ? 'sosWordColor' : '' ">{{record.userName}}<span>({{record.userCode}})</span></div>
+                                <div class="li-div" style="width:150px;" :class="record['status'] == 0 ? 'sosWordColor' : '' ">{{record.datetime
+                                    | date("yyyy-MM-dd HH:mm:ss")}}</div>
+                            </li>
+                        </ul>
+                    </li> -->
+                    <li>
+                        <span class="ul-sos-title" :click="@clickSosTitle($event)"><i class="sos-icon bk-icon hide"></i>{{@sszhxt_language.SOSInfo}}</span>
+                        <ul>
+                            <li :for="($index,record) in @serviceSOSData" :click="@handelSOS(record)">
+                                <div class="li-div" style="width:100px;" :class="record['status'] == 0 ? 'sosWordColor' : '' ">{{record.sosType}}</div>
+                                <div class="li-div" style="width:100px;" :class="record['status'] == 0 ? 'sosWordColor' : '' ">{{record.userName}}<span>({{record.userCode}})</span></div>
+                                <div class="li-div" style="width:150px;" :class="record['status'] == 0 ? 'sosWordColor' : '' ">{{record.datetime
+                                    | date("yyyy-MM-dd HH:mm:ss")}}</div>
+                            </li>
+                        </ul>
+                    </li>
+                    <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:-0px;left:0px;width:100%; height:100%;z-index:1;opacity:0;filter:alpha(opacity=0);"></iframe>
+                </ul>
+                <ul class="device-sos" :class="(@sosMenuType == 'device') ? ['activeInfo'] : ['']" style="z-index: 9999;display: none;">
+                    <li :for="($index,record) in @deviceSOSData">
+                        <div class="li-div" style="width:100px;">{{record.sosType}}</div>
+                        <div class="li-div" style="width:100px;">{{record.userName}}<span>({{record.userCode}})</span></div>
+                        <div class="li-div" style="width:150px;">{{record.datetime | date("yyyy-MM-dd HH:mm:ss")}}</div>
+                    </li>
+                    <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%; height:100%;z-index:1;opacity:0;filter:alpha(opacity=0);"></iframe>
+
+                </ul>
+                <ul class="status-sos" :class="(@sosMenuType == 'status') ? ['activeInfo'] : ['']" style="z-index: 9999;display: none;">
+                    <li :for="($index,record) in @statusSOSData">
+                        <div class="li-div" style="width:100px;">{{record.sosType}}</div>
+                        <div class="li-div" style="width:100px;">{{record.userName}}<span>({{record.userCode}})</span></div>
+                        <div class="li-div" style="width:150px;">{{record.datetime | date("yyyy-MM-dd HH:mm:ss")}}</div>
+                    </li>
+                    <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0;left:0;width:100%; height:100%;z-index:1;opacity:0;filter:alpha(opacity=0);"></iframe>
+                </ul>
+                <div class="sos-gjgl-gjdy" :class="@userSearch ? '' : 'btnDisabled'" :click="@handleSOSGjdy">
+                    {{@sszhxt_language.device}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 告警订阅弹窗 -->
+    <div :controller="sos-gjdy" class="sos-gjdy-dialog">
+        <xmp :widget="{is:'common-ms-modal', modalSelector: '#sos-gjdy-dialog',title:@sszhxt_language.device, modalWidth:@modalWidth, modalHeight: @modalHeight, extramove: @extramove, show:@gjdyShow, ifcancelBtn: false, ifokBtn: false,onCancel:@handleExit }">
+            <div id="sos-gjdy-dialog">
+            <div class="gjdyInlne-block-container" :visible = "@firstChoose">
+                <div class="checkboxBlock">
+                    <span class="gjdyInlne-block">{{@gjdy_language.workAlarmType}}</span>
+                    <div class="checkbox-inline">
+                        <input type="checkbox" value='DEVICE_SOS' :duplex="@deviceSOS" data-duplex-changed="@handleCheckboxChange">
+                        <span class="checkImage"></span>
+                        <span>{{@gjdy_language.SOSAlarm}}</span>
+                    </div>
+                </div>
+                <div class="checkboxBlock">
+                    <span class="gjdyInlne-block">{{@gjdy_language.stateAlarmTypes}}</span>
+                    <div class="checkbox-inline">
+                        <input type="checkbox" value='DEVICE_ONLINE' :duplex="@deviceSOS" data-duplex-changed="@handleCheckboxChange">
+                        <span class="checkImage"></span>
+                        <span>{{@gjdy_language.online}}</span>
+                    </div>
+                    <br>
+                    <div class="checkbox-inline">
+                        <input type="checkbox" value='DEVICE_OFFLINE' :duplex="@deviceSOS" data-duplex-changed="@handleCheckboxChange">
+                        <span class="checkImage"></span>
+                        <span>{{@gjdy_language.offline}}</span>
+                    </div>
+                </div>
+                <div class="checkboxBlock">
+                    <span class="gjdyInlne-block">{{@gjdy_language.deviceAlarmTypes}}</span>
+                    <div class="checkbox-inline">
+                        <input type="checkbox" value='DEVICE_ELECTRIC_CAPACITANCE' :duplex="@deviceSOS"
+                            data-duplex-changed="@handleCheckboxChange">
+                        <span class="checkImage"></span>
+                        <span>{{@gjdy_language.power}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="orgContainer" :visible="@secondChoose">
+                <div class="leftOrgcontainer">
+                     <ms-sszh-sidebar
+                         :widget="{owner:'sosgjdyTree',onCheck:@handleSosTreeCheck,onPollTreeIdFn:@onPollTreeIdFn}">
+                     </ms-sszh-sidebar>
+                        <!-- <ms-sszh-sosgjdy-tree :widget="{destoryTree: @destoryTree,onCheck:@handleSosTreeCheck}"></ms-sszh-sosgjdy-tree> -->
+                        <!-- <span class="contianChild-cls checkbox-inline" style="display: none;">
+                            <input type="checkbox" value="contianChild" :duplex="@contianChild" data-duplex-changed="@handleOrgCheckboxChange">
+                            <span class="checkImage"></span>
+                            <span style="display:block; margin-top:-6px">{{@gjdy_language.includeBranches}}</span>
+                        </span> -->
+                </div>
+                <div class="middleContainer">
+                    <label :click="@hanleToright">
+                        <!-- <span :class="['toRightIcon', @deviceArr.length == 0 ? 'toRightIconDisabled' : '']"></span> -->
+                        <span class="toRightIcon"></span>
+                    </label>
+                </div>
+                <div class="rightOrgcontainer">
+                    <p style="padding:20px 15px 5px 15px">{{@gjdy_language.subscribed}}</p>
+                    <div class="rightOrgcontainerWarp">
+                        <ul :for="($key, item) in @rightDevArr">
+                            <a :if="@item.list.length !=0" style="cursor: pointer;color: #597292;" class="checkbox-inline">
+                                <!-- <span class="fa fa-lg" style="cursor: pointer;" :click="@hideOrshowLi(item,$key)" :class="[item[0].visible? 'fa-caret-down':'fa-caret-up']"></span> -->
+                                <input type="checkbox" :click="@rightcheckOrg($event, item.list)" ms-duplex-checked="item.checked">
+                                <span class="checkImage"></span>
+                                <span :click="@hideOrshowLi(item.list,$key)">
+                                    <label class="org"></label>
+                                    <span>{{item.list[0].orgName | InitValue}}</span>
+                                </span>
+                                <!-- <span class="fa fa-close" style="cursor: pointer;color: #C42E2E;float: right;" :click="@deleteOrgDevice(item.list,$key) |stop"></span> -->
+                            </a>
+                            <div :visible="item.list.length > 0 && item.list[0].gbCode" style="margin-left: 10px;">
+                                <li class="rightList checkbox-inline" :for="($index, value) in item.list"
+                                    :visible="@value.visible">
+                                    <input type="checkbox" ms-duplex-checked="value.checked" data-duplex-changed="@rightcheckOne($event, item)">
+                                    <span class="checkImage"></span>
+                                    <span>
+                                        <label class="dev"></label>
+                                        <span class="devSpan">{{value.username}}</span>
+                                    </span>
+                                    <span class="fa tree-close" style="cursor: pointer;color: #C42E2E;float: right;"
+                                        :click="@deleteDevice(value,$key,$index)"></span>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                    <!-- <div class="checkbox-inline device-selecte-all">
+                        <input type="checkbox" value='' :click="@rightcheckAll" ms-duplex-checked="@rightallchecked">
+                        <span class="checkImage"></span>
+                        <span>{{@gjdy_language.selectAll}}</span>
+                    </div> -->
+                </div>
+            </div>
+            <div class="sos-gjdy-btnAll">
+            <div class="sos-gjdy-next sos-gjdy-btn" :visible="@firstChoose" :click="@handleNext">
+                {{@sszhxt_language.next}}
+            </div>
+            <div class="sos-gjdy-ok sos-gjdy-btn" :visible="@secondChoose" :click="@handleSave">
+                {{@sszhxt_language.submit}}
+            </div>
+            <div class="sos-gjdy-cancle sos-gjdy-btn" :visible="@secondChoose" :click="@handleExit">
+                {{@sszhxt_language.cancel}}
+            </div>
+            </div>
+        </div>
+        </xmp>
+    </div>
+    <script>
+        require(['./sszhxt']);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+<template>
+    <div class="chartBox">
+        <div class="chartBox-head">
+            <div class="chartBox-head-title" :css="{width: @width}">
+                <span>{{title}}</span>
+            </div>
+
+            <div class="parallelogram">
+            </div>
+
+            <div class="chartBox-head-ctl">
+                <span class="left cbutton cbutton--effect-tamara" :click="clickLeft"></span>
+                <span class="right cbutton cbutton--effect-tamara" :click="clickRight"></span>
+            </div>
+
+        </div>
+
+        <div class="chartBox-content">
+            <slot name="content" />
+        </div>
+    </div>
+</template>

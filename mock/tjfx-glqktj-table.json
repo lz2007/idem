@@ -1,0 +1,178 @@
+{
+  "totalPages": 3,
+  "totalElements": 38,
+  "currentPages": 0,
+  "perPages": 10,
+  "currentElements": [
+    {
+      "orgName": "国迈一级",
+      "orgUserTotal": 166,
+      "userCode": 166,
+      "assetsDSJInfo": {
+        "orgPath": "/GM000",
+        "countTotal": 4,
+        "countUser": 4,
+        "allotRatio": 0
+      },
+      "assetsWorkstationInfo": {
+        "orgPath": "/GM000",
+        "workstationTotal": 38,
+        "spaceTotal": 0,
+        "spacePerDsjUser": 0
+      }
+    },
+    {
+      "orgName": null,
+      "orgUserTotal": 5,
+      "userCode": 166,
+      "assetsDSJInfo": {
+        "orgPath": "/GM000/88888888",
+        "countTotal": 0,
+        "countUser": 0,
+        "allotRatio": 0
+      },
+      "assetsWorkstationInfo": {
+        "orgPath": "/GM000/88888888",
+        "workstationTotal": 0,
+        "spaceTotal": 0,
+        "spacePerDsjUser": 0
+      }
+    },
+    {
+      "orgName": null,
+      "orgUserTotal": 5,
+      "userCode": 166,
+      "assetsDSJInfo": {
+        "orgPath": "/GM000/003",
+        "countTotal": 1,
+        "countUser": 1,
+        "allotRatio": 0
+      },
+      "assetsWorkstationInfo": {
+        "orgPath": "/GM000/003",
+        "workstationTotal": 0,
+        "spaceTotal": 0,
+        "spacePerDsjUser": 0
+      }
+    },
+    {
+      "orgName": null,
+      "orgUserTotal": 11,
+      "userCode": 166,
+      "assetsDSJInfo": {
+        "orgPath": "/GM000/004",
+        "countTotal": 0,
+        "countUser": 0,
+        "allotRatio": 0
+      },
+      "assetsWorkstationInfo": {
+        "orgPath": "/GM000/004",
+        "workstationTotal": 0,
+        "spaceTotal": 0,
+        "spacePerDsjUser": 0
+      }
+    },
+    {
+      "orgName": null,
+      "orgUserTotal": 8,
+      "userCode": 12312321312,
+      "assetsDSJInfo": {
+        "orgPath": "/GM000/005",
+        "countTotal": 0,
+        "countUser": 0,
+        "allotRatio": 0
+      },
+      "assetsWorkstationInfo": {
+        "orgPath": "/GM000/005",
+        "workstationTotal": 1,
+        "spaceTotal": 0,
+        "spacePerDsjUser": 0
+      }
+    },
+    {
+      "orgName": null,
+      "orgUserTotal": 9,
+      "userCode": 166,
+      "assetsDSJInfo": {
+        "orgPath": "/GM000/00054",
+        "countTotal": 2,
+        "countUser": 2,
+        "allotRatio": 0
+      },
+      "assetsWorkstationInfo": {
+        "orgPath": "/GM000/00054",
+        "workstationTotal": 2,
+        "spaceTotal": 0,
+        "spacePerDsjUser": 0
+      }
+    },
+    {
+      "orgName": null,
+      "orgUserTotal": 0,
+      "userCode": 166,
+      "assetsDSJInfo": {
+        "orgPath": "/GM000/6548678",
+        "countTotal": 0,
+        "countUser": 0,
+        "allotRatio": 0
+      },
+      "assetsWorkstationInfo": {
+        "orgPath": "/GM000/6548678",
+        "workstationTotal": 0,
+        "spaceTotal": 0,
+        "spacePerDsjUser": 0
+      }
+    },
+    {
+      "orgName": null,
+      "orgUserTotal": 0,
+      "userCode": 166,
+      "assetsDSJInfo": {
+        "orgPath": "/GM000/wqe",
+        "countTotal": 0,
+        "countUser": 0,
+        "allotRatio": 0
+      },
+      "assetsWorkstationInfo": {
+        "orgPath": "/GM000/wqe",
+        "workstationTotal": 0,
+        "spaceTotal": 0,
+        "spacePerDsjUser": 0
+      }
+    },
+    {
+      "orgName": null,
+      "orgUserTotal": 12,
+      "userCode": 166,
+      "assetsDSJInfo": {
+        "orgPath": "/GM000/222",
+        "countTotal": 0,
+        "countUser": 0,
+        "allotRatio": 0
+      },
+      "assetsWorkstationInfo": {
+        "orgPath": "/GM000/222",
+        "workstationTotal": 0,
+        "spaceTotal": 0,
+        "spacePerDsjUser": 0
+      }
+    },
+    {
+      "orgName": null,
+      "orgUserTotal": 0,
+      "userCode": 166,
+      "assetsDSJInfo": {
+        "orgPath": "/GM000/44",
+        "countTotal": 0,
+        "countUser": 0,
+        "allotRatio": 0
+      },
+      "assetsWorkstationInfo": {
+        "orgPath": "/GM000/44",
+        "workstationTotal": 0,
+        "spaceTotal": 0,
+        "spacePerDsjUser": 0
+      }
+    }
+  ]
+}

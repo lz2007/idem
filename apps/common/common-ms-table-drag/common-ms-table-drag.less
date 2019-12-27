@@ -1,0 +1,239 @@
+.result-table {
+    position: absolute;
+    // bottom: 62px;
+    bottom: 50px;
+    top: 100px;
+    right: 0;
+    left: 0;
+    overflow: auto;
+    font-size: 14px;
+    color: #536b82;
+    
+    .table-mask {
+        position: absolute;
+        left: 0;
+        right: 0;
+        background: #e0e7ed;
+        z-index: -1;
+        height: 64px;
+    }
+
+table.result, table.no-result-table {
+    table-layout: fixed;
+    width: 100%;
+    height: 32px;
+    font-size: 14px;
+    // color: #536b82;
+    background: #e0e7ed;
+    
+    border-collapse: collapse;
+
+    .small-table {
+        table-layout: fixed; 
+
+        width: 100%;
+    }
+
+    td {
+        position: relative;
+        overflow: hidden;
+        min-width: 15px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        min-width: 10px;
+        // top: 2px;
+        z-index: 0;
+    }
+
+    span {
+        width: auto;
+        user-select: all;
+
+        a {
+            cursor: pointer;
+        }
+    }
+
+    // col-1 {
+        
+    // }
+
+    
+}
+
+.no-result-table {
+    background: #f7f7f7;
+    display: none;
+    // position: absolute;
+    // top: 64px;
+}
+
+.ane-checkbox {
+    top: 4px;
+    left: 2px;
+}
+.btn-xs {
+    top: -1px;
+    position: relative;
+}
+.table-header, .table-second-header {
+    overflow: hidden;
+    height: 32px;
+    width: 100%;
+    
+    white-space: nowrap;
+    margin-top: -34px;
+    background: #e0e7ed;
+
+    .ane-checkbox {
+        top: 3px;
+    }
+
+    div.ane-checkbox:first-child {
+        display: none;
+    }
+    td {
+        border: 1px solid #a5b4bd;
+        // height: 64px;
+        text-align: center;
+        vertical-align: middle; 
+
+        .video-count {
+            height: 32px;
+            top: 8px;
+        }
+    }
+
+    .inner-table {
+        // width: 500px;
+    }
+
+    .small-table td {
+        width: 125px;
+        border-collapse: collapse;
+        height: 38px;
+        text-align: center;
+        vertical-align: middle;
+        position: relative;
+        top: 2px;
+        padding: 0;
+        border: none;
+        border-top: 1px solid #a5b4bd; 
+        border-right: 1px solid #a5b4bd;
+
+        &.last-son-table {
+        border-right: none;
+            
+        }
+
+        &+span {
+            height: 32px;
+            top: 5px;
+        }
+        
+    }
+
+    span {
+        position: relative;
+        left: 0;
+        right: 0;
+        display: inline-block;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+}
+
+}
+
+.table-data {
+
+    width: 100%;
+    text-align: center;
+    vertical-align: middle;
+    background: #f7f7f7;
+    height: 33px;
+    line-height: 33px;
+
+    border-left: 1px solid #e0e7ec;
+    border-top: 1px solid #e0e7ec;
+
+    &:hover {
+        background: #E6E6E6;
+    }
+
+    &.no-list {
+    border-top: none;
+        
+    }
+    
+    .td-link {
+        width: 40px;
+        color: #0419dc;
+    }
+
+    &.no-list {
+        width: 100%;
+    }
+    td {
+        position: relative;        
+        border-right: 1px solid #e0e7ec;
+        border-bottom: 1px solid #e0e7ec;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+    }
+
+    span {
+        position: relative;
+        top: 0;
+        // transform: translateX(-50%);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .inner-table {
+        border-bottom: none;
+        .small-table {
+            position: relative;
+            top: 1px;
+            td {
+                width: 125px;
+            }
+            span {
+                position: static;
+            }
+        }
+
+        .last-small-child{
+            border-right: none;
+        }
+    }
+
+ 
+}
+.table-index-loading {
+    background: url(/static/image/tyywglpt/loading.gif) center center no-repeat;
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    top: 77px !important;
+    bottom: 0;
+    // z-index: 99;
+    z-index: 0;        
+    background-color: #F7F7F7;
+    line-height: 34px;
+    vertical-align: middle;
+
+    .loadingSpan {
+        position: absolute;
+        top: 52%;
+        left: 47.35%;
+        text-align: center;
+        color: #536b82;
+    }
+}
+

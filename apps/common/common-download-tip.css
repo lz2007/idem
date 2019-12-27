@@ -1,0 +1,14 @@
+#modal-download-tip p{
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+#modal-download-tip .tip-text{
+    font-size: 12px;
+}
+#modal-download-tip .fa-info-circle{
+    color: #E09E1F;
+    margin-right: 5px;
+}
+#download-link{
+    visibility: hidden;
+}

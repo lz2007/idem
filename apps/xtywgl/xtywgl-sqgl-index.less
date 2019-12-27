@@ -1,0 +1,214 @@
+/* header begin */
+
+.ywzx_sqgl .updateBtn:hover {
+    background: #ffa018;
+}
+
+.ywzx_sqgl .noneLic {
+    // color: #ffa018; //未授权颜色
+    // margin-top: 5px;
+    background: #ffa018;
+    margin-top: 0px;
+    width: 17%;
+    height: 50px;
+    color: white;
+    text-align: center;
+    line-height: 50px;
+    font-size: 22px;
+    display: inline-block;
+}
+
+.ywzx_sqgl .none {
+    display: none;
+}
+
+/* header end */
+
+/* tables begin */
+
+.ywzx_sqgl .ywzx_sqgl_panel {
+    position: absolute;
+    bottom: 40px;
+    left: 8px;
+    right: 20px;
+    top: 177px;
+    font-size: 14px;
+    color: #536b82;
+    text-align: center;
+}
+
+.ywzx_sqgl .licenseInfo {
+    position: relative;
+    height: 100%;
+    margin-bottom: 5px;
+    background-color: #f7f7f7;
+}
+
+.ywzx_sqgl .tyywglpt-list-header {
+    width: 100%;
+    background: #e0e7ed;
+    padding-right: 0;
+}
+
+.ywzx_sqgl .tyywglpt-list-header li {
+    display: inline-block;
+    height: 44px;
+    background: #e0e7ec;
+}
+
+.ywzx_sqgl .tyywglpt-list-content {
+    height: 100%;
+    min-height: 34px;
+    background: #f7f7f7;
+    border: 1px solid #e0e7ec;
+    border-top: none;
+}
+
+.ywzx_sqgl .tyywglpt-list-content li {
+    height: 34px;
+    line-height: 34px;
+    /* border-bottom: 1px solid #e0e7ec; */
+}
+
+.ywzx_sqgl .tyywglpt-list-content div {
+    display: inline-block;
+    padding: 0 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-left: 1px solid #e0e7ec;
+    cursor: default;
+}
+
+.ywzx_sqgl .tyywglpt-list-header li:first-child,
+.ywzx_sqgl .tyywglpt-list-header li + li + li,
+.ywzx_sqgl .tyywglpt-list-content .name {
+    width: 13%;
+    // border-right: 1px solid #f2f2f2;
+    // border-left: 1px solid #f2f2f2;
+}
+
+.ywzx_sqgl .tyywglpt-list-header li + li,
+.ywzx_sqgl .tyywglpt-list-header li + li + li + li,
+.ywzx_sqgl .tyywglpt-list-content .value {
+    width: 37%;
+}
+
+.ywzx_sqgl .tyywglpt-list-header li:first-child,
+.ywzx_sqgl .tyywglpt-list-content li .first {
+    border-left: 0px;
+}
+
+.ywzx_sqgl .tyywglpt-list-content .lastLiSecond {
+    display: none;
+}
+
+.ywzx_sqgl .tyywglpt-list-content .lastLiValue1 {
+    width: 87%;
+    text-align: left;
+}
+
+/* table end */
+
+/* dialog begin */
+
+.inputHbox textarea {
+    height: 262px;
+    outline: none;
+    resize: none;
+    color: #536b82;
+}
+
+.machineBox {
+    font-size: 14px;
+    padding-bottom: 5px;
+    color: #536b82;
+}
+
+/* dialog end */
+
+.ywzx_sqgl {
+    width: 100%;
+    height: 100%;
+    .headerHbox {
+        height: 60px;
+        line-height: 0px;
+        position: relative;
+        padding: 1%;
+        margin-top: 0px;
+        margin-bottom: 9px;
+        .alreadyLic {
+            background: #5ece3c;
+            margin-top: 0px;
+            width: 15%;
+            height: 50px;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            font-size: 22px;
+            display: inline-block;
+        }
+        .icon_addUser {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            margin-left: -50px;
+            background: url(/static/image/xtywgl/sqgl.png?__sprite) center
+                center no-repeat;
+        }
+    }
+    .tyywglpt-list-header-wrap {
+        width: 100%;
+        margin-top: -34px;
+        background: #e0e7ec;
+        overflow: hidden;
+        border: 1px solid #f2f2f2;
+        li {
+            border-right: 1px solid #f2f2f2;
+        }
+    }
+    .tyywglpt_sqgl_panel {
+        position: absolute;
+        bottom: 40px;
+        left: 1%;
+        right: 1%;
+        top: 130px;
+        font-size: 14px;
+        color: #536b82;
+        text-align: center;
+    }
+    .updateBtn {
+        position: absolute;
+        top: 22px;
+        right: 1%;
+        width: 135px;
+        padding-right: 8px;
+        text-align: right;
+        height: 30px;
+        line-height: 30px;
+        margin-left: 40px;
+        background: #1055b3;
+        color: #ffffff;
+        border-radius: 2px;
+        .icon_update {
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            margin-left: -25px;
+            background: url(/static/image/xtywgl/update.png?__sprite) center
+                center no-repeat;
+        }
+    }
+    .updateBtn_zhcn {
+        width: 118px !important;
+    }
+    .tyywglpt-list-content {
+        height: 100%;
+        min-height: 34px;
+        background: #f7f7f7;
+        border: 1px solid #e0e7ec;
+        border-top: none;
+        overflow: hidden;
+        // background: #5ECE3C;
+    }
+}

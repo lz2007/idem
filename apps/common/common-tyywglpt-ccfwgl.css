@@ -1,0 +1,330 @@
+/* 统一运维管理平台--存储服务管理公共样式 */
+.ccfwgl-wrap .com-modal-modal-footer {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.tyywglpt-tool-bar .btn-tool.width-130 {
+    width: 130px;
+}
+
+/* 公共弹框 */
+.commonDialog.ccfwgl {
+    font-size: 14px;
+    padding: 10px 10px 10px 6px;
+}
+
+.commonDialog.ccfwgl .tree-select-wrap .tree-select-selected {
+    top: 5px;
+}
+
+.commonDialog.ccfwgl .clear {
+    clear: both;
+}
+
+.commonDialog.ccfwgl div.ccfwgl-row {
+    display: inline-block;
+    width: 282px;
+    /*float: left;*/
+    position: relative;
+    /* margin-bottom:16px; */
+    margin-bottom: 20px;
+    color: #536B82
+}
+
+.commonDialog.ccfwgl .close-clear {
+    position: absolute;
+    right: 12px;
+    /* top: 8px; */
+    font-size: 14px;
+    display: none;
+    cursor: pointer;
+}
+
+.commonDialog.ccfwgl .ccfwgl-error-tips {
+    color: red;
+}
+
+.commonDialog.ccfwgl .ccfwgl-form-tips,
+.commonDialog.ccfwgl .ccfwgl-error-tips {
+    position: absolute;
+    top: 30px;
+    /* color:red; */
+    font-size: 12px;
+}
+
+.commonDialog.ccfwgl .ccfwgl-form-tips .fa-info-circle {
+    color: #E09E1F;
+}
+
+.commonDialog.ccfwgl div.double {
+    margin-left: 44px;
+}
+
+.commonDialog.ccfwgl .path {
+    width: 610px;
+    margin-bottom: 20px;
+    color: #536B82;
+    float: left;
+    position: relative;
+
+}
+
+.commonDialog.ccfwgl .warn i {
+    color: #E09E1F;
+    font-size: 16px;
+}
+
+.commonDialog.ccfwgl .warn {
+    text-indent: 4px;
+    float: left;
+    margin: 0 0 8px 0;
+    font-weight: 700;
+}
+
+.commonDialog.ccfwgl .path .form-control {
+    width: 523px;
+    height: 30px;
+    padding: 4px 12px;
+}
+
+.commonDialog.ccfwgl label {
+    display: inline-block;
+    width: 74px;
+    text-align: right;
+    font-weight: 700;
+    margin-right: 5px;
+}
+
+.commonDialog.ccfwgl label i {
+    color: red;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.commonDialog.ccfwgl .form-control {
+    display: inline-block;
+    width: 196px;
+    height: 30px;
+    padding: 4px 12px;
+}
+
+.commonDialog.ccfwgl .has-feedback {
+    margin-left: 17px;
+}
+
+/* .commonDialog.ccfwgl .form-inline .control-label{
+  display: inline;
+} */
+.commonDialog.ccfwgl .ane-timepicker {
+    display: inline-block;
+    width: 197px;
+}
+
+.commonDialog.ccfwgl .methodDialog label {
+    width: 100%;
+    text-align: left;
+}
+
+.commonDialog.ccfwgl .methodDialog input {
+    width: 245px;
+}
+
+/* 查看弹框 */
+.ccfwglLookDialog span {
+    display: inline-block;
+    padding: 0 0 0 6px;
+    width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ccfwglLookDialog .path span {
+    width: 477px;
+}
+
+.commonDialog.ccfwgl.ccfwglLookDialog label {
+    font-weight: bold;
+    display: inline-block;
+    vertical-align: top;
+}
+
+/* 添加弹框 */
+.ccfwglAddDialog.ccfwgl form .control-label {
+    display: inline;
+}
+
+.ccfwglAddDialog.ccfwgl form .form-group {
+    margin-bottom: 0;
+}
+
+.ccfwglAddDialog.ccfwgl .ccfwgl-form-tips,
+.ccfwglAddDialog.ccfwgl .ccfwgl-error-tips {
+    left: 82px;
+}
+
+/* 修改弹框 */
+.ccfwglModifyDialog.ccfwgl .ccfwgl-form-tips,
+.ccfwglModifyDialog.ccfwgl .ccfwgl-error-tips {
+    left: 82px;
+}
+
+/* 存储策略弹框 */
+.ccfwglMethodDialog {
+    height: 320px;
+    position: relative;
+}
+
+.ccfwglMethodDialog .ccfwgl-normalDay {
+    margin-top: 151px;
+}
+
+.ccfwglMethodDialog.ccfwgl.commonDialog div.ccfwgl-row {
+    /* width:340px; */
+    width: 350px;
+}
+
+.ccfwglMethodDialog.ccfwgl.commonDialog div.ccfwgl-row .form-control {
+    width: 82px;
+    margin-right: 6px;
+}
+
+.ccfwglMethodDialog.ccfwgl.commonDialog label {
+    width: 150px;
+
+}
+
+.ccfwglMethodDialog.ccfwgl.commonDialog .modify {
+    color: #0078D7;
+    cursor: pointer;
+}
+
+.ccfwglMethodDialog.ccfwgl.commonDialog .confirm {
+    padding: 0 6px;
+    margin-right: 4px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.ccfwglMethodDialog.ccfwgl.commonDialog a {
+    font-family: "Microsoft YaHei", serif;
+    color: #536b82;
+    margin-right: 4px;
+}
+
+.ccfwglMethodDialog.ccfwgl.commonDialog .day {
+    font-weight: 700;
+}
+
+.ccfwglMethodDialog.ccfwgl.commonDialog .ccfwgl-form-tips,
+.ccfwglMethodDialog.ccfwgl.commonDialog .ccfwgl-error-tips {
+    left: 160px;
+}
+
+.ccfwglMethodDialog.ccfwgl.commonDialog .close-clear {
+    left: 222px;
+    width: 10px;
+}
+
+.ccfwglMethodDialog.ccfwgl.commonDialog .method-pie {
+    position: absolute;
+    top: -17px;
+    right: 0;
+}
+
+/* 删除，配置测试弹框 */
+.commonDialog.ccfwgl .confirm-tip {
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+}
+
+.commonDialog.ccfwgl.deviceTest .yes {
+    text-align: center;
+    height: 28px;
+    border-top: 1px solid #e9e9e9;
+    padding: 10px 16px 10px 10px;
+    margin: 30px -26px 0 -22px;
+}
+
+.commonDialog.ccfwgl.deviceTest .yes button {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 500;
+    text-align: center;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 4px 15px;
+    font-size: 12px;
+    /* border-radius: 6px; */
+    position: relative;
+    width: 80px;
+    height: 30px;
+    background: #1055b3;
+    color: #fff;
+    font-size: 14px;
+    border: 1px solid transparent;
+}
+
+.commonDialog.ccfwgl div.test-btn-wrap {
+    margin-bottom: 0;
+}
+
+.commonDialog.ccfwgl .ccfwgl-row .test-btn {
+    width: 120px;
+    height: 30px;
+    background: #1c9bff;
+    border-color: #1c9bff;
+    margin: 8px 0 0 8px;
+    color: #fff;
+    border-radius: 6px;
+}
+
+.commonDialog.ccfwgl .ccfwgl-row .test-btn:hover {
+    background: #107dda;
+}
+
+/* 存储分析弹框 */
+.ccfwglAnalysisDialog .time-form-wrap {
+    margin-top: 11px;
+}
+
+.ccfwglAnalysisDialog .has-feedback {
+    width: 253px;
+    display: inline-block;
+}
+
+.ccfwglAnalysisDialog .has-feedback label {
+    display: inline;
+    font-weight: normal;
+}
+
+.ccfwglAnalysisDialog .has-feedback .ane-datepicker {
+    display: inline-block;
+}
+
+.ccfwglAnalysisDialog .has-feedback .ane-datepicker input {
+    width: 178px !important;
+}
+
+.ccfwglAnalysisDialog .analysisQuery {
+    padding: 6px 12px;
+    color: #fff;
+    width: 120px;
+    height: 30px;
+    background: #fd8702;
+
+}
+
+.ccfwglAnalysisDialog .analysisQuery:hover {
+    background: #DB7400;
+}

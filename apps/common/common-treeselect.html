@@ -1,0 +1,14 @@
+<template>
+    <div :css="@css" class="common-input">
+        <div class="common-input-container">
+            <label class="common-input-label" :attr="{title:@input.name.replace(':', '')}">
+                {{@input.name}}:
+            </label>
+            <div class="common-input-input">
+                <div class="common-input-inner" :attr="{id:@id}">
+                    <ms-select-option :widget="{treeData:@input.data,selectedKey: @input.selectedKey,showSearch:true,selectedTitle:@input.selectedTitle,onChange:@change}"></ms-select-option>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

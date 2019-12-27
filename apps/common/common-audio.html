@@ -1,0 +1,35 @@
+<template>
+    <div class="audio_player" id="audio_player" :if="@gm_audio">
+        <div class="audio_panel">
+            <div :if="@is_ie" style="display:none">
+                <object classid="clsid:6BF52A52-394A-11D3-B153-00C04F79FAA6" id="play_id" class="ie_player" autoStart="1"></object>
+            </div>
+            <div class="h5_audio" :if="!@is_ie">
+                <audio id="gm_audio" controls="controls" autoplay :attr="{src: @src}" style="display:none"></audio>
+            </div>
+            <a class="play_btn" :click="@play"></a>
+            <a class="pause_btn" :click="@pause"></a>
+            <div class="time_panel">
+                <span class="current_time">{{@current_time}}</span>
+                <span class="slash_time">/</span>
+                <span class="total_time">{{@total_time}}</span>
+            </div>
+            <!-- <button :click="@play" class="play_btn">播放</button> -->
+            <div class="progress_bar">
+                <div class="p_white_line" id="p_white_line"></div>
+                <div class="p_blue_line"></div>
+                <span class="fa fa-circle circle_span" id="p_circle_span"></span>
+            </div>
+            <div class="volume_control">
+                <a class="voice" :click="@voice"></a>
+                <a class="mute" :click="@mute"></a>
+                <div class="volume_progress">
+                    <div class="v_white_line" id="v_white_line"></div>
+                    <div class="v_blue_line"></div>
+                    <span class="fa fa-circle circle_span" id="v_circle_span"></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</template>

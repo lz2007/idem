@@ -1,0 +1,19 @@
+<template>
+	<div class="common-sszh-side-bar-sosgjdy" :class="[@extra_class ? 'sszhSideBar_en' : '']">
+		<div class="side-bar-main">
+			<div class="input-group" :class="[@inputStatus === 0 && 'input-tip',@inputStatus === 1 && 'input-error']">
+				<div class="has-icon-input-wrap">
+					<input type="text" class="form-control" ms-duplex="@keyword" :focus="@handleSearchInputFocus" :blur="@handleSearchInputBlur"
+					 :keyup="@handleQuickSearch">
+					<i class="input-close" :visible="false" :mousedown="@handleKeyClear|prevent"></i>
+				</div>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" :click="@handleSearch"></button>
+				</span>
+			</div>
+			<div class="ztree-container">
+				<ul id="sos-poll-tree" class="ztree"></ul>
+			</div>
+		</div>
+	</div>
+</template>

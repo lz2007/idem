@@ -1,0 +1,129 @@
+<template>
+    <div class="zfsypsjglpt_jdkp_sjjycxkp">
+        <div class="search_box" :if="@opt_sjjycxkp.authority.SEARCH">
+            <div class="hBox" style="padding-top: 10px;">
+                <div class="dataFormBox dataTreeBox">
+                    <span class="large_span">执勤部门：</span>
+                    <div class="dep_tree" :controller="sjjycxkp_tree">
+                        <ms-tree-selecting :widget="{tree: @sjjycxkp_data, showSearch: true, wrapId: 'sjjycxkp-tree-select', getSelected: @getSelected, selectedKey: @tree_key ? @tree_key : '', selectedTitle: @tree_title ? @tree_title : '', onChange: @select_change, extraExpandHandle: @extraExpandHandle}"></ms-tree-selecting>
+                    </div>
+                    <!-- <div class="included_dep" :click="@included_dep_click">
+                        <img :attr="{src:@included_dep_img}">包含子部门
+                    </div> -->
+                </div>
+                <div class="dataRadioBox" :controller="sjjycxkp_time_range">
+                    <span>违法时间：</span>
+                    <ms-select :widget="{col: 'con', options:@time_range_options, value: @time_range, onChange: @onChangeTR}" :class="['formInput']"></ms-select>
+
+                    <div class="dataTimeBox" :if="@select_time">
+                        <div class="sjjycxkp_timePanel" :controller="sjjycxkp_startTime">
+                            <ms-datepicker :widget="{onChange:@handleTimeChange, placeholder:'请选择开始时间', value:@sjjycxkp_startTime, showTime: false}"></ms-datepicker>
+                        </div>
+                        <span style="float:left; height:28px; line-height:28px;">-</span>
+                        <div class="sjjycxkp_timePanel" :controller="sjjycxkp_endTime">
+                            <ms-datepicker :widget="{onChange:@handleTimeChange, placeholder:'请选择结束时间', value:@sjjycxkp_endTime, showTime: false}"></ms-datepicker>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="common_search_btn" :if="@opt_sjjycxkp.authority.SEARCH" :click="@searchBtn">查询</a>
+            </div>
+            <div class="hBox" style="padding-top: 6px;">
+                <div class="dataFormBox">
+                    <span class="large_span">随机抽查数：</span>
+                    <input class="search_num" type="text" ms-duplex="@search_num" :keyup="@search_num_enter" :attr="{title: @search_num}">
+                    <span>条</span>
+                </div>
+            </div>
+        </div>
+        <div class="jdkp_sjjycxkp_table" :controller="jdkp_sjjycxkp_table">
+            <div :class="['sjjycxkp_tabCont']">
+                <div :controller="sjjycxkp_table" :class="['table-index']" id="sjjycxkp_table">
+                    <div class="table-index-thead-fixed">
+                        <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                            <li data-order="1" class="col-4">序号</li>
+                            <li data-order="2" class="col-6">操作</li>
+                            <li data-order="3" class="col-16">执勤部门</li>
+                            <li data-order="4" class="col-13">违法时间</li>
+                            <li data-order="5" class="col-10">警员警号</li>
+                            <li data-order="6" class="col-9">当事人</li>
+                            <li data-order="7" class="col-9">驾驶证号</li>
+                            <li data-order="8" class="col-9">车牌号码</li>
+                            <li data-order="9" class="col-9">决定书编号</li>
+                            <li data-order="10" class="col-9">违法地点</li>
+                            <li data-order="11" class="col-6">关联媒体</li>
+                        </ul>
+                    </div>
+                    <ul class="table-index-tbody">
+                        <li class="list-null" :if="!@data.length">暂无数据</li>
+                        <li :for="($index, record) in @data">
+                            <div class="tbody col-4">
+                                <div class="table-cont">{{(@currentPage - 1) * @prePageSize + $index + 1}}</div>
+                            </div>
+                            <div class="tbody col-6">
+                                <div class="table-cont">
+                                    <span>
+                                        <a class="check_Btn" :click="@handle('check_click', 'space', record, $index)" :if="@opt_sjjycxkp.authority.SEARCH">查看</a>
+                                        <span :if="@opt_sjjycxkp.authority.OPT_SHOW">-</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="tbody col-16">
+                                <div class="table-cont" :attr="record['orgName'] && (record['orgName'] != '-') ? {rel:'drevil',tdval:record['orgName']}:''">
+                                    {{record['orgName']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-13">
+                                <div class="table-cont" :attr="record['wfsj'] && (record['wfsj'] != '-') ? {rel:'drevil',tdval:record['wfsj']}:''">
+                                    {{record['wfsj']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['userName'] && (record['userName'] != '-') ? {rel:'drevil',tdval:record['userName']}:''">
+                                    {{record['userName']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-9">
+                                <div class="table-cont" :attr="record['dsr'] && (record['dsr'] != '-') ? {rel:'drevil',tdval:record['dsr']}:''">
+                                    {{record['dsr']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-9">
+                                <div class="table-cont" :attr="record['jszh'] && (record['jszh'] != '-') ? {rel:'drevil',tdval:record['jszh']}:''">
+                                    {{record['jszh']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-9">
+                                <div class="table-cont" :attr="record['hphm'] && (record['hphm'] != '-') ? {rel:'drevil',tdval:record['hphm']}:''">
+                                    {{record['hphm']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-9">
+                                <div class="table-cont" :attr="record['jdsbh'] && (record['jdsbh'] != '-') ? {rel:'drevil',tdval:record['jdsbh']}:''">
+                                    {{record['jdsbh']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-9">
+                                <div class="table-cont" :attr="record['wfdz'] && (record['wfdz'] != '-') ? {rel:'drevil',tdval:record['wfdz']}:''">
+                                    {{record['wfdz']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-6">
+                                <div class="table-cont" :attr="record['relation'] && (record['relation'] != '-') ? {rel:'drevil',tdval:record['relation']}:''">
+                                    {{record['relation']}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="table-index-loading" :if="@loading">
+                        <span class="loadingSpan">结果加载中</span>
+                    </div>
+                    <!-- <div :if="!@loading && !@data.length" class="noData">暂无数据</div> -->
+                </div>
+            </div>
+            <div class="sjjycxkp_page">
+                <ms-pages :widget="{total:@table_pagination.total, pageSize:@table_pagination.pageSize, current:@table_pagination.current, onChange:@handlePageChange, getCurrent:@getCurrent, overLimit:@page_type}"></ms-pages>
+            </div>
+        </div>
+    </div>
+</template>

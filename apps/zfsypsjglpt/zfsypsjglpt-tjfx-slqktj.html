@@ -1,0 +1,205 @@
+<template>
+    <div class="zfsypsjglpt_tjfx_slqktj" :class="[@extra_class? 'zfsypsjglpt_tjfx_slqktj_en' : '']">
+        <div class="search_box" :if="@authority.SEARCH || @authority.EXPORT">
+            <div class="hBox">
+                <div class="dataFormBox" :if="@authority.SEARCH">
+                    <span style="margin-right: 3px;">{{@slqktj_txt.department}}：</span>
+                    <div class="dep_tree" :controller="slqktj_tree">
+                        <!-- <ms-tree-select :widget="{treeData: @yspk_data, onChange: @select_change, value: @yspk_value, expandedKeys: @yspk_expandedKeys}" :class="['formInput']"></ms-tree-select> -->
+                        <ms-tree-selecting :widget="{tree: @yspk_data, showSearch: true, wrapId: 'zfyps-tree-select', getSelected: @getSelected, selectedKey: @tree_key ? @tree_key : '', selectedTitle: @tree_title ? @tree_title : '', onChange: @select_change, extraExpandHandle: @extraExpandHandle}"></ms-tree-selecting>
+                    </div>
+                </div>
+
+                <div class="dataFormBox dataFormBoxEn" :controller="count_type_person" :if="@authority.SEARCH">
+                    <span class="span_cls">{{@slqktj_txt.staffType}}：</span>
+                    <ms-select :widget="{col: 'con', options:@count_type_options, value: @count_type, onChange: @onChangeType}"
+                        :class="['formInput']"></ms-select>
+                </div>
+                <!-- <div class="dataFormBox" :controller="count_type_slqktj" :if="@authority.SEARCH">
+                    <span style="margin-right: 3px;">统计对象:</span>
+                    <ms-select :widget="{col: 'con', options:@countLevel_type_options, value: @countLevel_type, onChange: @onChangeLevel}" :class="['formInput']" :css="{width:@widthcontent}"></ms-select>
+                    <span :if="@levelFlag">-</span>
+                    <ms-select :widget="{col: 'con', options:@count_type_options, value: @count_type, onChange: @onChangeT}" :class="['formInputL']"></ms-select>
+                </div> -->
+
+            </div>
+            <div class="hBox" :controller="slqktj_time_range" style="padding-top: 5px;margin-bottom: 5px;">
+                <div class="dataRadioBox" :if="@authority.SEARCH">
+                    <span style="margin-right: 3px;">{{@slqktj_txt.timeRange}}：</span>
+                    <ms-select :widget="{value: @time_range, options:@time_range_options, onChange:@onChangeTR}" :class="['formInput']"></ms-select>
+                    <div class="dataTimeBox" :if="@select_time">
+                        <!-- <span class="dataTimeBox_span">开始时间：</span> -->
+                        <div class="slqktj-dataRight" :controller="slqktj-startTime">
+                            <ms-datepicker :widget="{format: 'YYYY-MM-DD', value:@slqktj_startTime, showTime: false, onChange:@handlerChange,endDate:@slqktj_endDate, direction: 'down', languageSelect: @extra_class ? 'en' : ''}"></ms-datepicker>
+                        </div>
+                        <!-- <span class="dataTimeBox_span" style="margin-left: 55px;">结束时间：</span> -->
+                        <span style="float:left; height:28px; line-height:28px;">-</span>
+                        <div class="slqktj-dataRight" :controller="slqktj-endTime">
+                            <ms-datepicker :widget="{format: 'YYYY-MM-DD', value:@slqktj_endTime, showTime: false, onChange:@handlerChange,endDate:@slqktj_endDate, direction: 'down', languageSelect: @extra_class ? 'en' : ''}"></ms-datepicker>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="dataTimeBox" :class="[@select_time ? 'item_show':'item_hide']">
+                    <label class="slqktj_time_span" style="margin-right: 3px;">开始时间:</label>
+                    <div class="slqktj-dataRight" :controller='slqktj-startTime'>
+                        <ms-datepicker :widget="{
+                        onChange:@handlerChange,
+                        placeholder:'请选择开始时间',
+                        value:@slqktj_startTime,
+                        endDate:@slqktj_endDate,
+                        showTime: false
+                    }" :class="['slqktjformInput_time']"></ms-datepicker>
+                        <div class="slqktj_tip_box czrz_end_time_tip">
+                            <span :class="['slqktj_tip']" :css="{display:@start_null}">
+                                <i class="fa fa-exclamation-circle">&nbsp;开始时间不能为空</i>
+                            </span>
+                        </div>
+                    </div>
+                    <label class="slqktj_time_span" style="margin-right: 3px;">结束时间:</label>
+                    <div class="slqktj-dataRight" :controller='slqktj-endTime'>
+                        <ms-datepicker :widget="{
+                        onChange:@handlerChange,
+                        placeholder:'请选择结束时间',
+                        value:@slqktj_endTime,
+                        endDate:@slqktj_endDate,
+                        showTime: false
+                    }" :class="['slqktjformInput_time']"></ms-datepicker>
+                        <div class="slqktj_tip_box czrz_end_time_tip">
+                            <span :class="['slqktj_tip']" :css="{display:@end_null}">
+                                <i class="fa fa-exclamation-circle">&nbsp;结束时间不能为空</i>
+                            </span>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="slqktj_btnClass">
+                <a :if="!@extra_class&&@authority.EXPORT" class="export_btn" :click="@exportBtn">{{@slqktj_txt.export}}</a>
+                <a :if="@authority.SEARCH" class="search_btn" :click="@searchBtn(0)">{{@slqktj_txt.query}}</a>
+                <a :if="!@extra_class && @authority.SEARCH" class="hint_jsdrl" :click="@hint_vm">
+                    <img src="/static/image/zfsypsjglpt/u4131.png">
+                </a>
+            </div>
+        </div>
+        <div class="orgPathBlock">
+            <diav style="display: inline-block;cursor: pointer;" disabled>
+                <a :click="@orgIndexBtn(0)">{{@slqktj_txt.home}}</a>
+            </diav>
+            <ol class="orgPathBlockOL">
+                <li :for="($index, item) in @orgPathNameArrayShow">
+                    <a :click="@orgNameBtn(1,item)" :class="[(@orgPathNameArrayShow.length - 1) == $index  ? 'active' : '']">{{@item.orgName
+                        | fillterEmpty}}</a>
+                </li>
+            </ol>
+        </div>
+        <div class="zfsypsjglpt_tjfx_slqktj_table" :controller="zfsypsjglpt_tjfx_slqktj_table">
+            <div class="zfsypsjglpt_tjfx_slqktj_table_content">
+                <!--
+                	作者:1272635875@qq.com
+                	时间:2017-11-23
+                	描述:摄录情况统计table表
+                -->
+                <div class="slqktj-list-panel">
+                    <div class="slqktj-list-header-wrap">
+                        <ul class="slqktj-list-header">
+                            <!-- 序号 -->
+                            <li class="col-4 firstItem">{{@slqktj_txt.tableNo}}</li>
+                            <!-- 部门 -->
+                            <li class="col-6">{{@slqktj_txt.department}}</li>
+                            <!-- 警员/警号 -->
+                            <li :if="@userCode_flag" class="col-16">{{@slqktj_txt.nameID}}</li>
+                            <!-- 当前执法人员数 -->
+                            <li :if="!@userCode_flag" class="slqktj-dqrs" :class="[ @extra_class ? 'col-8' : 'col-6']">{{@slqktj_txt.quantityCurrentPolice}}</li>
+                            <!-- 执法仪数(台) -->
+                            <li :if="!@userCode_flag" class="slqktj-zfjlys" :class="[ @extra_class ? 'col-11' : 'col-10']">{{@slqktj_txt.quantityBodyCameras}}</li>
+                            <!-- 执法仪视频数(个) -->
+                            <li class="col-10 zfsps-flag">{{@slqktj_txt.quantityVideos}}</li>
+                            <!-- 执法仪视频总大小(GB) -->
+                            <li :class="[ @extra_class ? 'col-11' : 'col-14']">{{@slqktj_txt.totalVideoSize}}</li>
+                            <!-- 执法仪视频总时长(时:分:秒) -->
+                            <li class="col-14">{{@slqktj_txt.totalVideoDuration}}</li>
+                            <!-- 超过24小时导入视频数(个) -->
+                            <li class="col-16">{{@slqktj_txt.over24}}</li>
+                            <!-- 及时导入率 -->
+                            <li class="col-10 jsdrl-flag">{{@slqktj_txt.timelyImportRate}}
+                                <!--<img src="/static/image/zfsypsjglpt/u4131.png" :click="@hint_jsdrl">-->
+                                <div :if="@hintJsdrl_flag" class="hint-content1">
+                                    <div class="hint-triangle1"></div>
+                                    <!-- 视频及时导入率=[1-(超过24小时导入执法视频数/执法视频数)]*100% -->
+                                </div>
+                            </li>
+                            <!-- 执法仪使用率 -->
+                            <li class="col-10">{{@slqktj_txt.usageRate}}
+                                <!--<img src="/static/image/zfsypsjglpt/u4131.png" :click="@hint_zfysyl">-->
+                                <div :if="@hintZfysyl_flag" class="hint-content">
+                                    <div class="hint-triangle" style="margin-left: 115px;"></div>
+                                    <!-- 执法记录仪使用率=执法记录仪在线天数总和 / Σ每天执法记录仪总数 -->
+                                    <span style="min-width: 240px;"></span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <ul class="slqktj-list-content">
+                        <div :if="@loading" class="slqktjList-loading" style="width:100%;height:100%;">
+                            <!-- 结果加载中 -->
+                            <span>{{@slqktj_txt.loading}}</span>
+                        </div>
+                        <li :if="@isNull" class="list-null" style="text-align: center;">{{@slqktj_txt.noRecords}}</li>
+                        <li :for="($index, item) in @remoteList">
+                            <div class="col-4 firstItem" :attr="{'data-toggle':'tooltip'}">{{@item.index |
+                                fillterEmpty}}</div>
+                            <div class="col-6" :click="@orgDeptBtn(1,item)" style="color: #0419dc; cursor: pointer;"
+                                :attr="{'data-toggle':'tooltip'}">{{@item.orgName | fillterEmpty}}</div>
+                            <div :if="@userCode_flag" class="col-16" :attr="{'data-toggle':'tooltip'}">{{@item.userCode
+                                | fillterEmpty}}</div>
+                            <div :if="!@userCode_flag" class="device-people" :class="[ @extra_class ? 'col-8' : 'col-6']"
+                                :attr="{'data-toggle':'tooltip'}">{{@item.dqrs
+                                | fillterEmpty}}</div>
+                            <div :if="!@userCode_flag" class="device-num" :class="[ @extra_class ? 'col-11' : 'col-10']"
+                                :attr="{'data-toggle':'tooltip'}">{{@item.zfys
+                                | fillterEmpty}}</div>
+                            <div class="col-10 zfsps-flag" :attr="{'data-toggle':'tooltip'}">{{@item.zfysps |
+                                fillterEmpty}}</div>
+                            <div :class="[ @extra_class ? 'col-11' : 'col-14']" :attr="{'data-toggle':'tooltip'}">{{@item.zfyspzdx
+                                | fillterEmpty}}</div>
+                            <div class="col-14" :attr="{'data-toggle':'tooltip'}">{{@item.zfyspzsc | fillterEmpty}}</div>
+                            <div class="col-16" :attr="{'data-toggle':'tooltip'}">{{@item.over24fileNum |
+                                fillterEmpty}}</div>
+                            <!-- <div class="col-10 jsdrl-flag" :attr="{'data-toggle':'tooltip'}">{{@item.jsdrl | fillterEmpty}}</div>
+                            <div class="col-10" :attr="{'data-toggle':'tooltip'}">{{@item.zfysyl | fillterEmpty}}</div> -->
+                            <div class="col-10 jsdrl-flag" :attr="{'data-toggle':'tooltip'}">{{@item.jsdrl |
+                                showPercent}}</div>
+                            <div class="col-10" :attr="{'data-toggle':'tooltip'}">{{@item.zfysyl | showPercent}}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 分页 -->
+            <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent,getPageSize:@getPageSize}"></ms-pages>
+            <!-- 分页end -->
+        </div>
+    </div>
+
+    <div class="slqktj-hint" :controller="slqktj-hint">
+        <ms-dialog :widget="{$innerVm:'slqktj-hintVm', show:@show,onCancel:@handleCancel, onOk:@handleOk,height:380,width:630,isMove:true}">
+            <div slot="body" ms-skip>
+                <div slot="body" ms-skip>
+                    <!-- 弹窗内容 -->
+                    <p>1、当前人数 : 执勤部门当前人数；</p>
+                    <p>2、执法记录仪数(台) : 执勤部门下当前执法记录仪台数；</p>
+                    <p>3、执法记录仪视频数(个) : 执法记录仪所录制的执法视频数量；</p>
+                    <p>4、执法记录仪视频总大小(GB) : 指执法视频总大小；</p>
+                    <p>5、执法记录仪视频总时长(时:分:秒) : 执法记录仪已录视频总时长；</p>
+                    <p>6、超过24小时内导入视频(个) : 指超过24小时候导入的视频文件数目；</p>
+                    <p>7、视频及时导入率 : 视频及时导入率=[1-（超过24小时导入执法视频数/执法视频数）]*100%；</p>
+                    <p>8、执法记录仪使用率(统计对象为部门): 执法记录仪使用率=（执法记录仪在线天数总和 /每天执法记录仪数量总和）*100%；</p>
+                    <p>9、执法记录仪使用率(统计对象为人员) : 执法记录仪使用率=（选定时间内执法记录仪在线天数 /选定的天数）*100%；</p>
+
+                </div>
+            </div>
+            <div slot="footer" ms-skip>
+            </div>
+        </ms-dialog>
+    </div>
+</template>

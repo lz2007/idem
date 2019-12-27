@@ -1,0 +1,220 @@
+<template>
+    <div class="zfsypsjglpt_jdkp_zhkp_jj zfsypsjglpt-jdkp-kpcczl">
+        <div>
+            <div class="search_box" :if="@authority.SEARCH">
+                <div class="hBox" style="padding-top:10px;">
+                    <div class="dataFormBox">
+                        <span class="span_cls" style="width: 76px;text-align: right;">执勤部门：</span>
+                        <div class="dep_tree" :controller="zhkp_kpcczl_tree">
+                            <ms-tree-selecting :widget="{tree: @zhkp_data, showSearch: true, wrapId: 'zhkp-tree-select', getSelected: @getSelected, selectedKey: @tree_key ? @tree_key : '', selectedTitle: @tree_title ? @tree_title : '', onChange: @select_change, extraExpandHandle: @extraExpandHandle}"></ms-tree-selecting>
+                        </div>
+                    </div>
+                </div>
+                <div class="hBox" style="padding-top:10px;">
+                    <div class="dataFormBox kpcczl-rylb">
+                        <span class="">人员类别：</span>
+                        <div class="inline-component" :controller="kpcczl_rylb">
+                            <ms-select :widget="{
+                                        col:'policeType',
+                                        value: @policeType,
+                                        onChange:@searchForm_rylb_Change
+                                    }">
+                                <ms-select-option :widget="{value:''}">不限</ms-select-option>
+                                <ms-select-option :widget="{value:'LEVAM_JYLB_JY'}">警员</ms-select-option>
+                                <ms-select-option :widget="{value:'LEVAM_JYLB_FJ'}">辅警</ms-select-option>
+                            </ms-select>
+                        </div>
+                    </div>
+                </div>
+                <a class="common_search_btn kpcczl-search" :click="@searchBtn" :if="@authority.SEARCH">查询</a>
+                <!-- <a class="common_search_btn kpcczl-output" :click="@output" :if="@authority.SEARCH">导出</a> -->
+                <a :if="@authority.SEARCH" class="tips-img" :click="@alert_tips">
+                    <img src="/static/image/zfsypsjglpt/u4131.png">
+                </a>
+                <div>
+                    <div class="hBox" style="padding-top:10px;" :controller="zhkp_time_range_kpcczl" :if="@authority.SEARCH">
+                        <div class="dataFormBox">
+                            <span class="span_cls" style="width: 76px;text-align: right;">时间范围：</span>
+                            <ms-select :widget="{col: 'con', options:@time_range_options, value: @time_range, onChange: @onChangeTR}"
+                                :class="['formInput timeSelect']"></ms-select>
+                        </div>
+                        <div class="dataTimeBox" :if="@select_time">
+                            <span class="span_cls">开始时间：</span>
+                            <div class="zhkp-dataRight" :controller="zhkp_startTime_kpcczl">
+                                <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'请选择开始时间', value:@zhkp_startTime, showTime: false, endDate:@endDate}"></ms-datepicker>
+                                <div class="zhkp_tip_box zhkp_start_time_tip">
+                                    <span :class="['zhkp_tip']" :css="{display:@start_null}">
+                                        <i class="fa fa-exclamation-circle">&nbsp;开始时间不能为空</i>
+                                    </span>
+                                </div>
+                            </div>
+                            <span class="span_cls" style="padding-left: 38px;">结束时间：</span>
+                            <div class="zhkp-dataRight" :controller="zhkp_endTime_kpcczl">
+                                <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'请选择结束时间', value:@zhkp_endTime, showTime: false, endDate:@endDate}"></ms-datepicker>
+                                <div class="zhkp_tip_box zhkp_end_time_tip">
+                                    <span :class="['zhkp_tip']" :css="{display:@end_null}">
+                                        <i class="fa fa-exclamation-circle">&nbsp;结束时间不能为空</i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div :controller="zfsypsjglpt_jdkp_kpcczl_table">
+                <div class="zfsypsjglpt_jdkp_zhkp_jj_table zfsypsjglpt_jdkp_kpcczl_table">
+                    <div class="zcqktj-list-panel" :controller="kpcczl_table_vm" id="kpcczl_table_id">
+                        <ul class="zcqktj-list-header-upper">
+                            <li parent="1" class="col-3 borberb">
+                                <span style="visibility: hidden;">序号</span>
+                            </li>
+                            <li parent="2" class="col-11 borberb">
+                                <span style="visibility: hidden;">执勤部门</span>
+                            </li>
+                            <!-- <li parent="3" class="col-7 borberb">
+                                <span style="visibility: hidden;">
+                                    时长抽查率
+                                </span>
+                            </li> -->
+                            <li parent="3" class="col-6 borberb">
+                                <span style="visibility: hidden;">抽查通过率</span>
+                            </li>
+                            <li class="col-16 hidewordheadli" parent="4">简易程序抽查结果</li>
+                            <li class="col-16 hidewordheadli" parent="5">非现场处罚抽查结果</li>
+                            <li class="col-16 hidewordheadli" parent="6">强制措施抽查结果</li>
+                            <li class="col-16 hidewordheadli" parent="7">事故处理抽查结果</li>
+                            <li class="col-16 hidewordheadli" parent="8">核查结果</li>
+
+                        </ul>
+
+                        <ul class="zcqktj-list-header">
+                            <li data-order="1" son="1" class="col-3 zcqktj-list-header-upper-li">
+                                <div style="visibility: hidden;">序号</div>
+                                <span class="double-table-header">序号</span>
+                            </li>
+                            <li data-order="2" son="2" class="col-11 zcqktj-list-header-upper-li">
+                                <div style="visibility: hidden;">执勤部门</div>
+                                <span class="double-table-header">执勤部门</span>
+                            </li>
+                            <!-- <li data-order="3" son="3" class="col-7 zcqktj-list-header-upper-li">
+                                <div style="visibility: hidden;">时长抽查率</div>
+                                <span class="double-table-header">时长抽查率</span>
+                            </li> -->
+                            <li data-order="3" son="3" class="col-6 zcqktj-list-header-upper-li">
+                                <div style="visibility: hidden;">抽查通过率</div>
+                                <span class="double-table-header">抽查通过率</span>
+                            </li>
+                            <li data-order="4" son="4" class="col-8 hidewordheadli">通过数/比例</li>
+                            <li data-order="5" son="4" class="col-8 hidewordheadli">不通过数/比例</li>
+                            <li data-order="6" son="5" class="col-8 hidewordheadli">通过数/比例</li>
+                            <li data-order="7" son="5" class="col-8 hidewordheadli">不通过数/比例</li>
+                            <li data-order="8" son="6" class="col-8 hidewordheadli">通过数/比例</li>
+                            <li data-order="9" son="6" class="col-8 hidewordheadli">不通过数/比例</li>
+                            <li data-order="10" son="7" class="col-8 hidewordheadli">通过数/比例</li>
+                            <li data-order="11" son="7" class="col-8 hidewordheadli">不通过数/比例</li>
+                            <li data-order="12" son="8" class="col-8 hidewordheadli">情况属实</li>
+                            <li data-order="13" son="8" class="col-8 hidewordheadli">情况不属实/扣分情况</li>
+
+                        </ul>
+                        <!-- 防止表格出现滚动条表格列偏移 -->
+                        <div class="header-fill" :if="@showScroll"></div>
+                        <ul class="zcqktj-list-content table-index">
+                            <div class="table-index-loading" :if="@loading">
+                                <span class="loadingSpan">结果加载中</span>
+                            </div>
+                            <li class="list-null" :if="!@data.length">暂无数据</li>
+                            <li :for="($index, item) in @list" :if="!@loading">
+                                <div class="col-3" :attr="{'data-toggle':'tooltip'}">{{(table_pagination.current-1)*table_pagination.pageSize+$index+1}}</div>
+                                <div class="col-11" :attr="{'data-toggle':'tooltip'}">{{@item.orgName}}</div>
+                                <!-- <div class="col-7" :attr="{'data-toggle':'tooltip'}">{{@item.scccl | fillterEmpty}}</div> -->
+                                <div class="col-6" :attr="{'data-toggle':'tooltip'}">{{@item.cctgbl | toper}}</div>
+                                <div class="col-8" :attr="{'data-toggle':'tooltip'}">
+                                    <!-- <a class="checkLook" :click="@handle('jycxcctgs','jycxcctgs',item,$index, 'jt_passed')">0/0</a> -->
+                                    <a class="checkLook" :click="@handle('jycx','jycxcctgs',item,$index, 'jt_passed')">{{@item.jycxcctgs}}/{{@item.jycxcctgbl
+                                        | toper}}</a>
+                                </div>
+                                <div class="col-8" :attr="{'data-toggle':'tooltip'}">
+                                    <a class="checkLook" :click="@handle('jycx','jycxccbtgs',item,$index, 'jt_no_passed')">{{@item.jycxccbtgs}}/{{@item.jycxccbtgbl
+                                        | toper}}</a>
+                                </div>
+                                <div class="col-8" :attr="{'data-toggle':'tooltip'}">
+                                    <a class="checkLook" :click="@handle('fxccl','fxccfcctgs',item,$index, 'jt_passed')">{{@item.fxccfcctgs
+                                        | fillterEmpty}}/{{@item.fxccfcctgbl | toper}}</a>
+                                </div>
+                                <div class="col-8" :attr="{'data-toggle':'tooltip'}">
+                                    <a class="checkLook" :click="@handle('fxccl','fxccfccbtgs',item,$index, 'jt_no_passed')">{{@item.fxccfccbtgs}}/{{@item.fxccfccbtgbl
+                                        | toper}}</a>
+                                </div>
+                                <div class="col-8" :attr="{'data-toggle':'tooltip'}">
+                                    <a class="checkLook" :click="@handle('qzcs','qzcscctgs',item,$index, 'jt_passed')">{{@item.qzcscctgs}}/{{@item.qzcscctgbl
+                                        | toper}}</a>
+                                </div>
+                                <div class="col-8" :attr="{'data-toggle':'tooltip'}">
+                                    <a class="checkLook" :click="@handle('qzcs','qzcsccbtgs',item,$index, 'jt_no_passed')">{{@item.qzcsccbtgs}}/{{@item.qzcsccbtgbl
+                                        | toper}}</a>
+                                </div>
+                                <div class="col-8" :attr="{'data-toggle':'tooltip'}">
+                                    <a class="checkLook" :click="@handle('sgcl','sgclcctgs',item,$index, 'sg_passed')">{{@item.sgclcctgs}}/{{@item.sgclcctgbl
+                                        | toper}}</a>
+                                </div>
+                                <div class="col-8" :attr="{'data-toggle':'tooltip'}">
+                                    <a class="checkLook" :click="@handle('sgcl','sgclccbtgs',item,$index, 'sg_no_passed')">{{@item.sgclccbtgs}}/{{@item.sgclccbtgbl
+                                        | toper}}</a>
+                                </div>
+                                <div class="col-8" :attr="{'data-toggle':'tooltip'}">
+                                    <a class="checkLook" :click="@handle('fhqk','fhqkbss',item,$index, 'real')">{{@item.fhqkss}}</a>
+                                </div>
+                                <div class="col-8" :attr="{'data-toggle':'tooltip'}">
+                                    <a class="checkLook" :click="@handle('fhqk','fhqkbss',item,$index, 'no_real')">{{@item.fhqkbss}}/{{@item.fhkfqk}}</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent,getPageSize:@getPageSize}"></ms-pages> -->
+                <ms-pages :widget="{total:@table_pagination.total, onChange:@handlePageChange, current:@table_pagination.current, getCurrent:@getCurrent, pageSize:@table_pagination.pageSize}"></ms-pages>
+            </div>
+        </div>
+    </div>
+    <!-- xx率计算描述弹窗 -->
+    <div class="zhkp-tips" :controller="zhkp-tips-kpcczl">
+        <ms-dialog :widget="{$innerVm:'zhkp-tipsVm-kpcczl', show:@show,onCancel:@handleCancel, onOk:@handleOk,height:150,width:630,isMove:true}">
+            <div slot="body" ms-skip>
+                <div slot="body" ms-skip>
+                    <p>1、时长抽查率 = 抽查视频总时长 / 已关联视频总时长</p>
+                    <p>2、业务抽查率 = 业务抽查数 / 业务总数。</p>
+                </div>
+            </div>
+            <div slot="footer" ms-skip>
+            </div>
+        </ms-dialog>
+    </div>
+
+    <!-- 选择考评核查弹窗 -->
+    <div class="checks-dialog" :controller="checks-dialog">
+        <ms-dialog :widget="{$innerVm:'checks-dialog', show:@show,onCancel:@handleCancel, onOk:@handleOk,height:230,width:630,isMove:true}">
+            <div slot="body" ms-skip>
+                <ul class="dropdown">
+                    <li :click="handCick('jycx')">
+                        <a>
+                            简易程序</a>
+                    </li>
+                    <li :click="handCick('fxccl')">
+                        <a>
+                            非现场处罚</a>
+                    </li>
+                    <li :click="handCick('qzcs')">
+                        <a>
+                            强制措施</a>
+                    </li>
+                    <li :click="handCick('sgcl')">
+                        <a>
+                            事故处理</a>
+                    </li>
+                </ul>
+            </div>
+            <div slot="footer" ms-skip>
+            </div>
+        </ms-dialog>
+    </div>
+</template>

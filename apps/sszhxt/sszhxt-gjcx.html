@@ -1,0 +1,212 @@
+<template>
+    <div class="sxzhxt-gjcx gjcx" id="sxzhxt-gjcx">
+        <div class="ant-layout-aside">
+            <div class="ant-layout-sider">
+                <div class="sildeNav">
+                    <!-- <div class="infoText">
+                        <div :class="['left',activeToggle==0 ? 'active' : '']" :click="select('shebei')">
+                            {{@sszhxt_language.device}}
+                        </div>
+                        <div :class="['right',activeToggle==1 ? 'active' : '']" :click="select('renyuan')">
+                            {{@sszhxt_language.police}}
+                        </div>
+                    </div> -->
+                    <div class="gjcx-search" :class="@extra_class_dialog ? '' : 'gjcx-search-zhcn'">
+                        <xmp is="ms-form" :widget="{$form:@$form,type:'search',inline:true}">
+
+                            <ms-form-item :widget="{label:@sszhxt_language.department}"
+                                :class="[@extra_class_dialog ? 'form-item form-org en' : 'form-item form-org']">
+                                <ms-tree-selecting
+                                    :widget="{tree:@orgData, showSearch:true,selectedKey:@orgId,selectedTitle:@selectedTitle, wrapId: 'tree-select-gjcx',getSelected:@getSelected,onChange:@handleTreeChange,extraExpandHandle:@extraExpandHandle}">
+                                </ms-tree-selecting>
+                            </ms-form-item>
+
+                            <div :class="[@extra_class_dialog ? 'form-group has-feedback en' : 'form-group has-feedback']"
+                                style="vertical-align: top;">
+                                <!-- <label class="control-label">{{@shebei?@extra_class_dialog ? @sszhxt_language.device
+                                    :'设备:':@extra_class_dialog ? @sszhxt_language.police:'人员:'}}</label> -->
+                                <div class="select-label" :class="@extra_class_dialog ? 'select-label-en' : ''">
+                                    <div :click="@selectOptionChoose">
+                                        <span :visible="@activeToggle ==1">{{@sszhxt_language.nameID}}</span>
+                                        <!-- <span :visible="@activeToggle == 0">{{@sszhxt_language.device}}</span>     
+                                            <span class="select-down select-icon" :visible="@selectOptionhide"></span>
+                                            <span class="select-up select-icon" :visible="!@selectOptionhide"></span> -->
+                                    </div>
+                                    <!-- <div class="select-option" :visible="!@selectOptionhide">
+                                                <span :class="@activeToggle == 1 && 'active'" :click="changeSelect('renyuan')|stop">{{@sszhxt_language.police}}</span>
+                                                <span :class="@activeToggle == 0 && 'active'" :click="changeSelect('shebei')|stop">{{@sszhxt_language.device}}</span>
+                                            </div> -->
+                                </div>
+                                <div class="has-icon-input-wrap">
+                                    <input type="input" class="form-control key" :duplex="@key"
+                                        :attr="{placeholder:@activeToggle == 1 ? @sszhxt_language.enterNameID : @sszhxt_language.enterDeviceNameID }"
+                                        :focus="@handleInputFocus" :blur="@handleInputBlur" :keyup="@handleQuickSearch">
+                                    <i class="close-clear" :class="@extra_class_dialog ? '' : 'close-clear-zhcn'"
+                                        :mousedown="@handleCloseClear"></i>
+                                </div>
+                            </div>
+                            <ms-form-item :widget="{label:@sszhxt_language.startTime} "
+                                :class="[@extra_class_dialog ? 'en' : '']">
+                                <ms-datepicker :widget="{
+                                    format:'YYYY-MM-DD HH:mm:ss',
+                                    placeholder:'',
+                                    showTime: false,
+                                    value:@searchdataTime,
+                                    onChange:datatimechange,
+                                    languageSelect: @extra_class_dialog ? 'en' : ''
+                                }" :css="{width: @extra_class_dialog ? 153:180}"></ms-datepicker>
+                            </ms-form-item>
+                            <ms-form-item :widget="{label:@sszhxt_language.endTime} "
+                                :class="[@extra_class_dialog ? 'en' : '']">
+                                <ms-datepicker :widget="{
+                                     format:'YYYY-MM-DD HH:mm:ss',
+                                    placeholder:'',
+                                    showTime: false,
+                                    value:@datatimeEndTime,
+                                    onChange:datatimechangeEndTime,
+                                    languageSelect: @extra_class_dialog ? 'en' : ''
+                                }" :css="{width: @extra_class_dialog ? 153:180}"></ms-datepicker>
+                            </ms-form-item>
+                        </xmp>
+                        <button type="button" :class="@useSearch ? '': 'btnDisabled' " class="btn btn-sm form-search"
+                            :click="@search()">
+                            {{@sszhxt_language.query}}
+                        </button>
+                    </div>
+                    <div :visible="noData" class="list-null">{{@sszhxt_language.noResult}}</div>
+                    <ul class="gjcx-searchresult" :class="[@extra_class_dialog ? 'gjcx-searchresult_en' : '']"
+                        :if="selectType2=='shebei'">
+                        <li class="gjcx-searchresult-item" :for="($index,item) in @searchData"
+                            :click="@itemClick($index)"
+                            :class="[ item.active ? 'active' : '','gjcx-searchresult-item']">
+                            <div class="leftListForFixbug">
+                                <span class="title"
+                                    :class="[item.active && 'spanacitve']">{{@sszhxt_language.deviceName}}：</span>
+                                <span class="body body1" :class="[item.active && 'spanacitve']"
+                                    :attr="{title:item.deviceName} | fillterEmptyObj">{{item.deviceName
+                                    | fillterEmpty}}</span>
+                            </div>
+                            <div class="leftListForFixbug">
+                                <span class="title" :class="[item.active && 'spanacitve']">
+                                    {{@sszhxt_language.deviceID}}：
+                                </span>
+                                <span class="body body2" :class="[item.active && 'spanacitve']"
+                                    :attr="{title:item.deviceId} | fillterEmptyObj">{{item.deviceId}}</span>
+                            </div>
+                            <div class="leftListForFixbug">
+                                <span class="title"
+                                    :class="[item.active && 'spanacitve']">{{@sszhxt_language.offlineDuration}}：</span>
+                                <span class="body body3" :class="[item.active && 'spanacitve']"
+                                    :attr="{title:item.onlineDuration} | formatOnlineTimeObj">{{item.onlineDuration
+                                    | formatOnlineTime}}</span>
+                            </div>
+                            <!--<div>-->
+                            <!--<span class="title">开始地址：</span>-->
+                            <!--<span class="body" :attr="{title:item.address} | fillterEmptyObj">{{item.address | fillterEmpty}}</span>-->
+                            <!--</div>-->
+                            <div class="leftListForFixbug">
+                                <span class="title"
+                                    :class="[item.active && 'spanacitve']">{{@sszhxt_language.startPoint}}：</span>
+                                <span class="body body4" :class="[item.active && 'spanacitve']"
+                                    :attr="{title:item.createTime} | formatDateObj">{{item.createTime
+                                    | date("yyyy-MM-dd HH:mm:ss")}}
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="gjcx-searchresult" :if="selectType2=='renyuan'">
+                        <li :for="($index,item) in @searchData" :click="@itemClick($index)"
+                            :class="[ item.active ? 'active' : '','gjcx-searchresult-item']">
+                            <div class="leftListForFixbug">
+                                <span class="title"
+                                    :class="[item.active && 'spanacitve']">{{@sszhxt_language.userName}}：</span>
+                                <span class="body" :class="[item.active && 'spanacitve']"
+                                    :attr="{title:item.userName} | fillterEmptyObj">{{item.userName
+                                    | fillterEmpty}}</span>
+                            </div>
+                            <div class="leftListForFixbug">
+                                <span class="title" :class="[item.active && 'spanacitve']">
+                                    {{@sszhxt_language.userCode}}：
+                                </span>
+                                <span class="body" :class="[item.active && 'spanacitve']"
+                                    :attr="{title:item.userCode} | fillterEmptyObj">{{item.userCode}}</span>
+                            </div>
+                            <div class="leftListForFixbug">
+                                <span class="title"
+                                    :class="[item.active && 'spanacitve']">{{@sszhxt_language.offlineDuration}}：</span>
+                                <span class="body" :class="[item.active && 'spanacitve']"
+                                    :attr="{title:item.onlineDuration} | formatOnlineTimeObj">{{item.onlineDuration
+                                    | formatOnlineTime}}</span>
+                            </div>
+                            <!--<div>-->
+                            <!--<span class="title">开始地址：</span>-->
+                            <!--<span class="body" :attr="{title:item.address} | fillterEmptyObj">{{item.address | fillterEmpty}}</span>-->
+                            <!--</div>-->
+                            <div class="leftListForFixbug">
+                                <span class="title"
+                                    :class="[item.active && 'spanacitve']">{{@sszhxt_language.startPoint}}：</span>
+                                <span class="body" :class="[item.active && 'spanacitve']"
+                                    :attr="{title:item.createTime} | formatDateObj">{{item.createTime
+                                    | date("yyyy-MM-dd HH: mm:ss")}}
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- <div class="sildeNav-bar">
+                        <div class="tabbar" :class="[@btnDisabled ? 'disable' : '']" :css="{width:@extra_class_dialog?'75%':96}">
+                            <a href="javascript:;" :visible="showPlayBtn" :click="@playBtnClick()">
+                                <i class="fa fa-play"></i>
+                                <p class="tabbar-label">{{@sszhxt_language.play}}</p>
+                            </a>
+                            <a href="javascript:;" :visible="!showPlayBtn" :click="@playBtnClick()">
+                                <i class="fa fa-stop"></i>
+                                <p class="tabbar-label">{{@sszhxt_language.pulse}}</p>
+                            </a>
+                            <a href="javascript:;" :click="@speedUpClick()" :css="{width:@extra_class_dialog?100:30}">
+                                <i class="fa">{{speed}}X</i>
+                                <p class="tabbar-label">{{@sszhxt_language.fastForward}}</p>
+                            </a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="ant-layout-main">
+                <div class="ant-layout-container">
+                    <div class="ant-layout-content">
+                        <div id="gjcx-map" :css="{height:@mapHeight}">
+                        </div>
+                        <div class="trace_control">
+                            <ul>
+                                <li>
+                                    <span class="fa step-backward" :attr="{title:@sszhxt_language_main.backward}"
+                                        :click="@handleStepPre"></span>
+                                </li>
+                                <li>
+                                    <span class="fa fast-backward" :attr="{title:@sszhxt_language_main.slowPlay}"
+                                        :click="@handleSlower"></span>
+                                </li>
+                                <li>
+                                    <span class="fa" :class="@showPlayBtn ? 'play' : 'pause'"
+                                        :attr="{ 'title':@showPlayBtn? @sszhxt_language_main.play : @sszhxt_language_main.pause}"
+                                        :click="@playBtnClick"></span>
+                                </li>
+                                <!-- <li>
+                                    <span class="fa stop" :attr="{title:@sszhxt_language.stop}" :click="@handleStop"></span>
+                                </li> -->
+                                <li>
+                                    <span class="fa fast-forward" :attr="{title:@sszhxt_language_main.fastPlay}"
+                                        :click="@handleFaster"></span>
+                                </li>
+                                <li>
+                                    <span class="fa step-forward" :attr="{title:@sszhxt_language_main.forward}"
+                                        :click="@handleStepNext"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</template>

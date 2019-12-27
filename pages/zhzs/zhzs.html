@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge; charset=utf-8">
+    <title>执法音视频一体化管理平台</title>
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="/node_modules/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="/node_modules/ane/dist/ane.css" rel="stylesheet" />
+    <link href="./zhzs.css" rel="stylesheet" />
+    <script src="/static/mod.js"></script>
+    <!--[if lt IE 9]>
+    <script src="/static/polyfill/html5shiv.js"></script>
+    <script src="/static/polyfill/respond.src.js"></script>
+    <![endif]-->
+</head>
+
+<body :controller="zhzs" class="ms-controller">
+    <div class="zhzs-main">
+        <div class="hearder">
+            <h3 class="current-time">{{@currentTime}}</h3>
+            <img src="/static/image/zhzs/dpzs_header.png?__sprite" alt="">
+            <a :click="@toHome" class="cbutton cbutton--effect-tamara" title="首页"><img src="/static/image/zhzs/to-home.png?__sprite" alt="首页"></a>
+        </div>
+        <div class="content" :css="{height: @contentHeight}">
+            <div class="content-left">
+                <div class="left-top">
+                    <ul>
+                        <li :for="($index, item) in @tabName" :click="@leftTopTabClick($index)" :class="[$index == currentIndex ? 'parallelogram active-tab' : 'parallelogram']"><span class="reverse-parallelogram">{{item.name}}</span></li>
+                        <li class="parallelogram"><span class="reverse-parallelogram"></span></li>
+                    </ul>
+                    <div :class="['zhzs-left-top-tabCont zhzs-table']">
+                        <div :controller="zhzs-left-top-table" :class="['table-index']">
+                            <div class="table-index-thead-fixed">
+                                <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                                    <li :if="0 == currentIndex" data-order="1" class="col-40">警情类型</li>
+                                    <li :if="1 == currentIndex" data-order="1" class="col-40">违法类型</li>
+                                    <li :if="2 == currentIndex" data-order="1" class="col-40">事故类型</li>
+                                    <li :if="0 == currentIndex" data-order="2" class="col-30">处警民警</li>
+                                    <li :if="1 == currentIndex || 2 == currentIndex" data-order="2" class="col-30">执勤民警</li>
+                                    <li :if="0 == currentIndex" data-order="3" class="col-30">报警时间</li>
+                                    <li :if="1 == currentIndex" data-order="3" class="col-30">违法时间</li>
+                                    <li :if="2 == currentIndex" data-order="3" class="col-30">处理时间</li>
+                                </ul>
+                            </div>
+                            <ul class="table-index-tbody">
+                                <li :if="(!@data.length)" class="list-null">暂无数据</li>
+                                <li :for="($index, record) in @data">
+                                    <div :if="0 == currentIndex" class="tbody col-40" :class="[record['active'] ? 'active-hover' : '']">
+                                        <div class="table-cont" :attr="record['jqlbmc'] && (record['jqlbmc'] != '-') ? {rel:'drevil',tdval:record['jqlbmc']}:''">
+                                            {{record['jqlbmc'] && record['jqlbmc'] != '' ? record['jqlbmc'] : '-'}}
+                                        </div>
+                                    </div>
+                                    <div :if="1 == currentIndex" class="tbody col-40" :class="[record['active'] ? 'active-hover' : '']">
+                                        <div class="table-cont" :attr="record['wflx'] && (record['wflx'] != '-') ? {rel:'drevil',tdval:record['wflx']}:''">
+                                            {{record['wflx'] && record['wflx'] != '' ? record['wflx'] : '-'}}
+                                        </div>
+                                    </div>
+                                    <div :if="2 == currentIndex" class="tbody col-40" :class="[record['active'] ? 'active-hover' : '']">
+                                        <div class="table-cont" :attr="record['sglx'] && (record['sglx'] != '-') ? {rel:'drevil',tdval:record['sglx']}:''">
+                                            {{record['sglx'] && record['sglx'] != '' ? record['sglx'] : '-'}}
+                                        </div>
+                                    </div>
+                                    <div :if="0 == currentIndex" class="tbody col-30" :class="[record['active'] ? 'active-hover' : '']">
+                                        <div class="table-cont" :attr="record['cjr'] && (record['cjr'] != '-') ? {rel:'drevil',tdval:(record['cjrxm']+'('+record['cjr']+')')}:''">
+                                            {{record['cjrxm'] && record['cjrxm'] != '' ? record['cjrxm'] : '-'}} （{{record['cjr'] && record['cjr'] != '' ? record['cjrxm'] : '-'}}）
+                                        </div>
+                                    </div>
+                                    <div :if="1 == currentIndex || 2 == currentIndex" class="tbody col-30" :class="[record['active'] ? 'active-hover' : '']">
+                                        <div class="table-cont" :attr="record['userCode'] && (record['userCode'] != '-') ? {rel:'drevil',tdval:(record['userName']+'('+record['userCode']+')')}:''">
+                                            {{record['userName']  ? record['userName'] : '-'}} （{{record['userCode'] ? record['userCode'] : '-'}}）
+                                        </div>
+                                    </div>
+                                    <div :if="0 == currentIndex" class="tbody col-30" :class="[record['active'] ? 'active-hover' : '']">
+                                        <div class="table-cont" :attr="record['bjsj'] && (record['bjsj'] != '-') ? {rel:'drevil',tdval:record['bjsj']}:''">
+                                            {{record['bjsj'] && record['bjsj'] != '' ? record['bjsj'] : '-'}}
+                                        </div>
+                                    </div>
+                                    <div :if="1 == currentIndex" class="tbody col-30" :class="[record['active'] ? 'active-hover' : '']">
+                                        <div class="table-cont" :attr="record['wfsj'] && (record['wfsj'] != '-') ? {rel:'drevil',tdval:record['wfsj']}:''">
+                                            {{record['wfsj'] && record['wfsj'] != '' ? record['wfsj'] : '-'}}
+                                        </div>
+                                    </div>
+                                    <div :if="2 == currentIndex" class="tbody col-30" :class="[record['active'] ? 'active-hover' : '']">
+                                        <div class="table-cont" :attr="record['clsj'] && (record['clsj'] != '-') ? {rel:'drevil',tdval:record['clsj']}:''">
+                                            {{record['clsj'] && record['clsj'] != '' ? record['clsj'] : '-'}}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="table-index-loading" :if="@loading">
+                                <span class="loadingSpan">结果加载中</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="left-bottom">
+                    <div class="echart-box-item">
+                        <ms-chartbox :widget="{title:'设备情况统计',width: '120px', leftCtl: @leftClick, rightCtl: @rightClick}">
+                            <div slot="content" id="zfjly" style="height:100%;">
+                                
+                            </div>
+                        </ms-chartbox>
+                        <!-- <div :visible="@tabToggle" class="echart-device-bg">
+                            <img src="/static/image/zhzs/device-icon.png?__sprite" alt="">
+                        </div> -->
+                        <!-- <div :visible="!@tabToggle" class="echart-storage-server-bg">
+                            <img src="/static/image/zhzs/storage-server.png?__sprite" alt="">
+                        </div> -->
+                    </div>
+                    <div class="line-dash">
+                        <img style="width: 100%;" src="/static/image/zhzs/line-dash.png?__sprite" alt="">
+                    </div>
+                    <div class="echart-box-item">
+                        <ms-chartbox :widget="{title:''}">
+                            <div :visible="@tabToggle" slot="content" id="cjgzz" style="height:100%;">
+                                
+                            </div>
+                        </ms-chartbox>
+                        <!-- <div :visible="@tabToggle" class="echart-device-bg work-station-bg">
+                            <img src="/static/image/zhzs/workstation-icon.png?__sprite" alt="">
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="content-center">
+                <div class="content-center-top">
+                    <div class="cate">
+                        <div class="cate-item">
+                            <ul>
+                                <li><p>警情</p><h3>{{@liveData.jq}}</h3></li>
+                                <li><p>交通违法</p><h3>{{@liveData.jtwf}}</h3></li>
+                                <li><p>事故处理</p><h3>{{@liveData.sgcl}}</h3></li>
+                            </ul>
+                        </div>
+                        <h2>广东省广州市</h2>
+                    </div>
+                    <div class="time-item">
+                        <p>今日新增视频时长</p>
+                        <h3>{{@liveData.jrxzspsc}}</h3>
+                    </div>
+                    <div class="cate-img">
+                        <img src="/static/image/zhzs/guangong_map.png?__sprite" alt="">
+                    </div>
+                    <div :if="@liveData.alarmNumber || 0 != @liveData.alarmNumber" class="alarm-item">
+                        <img src="/static/image/zhzs/alarm-icon.png?__sprite" alt="">
+                        <h3>SOS告警</h3>
+                        <span>{{@liveData.alarmNumber}}</span>
+                    </div>
+                </div>
+                <div class="content-center-bottom">
+                    <ul>
+                        <li :click="@centerBottomTabClick('0', $event)" class="parallelogram active-tab"><span class="reverse-parallelogram">执法记录仪 <b>（在线：{{@liveData.onlineNumber}}）</b></span></li>
+                        <li :click="@centerBottomTabClick('1', $event)" class="parallelogram"><span class="reverse-parallelogram">SOS告警</span></li>
+                    </ul>
+                    <div :class="['zhzs-center-bottom-tabCont zhzs-table']">
+                        <div :controller="zhzs-center-bottom-table" :class="['table-index']">
+                            <div class="table-index-thead-fixed">
+                                <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                                    <li data-order="1" class="col-10">序号</li>
+                                    <li data-order="2" class="col-40">执勤部门</li>
+                                    <li data-order="3" class="col-30">警员（警号）</li>
+                                    <li :if="0 == currentTabIndex" data-order="4" class="col-20">上线时间</li>
+                                    <li :if="1 == currentTabIndex" data-order="4" class="col-20">告警时间</li>
+                                </ul>
+                            </div>
+                            <ul class="table-index-tbody">
+                                <li :if="(!@data.length)" class="list-null">暂无数据</li>
+                                <li :for="($index, record) in @data">
+                                    <div class="tbody col-10" :class="[record['active'] ? 'active-hover' : '']">
+                                        <div class="table-cont">{{$index + 1}}</div>
+                                    </div>
+                                    <div :if="0 == currentTabIndex" class="tbody col-40" :class="[record['active'] ? 'active-hover' : '']">
+                                        <div class="table-cont" :attr="record['userOrgName'] && (record['userOrgName'] != '-') ? {rel:'drevil',tdval:record['userOrgName']}:''">
+                                            {{record['userOrgName'] && record['userOrgName'] != '' ? record['userOrgName'] : '-'}}
+                                        </div>
+                                    </div>
+                                    <div :if="1 == currentTabIndex" class="tbody col-40" :class="[record['active'] ? 'active-hover' : '']">
+                                        <div class="table-cont" :attr="record['orgName'] && (record['orgName'] != '-') ? {rel:'drevil',tdval:record['orgName']}:''">
+                                            {{record['orgName'] && record['orgName'] != '' ? record['orgName'] : '-'}}
+                                        </div>
+                                    </div>
+                                    <div :if="0 == currentTabIndex" class="tbody col-30" :class="[record['active'] ? 'active-hover' : '']">
+                                        <div class="table-cont" :attr="record['usercode'] && (record['usercode'] != '-') ? {rel:'drevil',tdval:(record['username']+'('+record['usercode']+')')}:''">
+                                            {{record['username'] ? record['username'] : '-'}} （{{record['usercode'] ? record['usercode'] : '-'}}）
+                                        </div>
+                                    </div>
+                                    <div :if="1 == currentTabIndex" class="tbody col-30" :class="[record['active'] ? 'active-hover' : '']">
+                                        <div class="table-cont" :attr="record['userCode'] && (record['userCode'] != '-') ? {rel:'drevil',tdval:(record['userName']+'('+record['userCode']+')')}:''">
+                                            {{record['userName'] ? record['userName'] : '-'}} （{{record['userCode'] ? record['userCode'] : '-'}}）
+                                        </div>
+                                    </div>
+                                    <div :if="0 == currentTabIndex" class="tbody col-20" :class="[record['active'] ? 'active-hover' : '']">
+                                        <div class="table-cont" :attr="record['insertTime'] && (record['insertTime'] != '-') ? {rel:'drevil',tdval:record['insertTime']}:''">
+                                            {{record['insertTime'] && record['insertTime'] != '' ? record['insertTime'] : '-'}}
+                                        </div>
+                                    </div>
+                                    <div :if="1 == currentTabIndex" class="tbody col-20" :class="[record['active'] ? 'active-hover' : '']">
+                                        <div class="table-cont" :attr="record['time'] && (record['time'] != '-') ? {rel:'drevil',tdval:record['time']}:''">
+                                            {{record['time'] && record['time'] != '' ? record['time'] : '-'}}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="table-index-loading" :if="@loading">
+                                <span class="loadingSpan">结果加载中</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-right">
+                <ms-contentright></ms-contentright>
+            </div>
+        </div>
+        <div class="footer">
+            <img src="/static/image/zhzs/dpzs_footer.png?__sprite" alt="">
+        </div>
+    </div>
+
+    <script>
+        require(['./zhzs']);
+        document.body.style.height = document.body.style.minHeight = window.document.documentElement.clientHeight + 'px';
+    </script>
+</body>
+
+</html>

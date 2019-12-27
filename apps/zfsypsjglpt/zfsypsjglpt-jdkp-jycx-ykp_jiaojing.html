@@ -1,0 +1,284 @@
+<template>
+    <div class="ajgl-container ckkp-container">
+        <div class="ajgl-ck-head">
+            <img ms-if="@checkLooking" class="ck-head" src="/static/image/zfda-ajgl-ck/filemt.png?__sprite">
+            <span :attr="{title: @checkLooking}">{{@checkLooking}}</span>
+            <button class="ajgl-back" :click="back">返回</button>
+        </div>
+        <div style="width:100%;height:1px;margin:1px auto;padding:0px;background-color:#0078d7;"></div>
+        <ms-glmt :widget="{mt_data: @mtdata, playFile:@playFile, height:height,diaHide:@diaHide}"></ms-glmt>
+        <div class="ajgl-ck-footer">
+            <div class="jbxx-type">
+                <button ms-class="[@jbxx_clickClass]" :click="@jbxx" ms-text="@hx_type"></button>
+                <button ms-class="[@cjxx_clickClass]" :click="@cjxx">{{@infomation_type}}</button>
+                <button ms-class="[@mtxx_clickClass]" :click="@mtxx">媒体信息</button>
+            </div>
+            <div class="jbxx-type" ms-if="@authority.hccl && !@hc_done">
+                <button class="hccl-btn" :click="@hccl" ms-if="!@hc_done" :attr="{disabled: !@kp_done}" ms-visible="@hc_tab_show">核查处理</button>
+            </div>
+            <div class="jbxx hccl" ms-if="@jbxx_show" :controller="ajgl_jbxx_info2">
+                <label ms-if="!@hc_done && !@kp_done">该数据未被考评，不提供核查</label>
+                <label ms-if="@hc_done">核查结果</label>
+                <div class="kp-content" ms-if="@hc_done">
+                    <div class="jbxx-inline" style="margin-top:0px">
+                        <span>
+                            <b>核查部门：</b>
+                            <span class="innerSpan  commonSpan">
+                                <div>{{@hc_infomation.orgName | checkInvalidProp}}</div>
+                            </span>
+                        </span>
+                        <span>
+                            <b>核查人：</b>
+                            <span class="innerSpan  commonSpan">
+                                <div>{{@hc_infomation.userName | checkInvalidProp}}({{@hc_infomation.userCode | checkInvalidProp}})</div>
+                            </span>
+                        </span>
+                        <span>
+                            <b>核查时间：</b>
+                            <span class="innerSpan  commonSpan">
+                                <div>{{@hc_infomation.createTime | formatDate}}</div>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="jbxx-inline">
+                        <span>
+                            <b>核查结果：</b>
+                            <span class="innerSpan  commonSpan">
+                                <div>{{@hc_infomation.real | checkInvalidProp}}</div>
+                            </span>
+                        </span>
+                        <span>
+                            <b>扣分情况：</b>
+                            <span class="innerSpan  commonSpan">
+                                <div>{{@hc_infomation.deduction | checkInvalidProp}}</div>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="jbxx-inline">
+                        <span class="allwordshow">
+                            <b>核查意见：</b>
+                            <span class="innerSpan  commonSpan">
+                                <div>{{@hc_infomation.comment | checkInvalidProp}}</div>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <label ms-if="@kp_done">考评结果</label>
+                <div class="kp-content" ms-if="@kp_done">
+                    
+                    <div class="jbxx-inline" style="margin-top:0px">
+                        <span>
+                            <b>考评部门：</b>
+                            <span class="innerSpan  commonSpan">
+                                <div>{{@kp_infomation.orgName | checkInvalidProp}}</div>
+                            </span>
+                        </span>
+                        <span>
+                            <b>考评人：</b>
+                            <span class="innerSpan  commonSpan">
+                                <div>{{@kp_infomation.userName | checkInvalidProp}}({{@kp_infomation.userCode | checkInvalidProp}})</div>
+                            </span>
+                        </span>
+                        <span>
+                            <b>考评时间：</b>
+                            <span class="innerSpan  commonSpan">
+                                <div>{{@kp_infomation.createTime | formatDate}}</div>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="jbxx-inline">
+                        <span class="allwordshow">
+                            <b>考评结果：</b>
+                            <span class="innerSpan  commonSpan">
+                                <div>{{@kp_infomation.result | checkInvalidProp}}</div>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="jbxx-inline">
+                        <span class="allwordshow">
+                            <b>考评评语：</b>
+                            <span class="innerSpan  commonSpan">
+                                <div>{{@kp_infomation.comment | checkInvalidProp}}</div>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="cjxx" ms-if="@cjxx_show" :controller="ajgl_cjxx_info2">
+                <div class="jbxx-inline" style="margin-top:0px">
+                    <span>
+                        <b>执法类型：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div id="zflx">{{@infomation.type | checkInvalidProp}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>执勤部门：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.orgName | checkInvalidProp}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b style="margin-left: 12px;">当事人：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.dsr | checkInvalidProp}}</div>
+                        </span>
+                    </span>
+                </div>
+                <div class="jbxx-inline">
+                    <span>
+                        <b>执勤民警：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{infomation.userName | checkInvalidProp}}({{@infomation.userCode | checkInvalidProp}})</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>驾驶证号：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.jszh | checkInvalidProp}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>违法行为：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.wfxwmc | checkInvalidProp}}</div>
+                        </span>
+                    </span>
+                </div>
+                <div class="jbxx-inline">
+                    <span>
+                        <b>决定书编号：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.jdsbh | checkInvalidProp}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>号牌号码：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.hphm | checkInvalidProp}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>违法地点：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.wfdz | checkInvalidProp}}</div>
+                        </span>
+                    </span>
+                </div>
+                <div class="jbxx-inline">
+                    <span>
+                        <b>号牌种类：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.hpzlmc | checkInvalidProp}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>违法时间：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@infomation.wfsj | formatDate}}</div>
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="cjxx mtxx" ms-if="@mtxx_show" :controller="ajgl_mtxx_info2">
+                <div class="jbxx-inline" style="margin-top:0px">
+                    <!-- <span>
+                        <b>媒体质量：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@mt_infomation.mtzl | checkInvalidProp}}</div>
+                        </span>
+                    </span> -->
+                    <span>
+                        <b>拍摄时间：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@mt_infomation.startTime | formatDateKP}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>民警岗位：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@mt_infomation.jobType | checkInvalidProp}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>导入时间：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@mt_infomation.importTime | formatDateKP}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>存储天数：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@mt_infomation.saveTime | checkInvalidProp}}</div>
+                        </span>
+                    </span>
+                </div>
+                <div class="jbxx-inline">
+                    <span>
+                        <b>拍摄民警：</b>
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@mt_infomation.userName | checkInvalidProp}}({{@mt_infomation.userCode | checkInvalidProp}})</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>关联媒体：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@mt_infomation.keyFile | checkInvalidProp}}</div>
+                        </span>
+                    </span>
+                    <span>
+                        <b>存储位置：</b>
+
+                        <span class="innerSpan  commonSpan">
+                            <div>{{@mt_infomation.path | checkInvalidProp}}</div>
+                        </span>
+                    </span>
+                   
+                </div>
+            </div>
+        </div>
+        <div class="ajgl-allinfo">
+            <ms-dialog :widget="{$innerVm: 'ajgl-allinfo', show: @hccl_dialog_show, okText: '确认', cancelText: '取消',onOk: @done_hcck,isMove:true,width:'480', height:'410',onCancel: @cancel_hc,move_return:@move_return}">
+                <div slot="body" ms-skip>
+                    <div :controller="allinfo_body_jycxkp">
+                        <div class="hccl-form" style="margin-top:0px">
+                            <input type="radio" value="1" ms-duplex="@real" :click="@check_real">
+                            <span style="margin-right: 80px;">情况属实</span>
+                            <input type="radio" value="0" ms-duplex="@real" :click="@check_real">
+                            <span>情况不属实</span>
+                        </div>
+                        <div class="hccl-form">
+                            扣分:
+                            <input disabled="true" maxlength="5" ms-duplex="@deduction" class="form-control deletepoint" :blur="@check_number">
+                            <label class="block red-word" ms-if="error_number_valid">请输入0 - 9999的的正整数</label>
+                        </div>
+                        <div class="hccl-form" tyle="margin-bottom:0px">
+                            核查意见：
+                            <textarea rows="5" ms-duplex="@comment" :blur="@check_hcyj"></textarea>
+                            <label class="block red-word" ms-if="error_hcyj_valid">请输入核查意见</label>
+                        </div>
+                    </div>
+                </div>
+            </ms-dialog>
+        </div>
+        <div class="back-confirm">
+            <ms-dialog :widget="{$innerVm: 'back-confirm', show: @back_confirm, okText: '确认', isMove:true,cancelText: '取消', onOk: @goback,width:'299', height:'180',onCancel: @handleCancel_confirm,move_return:@move_return2}">
+                <div slot="body" ms-skip>
+
+                    <div class="delete-dialog">
+                        <span>是否确定离开此页面？</span>
+                    </div>
+                </div>
+            </ms-dialog>
+        </div>
+    </div>
+</template>

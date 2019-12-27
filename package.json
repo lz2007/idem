@@ -1,0 +1,53 @@
+{
+  "name": "faaj",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "fis3 server start -p 3000 & fis3 release dev -wc",
+    "clean": "fis3 server stop && fis3 server clean && rimraf build && rimraf *.zip",
+    "build": "rimraf build && fis3 release production -cd ./build",
+    "zip": "zip.cmd "
+  },
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "http://5bay.cn:30000/root/faaj.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@types/jquery": "^2.0.41",
+    "@types/rx": "^4.1.1",
+    "addeventlistener-with-dispatch": "^1.0.2",
+    "ane": "^0.1.3",
+    "avalon2": "^2.2.7",
+    "babel-polyfill": "^6.26.0",
+    "bootstrap": "^3.2.0",
+    "es5-shim": "^4.5.9",
+    "es6-promise": "^4.1.0",
+    "font-awesome": "^4.7.0",
+    "jquery": "^1.12.4",
+    "mmRouter": "^0.9.6",
+    "moment": "^2.17.1",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
+    "rimraf": "^2.6.1",
+    "rx": "^4.1.0",
+    "socket.io": "^2.0.3",
+    "spectrum-colorpicker": "^1.8.0"
+  },
+  "devDependencies": {
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-es3-member-expression-literals": "^6.22.0",
+    "babel-plugin-transform-es3-property-literals": "^6.22.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "fis-parser-babel-6.x": "^6.24.1",
+    "fis3-hook-commonjs": "^0.1.25",
+    "fis3-hook-node_modules": "^2.2.8",
+    "fis3-packager-deps-pack": "^0.1.2",
+    "fis3-postpackager-loader": "^2.1.3",
+    "fis3-postprocessor-component-view": "^1.0.8",
+    "fis3-preprocessor-js-require-css": "^0.1.1"
+  }
+}

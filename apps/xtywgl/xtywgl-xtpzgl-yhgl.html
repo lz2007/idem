@@ -1,0 +1,385 @@
+<template>
+    <div class="organizationWrap">
+        <div class="ywzx-yhgl-left">
+            <div class="departmentTree">
+                <div :controller="lineTree" class="yhgl-dataIpt ywzx-fixmargin">
+                    <div id="yhgl-depTree" class="ztree"></div>
+                </div>
+            </div>
+        </div>
+        <div class="yhgl-total" :class="[@extra_class ? 'yhgl_en' : '']">
+            <div class="handleDepTree">
+                <div :if="@list_tree.selectedDepTitle != ''">
+                    <span class="span_depTitle">{{@list_tree.selectedDepTitle}}</span>
+                    <div class="input_depTitle">
+                        <ms-input :widget="{col:'depTitle',onChange:@handledepTitleChange,value:@list_tree.editDepTitle}"
+                            :focus="@handleInputFocus" :blur="@handleInputBlur"></ms-input>
+                        <i class="fa fa-close close-clear" :mousedown="@handleCloseClear"></i>
+                    </div>
+                    <!-- <div class="iconEdit" :click="@editDepTree" :if="@authority.BMEDIT && extra_class"></div>
+                    <div class="iconConfirm" :click="@confirmEdit" :if="extra_class"></div>
+                    <div class="iconCancel" :click="@cancelEdit" :if="extra_class"></div>
+                    <div class="iconDel" :click="@delDepTree" :if="@authority.BMDELETE && extra_class"></div> -->
+                </div>
+            </div>
+            <div class="yhgl-search" :if="@authority.SEARCH">
+                <!--警员ID :attr="{placeholder: @yhgl_txt.nameIDTips}"-->
+                <label class="yhgl-dataSpan">{{@yhgl_txt.nameID}}</label>
+                <div class="yhgl-dataIpt yhglRight">
+                    <span class="yhgl-iptPoliceNum" :class="[@policeKeyShowX ? 'yhgl-iptPoliceNum-focus':'']">
+                        <input name="policeKey" type="text" :blur="@policeKey_blur" :focus="@policeKey_focus" ms-duplex="@policeKey"
+                            ms-keydown="@policeEnter | enter" :attr="{title: @search_nameID_title, placeholder: @yhgl_txt.nameIDTips}" :keyup="@nameID_input_enter">
+                        <i :if="@policeKeyShowX" class="yhgl-iptPoliceNum-clear" :mousedown="@yhgl_handleClear('policeKey')"></i>
+                    </span>
+                </div>
+                <!-- 用户角色 -->
+                <label class="yhgl-dataSpan">{{@yhgl_txt.role}}</label>
+                <div class="yhgl-dataIpt">
+                    <ms-select :widget="{value:@roleValue, options:@roleOptions,onChange:@handleRoleChange}"></ms-select>
+                </div>
+                <!-- 账户类型 -->
+                <label class="yhgl-dataSpan" style="margin-left:15px;">{{@yhgl_txt.userType}}</label>
+                <div :controller="yhgl-search-job" class="yhgl-dataIpt yhglRight">
+                    <ms-select :widget="{value:@selValue,options:@options,onChange:@handleChange}"></ms-select>
+                </div>
+                <!-- 子部门 -->
+                <div class="yhgl-dataIpt-check">
+                    <input type="checkbox" class="yhgl-checkbox-ipt" id="childDp" :duplex-checked="@checkChild"
+                        data-duplex-changed="@checkFnc($event)" />
+                    <label for="childDp" class="yhgl-checkbox-label">
+                        <img :attr="{src:@check_src}">{{@yhgl_txt.branch}}</label>
+                </div>
+                <button type="button" id="aaa" class="yhgl-dataIpt-btn" :click="yhgl_searchFnc" :if="@authority.SEARCH">
+                    <span>{{@yhgl_txt.query}}</span>
+                </button>
+            </div>
+            <div class="yhgl-menu">
+                <ul>
+                    <!-- 新增用户 -->
+                    <li :click="@addUserFnc" class="addUser-disabled" :if="@authority.CREATE">
+                        <i class="icon icon_addUser"></i>
+                        <label class="yhglMenu-label">{{@yhgl_txt.add}}</label>
+                    </li>
+                    <!-- 导出模板 -->
+                    <li :click="exportTemFnc" :if="@authority.EXPORT_TEMPLATE">
+                        <i class="icon icon_export"></i>
+                        <label class="yhglMenu-label">{{@yhgl_txt.exportTemplates}}</label>
+                    </li>
+                    <!-- 导入用户 -->
+                    <li :click="importUserFnc" :if="@authority.IMPORT">
+                        <i class="icon icon_importUser"></i>
+                        <label class="yhglMenu-label">{{@yhgl_txt.importUsers}}</label>
+                    </li>
+                    <!-- 导出用户 -->
+                    <li :click="exportUserFnc" :if="@authority.EXPORT">
+                        <i class="icon icon_export"></i>
+                        <label class="yhglMenu-label">{{@yhgl_txt.exportUsers}}</label>
+                    </li>
+                </ul>
+            </div>
+            <div :controller="yhgl_tabCont">
+                <div :class="['yhgl-tabCont']">
+                    <div :controller="yhgl_table" :class="['table-index']" id="yhgl_table">
+                        <div class="table-index-thead-fixed">
+                            <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                                <!-- 序号 -->
+                                <li data-order="1" class="col-7">{{@yhgl_txt.tableNo}}</li>
+                                <!-- 所属部门 -->
+                                <li data-order="2" class="col-8">{{@yhgl_txt.department}}</li>
+                                <!-- 姓名 -->
+                                <li data-order="3" class="col-5">{{@yhgl_txt.name}}</li>
+                                <!-- 警号-->
+                                <!-- <li data-order="4" class="col-9">{{@yhgl_txt.policeId}}</li> -->
+                                <!-- 账号 -->
+                                <li data-order="4" class="col-9">{{@yhgl_txt.account}}</li>
+                                <!-- 账户类型 -->
+                                <li data-order="5" class="col-9">{{@yhgl_txt.userType}}</li>
+                                <!-- 有效时间 -->
+                                <li data-order="6" class="col-9">{{@yhgl_txt.validTime}}</li>
+                                <!-- 性别 -->
+                                <li data-order="7" class="col-5">{{@yhgl_txt.sex}}</li>
+                                <!-- 证书编号 -->
+                                <li data-order="8" class="col-20">{{@yhgl_txt.IDCard}}</li>
+                                <!-- 联系方式 -->
+                                <li data-order="9" class="col-11">{{@yhgl_txt.tel}}</li>
+                                <!-- 邮箱 -->
+                                <li data-order="10" class="col-10">{{@yhgl_txt.mail}}</li>
+                                <!-- 二维码 -->
+                                <!-- <li data-order="12" class="col-7">{{@yhgl_txt.qrCode}}</li> -->
+                                <!-- 操作 -->
+                                <li data-order="11" class="col-7">{{@yhgl_txt.operation}}</li>
+                            </ul>
+                        </div>
+                        <ul class="table-index-tbody">
+                            <!-- 暂无数据 -->
+                            <li class="list-null" :if="!@data.length">{{@yhgl_txt.noRecords}}</li>
+                            <li :for="($index, record) in @data">
+                                <!-- 序号 -->
+                                <div class="tbody col-7">
+                                    <div class="table-cont" :attr="{rel:'drevil',tdval:(@currentPage-1)*@prePageSize+$index + 1}">{{(@currentPage-1)*@prePageSize+$index
+                                        + 1}}</div>
+                                </div>
+                                <!-- 所属部门 -->
+                                <div class="tbody col-8">
+                                    <div class="table-cont" :attr="record['orgName'] && (record['orgName'] != '-') ? {rel:'drevil',tdval:record['orgName']}:''">
+                                        {{record['orgName']}}
+                                    </div>
+                                </div>
+                                <!-- 姓名 -->
+                                <div class="tbody col-5">
+                                    <div class="table-cont" :attr="record['userName'] && (record['userName'] != '-') ? {rel:'drevil',tdval:record['userName']}:''">
+                                        {{record['userName']}}
+                                    </div>
+                                </div>
+                                <!-- 警号 -->
+                                <!-- <div class="tbody col-9">
+                                    <div class="table-cont" :attr="record['userCode'] && (record['userCode'] != '-') ? {rel:'drevil',tdval:record['userCode']}:''">
+                                        {{record['userCode']}}
+                                    </div>
+                                </div> -->
+                                <!-- 账号 -->
+                                <div class="tbody col-9">
+                                    <div class="table-cont" :attr="record['account'] && (record['account'] != '-') ? {rel:'drevil',tdval:record['account']}:''">
+                                        {{record['account']}}
+                                    </div>
+                                </div>
+                                <!-- 账户类型 -->
+                                <div class="tbody col-9">
+                                    <div class="table-cont" :attr="record['userType'] && (record['userType'] != '-') ? {rel:'drevil',tdval:record['userType']}:''">
+                                        {{record['userType']}}
+                                    </div>
+                                </div>
+                                <!-- 有效时间 -->
+                                <div class="tbody col-9">
+                                    <div class="table-cont" :attr="record['accountValidDays'] && (record['accountValidDays'] != '-') ? {rel:'drevil',tdval:record['accountValidDays']}:''">
+                                        {{record['accountValidDays']}}
+                                    </div>
+                                </div>
+                                <!-- 性别 -->
+                                <div class="tbody col-5">
+                                    <div class="table-cont" :attr="record['gender'] && (record['gender'] != '-') ? {rel:'drevil',tdval:record['gender']}:''">
+                                        {{record['gender']}}
+                                    </div>
+                                </div>
+                                <!-- 身份证 -->
+                                <div class="tbody col-20">
+                                    <div class="table-cont" :attr="record['idCard'] && (record['idCard'] != '-') ? {rel:'drevil',tdval:record['idCard']}:''">
+                                        {{record['idCard']}}
+                                    </div>
+                                </div>
+                                <!-- 手机 -->
+                                <div class="tbody col-11">
+                                    <div class="table-cont" :attr="record['mobelPhone'] && (record['mobelPhone'] != '-') ? {rel:'drevil',tdval:record['mobelPhone']}:''">
+                                        {{record['mobelPhone']}}
+                                    </div>
+                                </div>
+                                <!-- 邮箱 -->
+                                <div class="tbody col-10">
+                                    <div class="table-cont" :attr="record['email'] && (record['email'] != '-') ? {rel:'drevil',tdval:record['email']}:''">
+                                        {{record['email']}}
+                                    </div>
+                                </div>
+                                <!-- 二维码 -->
+                                <!-- <div class="tbody col-7">
+                                    <div class="qrcode" :click="@handleQRcode(record, $event, 'create')"></div>
+                                    <div class="showQRcode">
+                                        <div class="qrcode-head">
+                                            <span>QR code</span>
+                                            <div class="closeQRcode" :click="closeQRcode($event)">x</div>
+                                            <div class="refreshQRcode" :click="@handleQRcode(record, $event, 'refresh')"></div>
+                                        </div>
+                                        <div class="qrcode-body">
+                                            <div class="imgQRcode">
+                                                <img src="" alt="" class="qrcode">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!-- 操作 -->
+                                <div class="tbody col-7">
+                                    <div class="table-cont">
+                                        <div class="op_edit" :click="@editUser(record)" :if="@authority.EDIT" :attr="{title: @yhgl_txt.editUser}"></div>
+                                        <div class="op_delete" :click="@deleteUser(record)" :if="@authority.DELETE" :attr="{title: @yhgl_txt.deleteUser}"></div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="table-index-loading" :if="@loading">
+                            <span class="loadingSpan">{{@yhgl_txt.loading}}</span>
+                        </div>
+                        <!-- <div :if="!@loading && !@data.length" class="table-index-noData">
+                            <div class="noData">暂无数据</div>
+                        </div> -->
+                    </div>
+                </div>
+                <!-- 分页 -->
+                <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent}"></ms-pages>
+                <!-- 分页end -->
+            </div>
+        </div>
+
+        <!-- 新增用户弹框-->
+        <div class="yhgl-addUser" :controller="yhgl-addUser">
+            <ms-dialog :widget="{$innerVm:'yhgl-addUserVm', show:@show,onCancel:@handleCancel, onOk:@handleOk,height:690,width:@dialog_width,isMove:true}">
+                <div slot="body" ms-skip>
+                    <!-- 新增用户弹窗内容 -->
+                    <div ms-html="@yhgl_addUserDialog" class="yhgl-add"></div>
+                </div>
+                <div slot="footer" ms-skip>
+                    <div ms-html="@yhgl_addUser_footerHtml" class="yhgl-addUser-modalFooter"></div>
+                </div>
+            </ms-dialog>
+        </div>
+
+        <!--编辑用户框 -->
+        <div class="yhgl-editUser" :controller="yhgl-editUser">
+            <xmp :widget="{is:'ms-dialog', $innerVm:'yhgl-editUserVm', show:@show,onCancel:@handleCancel, onOk:@handleOk,height:690,width:@dialog_width,isMove:true}">
+                <div slot="body" ms-skip>
+                    <!-- 编辑用户弹窗内容 -->
+                    <div ms-html="@yhgl_editUserDialog"></div>
+                </div>
+                <div slot="footer" class="yhgl-editUser-modalFooter" ms-skip>
+                    <!-- <div class="mgrEor">*注意：当前用户没有权限编辑该用户管理范围</div> -->
+                    <div ms-html="@yhgl_editUser_footerHtml" class="footerHtml"></div>
+                </div>
+            </xmp>
+        </div>
+
+        <!--管理范围弹窗 -->
+        <div class="yhgl-mgrScopes" :controller="yhgl-mgrScopes">
+            <xmp :widget="{is:'ms-dialog', $innerVm:'yhgl-mgrScopesVm', show:@show,onCancel:@handleCancel, onOk:@handleOk,height:570,width:@dialog_width,isMove:true}">
+                <div slot="body" ms-skip>
+                    <!-- 管理范围弹窗内容 -->
+                    <div class="mgrScopes-dialog">
+                        <ms-tree :widget="{checkable:true,tree:@mgrScopesTree,halfCheckable:@halfCheckable,onCheck:@handleCheck, expandedKeys:@expandedKeys,checkedKeys:@checkedKeys,beforeExpand:@beforeExpand} "></ms-tree>
+                    </div>
+                </div>
+                <div slot="footer" class="yhgl-mgrScopes-modalFooter" ms-skip>
+                    <div :if="@mgrEor" class="mgrEor">*{{@yhgl_txt.warnTheCurrentUserDoesNotHavePermissionToOperateOnTheUserAdministrativeScope}}</div>
+                    <div ms-html="@yhgl_mgrScopes_footerHtml" class="footerHtml"></div>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 删除用户弹窗 -->
+        <div class="yhgl-deleteUser" :controller="yhgl-deleteUser">
+            <ms-dialog :widget="{$innerVm:'yhgl-deleteUserVm', show:@show, size:'small',onCancel:@handleCancel, onOk:@handleOk,height:180,width:300,isMove:true}">
+                <div slot="body" class="yhgl-deleteDialog" ms-skip>
+                    <!-- 删除用户弹窗内容 -->
+                    <!-- <div ms-html="@yhgl_deleteUserDialog"></div>  -->
+                    <div class="yhgl-deleteDialog-cont">
+                        <span>{{@areYouSureToDeleteThisItem}}</span>
+                        <!-- <span ms-html="@yhgl_deleteUserCont"></span> -->
+                        <!-- <span>this data?</span> -->
+                    </div>
+                    <div class="yhgl-deleteBtn">
+                        <button type="button" class="yhgl-deleteBtn-ok" :click="@handleOk">{{@txt_save}}</button>
+                        <button type="button" class="yhgl-deleteBtn-no" :click="@handleCancel">{{@txt_cancel}}</button>
+                    </div>
+                </div>
+                <div slot="footer" ms-skip>
+                </div>
+            </ms-dialog>
+        </div>
+
+        <!-- 导入用户弹窗 -->
+        <div :controller="yhgl-importUser">
+            <ms-dialog :widget="{$innerVm:'yhgl-importUserVm', show:@show, okText:@import, cancelText:@cancel,onCancel:@handleCancel, onOk:@handleOk,height:240,width:520,isMove:true}">
+                <div slot="body" ms-skip>
+                    <!-- 导入用户弹窗内容 -->
+                    <div class="yhgl-importUserDialog">
+                        <div class="yhgl-importUserData">
+                            <label class="yhgl-importUserDataLabel">{{@passwordType}}</label>
+                            <div :controller="yhgl-importUserDataRadio" class="yhgl-importUserDataRadio">
+                                <ms-radio-group :widget="{
+                                    options:[
+                                        { label: @clearText, value: 'Express' },
+                                        { label: @cipherText, value: 'ciphertext' }
+                                    ],
+                                    value:@psw_value,
+                                    onChange:@handleChange
+                                }">
+                                </ms-radio-group>
+                            </div>
+                        </div>
+                        <div class="yhgl-importUserData  yhgl-importUserData-top">
+                            <label class="yhgl-importUserDataLabel">{{@selectAFile}}</label>
+                            <input type="text" class="yhgl-importUserDataIpt" ms-duplex="@yhgl_importUserUrl" :attr="{title:@yhgl_importUserUrl}">
+                            <button type="button" class="yhgl-importUserDataBtn">{{@browse}}</button>
+                            <input id="fileToUpload" type="file" name="file" title="" class="yhgl-importUserDataFile"
+                                :change="@yhgl_importUserBtn" />
+                        </div>
+                    </div>
+                </div>
+            </ms-dialog>
+        </div>
+
+        <!-- 设置角色范围弹窗 -->
+        <div class="yhgl-setRoleArea" :controller="yhgl-setRoleArea">
+            <ms-dialog :widget="{$innerVm: 'yhgl-setRoleAreaVm', show:@show, onOk:@setRoleAreaOk , onCancel:@handleCancel,height:400,width:500,isMove:true}">
+                <div slot='body' ms-skip>
+                    <div :css="{display:'none'}">kdkdkdk</div>
+                    <ms-checkbox-group :widget="{options:@roleAreaOptions, onChange:@getRoleArea,value:@checkedVal}"
+                        :class="['roleAreaClass']"></ms-checkbox-group>
+                    <div :css="{marginTop:5}">
+                        <input type="checkbox" class="yhgl-setRole-all" id="setRoleAll" :duplex-checked="@setRoleCheck"
+                            data-duplex-changed="@setRoleCheckFnc($event)" />
+                        <label for="setRoleAll" class="yhgl-setRole-allLabel">
+                            <span :class="@setRoleCheck ? 'setRoleChecked':'setRoleCheck'"></span>全选</label>
+                    </div>
+                </div>
+                <div slot='footer' ms-skip :class="['yhgl-setRoleArea-modalFooter']">
+                    <button type="button" :click='@setRoleAreaOk' class="yhgl-nextStep">{{@txt_save}}</button>
+                    <button type="button" :click='@setRoleAreaNo' class="yhgl-nextStep" :css="{marginLeft:'10px'}">{{@txt_cancel}}</button>
+                </div>
+            </ms-dialog>
+        </div>
+
+        <!-- 编辑部门树弹窗 -->
+        <div class="yhgl-handleDepTree" :controller="yhgl-handleDepTree">
+            <ms-dialog :widget="{$innerVm: 'yhgl-handleDepTreeVm', show:@show, onOk:@handleDepTreeOk , onCancel:@handleCancel,width:@width,height:@height,isMove:true, className: 'dialog-handleDepTree'}">
+                <div slot='body' ms-skip>
+                    <div :if="@dialogFlag == 0 || @dialogFlag == 3">
+                        <xmp is="ms-form" :widget="{$form: @$form}">
+                            <ms-form-item :widget="{label: @departmentName}">
+                                <ms-input :widget="{col:'depName',onChange:@handledepNameChange,value:@depName}"
+                                    :focus="@handledepNameFocus" :blur="@handledepNameBlur"></ms-input>
+                                <i :if="@depNameShowX" class="yhgl-iptdepName-clear" :class="[@extra_class ? 'yhgl-iptdepName-clear-en' : '']" :mousedown="@handledepNameCloseClear"></i>
+                            </ms-form-item>
+                        </xmp>
+                    </div>
+                    <div :if="@dialogFlag == 1" class="marginBottom20">
+                        {{@areYouSureToDeleteTheDepartment}}
+                    </div>
+                    <div :if="@dialogFlag == 2">
+                        <!--这里对应删除部门树有子部门的情况，暂时不做，后台没接口-->
+                        <p class="smallSize">Sorry, there are staff or other things in this department.</p>
+                        <p class="smallSize">You have to delete these things before deleting the department.</p>
+                        <div class="list">
+                            <div>
+                                <p>
+                                    <label>Staff:</label><span>7</span>
+                                </p>
+                                <p>
+                                    <label>Sub-branch:</label><span>5</span>
+                                </p>
+                            </div>
+                            <div>
+                                <p>
+                                    <label>All BWC:</label><span>9</span>
+                                </p>
+                                <p>
+                                    <label>Docking Station:</label><span>2</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div slot='footer' ms-skip :class="['yhgl-setRoleArea-modalFooter']">
+                    <button type="button" :click='@handleDepTreeOk' class="yhgl-nextStep">{{@txt_save}}</button>
+                    <button type="button" :click='@handleDepTreeNo' class="yhgl-nextStep" :css="{marginLeft:'10px'}">{{@txt_cancel}}</button>
+                </div>
+            </ms-dialog>
+        </div>
+    </div>
+</template>

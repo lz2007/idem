@@ -1,0 +1,159 @@
+<template>
+    <div class="sszhxt-gjgl-gjdy" :class="[@extra_class ? 'djdy_en' : '']">
+        <div class="block_inline block_inline_one">
+            <h4>{{@gjdy_language.alarmSource}}</h4>
+            <div class="gjdyInlne-block-container">
+                <div class="checkboxBlock">
+                    <span class="gjdyInlne-block">{{@gjdy_language.workAlarmType}}</span>
+                    <div class="checkbox-inline">
+                        <input type="checkbox" value='DEVICE_SOS' :duplex="@deviceSOS" data-duplex-changed="@handleCheckboxChange">
+                        <span class="checkImage"></span>
+                        <span>{{@gjdy_language.SOSAlarm}}</span>
+                        <!-- <span :class="@sosLevelClass">{{@jsonLevel.sosLevel | changeWord}}</span> -->
+                    </div>
+                    <br>
+                    <div class="checkbox-inline" :if="!@extra_class">
+                        <input type="checkbox" value='FACE_MONITORING' :duplex="@deviceSOS" data-duplex-changed="@handleCheckboxChange">
+                        <span class="checkImage"></span>
+                        <span>{{@gjdy_language.faceDetection}}</span>
+                        <!-- <span :class="@faceLevelClass">{{@jsonLevel.faceLevel | changeWord}}</span> -->
+                    </div>
+                    <br>
+                    <div class="checkbox-inline" :if="!@extra_class">
+                        <input type="checkbox" value='CAR_MONITORING' :duplex="@deviceSOS" data-duplex-changed="@handleCheckboxChange">
+                        <span class="checkImage"></span>
+                        <span>{{@gjdy_language.carDetection}}</span>
+                        <!-- <span :class="@carLevelClass">{{@jsonLevel.carLevel | changeWord}}</span> -->
+                    </div>
+                </div>
+                <div class="checkboxBlock">
+                    <span class="gjdyInlne-block">{{@gjdy_language.stateAlarmTypes}}</span>
+                    <div class="checkbox-inline">
+                        <input type="checkbox" value='DEVICE_ONLINE' :duplex="@deviceSOS" data-duplex-changed="@handleCheckboxChange">
+                        <span class="checkImage"></span>
+                        <span>{{@gjdy_language.online}}</span>
+                        <!-- <span :class="@onLineLevelClass">{{@jsonLevel.onLineLevel | changeWord}}</span> -->
+                    </div>
+                    <br>
+                    <div class="checkbox-inline">
+                        <input type="checkbox" value='DEVICE_OFFLINE' :duplex="@deviceSOS" data-duplex-changed="@handleCheckboxChange">
+                        <span class="checkImage"></span>
+                        <span>{{@gjdy_language.offline}}</span>
+                        <!-- <span :class="@offLineLevelClass">{{@jsonLevel.offLineLevel | changeWord}}</span> -->
+                    </div>
+                </div>
+                <div class="checkboxBlock">
+                    <span class="gjdyInlne-block">{{@gjdy_language.deviceAlarmTypes}}</span>
+                    <div class="checkbox-inline">
+                        <input type="checkbox" value='DEVICE_ELECTRIC_CAPACITANCE' :duplex="@deviceSOS"
+                            data-duplex-changed="@handleCheckboxChange">
+                            <span class="checkImage"></span>
+                        <span>{{@gjdy_language.power}}</span>
+                        <!-- <span :class="@batteryLevelClass">{{@jsonLevel.batteryLevel | changeWord}}</span> -->
+                    </div>
+                    <br>
+                    <div class="checkbox-inline" :if="false">
+                        <input type="checkbox" value='DEVICE_STORAGE_CAPACITANCE' :duplex="@deviceSOS"
+                            data-duplex-changed="@handleCheckboxChange">
+                            <span class="checkImage"></span>
+                        <span>{{@gjdy_language.storageCapacity}}</span>
+                        <!-- <span :class="@storageLevelClass">{{@jsonLevel.storageLevel | changeWord}}</span> -->
+                    </div>
+                </div>
+                <div class="gjycheckall checkbox-inline">
+                    <input type="checkbox" value='' :click="@gjycheckAll" ms-duplex-checked="@deviceSOS.length == 7">
+                    <span class="checkImage"></span>
+                    <span>{{@gjdy_language.selectAll}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="block_inline block_inline_two">
+            <h4>{{@gjdy_language.device}}</h4>
+            <div class="orgContainer">
+                <div class="leftOrgcontainer">
+                    <div class="leftOrgcontainerHead">
+                        <!-- <span style="vertical-align: middle;font-size: 18px;line-height: 35px;margin-right: 15px;">{{@gjdy_language.departmentS}}</span> -->
+                        <!-- <ms-tree-selecting :widget="{tree:@orgData, showSearch:true,getSelected:@getSelected, wrapId: 'tree-select-wrap-gjdy',extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting> -->
+                        <ms-sszh-sidebar :widget="{owner:'sszhxt-gjdy-polltree',onCheck:@handleTreeCheck,extraProcessWhenPersonChange:@extraProcessWhenPersonChange,isJustParent: true}"></ms-sszh-sidebar>
+                        <span class="contianChild-cls checkbox-inline" style="display: none;">
+                            <input type="checkbox" value="contianChild" :duplex="@contianChild" data-duplex-changed="@handleOrgCheckboxChange">
+                            <span class="checkImage"></span>
+                            <span style="display:block; margin-top:-6px">{{@gjdy_language.includeBranches}}</span>
+                        </span>
+                    </div>
+                    <div class="leftOrgcontainerWarp">
+                        <div style="height: 90%;overflow-y:auto;padding-left: 20px;">
+                            <ul>
+                                <li style="padding: 5px 15px 0 0;" :for="($index, item) in @deviceArr">
+                                    <input type="checkbox" ms-duplex-checked="item.checked" data-duplex-changed="@leftcheckOne">
+                                    <span class="checkImage"></span>
+                                    <span :class="[item.selected ? 'text-selected' : '']">
+                                        <label :class="[item.gbCode ? 'dev':'org']"></label>
+                                        <span style="vertical-align: middle;">{{item.username}}</span>
+                                    </span>
+                                </li>
+                                <li style="padding: 5px 15px 0 0;" :if="@deviceArr.length == 0 && @showTip">
+                                    {{@gjdy_language.noDevice}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="checkbox-inline device-selecte-all">
+                            <input type="checkbox" value='' :click="@leftcheckAll" ms-duplex-checked="@leftallchecked">
+                            <span class="checkImage"></span>
+                            <span>{{@gjdy_language.selectAll}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="middleContainer">
+                    <label :click="@hanleToright">
+                        <span :class="['toRightIcon', @deviceArr.length == 0 ? 'toRightIconDisabled' : '']"></span>
+                    </label>
+                    <label :click="@handleToLeft">
+                        <span :class="['toLeftIcon', @rightDevArr.length == 0 ? 'toLeftIconDisabled' : '']"></span>
+                    </label>
+                </div>
+                <div class="rightOrgcontainer">
+                    <p style="padding:20px 15px 5px 15px">{{@gjdy_language.subscribed}}</p>
+                    <div class="rightOrgcontainerWarp">
+                        <ul :for="($key, item) in @rightDevArr">
+                            <a :if="@item.list.length !=0" style="cursor: pointer;color: #597292;" class="checkbox-inline">
+                                <!-- <span class="fa fa-lg" style="cursor: pointer;" :click="@hideOrshowLi(item,$key)" :class="[item[0].visible? 'fa-caret-down':'fa-caret-up']"></span> -->
+                                <input type="checkbox" :click="@rightcheckOrg($event, item.list)" ms-duplex-checked="item.checked">
+                                <span class="checkImage"></span>
+                                <span :click="@hideOrshowLi(item.list,$key)">
+                                    <label class="org"></label>
+                                    <span>{{item.list[0].orgName | InitValue}}</span>
+                                </span>
+                                <!-- <span class="fa fa-close" style="cursor: pointer;color: #C42E2E;float: right;" :click="@deleteOrgDevice(item.list,$key) |stop"></span> -->
+                            </a>
+                            <div :visible="item.list.length > 0 && item.list[0].gbCode" style="margin-left: 10px;">
+                                <li class="rightList checkbox-inline" :for="($index, value) in item.list"
+                                    :visible="@value.visible">
+                                    <input type="checkbox" ms-duplex-checked="value.checked" data-duplex-changed="@rightcheckOne($event, item)">
+                                    <span class="checkImage"></span>
+                                    <span>
+                                        <label class="dev"></label>
+                                        <span>{{value.username}}</span>
+                                    </span>
+                                    <!-- <span class="fa fa-close" style="cursor: pointer;color: #C42E2E;float: right;"
+                                        :click="@deleteDevice(value,$key,$index)"></span> -->
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="checkbox-inline device-selecte-all">
+                        <input type="checkbox" value='' :click="@rightcheckAll" ms-duplex-checked="@rightallchecked">
+                        <span class="checkImage"></span>
+                        <span>{{@gjdy_language.selectAll}}</span>
+                    </div>
+                </div>
+                <div style="clear: both"></div>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+        <div class="buttonContainer">
+            <button type="button" class="btn " :click="@save">{{@gjdy_language.save}}</button>
+            <button type="button" class="btn " :click="@reset">{{@gjdy_language.reset}}</button>
+        </div>
+    </div>
+</template>

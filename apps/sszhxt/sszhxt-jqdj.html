@@ -1,0 +1,85 @@
+<template>
+  <article class="sszhst-jqdj">
+    <!-- 左边群组 -->
+    <div class="side-bar  ">
+      <div class="sidebar-search form-group common-btn">
+        <input type="text" :duplex="searchValue" class="form-controll">
+        <button>查询</button>
+      </div>
+      <div class="fix-group panel">
+        <div class="title">
+          固定群组
+        </div>
+        <dl class="menu" ms-for="el in  @fixedGroupData">
+          <dt><i class="fa fa-twitch"></i><span class="menu-name">{{el.name}}</span><em class="fa  fa-microphone pull-right"
+              :click="@handleMicrophoneSaying()"></em>
+            <div class="count">({{el.num}}/{{@el.all}})</div>
+          </dt>
+          <dd ms-for="item in el.data">
+            <a href="javascript:;"><i  class="fa fa-twitch"></i><span >{{item.text}}</span><div class="police-num">({{item.policeNum}})</div><em class="fa fa-volume-up"></em></a>
+          </dd>
+        </dl>
+      </div>
+      <div class="temporary-group panel">
+        <div class="title">
+          临时群组 <i class="fa pull-right fa-plus" :click="@createNewTemporaryGroup"></i>
+        </div>
+        <dl class="menu" ms-for="($index,el) in  @temporaryGroupData">
+          <dt><i class="fa fa-twitch"></i><span class="menu-name">{{el.name}}</span><em class="fa  fa-close pull-right" :click="@handleDeleteTemporaryGroup($index)"></em>
+            <em class="fa  fa-edit pull-right" :click="@createNewTemporaryGroup"></em><em class="fa  fa-microphone pull-right"
+              :click="@handleMicrophoneSaying"></em>
+            <div class="count">({{el.num}}/{{@el.all}})</div>
+          </dt>
+          <dd ms-for="item in el.data">
+            <a href="javascript:;"><i  class="fa fa-circle"></i><span >{{item.text}}</span><div class="police-num">({{item.policeNum}})</div><em class="fa fa-volume-up"></em></a>
+          </dd>
+        </dl>
+      </div>
+    </div>
+    <div class="main ">
+      <!-- 地图 -->
+      <div class="map-wrap"  id="jqdj-map">
+      </div>
+      <!-- 平台对讲 -->
+      <div class="talking-platform">
+        <h5>当前对讲<span ms-visible="isSaying">：{{curGroup}}</span><button class="btn btn-danger btn-xs  pull-right"  ms-visible="isSaying" :click="@handleOutMicrophoneSaying">退出对讲</button></h5>
+        <ul class="clear-fix "  ms-visible="isSaying">
+          <li class="left-part ">
+            <div class="wrap">
+              <div class="icon pull-left"><i class="fa fa-user-circle-o  "></i>
+                <div>空闲</div>
+              </div>
+              <a class="pull-left"><i class="caret"></i><span  class="first"><em class="fa  fa-volume-up pull-left"></em><em class="word  pull-left">正在说话</em></span><span><em class="fa  fa-ellipsis-h"></em><em  class="fa fa-ellipsis-h"></em></span></a>
+            </div>
+          </li>
+          <li class="right-part ">
+            <div class="wrap">
+              <div class="icon pull-left"><i class="fa  fa-television icon"></i>
+                <div>平台</div>
+              </div>
+              <a class="pull-left"><i class="caret"></i><span class="first"><em class="fa  fa-microphone pull-left"></em><em  class="word  pull-left">按住F2说话</em></span></a>
+            </div>
+          </li>
+        </ul>
+        <div class=" add" ms-visible="!isSaying">
+          <i class="fa fa-plus"></i>
+          <span>选择群组加入对讲</span>
+        </div>
+      </div>
+    </div>
+    <!-- 新建临时群组弹框 -->
+    <div :controller="createTemporaryGroup">
+      <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.create-temgroup',drag:true,modalWidth:@modalWidth,show: @show, onCancel: @handleCancel, onOk: @handleOk}">
+        <div  class="create-temgroup">
+        </div>
+      </xmp>
+  </div>
+    <div :controller="deleteTemporaryGroup">
+      <ms-dialog :widget="{$innerVm: 'deleteTemporaryGroup', show: @show, onCancel: @handleCancel, onOk: @handleOk,okText:@okText}">
+          <div slot="body" ms-skip>
+            <div >确定删除{{curDeleteName}}吗？</div>
+            </div>
+        </ms-dialog>
+    </div>
+  </article>
+</template>>

@@ -1,0 +1,142 @@
+.ywzx-zfymm {
+    height: 100%;
+    .zfymm-loading {
+        position: relative;
+        height: 50%;
+        background: url(/static/image/tyywglpt/loading.gif) center center
+            no-repeat;
+        span {
+            width: 100%;
+            position: absolute;
+            top: 56%;
+            left: 0;
+        }
+    }
+    .noAuthority, .bwcPswnoData {
+        text-align: center;
+    }
+    .changePswTitle {
+        font-family: 'Arial Negreta', 'Arial Normal', 'Arial';
+        font-weight: 700;
+        font-style: normal;
+        font-size: 24px;
+        padding-top: 40px;
+        margin-bottom: 40px;
+        color: #2c3640;
+        text-align: center;
+    }
+    .modelTotal {
+        height: 80%;
+        overflow-y: auto;
+        text-align: center;
+        .modelList {
+            min-height: 333px;
+            display: inline-block;
+            width: 384px;
+            position: relative;
+            .pswContent {
+                border: 1px solid #999999;
+                padding: 30px;
+                margin: 20px;
+            }
+            .modelName {
+                font-family: 'Arial Negreta', 'Arial Normal', 'Arial';
+                font-weight: 700;
+                font-style: normal;
+                font-size: 16px;
+                color: #2c3640;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .targetPsw {
+                font-size: 14px;
+                margin-right: 10px;
+            }
+            .targetPsw, .pswIpt {
+                display: inline-block;
+            }
+            .targetPsw.targetPsw2 {
+                margin-right: 6px;
+            }
+            .pswIpt {
+                position: relative;
+                input {
+                    width: 160px;
+                    // height: 25px;
+                    padding-right: 26px;
+                }
+                .showPsw {
+                    position: absolute;
+                    left: 143px;
+                    top: 9px;
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    vertical-align: middle;
+                    text-align: center;
+                    cursor: pointer;
+                    background: url(/static/image/xtywgl/invisible.png?__sprite) no-repeat;
+                }
+                .showTxt {
+                    position: absolute;
+                    left: 143px;
+                    top: 9px;
+                    display: inline-block;
+                    width: 12px;
+                    height: 12px;
+                    vertical-align: middle;
+                    text-align: center;
+                    cursor: pointer;
+                    background: url(/static/image/xtywgl/visible.png?__sprite) no-repeat;
+                }
+            }
+            .pswIpt.pswNoIpt {
+                input {
+                    border: 0;
+                    background-color: #f2f2f2;
+                    padding-left: 1px;
+                }
+                .showPsw, .showTxt {
+                    left: 139px;
+                }
+            }
+            .errorTip {
+                position: absolute;
+                top: 136px;
+                left: 45px;
+                color: #FF0000;
+            }
+            .errorTip.errorTip_zhcn {
+                left: 153px;
+            }
+            .ruleTip {
+                float: left;
+                padding: 0 20px 0 20px;
+                p {
+                    margin-bottom: 0px !important;
+                    color: #999999;
+                    font-size: 14px;
+                    text-align: left;
+                }
+            }
+            .zfymm-btn {
+                text-align: center;
+                margin-top: 30px;
+                button {
+                    width: 84px;
+                    height: 24px;
+                    color: #FFFFFF;
+                    background-color: rgb(16,85,179);
+                }
+                .cancelBtn {
+                    margin-left: 10px;
+                }
+                .saveBtn.saveDisable {
+                    cursor: not-allowed;
+                    background-color: rgb(153,153,153);
+                }
+            }
+        }
+    }
+    
+}

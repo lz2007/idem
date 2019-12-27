@@ -1,0 +1,322 @@
+<template>
+    <div class="sbk-rlk-content">
+
+        <div class="sbk-rlk-content-left">
+
+            <div class="lists">
+
+                <div class="lists-title">
+                    <span class="text">
+                        人员类型库列表
+                    </span>
+                    <span class="icon">
+                        +
+                    </span>
+                </div>
+
+                <div class="list-tree">
+                    <ul class="list-box">
+                        <li class="list-item">
+                            <i class="icon"></i>
+                            <span>全部</span>
+                            <ul class="list-sub-box">
+                                <li class="list-sub-item">黑名单人员库</li>
+                                <li class="list-sub-item">黑名单人员1库</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="sbk-rlk-content-right">
+            <!-- 按钮 -->
+            <div class="operationHbox">
+
+                <ul class="optList">
+                    <li :click="(dialogAddShow = true)"><label>新增</label></li>
+                    <li :click="(dialogDelShow = true)"><label>删除</label></li>
+                    <li :click="(dialogImportShow = true)"><label>批量导入</label></li>
+                    <li :click="exportExcel"><label>批量导出</label></li>
+                    <li :click="(dialogaddFailShow = true)"><label>新增失败</label></li>
+                    <li :click="(dialogRylxkszShow = true)"><label>人员类型库设置</label></li>
+                    <li class="search">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="exampleInputAmount" placeholder="">
+                                    <div class="input-group-addon">搜索</div>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+
+            </div>
+
+            <!-- 表格 -->
+            <ms-comtable :widget="{id:'sbk-rlk-list-table',loading:@loading,data:@list,actions:@actions,onChange:selectChange,panelCss:{marginTop: 42,height: 700}}">
+                <ms-comtable-header :widget="{dataIndex:'id',type:'selection',colwidth:'5%'}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'序号',type:'index',colwidth:'5%',popover:true}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'操作',colwidth:'10%'}">
+                    <button type="button" class="btn btn-danger btn-xs" :click="handle('delete')">修改</button>
+                    <button type="button" class="btn btn-danger btn-xs" :click="handle('delete')">删除</button>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'姓名',dataIndex:'address',colwidth:'10%',popover:true}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'性别',dataIndex:'province',colwidth:'10%',popover:true}"></ms-comtable-header>
+                <ms-comtable-header :widget="{title:'人员类型',colwidth:'10%',popover:true}">
+                    <span :skip>{{record.name}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'证件类型',colwidth:'10%',popover:true}">
+                    <span :skip>{{record.name}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'证件号码',colwidth:'10%',popover:true}">
+                    <span :skip>{{record.name}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'注册时间',colwidth:'15%',popover:true}">
+                    <span :skip>{{record.name}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'失效时间',colwidth:'10%',popover:true}">
+                    <span :skip>{{record.name}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'注册照片',colwidth:'5%',popover:true}">
+                    <span :skip>{{record.name}}</span>
+                </ms-comtable-header>
+            </ms-comtable>
+
+            <!-- 分页 -->
+            <ms-pages :widget="{total:@pagination.total,pageSize:@pagination.pageSize,current:@pagination.current,getCurrent:@getCurrent}"></ms-pages>
+
+        </div>
+
+        <!-- 弹窗-新增 and 编辑 -->
+        <div class="add_edit">
+            <ms-dialog :widget="{$innerVm:'doc-dialog-add', show:@dialogAddShow,onCancel:@dialogAddCel,className:'add_edit_dialog common_dialog', onOk:@dialogAddOk,height:600,width:700,isMove:true}">
+                <div slot="body" ms-skip>
+                    <div class="left col-xs-6">
+                        <div class="doc-dialog-add-form" :controller="doc-dialog-add">
+                            <xmp is="ms-form" :widget="{$form:@$form,type:'search',inline:true}">
+                                <ms-form-item :widget="{label:'姓名：'}">
+                                    <ms-input :widget="{col:'title'}"></ms-input>
+                                </ms-form-item>
+
+                                <ms-form-item :widget="{label:'性别：'}">
+                                    <ms-radio-group :widget="{
+                                                col:'sex',
+                                                options:[
+                                                    { label: '男', value: 'M' },
+                                                    { label: '女', value: 'F' }
+                                                ],
+                                                }">
+                                    </ms-radio-group>
+                                </ms-form-item>
+
+                                <ms-form-item :widget="{label:'失效时间：'}">
+                                    <ms-datepicker :widget="{
+                                                col:'time',
+                                                format:'YYYY/MM/DD',
+                                                direction:'down'
+                                                }"></ms-datepicker>
+                                </ms-form-item>
+
+                                <ms-form-item :widget="{label:'年龄：'}">
+                                    <ms-input :widget="{col:'age'}"></ms-input>
+                                </ms-form-item>
+
+                                <ms-form-item :widget="{label:'籍贯：'}">
+                                    <ms-input :widget="{col:'address'}"></ms-input>
+                                </ms-form-item>
+
+                                <ms-form-item :widget="{label:'证件类型：'}">
+                                    <ms-select :widget="{col:'comic'}">
+                                        <ms-select-option :widget="{value:'onepiece'}">身份证</ms-select-option>
+                                        <ms-select-option :widget="{value:'onepiece2'}">港澳通行证</ms-select-option>
+                                    </ms-select>
+                                </ms-form-item>
+
+                                <ms-form-item :widget="{label:'证件号码：'}">
+                                    <ms-input :widget="{col:'idNum'}"></ms-input>
+                                </ms-form-item>
+
+                                <ms-form-item :widget="{label:'注册来源：'}">
+                                    <ms-select :widget="{col:'zcly'}">
+                                        <ms-select-option :widget="{value:'12'}">证件照片</ms-select-option>
+                                    </ms-select>
+                                </ms-form-item>
+
+                                <ms-form-item :widget="{label:'注册照片：'}">
+                                    <ms-input :widget="{col:'title'}" :css="{'width':120}"></ms-input>
+                                    <button type="button" class="registerPic-btn">选择</button>
+                                    <input id="fileToUpload" type="file" name="file" title="" class="register-file"
+                                        :change="@registerPic" />
+                                </ms-form-item>
+
+                                <ms-form-item :widget="{label:'人员类型：'}">
+                                    <ms-select :widget="{col:'rylx'}">
+                                        <ms-select-option :widget="{value:'1'}">黑名单人员库1</ms-select-option>
+                                        <ms-select-option :widget="{value:'2'}">黑名单人员库2</ms-select-option>
+                                    </ms-select>
+                                </ms-form-item>
+
+                                <ms-form-item :widget="{label:'备注：'}">
+                                    <ms-textarea :widget="{col:'beizhu',value:@value}"></ms-textarea>
+                                </ms-form-item>
+                            </xmp>
+                        </div>
+
+                    </div>
+                    <div class="right col-xs-6" style="height:477px;">
+                        <div class="show-img">
+                            <img src="" alt="注册照片">
+                        </div>
+                    </div>
+
+                </div>
+            </ms-dialog>
+        </div>
+
+        <!-- 弹窗-删除 -->
+        <div class="del">
+            <ms-dialog :widget="{$innerVm:'doc-dialog-del', show:@dialogDelShow,onCancel:@dialogDelCel,className:'del_dialog common_dialog', onOk:@dialogDelOk,height:180,width:300,isMove:true}">
+                <div slot="body" ms-skip>
+                    <div class="dels">
+                        你确定要删除吗？
+                    </div>
+                </div>
+            </ms-dialog>
+        </div>
+
+        <!-- 弹窗-批量导入 -->
+        <div class="import">
+            <ms-dialog :widget="{$innerVm:'doc-dialog-import', show:@dialogImportShow, className:'import_dialog common_dialog', okText: '确定', cancelText: '取消',onCancel:@dialogImportCel, onOk:@dialogImportOk,height:240,width:490,isMove:true}">
+                <div slot="body" ms-skip>
+                    <div class="importDialog" :controller="doc-dialog-import">
+                        <div class="import-top">
+                            <label class="import-label">Excel文件：</label>
+                            <input type="text" class="import-ipt" ms-duplex="@importUrl">
+                            <button type="button" class="import-btn">浏览</button>
+                            <input id="fileToUpload" type="file" name="file" title="" class="import-file" :change="@importBtn" />
+                        </div>
+                        <div class="import-top">
+                            <label class="import-label">上传进度：</label>
+                            <div class="import-progress">
+                                <ms-progress :widget="{progress:progress}"></ms-progress>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ms-dialog>
+        </div>
+
+        <!-- 弹窗-新增失败 -->
+        <div class="add-fail">
+            <ms-dialog :widget="{$innerVm:'doc-dialog-addFail', show:@dialogaddFailShow, className:'addFail_dialog common_dialog', okText: '确定', cancelText: '取消',onCancel:@dialogaddFailCel, onOk:@dialogaddFailtOk,height:640,width:960,isMove:true}">
+                <div slot="body" ms-skip>
+                    <div class="doc-dialog-addFail" :controller="doc-dialog-addFail">
+                        <xmp is="ms-form" :widget="{$form:@$form,type:'search',inline:true}">
+                            <ms-form-item :widget="{label:'开始时间：'}">
+                                <ms-datepicker :widget="{
+                                                col:'satrtTime',
+                                                direction:'down',
+                                                placeholder:'请选择开始时间',
+                                                format:'YYYY/MM/DD'
+                                            }"></ms-datepicker>
+                            </ms-form-item>
+
+                            <ms-form-item :widget="{label:'结束时间：'}" :css="{'marginLeft':'8px'}">
+                                <ms-datepicker :widget="{
+                                                col:'endTime',
+                                                direction:'down',
+                                                placeholder:'请选择结束时间',
+                                                format:'YYYY/MM/DD'
+                                            }"></ms-datepicker>
+                            </ms-form-item>
+
+                            <!-- 按钮 -->
+                            <div class="yhgl-menu">
+                                <ul>
+                                    <li :click="search"><label class="yhglMenu-label">查询</label></li>
+                                    <li :click="del"><label class="yhglMenu-label">删除</label></li>
+                                    <li :click="delAll"><label class="yhglMenu-label">删除全部</label></li>
+                                </ul>
+                            </div>
+
+                        </xmp>
+
+                        <!-- 表格 -->
+                        <ms-comtable :widget="{id:'sbk-rlk-addFail-list-table',loading:@loading,data:@list,actions:@actions,onChange:selectChange,panelCss:{marginTop: 42,height: 440}}">
+                            <ms-comtable-header :widget="{dataIndex:'id',type:'selection',colwidth:'5%'}"></ms-comtable-header>
+                            <ms-comtable-header :widget="{title:'序号',type:'index',colwidth:'5%',popover:true}"></ms-comtable-header>
+                            <ms-comtable-header :widget="{title:'姓名',dataIndex:'address',colwidth:'10%',popover:true}"></ms-comtable-header>
+                            <ms-comtable-header :widget="{title:'性别',dataIndex:'province',colwidth:'10%',popover:true}"></ms-comtable-header>
+                            <ms-comtable-header :widget="{title:'人员类型',colwidth:'10%',popover:true}">
+                                <span :skip>{{record.name}}</span>
+                            </ms-comtable-header>
+                            <ms-comtable-header :widget="{title:'证件类型',colwidth:'10%',popover:true}">
+                                <span :skip>{{record.name}}</span>
+                            </ms-comtable-header>
+                            <ms-comtable-header :widget="{title:'证件号码',colwidth:'15%',popover:true}">
+                                <span :skip>{{record.name}}</span>
+                            </ms-comtable-header>
+                            <ms-comtable-header :widget="{title:'注册时间',colwidth:'15%',popover:true}">
+                                <span :skip>{{record.name}}</span>
+                            </ms-comtable-header>
+                            <ms-comtable-header :widget="{title:'失败原因',colwidth:'10%',popover:true}">
+                                <span :skip>{{record.name}}</span>
+                            </ms-comtable-header>
+                            <ms-comtable-header :widget="{title:'注册照片',colwidth:'10%',popover:true}">
+                                <span :skip>{{record.name}}</span>
+                            </ms-comtable-header>
+                        </ms-comtable>
+
+                        <!-- 分页 -->
+                        <ms-pages :widget="{total:@pagination.total,pageSize:@pagination.pageSize,current:@pagination.current,getCurrent:@getCurrent}"></ms-pages>
+
+                    </div>
+                </div>
+            </ms-dialog>
+        </div>
+
+        <!-- 弹窗-人员类型库设置 -->
+        <div class="rylxksz">
+            <ms-dialog :widget="{$innerVm:'doc-dialog-rylxksz', show:@dialogRylxkszShow, className:'rylxksz_dialog common_dialog', okText: '确定', cancelText: '取消',onCancel:@dialogRylxkszCel, onOk:@dialogRylxkszOk,height:400,width:450,isMove:true}">
+                <div slot="body" ms-skip>
+                    <div class="doc-dialog-rylxksz" :controller="doc-dialog-rylxksz">
+                        <ul>
+                            <li class="type">
+                                <ms-comtable-checkbox :widget="{
+                                            config:{
+                                                checked:checkedAll,
+                                                label:'人员类型库',
+                                                value:'ALL',
+                                            },
+                                            onChange:@handleChange
+                                        }"></ms-comtable-checkbox>
+                            </li>
+                            <li :for="($index,el) in personlistAll">
+                                <ms-comtable-checkbox :widget="{
+                                    config:{
+                                        checked:el.enable,
+                                        label:el.name,
+                                        value:el.id,
+                                        index:$index
+                                    },
+                                    onChange:@handleChange
+                                }"></ms-comtable-checkbox>
+                            </li>
+
+                            <div class="threshold">
+                                <span>识别阀值：</span><input type="text" class="form-control" ms-duplex-number="threshold"><span>％（80%-100%）</span>
+                                <div class="info" :if="(80>threshold || threshold>100)">识别阀值不在设置范围内</div>
+                            </div>
+                        </ul>
+
+                    </div>
+                </div>
+            </ms-dialog>
+        </div>
+
+    </div>
+</template>

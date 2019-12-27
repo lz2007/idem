@@ -1,0 +1,199 @@
+<template>
+    <div class="ywzx-czrz">
+        <div class="czrz_menubar-left">
+            <ms-form :widget="{$form:@$searchForm,inline:true}">
+                <div class="czrzHearder">
+                    <!-- 部门 -->
+                    <div class="czrz-fixWidth">
+                        <label class="czrz-labelLineHeight">{{@czrz_language.department}}</label>
+                        <div class="dep_tree" :controller="ywzx_tree_czrz">
+                            <ms-tree-selecting :widget="{tree: @yspk_data, showSearch: true, wrapId: 'zfyps-tree-select', getSelected: @getSelected, selectedKey: @tree_key ? @tree_key : '', selectedTitle: @tree_title ? @tree_title : '', onChange: @select_change, extraExpandHandle: @extraExpandHandle, branchShow:true, clickBranchBack:@clickBranchBack, includedStatus:@included_status}"></ms-tree-selecting>
+                        </div>
+                        <span class="input-close-ywzx-czrz" :mousedown="@handleClear('department',$event)|prevent"
+                            :visible="false"></span>
+                    </div>
+                    <!-- Alias -->
+                    <!-- <div class="czrz-fixWidth">
+                        <label class="czrz-labelLineHeight">{{@czrz_language.userName}}</label>
+                        <input type="input" class="form-control fixinput-czrz" ms-duplex="@userName" :keypress="@handlePress"
+                            :focus="@handleFocus" :blur="@handleBlur" :attr="{title: @userName}">
+                        <span class="input-close-ywzx-czrz" :mousedown="@handleClear('userName',$event)|prevent"
+                            :visible="false"></span>
+                    </div> -->
+                    <!-- Username -->
+                    <div class="czrz-fixWidth">
+                        <label class="czrz-labelLineHeight">{{@czrz_language.userNameID}}</label>
+                        <input type="input" class="form-control fixinput-czrz" ms-duplex="@userCode" :keypress="@handlePress"
+                            :focus="@handleFocus" :blur="@handleBlur" :attr="{title: @userCode}">
+                        <span class="input-close-ywzx-czrz" :mousedown="@handleClear('userCode',$event)|prevent"
+                            :visible="false"></span>
+                    </div>
+                    <!-- Module -->
+                    <!-- <div class="czrz-fixWidth">
+                        <label class="czrz-labelLineHeight">{{@czrz_language.lookupRange}}</label>
+                        <ms-select :widget="{col: 'lookupRange', options:@count_type_options_lookupRange, value: @lookupRange, onChange: @onChangeType_lookupRange}"
+                            :class="['formInput']"></ms-select>
+                    </div> -->
+                    <!-- Operation Type -->
+                    <!-- <div class="czrz-fixWidth">
+                        <label class="czrz-labelLineHeight">{{@czrz_language.OperationCategory}}</label>
+                        <ms-select :widget="{col: 'con', options:@count_type_options, value: @OperationCategory, onChange: @onChangeType}"
+                            :class="['formInput']"></ms-select>
+                    </div> -->
+                    <div class="czrz-fixWidth">
+                        <label class="czrz-labelLineHeight">{{@czrz_language.OperationCategory}}</label>
+                        <input type="input" class="form-control fixinput-czrz" ms-duplex="@curType" :keypress="@handlePress"
+                            :focus="@handleFocus" :blur="@handleBlur" :attr="{title: @OperationCategory}">
+                        <span class="input-close-ywzx-czrz" :mousedown="@handleClear('curType',$event)|prevent"
+                            :visible="false"></span>
+                    </div>
+                    <!-- Operation Time -->
+                    <div class="czrz-fixWidth">
+                        <label class="czrz-labelLineHeight">{{@czrz_language.captureTime}}</label>
+                        <ms-form-item :css="{width: '50%'}">
+                            <ms-datepicker :widget="{
+                            onChange:@handlerChangeStart,
+                            col:'startTime',
+                            placeholder:@czrz_language.selectTheStartTime,
+                            width: '100%',
+                            endDate:@czrz_endDate,
+                            value: @startTime,
+                            showTime: true,
+                            languageSelect: @extra_class ? 'en' : ''
+                        }"></ms-datepicker>
+                            <div class="czrz_tip_box czrz_start_time_tip" style="margin-top: -10px;">
+                                <span :class="['czrz_tip']" :css="{display:@start_null}">
+                                    <i class="fa-exclamation-circle">&nbsp;{{@czrz_language.startTimeCannotBeNull}}</i>
+                                </span>
+                            </div>
+                        </ms-form-item>
+                    </div>
+                    <div class="czrz-fixWidth">
+                        <label class="czrz-labelLineHeight"></label>
+                        <ms-form-item :css="{width: '50%'}">
+                            <ms-datepicker :widget="{
+                            onChange:@handlerChangeEnd,
+                            col:'endDate',
+                            placeholder:@czrz_language.selectTheEndTime,
+                            width: '100%',
+                            endDate:@czrz_endDate,
+                            value: @endTime,
+                            showTime: true,
+                            languageSelect: @extra_class ? 'en' : ''
+                        }"></ms-datepicker>
+                            <div class="czrz_tip_box czrz_end_time_tip" style="margin-top: -10px;">
+                                <span :class="['czrz_tip']" :css="{display:@end_null}">
+                                    <i class="fa-exclamation-circle">&nbsp;{{@czrz_language.endTimeCannotBeNull}}</i>
+                                </span>
+                            </div>
+                        </ms-form-item>
+                        <!--</xmp>-->
+                    </div>
+                    <div class="czrz-fixWidth czrz-btn-MW" style="padding-left:43%;padding-right: 25px;">
+                        <a class="dateControl week" :click="@weekClick" :class="@dataBtnActive && @btnClickActive ? 'dataBtnActive' : ''">{{@czrz_language.thisWeek}}</a>
+                        <a class="dateControl month" :click="@monthClick" :class="@dataBtnActive && !@btnClickActive ? 'dataBtnActive' : ''">{{@czrz_language.thisMonth}}</a>
+                    </div>
+                    <div class="czrz-fixWidth">
+                        <button type="button" class="btn btn-query" :click="@czrzSearch" :if="@authority.SEARCH">{{@czrz_language.query}}</button>
+                    </div>
+                </div>
+            </ms-form>
+        </div>
+
+        <div class="ywzx-czrz-bar">
+            <div class="btnIcon" :click="@czrzExport" :if="@authority.DCRZ">
+                <i class="icon icon_addUser"></i>
+                <span class="btn-tool-ywxz">{{@czrz_language.exportLOG}}</span>
+            </div>
+        </div>
+
+        <div class="ajgl-table ajtb" :controller="czrz_tabCont">
+            <div :class="['czrz-table']">
+                <div :controller="xtpegl_czrz_table" :class="['table-index']" id="czrz_table">
+                    <div class="table-index-thead-fixed">
+                        <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                            <li class="col-5" data-order="1">{{@czrz_language.tableNo}}</li>
+                            <li class="col-10" data-order="2">{{@czrz_language.userCode}}</li>
+                            <li class="col-15" data-order="3">{{@czrz_language.department}}</li>
+                            <!-- <li class="col-6" data-order="3">{{@czrz_language.userName}}</li> -->
+                            <!-- <li class="col-8" data-order="4">{{@czrz_language.lookupRange}}</li> -->
+                            <!-- <li class="col-12" data-order="5">{{@czrz_language.OperationCategory}}</li> -->
+                            <li class="col-25" data-order="4">{{@czrz_language.operation}}</li>
+                            <!-- <li class="col-13" data-order="6">{{@czrz_language.OperationObject}}</li> -->
+                            <li class="col-10" data-order="5">{{@czrz_language.operationResult}}</li>
+                            <li class="col-20" data-order="6">{{@czrz_language.operationTime}}</li>
+                            <li class="col-15" data-order="7">{{@czrz_language.userIp}}</li>
+                            <!-- <li class="col-5" data-order="1">序号</li>
+                            <li class="col-5" data-order="2">记录标识</li>
+                            <li class="col-10" data-order="3">应用系统</li>
+                            <li class="col-10" data-order="4">用户标识</li>
+                            <li class="col-7" data-order="5">单位标识</li>
+                            <li class="col-10" data-order="6">操作时间</li>
+                            <li class="col-8" data-order="7">终端标识</li>
+                            <li class="col-5" data-order="8">操作类型</li>
+                            <li class="col-10" data-order="9">操作结果</li>
+                            <li class="col-10" data-order="10">失败原因代码</li>
+                            <li class="col-10" data-order="11">功能模块名称</li>
+                            <li class="col-10" data-order="12">操作条件</li>                     -->
+                        </ul>
+                    </div>
+
+                    <ul class="table-index-tbody">
+                        <li class="list-null" :if="!@remoteList.length">{{@czrz_language.noRecords}}</li>
+
+                        <li :for="($index, record) in @remoteList">
+                            <div class="tbody col-5">
+                                <div class="table-cont">{{record['index']}}</div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['userName'] && (record['userName'] != '-') ? {rel:'drevil',tdval:record['userName']}:''">
+                                    {{record['userName']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-15">
+                                <div class="table-cont" :attr="record['org'] && (record['org'] != '-') ? {rel:'drevil',tdval:record['org']}:''">
+                                    {{record['org']}}
+                                </div>
+                            </div>
+                            <!-- <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['funcModule'] && (record['funcModule'] != '-') ? {rel:'drevil',tdval:record['funcModule']}:''">
+                                    {{record['funcModule']}}
+                                </div>
+                            </div> -->
+                            <div class="tbody col-25">
+                                <div class="table-cont" :attr="record['operator'] && (record['operator'] != '-') ? {rel:'drevil',tdval:record['operator']}:''">
+                                    {{record['operator']}}
+                                </div>
+                            </div>
+                            <!-- <div class="tbody col-30">
+                                <div class="table-cont" :attr="record['describe'] && (record['describe'] != '-') ? {rel:'drevil',tdval:record['describe']}:''">
+                                    {{record['describe']}}
+                                </div>
+                            </div> -->
+                            <div class="tbody col-10">
+                                <div class="table-cont" :class="[record.results == 'Success' ? 'success':'fail']" :attr="record['results'] && (record['results'] != '-') ? {rel:'drevil',tdval:record['results']}:''">
+                                    {{record['results']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-20">
+                                <div class="table-cont" :attr="record['insertTime'] && (record['insertTime'] != '-') ? {rel:'drevil',tdval:record['insertTime']}:''">
+                                    {{record['insertTime']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-15">
+                                <div class="table-cont" :attr="record['ip'] && (record['ip'] != '-') ? {rel:'drevil',tdval:record['ip']}:''">
+                                    {{record['ip']}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="table-index-loading" :if="@loading">
+                        <span class="loadingSpan">{{@czrz_language.loading}}</span>
+                    </div>
+                </div>
+            </div>
+            <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent}"></ms-pages>
+            <!-- <ms-pages :widget="{total:@pagination.total,pageSize:@pagination.pageSize,current:@pagination.current,onChange:@handleTableChange,getCurrent:@getCurrent}"></ms-pages> -->
+        </div>
+    </div>
+</template>

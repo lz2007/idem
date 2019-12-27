@@ -1,0 +1,32 @@
+<template>
+    <div class="common_player" :if="@play_init">
+        <div class="audio_img" :if="@media_type == 1">
+            <!-- <img src="/static/image/zfsypsjglpt/audio_play.gif" :if="@isPlay">
+            <img src="/static/image/zfsypsjglpt/audio_pause.png" :if="!@isPlay"> -->
+            <ul>
+                <li :for="item in @columnArray" :class="[@item.height > 0 ? 'color':'']">
+                    <span :css="{height: @item.height}"></span>
+                </li>
+            </ul>
+        </div>
+        <div class="video_wait" :if="@video_wait" :class="@extra_class ? '' : 'video_wait_zhcn'">
+            <img src="/static/image/zfsypsjglpt/vedio_img.png" class="gm_video_img">
+            <span>{{@languageTxt.tips1}}</span>
+        </div>
+        <div class="video_error" :if="@video_error" :class="@extra_class ? '' : 'video_error_zhcn'">
+            <img src="/static/image/zfsypsjglpt/vedio_img.png" class="gm_video_img">
+            <span>{{@languageTxt.tips2}}</span>
+        </div>
+        <div :class="[@special_id]" class="video_panel">
+            <video id="my-video" class="video-js" autoplay preload="auto" width="" height="" poster="" data-setup="{}"
+                :attr="{src: @src}" :if="@video_init">
+                <source type="video/mp4" :attr="{src: @src}">
+                <p class="vjs-no-js ">
+                    {{@languageTxt.tips3}}
+                    <a href="http://videojs.com/html5-video-support/" target="_blank">{{@languageTxt.tips4}}</a>
+                </p>
+            </video>
+        </div>
+
+    </div>
+</template>

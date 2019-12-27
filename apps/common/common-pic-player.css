@@ -1,0 +1,613 @@
+.magnifier-thumb-wrapper {
+    position: relative;
+    display: block;
+    top: 0;
+    left: 0;
+}
+
+.magnifier-lens {
+    position: absolute;
+    border: solid 1px #ccc;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.magnifier-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: solid 1px #ccc;
+    color: #fff;
+    text-align: center;
+    background: transparent;
+    background: rgba(50, 50, 50, 0.5);
+    z-index: 1000;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#7F323232,endColorstr=#7F323232)";
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr=#7F323232, endColorstr=#7F323232);
+}
+
+.magnifier-loader-text {
+    font: 13px Arial;
+    margin-top: 10px;
+}
+
+.magnifier-large {
+    position: absolute;
+    z-index: 100;
+}
+
+.magnifier-preview {
+    padding: 0;
+    width: 100%;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+}
+
+.magnifier-preview img {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* .opaque {
+    opacity: .5;
+    filter: alpha(opacity=50);
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50)
+} */
+
+.hidden {
+    display: none;
+}
+
+/* ----------------------------------------------- */
+
+.common_pic_panel,
+.common_pic_show,
+.pic_content {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.common_pic_show {
+    left: 0;
+    top: 0;
+}
+
+.pic_large {
+    z-index: 9999;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    /* width: 300px;
+    height: 453px;
+    left: 850px; */
+}
+
+.common_pic_show .pic_mark {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+.common_pic_show {
+    padding-bottom: 30px;
+}
+
+.mark_left,
+.mark_right,
+.mark_top,
+.mark_bottom {
+    position: absolute;
+    background-color: #6c6c6c;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    -ms-filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=50);
+}
+
+/* ----------------------------------------------- */
+
+* body {
+    height: 100%;
+    overflow-y: auto;
+}
+
+* html {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.PicasaMask {
+    position: fixed;
+    _position: absolute;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    background: #000;
+    overflow: hidden;
+}
+
+.PicasaView {
+    position: fixed;
+    _position: absolute;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+}
+
+.PV_Picture {
+    position: absolute;
+    z-index: 0;
+    cursor: move;
+}
+
+.PV_Loading {
+    position: absolute;
+    z-index: 1;
+}
+
+.PV_Error {
+    position: absolute;
+    z-index: 2;
+}
+
+.PV_PerHint {
+    position: absolute;
+    z-index: 3;
+    width: 62px;
+    height: 28px;
+    text-align: center;
+    font: bold 13px/28px Tahoma;
+    color: #fff;
+    background: url("/static/image/zfsypsjglpt/Picasa_PerHint.gif") no-repeat 0
+        0;
+    cursor: default;
+}
+
+.PicasaView,
+.PV_Picture,
+.PV_Loading,
+.PV_PerHint {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.PV_Hint {
+    position: absolute;
+    z-index: 3;
+    height: 25px;
+    color: #fff;
+    font: 12px/25px Tahoma, "宋体";
+    text-align: center;
+}
+
+.PV_Close {
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    z-index: 9999;
+    /* right: 0; */
+    top: 0;
+    background: url("/static/image/zfsypsjglpt/Picasa_Close.png?__sprite")
+        no-repeat 0 0;
+    cursor: pointer;
+}
+
+.PV_Control {
+    display: none;
+    position: absolute;
+    z-index: 4;
+    height: 54px;
+    background: #262825;
+    border-top: solid 1px #353837;
+    overflow: hidden;
+}
+
+.PV_Items {
+    position: absolute;
+    z-index: 5;
+    padding: 1px 0 0;
+    margin: 0;
+    list-style: none;
+    height: 35px;
+    overflow: hidden;
+}
+
+.PV_Items li {
+    float: left;
+    width: 36px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    cursor: pointer;
+}
+
+.PV_Items img {
+    border: none;
+    width: 35px;
+    height: 35px;
+}
+
+.PV_Buttons {
+    position: absolute;
+    z-index: 6;
+    margin: 20px auto 0 auto;
+}
+
+.PV_Buttons a {
+    float: left;
+    color: #808080;
+    text-align: center;
+    text-decoration: none;
+}
+
+.PV_Zoom {
+    float: left;
+    width: 100px;
+    margin-top: 8px;
+}
+
+.PV_Zoom a {
+    float: right;
+    width: 28px;
+    height: 19px;
+    font: 11px/19px Tahoma;
+    margin-left: 1px;
+    background-image: url(Picasa_Button.gif);
+}
+
+.PV_Zoom a:hover {
+    color: #ccc;
+    background-position: 0 -20px;
+}
+
+.PV_Zoom a.seled {
+    color: #fff;
+    background-position: 0 -40px;
+}
+
+.PV_Select {
+    float: left;
+    width: 78px;
+    height: 30px;
+    margin: 0 15px;
+    background-image: url(Picasa_Button.gif);
+    overflow: hidden;
+}
+
+.PV_Btn_Normal {
+    background-position: -120px 0;
+}
+
+.PV_Btn_PrevOver {
+    background-position: -120px -40px;
+}
+
+.PV_Btn_SildeOver {
+    background-position: -120px -120px;
+}
+
+.PV_Btn_NextOver {
+    background-position: -120px -80px;
+}
+
+.PV_Select a {
+    margin: 0;
+    height: 30px;
+}
+
+.PV_Btn_Prev {
+    width: 24px;
+}
+
+.PV_Btn_Slide {
+    width: 30px;
+}
+
+.PV_Btn_Next {
+    width: 24px;
+}
+
+.PV_AutoPlay {
+    float: left;
+    width: 100px;
+    margin-top: 8px;
+}
+
+.PV_AutoPlay a {
+    width: 70px;
+    height: 19px;
+    line-height: 19px;
+    font-size: 12px;
+    background-image: url(Picasa_Button.gif);
+    background-position: -40px 0;
+}
+
+.PV_AutoPlay a:hover {
+    color: #ccc;
+    background-position: -40px -20px;
+}
+
+.PV_AutoPlay a.seled {
+    color: #fff;
+    background-position: -40px -40px;
+}
+
+/* --------------------------------------------------------------------- */
+
+#regOcxDiv {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.common_pic_controller {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    background-color: #fff;
+}
+
+.pic_content a {
+    cursor: default !important;
+}
+
+.common_pic_controller a {
+    cursor: pointer;
+    display: block;
+    float: left;
+    margin: 5px 5px;
+    width: 26px;
+    height: 20px;
+}
+
+#yt {
+    background: url(/static/image/zfsypsjglpt/yt.png?__sprite) no-repeat;
+}
+
+#yt:hover,
+#yt.controller_btn_click {
+    background: url(/static/image/zfsypsjglpt/yt_click.png?__sprite) no-repeat;
+}
+
+#qwm {
+    background: url(/static/image/zfsypsjglpt/qwm.png?__sprite) no-repeat;
+}
+
+#qwm:not(.not_allowed):hover,
+#qwm.controller_btn_click {
+    background: url(/static/image/zfsypsjglpt/qwm_click.png?__sprite) no-repeat;
+}
+
+#qqg {
+    background: url(/static/image/zfsypsjglpt/qqg.png?__sprite) no-repeat;
+}
+
+#qqg:not(.not_allowed):hover,
+#qqg.controller_btn_click {
+    background: url(/static/image/zfsypsjglpt/qqg_click.png?__sprite) no-repeat;
+}
+
+#zft {
+    background: url(/static/image/zfsypsjglpt/zft.png?__sprite) no-repeat;
+}
+
+#zft:not(.not_allowed):hover,
+#zft.controller_btn_click {
+    background: url(/static/image/zfsypsjglpt/zft_click.png?__sprite) no-repeat;
+}
+
+#gzbc {
+    background: url(/static/image/zfsypsjglpt/gzbc.png?__sprite) no-repeat;
+}
+
+#gzbc:not(.not_allowed):hover,
+#gzbc.controller_btn_click {
+    background: url(/static/image/zfsypsjglpt/gzbc_click.png?__sprite) no-repeat;
+}
+
+#qz {
+    background: url(/static/image/zfsypsjglpt/qz.png?__sprite) no-repeat;
+}
+
+#qz:not(.not_allowed):hover,
+#qz.controller_btn_click {
+    background: url(/static/image/zfsypsjglpt/qz_click.png?__sprite) no-repeat;
+}
+
+#szqy {
+    background: url(/static/image/zfsypsjglpt/szqy.png?__sprite) no-repeat;
+}
+
+#szqy:not(.not_allowed):hover,
+#szqy.setSize {
+    background: url(/static/image/zfsypsjglpt/szqy_click.png?__sprite) no-repeat;
+}
+
+#fd {
+    background: url(/static/image/zfsypsjglpt/fd.png?__sprite) no-repeat;
+}
+
+#fd:not(.not_allowed):hover,
+#fd.controller_btn_click {
+    background: url(/static/image/zfsypsjglpt/fd_click.png?__sprite) no-repeat;
+}
+
+#lcw {
+    background: url(/static/image/zfsypsjglpt/lcw.png?__sprite) no-repeat;
+}
+
+#lcw:hover {
+    background: url(/static/image/zfsypsjglpt/lcw_click.png?__sprite) no-repeat;
+}
+
+.common_pic_panel .pic_ocx {
+    width: 100%;
+    height: 100%;
+    /* padding-bottom: 30px; */
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+.common_pic_panel .update_web {
+    color: #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    padding: 8px;
+}
+
+.common_pic_controller .change_panel {
+    display: none;
+    float: left;
+    width: 220px;
+    height: 28px;
+    margin-left: 10px;
+    color: #536b82;
+}
+
+.common_pic_controller .change_txt {
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+    float: left;
+}
+
+.common_pic_controller .reduce_btn,
+.common_pic_controller .add_btn {
+    float: left;
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
+    width: 28px;
+    text-align: center;
+}
+
+.common_pic_controller .change_num {
+    float: left;
+    height: 28px;
+    line-height: 26px;
+    width: 30px;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid #aaa;
+    margin-top: 1px;
+}
+
+.common_pic_controller .common_pic_controller_btn {
+    width: 555px;
+    /* margin: 0 auto; */
+    float: left;
+}
+
+.common_pic_show .img_panel {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.common_pic_show .img_panel .errorClass {
+    width: auto !important;
+    height: auto !important;
+    position: relative !important;
+    left: 50% !important;
+    top: 50% !important;
+    margin: -104px 0px !important;
+}
+
+#line_left,
+#line_right,
+#line_top,
+#line_bottom {
+    display: none;
+    position: relative;
+    background-color: red;
+    border: none;
+}
+
+.common_pic_panel .not_allowed {
+    cursor: not-allowed !important;
+}
+
+.common_pic_panel .loading_panel {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: #fff;
+    z-index: 2;
+    opacity: 0.5;
+}
+
+.common_pic_panel .loading_panel .loading_panel_pic {
+    display: inline-block;
+    width: 156px;
+    height: 48px;
+    margin: 0 auto;
+    z-index: 3;
+    background: url("/static/image/zfsypsjglpt/Picasa_Loading.gif") no-repeat 0
+        0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 44%;
+}
+
+.common_pic_panel .loading_panel .loading_panel_pic.loading_panel_pic_en {
+    background: url("/static/image/zfsypsjglpt/Picasa_Loading_En.gif") no-repeat
+        0 0;
+}
+
+.player_pic_dialog_class .modal-body {
+    color: #536b82;
+}
+
+.player_pic_dialog_class .modal-footer {
+    padding-top: 0 !important;
+    border-top: 0 !important;
+}
+
+.player_pic_dialog_class .bootbox-body span {
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    margin: 4px 0;
+}
+
+.player_pic_dialog_class .bootbox-body .tip-text {
+    font-size: 12px;
+}
+
+.player_pic_dialog_class .bootbox-body .tip-text .fa-info-circle {
+    color: #e09e1f;
+    margin-right: 5px;
+}
+
+.player_pic_dialog_class .modal-footer .btn-primary {
+    /* display: none; */
+    float: left;
+    margin-left: 50px !important;
+}
+
+.player_pic_dialog_class .modal-footer .btn-default {
+    float: right;
+    margin-right: 50px !important;
+}

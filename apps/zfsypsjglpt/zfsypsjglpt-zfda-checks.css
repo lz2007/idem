@@ -1,0 +1,125 @@
+.checks-container .diatable .checkbox {
+    left: 5px;
+    right: 0;
+}
+
+.checks-container .diatable .zfda-glmt-item {
+    margin: 15px 0px 3px 40px;
+}
+
+.checks-container .diaglmt .diatimeover {
+    left: 300px;
+}
+
+.checks-container .word-break {
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.checks-container .com-pages {
+    position: static;
+    text-align: right;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.checks-container .dialog-oringin-btn button.tjgl_Cancel {
+    margin-right: 0;
+}
+
+.checks-container .jbxx b {
+    width: 85px;
+    display: inline-block;
+    text-align: right;
+}
+
+.checks-container .diatable {
+    overflow: auto
+}
+
+.tjgl-dialog .disable {
+    cursor: not-allowed
+}
+
+.checkboxicon.checked {
+    color: #0078d7
+}
+
+.checkboxicon {
+    font-size: 15px;
+    position: absolute;
+    left: 1%;
+    top: 47%;
+}
+
+.modal-header {
+    background-color: #414f5c;
+    color: #fff;
+    cursor: move;
+}
+
+.modal-footer .btn {
+    width: 120px;
+    color: #fff;
+    background-color: #0078D7;
+    margin-left: 20px;
+    border: 1px solid #0078D7;
+    border-radius: 2px;
+    outline: none;
+}
+
+.lz-container .jqgl-ck-container button.disabled:hover,
+.zfda-container .jqgl-ck-container button.disabled:hover {
+    background: #d4d7d9;
+}
+
+.infodel {
+    color: #536b82;
+    font-size: 16px;
+    text-align: center;
+}
+
+.diatable .zfda-glmt-item>span.first-child {
+    text-overflow: inherit
+}
+
+.lz-container .zfda-glmt-item,
+.zfda-container .zfda-glmt-item {
+    margin: 3px 0px 3px 32px;
+}
+
+.lz-container .commonSpan div,
+.zfda-container .commonSpan div {
+    cursor: pointer;
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 1px;
+}
+
+.lz-container .commonSpan,
+.zfda-container .commonSpan {
+    display: inline-block;
+    margin-left: -75px;
+    padding-left: 75px;
+    padding-right: 20px;
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+    vertical-align: middle;
+    margin-right: 13px;
+    margin-top: -5px;
+}
+
+.lz-container .jqgl-ck-head span,
+.zfda-container .jqgl-ck-head span {
+    width: 25%;
+}
+
+/* #gxx_ocx a{
+    width: auto !important;
+} */

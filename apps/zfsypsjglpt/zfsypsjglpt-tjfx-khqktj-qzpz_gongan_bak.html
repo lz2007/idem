@@ -1,0 +1,172 @@
+<template>
+    <div class="qzpz-wrap">
+        <ul class="qzpz-tabs">
+            <li ms-for="($index, el) in @arrTabs" :click="@tabsClick($index)" :class="[@currentTabsIndex == $index ? 'activeTabs' : '']">{{el.name}}</li>
+        </ul>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">执法记录仪配发率</h3>
+                <div class="weight-wrap">
+                    <span>权重</span>
+                    <input type="text" :class="[@pointObj.dsjEQRateWeight.show ? 'input_error' : '']" :blur="@dsjEQRateMaxPoint = @dsjEQRateWeight"
+                        data-duplex-changed="@weightChange('dsjEQRateWeight')" ms-duplex="@dsjEQRateWeight" class="form-control">
+                    <span>分</span>
+                    <div class="tips-wrap" :if="@pointObj.dsjEQRateWeight.show">
+                        <span :class="['zhkp_tip']">
+                            <i class="fa fa-exclamation-circle">&nbsp;{{@pointObj.dsjEQRateWeight.msg}}</i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="title-wrap">
+                    <p>配发率（%）</p>
+                    <p>得分</p>
+                </div>
+                <ms-rate-input :widget="{value: @dsjEQRate, onChange: @dsjEQRateInputChange ,num:4, maxPoint: @dsjEQRateMaxPoint, sign: 'dsjEQRate'}"></ms-rate-input>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">执法记录仪使用率</h3>
+                <div class="weight-wrap">
+                    <span>权重</span>
+                    <input type="text" :class="[@pointObj.dsjUsageRateWeight.show ? 'input_error' : '']" :blur="@dsjUsageRateMaxPoint = @dsjUsageRateWeight"
+                        data-duplex-changed="@weightChange('dsjUsageRateWeight')" ms-duplex="@dsjUsageRateWeight" class="form-control">
+                    <span>分</span>
+                    <div class="tips-wrap" :if="@pointObj.dsjUsageRateWeight.show">
+                        <span :class="['zhkp_tip']">
+                            <i class="fa fa-exclamation-circle">&nbsp;{{@pointObj.dsjUsageRateWeight.msg}}</i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="title-wrap">
+                    <p>使用率（%）</p>
+                    <p>得分</p>
+                </div>
+                <ms-rate-input :widget="{value: @dsjUsageRate, onChange: @dsjUsageRateInputChange ,num:4, maxPoint: @dsjUsageRateMaxPoint, sign: 'dsjUsageRate'}"></ms-rate-input>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">视频及时导入率</h3>
+                <div class="weight-wrap">
+                    <span>权重</span>
+                    <input type="text" :class="[@pointObj.videoImportOnTimeRateWeight.show ? 'input_error' : '']" :blur="@videoImportOnTimeRateMaxPoint = @videoImportOnTimeRateWeight"
+                        data-duplex-changed="@weightChange('videoImportOnTimeRateWeight')" ms-duplex="@videoImportOnTimeRateWeight"
+                        class="form-control">
+                    <span>分</span>
+                    <div class="tips-wrap" :if="@pointObj.videoImportOnTimeRateWeight.show">
+                        <span :class="['zhkp_tip']">
+                            <i class="fa fa-exclamation-circle">&nbsp;{{@pointObj.videoImportOnTimeRateWeight.msg}}</i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="title-wrap">
+                    <p>导入率（%）</p>
+                    <p>得分</p>
+                </div>
+                <ms-rate-input :widget="{value: @videoImportOnTimeRate, onChange: @videoImportInputChange ,num:4, maxPoint: @videoImportOnTimeRateMaxPoint, sign: 'videoImportOnTimeRate'}"></ms-rate-input>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">警情关联率</h3>
+                <div class="weight-wrap">
+                    <span>权重</span>
+                    <input type="text" :class="[@pointObj.psMatchRateWeight.show ? 'input_error' : '']" :blur="@psMatchRateMaxPoint = @psMatchRateWeight"
+                        data-duplex-changed="@weightChange('psMatchRateWeight')" ms-duplex="@psMatchRateWeight" class="form-control">
+                    <span>分</span>
+                    <div class="tips-wrap" :if="@pointObj.psMatchRateWeight.show">
+                        <span :class="['zhkp_tip']">
+                            <i class="fa fa-exclamation-circle">&nbsp;{{@pointObj.psMatchRateWeight.msg}}</i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="title-wrap">
+                    <p>关联率（%）</p>
+                    <p>得分</p>
+                </div>
+                <ms-rate-input :widget="{value: @psMatchRate, onChange: @psMatchRateInputChange ,num:7, maxPoint: @psMatchRateMaxPoint, sign: 'psMatchRate'}"></ms-rate-input>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">案件关联率</h3>
+                <div class="weight-wrap">
+                    <span>权重</span>
+                    <input type="text" :class="[@pointObj.cmMatchRateWeight.show ? 'input_error' : '']" :blur="@cmMatchRateMaxPoint = @cmMatchRateWeight"
+                        data-duplex-changed="@weightChange('cmMatchRateWeight')" ms-duplex="@cmMatchRateWeight" class="form-control">
+                    <span>分</span>
+                    <div class="tips-wrap" :if="@pointObj.cmMatchRateWeight.show">
+                        <span :class="['zhkp_tip']">
+                            <i class="fa fa-exclamation-circle">&nbsp;{{@pointObj.cmMatchRateWeight.msg}}</i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="title-wrap">
+                    <p>关联率（%）</p>
+                    <p>得分</p>
+                </div>
+                <ms-rate-input :widget="{value: @cmMatchRate, onChange: @cmMatchRateInputChange ,num:7, maxPoint: @cmMatchRateMaxPoint, sign: 'cmMatchRate'}"></ms-rate-input>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">考评率得分</h3>
+                <div class="weight-wrap">
+                    <span>权重</span>
+                    <input type="text" :class="[@pointObj.evaRateWeight.show ? 'input_error' : '']" :blur="@evaRateMaxPoint = @evaRateWeight"
+                        data-duplex-changed="@weightChange('evaRateWeight')" ms-duplex="@evaRateWeight" class="form-control">
+                    <span>分</span>
+                    <div class="tips-wrap" :if="@pointObj.evaRateWeight.show">
+                        <span :class="['zhkp_tip']">
+                            <i class="fa fa-exclamation-circle">&nbsp;{{@pointObj.evaRateWeight.msg}}</i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="title-wrap">
+                    <p>考评率（%）</p>
+                    <p>得分</p>
+                </div>
+                <ms-rate-input :widget="{value: @evaRate, onChange: @evaRateInputChange ,num:5, maxPoint: @evaRateMaxPoint, sign: 'evaRate'}"></ms-rate-input>
+            </div>
+        </div>
+        <!-- <div class="well well-sm">
+            <div class="weight-wrap">
+                <span>权重</span>
+                <input type="text" :class="[@pointObj.legalEVAPoint.show ? 'input_error' : '']" data-duplex-changed="@weightChange('legalEVAPoint')"
+                    ms-duplex="@legalEVAPoint" class="form-control">
+                <span>分</span>
+                <div class="tips-wrap" :if="@pointObj.legalEVAPoint.show">
+                    <span :class="['zhkp_tip']">
+                        <i class="fa fa-exclamation-circle">&nbsp;{{@pointObj.legalEVAPoint.msg}}</i>
+                    </span>
+                </div>
+            </div>
+            <b>法制考评得分</b>
+            <span>扣分=（扣分警情或者案件数/总的考评警情和案件数）*100%*权重设定分数</span>
+        </div> -->
+        <div class="qzpz-btn">
+            <a class="common_btn" :click="@saveBtn">保存</a>
+            <a class="common_btn" :click="@back">返回</a>
+        </div>
+        <div class="qzpz_fresh_tips_vm">
+            <ms-dialog :widget="{$innerVm: 'qzpz_fresh_tips_gongan', okText: '确认', cancelText: '取消', className: 'qzpz_fresh_tips_class', show: @qzpz_fresh_tips_show, onCancel: @cancel, onOk:@onOk, isMove:true, width:300, height:175, move_return:@move_return}">
+                <div slot="body" ms-skip>
+                    <span :css="{'color': '#536b82'}" ms-text="@dialog_txt"></span>
+                </div>
+            </ms-dialog>
+        </div>
+    </div>
+</template>

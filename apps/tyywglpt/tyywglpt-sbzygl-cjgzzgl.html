@@ -1,0 +1,467 @@
+<!-- 统一运维管理平台--设备资源管理--采集工作站管理 -->
+<!-- caojiacong -->
+<template>
+    <div class="tyywglpt cjgzzgl" :controller="cjgzzgl-vm">
+        <div class="tyywglpt-search-box" :if="@authority.SEARCH">
+            <xmp :widget="{is:'ms-form',$form:@$form,inline:true}">
+                <ms-form-item :widget="{label:'所属部门:'}" :class="'form-item form-single-line'">
+                    <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'cjgzzgl-tree-select-1', getSelected:@getSelected, selectedKey:@dataJson ? @dataJson.orgId : '', selectedTitle:@dataJson ? @dataJson.orgName : '', onChange:@handleTreeChange, extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                </ms-form-item>
+                <!-- 设备厂商影响设备型号 -->
+                <!-- 此处的设备厂商/型号包含已废弃的 -->
+                <ms-form-item :widget="{label: '设备厂商:'}" :class="['form-item', (@manufacturerOptions.length === 0 && 'disabled')]">
+                    <ms-select :widget="{col:'manufacturer', value:[@getDefaultManu(manufacturerOptions,dataJson)], displayValue:'暂无可选的设备厂商', options:@manufacturerOptions, onChange:@handleManuChange}">
+                    </ms-select>
+                </ms-form-item>
+                <ms-form-item :widget="{label: '设备型号:'}" :class="['form-item', (@modelOptions.length === 0 && 'disabled')]">
+                    <ms-select :widget="{col:'model', value:[@getDefaultModel(modelOptions, isManuSelectMode, dataJson)], displayValue:'暂无可选的设备型号', options:@modelOptions, onChange:@handleModelChange}">
+                    </ms-select>
+                </ms-form-item>
+                <button type="button" class="btn btn-query" :click="@query">查询</button>
+            </xmp>
+        </div>
+        <div class="tyywglpt-tool-bar">
+            <div class="tyywglpt-tool-bar-inner">
+                <input :if="@authority.REGISTRY" type="button" value="注册" :click="@handleRegister" class="btn btn-tool" :class="@selectedRowsLength !== 0 && 'disabled'">
+                <!-- 本域设备才能配置 -->
+                <input :if="@authority.CLPZ" type="button" value="策略配置" :click="@handlePloySetting" class="btn btn-tool" :class="@settingIsDisabled(checkedIsSource, selectedRowsLength)">
+                <!-- 本域设备才能配置 -->
+                <input :if="@authority.AQPZ" type="button" value="安全配置" :click="@handleSafeSetting" class="btn btn-tool" :class="@settingIsDisabled(checkedIsSource, selectedRowsLength)">
+                <!-- 同型号的才能一起批量升级 -->
+                <input :if="@authority.UPDATE" type="button" value="升级" :click="@handleUpdate" class="btn btn-tool" :class="@updateIsDisabled(checkedIsSameManuAndModel, selectedRowsLength)">
+            </div>
+        </div>
+        <div class="tyywglpt-list-panel">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <li class="col-2 first-item">
+                        <input type="checkbox" id="checkall" :duplex-checked="@checkAll" data-duplex-changed="@handleCheckAll($event)">
+                        <label for="checkall" :class="[@checkAll ? 'check_selected' : 'check_unselected']"></label>
+                    </li>
+                    <li class="col-4">序号</li>
+                    <li class="col-6">操作</li>
+                    <li class="col-10">所属部门</li>
+                    <li class="col-10">设备名称</li>
+                    <li class="col-14">国标编号</li>
+                    <li class="col-8">设备IP</li>
+                    <li class="col-8">设备厂商</li>
+                    <li class="col-6">设备型号</li>
+                    <li class="col-8">上级存储服务</li>
+                    <li class="col-6">在线状态</li>
+                    <li class="col-8">维护负责人</li>
+                    <li class="col-10 last-item">设备版本</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@loading" class="list-loading">
+                    <span>结果加载中</span>
+                </li>
+                <li :if="@isNull" class="list-null">暂无数据</li>
+                <li :if="!@loading && !@isNull" :for="($index, item) in @list">
+                    <div class="col-2 first-item">
+                        <input type="checkbox" :attr="{'id':$index}" :duplex-checked="item.checked" data-duplex-changed="@handleCheck($index,item,$event)">
+                        <label :attr="{'for':$index}" :class="[item.checked ? 'check_selected' : 'check_unselected']"></label>
+                    </div>
+                    <div class="col-4">{{((@current - 1) * @pageSize) + $index+1}}</div>
+                    <div class="col-6">
+                        <a :if="@authority.MODIFY" class="oparate" :class="[item.source && 'disabled']" :click="@handleModify(item)">修改</a>
+                        <a :if="@authority.DELETE" class="oparate last-operate" :class="[item.source && 'disabled']" :click="@handleDelete(item)">删除</a>
+                        <span :if="@authority.OPT_SHOW"> - </span>
+                    </div>
+                    <div class="col-10" :attr="{'title':item.orgName || '','data-toggle':'popover'}">{{@item.orgName | fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.wsName || '','data-toggle':'popover'}">{{@item.wsName | fillterEmpty}}</div>
+                    <div class="col-14" :attr="{'title':item.gbCode || '','data-toggle':'popover'}">{{@item.gbCode | fillterEmpty}}</div>
+                    <div class="col-8" :attr="{'title':item.ipAddr || '','data-toggle':'popover'}">{{@item.ipAddr | fillterEmpty}}</div>
+                    <div class="col-8" :attr="{'title':item.manufacturerName || '','data-toggle':'popover'}">{{@item.manufacturerName | fillterEmpty}}</div>
+                    <div class="col-6" :attr="{'title':item.modelnum || '','data-toggle':'popover'}">{{@item.modelnum | fillterEmpty}}</div>
+                    <div class="col-8" :attr="{'title':item.storageName || '','data-toggle':'popover'}">{{@item.storageName | fillterEmpty}}</div>
+                    <div class="col-6" :class="[item.isOnline !== 1 && 'isoffline']" :attr="{'title':item.isOnlineName || '','data-toggle':'popover'}">{{@item.isOnlineName | fillterEmpty}}</div>
+                    <div class="col-8" :attr="{'title':item.admin || '','data-toggle':'popover'}">{{@item.admin | fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.version || '','data-toggle':'popover'}">{{@item.version | fillterEmpty}}</div>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-tool-bar">
+            <input :if="@authority.BATCHDELETE" class="btn btn-tool" :class="[(!@checkedIsSource || @selectedRowsLength < 1) && 'disabled']"
+                type="button" value="批量删除" :click="@handleBatchDelete">
+        </div>
+        <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent}"></ms-pages>
+
+        <!-- 注册弹窗 -->
+        <div :controller="cjgzzgl-register-vm" class="sbzygl-modal cjgzzgl-modal-register">
+            <xmp :widget="{is:'common-ms-modal', title:'注册', modalSelector:'#cjgzzgl-modal-register', modalWidth:700, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="cjgzzgl-modal-register">
+                    <div class="modal-title">设备信息</div>
+                    <!-- 设备厂商影响设备型号 -->
+                    <!-- 此处的设备厂商/型号过滤掉已废弃的了(注释不要放到ms-form内的最开始，否则将解析出错)  -->
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <ms-form-item :class="['form-item', !@validJson.manufacturer && 'has-error', (@manufacturerOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>设备厂商:</label>
+                            <ms-select :widget="{col:'manufacturer', value:[@defaultManufacturer], displayValue:'暂无可选的设备厂商', options:@manufacturerOptions,onChange:@handleManuChange}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.manufacturer">请选择设备厂商</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item model-item',!@validJson.modelnum && 'has-error',(@modelOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>设备型号:</label>
+                            <ms-select :widget="{col:'modelnum', value:[@defaultModel], displayValue:'暂无可选的设备型号', options:@modelOptions, onChange:@handleModelChange}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.modelnum">请选择设备型号</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.wsName && 'has-error']">
+                            <label>
+                                <i>* </i>设备名称:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.wsName}" :duplex="@inputJson.wsName" :focus="@handleFocus('wsName',$event)"
+                                    :blur="@handleFormat('wsName',null,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('wsName',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.wsName">{{@inputJson.wsName.length > 30 ? '最多只可输入30位字符' : '请输入唯一的设备名称'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="'form-item'">
+                            <label>所属部门:</label>
+                            <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, selectedKey:@orgId, selectedTitle:@orgName, wrapId: 'cjgzzgl-tree-select-2', getSelected:@getSelected, onChange:@handleTreeChange, extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',((!@validJson.ip || !@validJson.ipUnique) ? 'has-error' : '')]">
+                            <label>
+                                <i>* </i>设备IP:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.ip}" :duplex="@inputJson.ip" :focus="@handleFocus('ip',$event)"
+                                    :blur="@handleFormat('ip',@ipReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('ip',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.ip">
+                                <i class="fa fa-info-circle"></i>支持0~255的数字与.的组合</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.ip">请输入正确的设备IP</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.ipUnique">请输入唯一的设备IP</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.addr && 'has-error']">
+                            <label>
+                                <i>* </i>设备地址:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.addr}" :duplex="@inputJson.addr" :focus="@handleFocus('addr',$event)"
+                                    :blur="@handleFormat('addr',null,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('addr',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.addr">{{@inputJson.addr.length > 30 ? '最多只可输入30位字符' : '请输入设备地址'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.admin && 'has-error']">
+                            <label>维护负责人:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.admin}" :duplex="@inputJson.admin" :focus="@handleFocus('admin',$event)"
+                                    :blur="@handleFormat('admin',@allotReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('admin',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip form-tip-admin" :if="@showJson.admin">
+                                <i class="fa fa-info-circle"></i>支持中文、英文、数字、括号字符</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.admin">{{@inputJson.admin.length > 30 ? '最多只可输入30位字符' : '请输入正确的维护负责人'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.phone && 'has-error']">
+                            <label>联系电话:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.phone}" :duplex="@inputJson.phone" :focus="@handleFocus('phone',$event)"
+                                    :blur="@handleFormat('phone',@telReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('phone',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.phone">
+                                <i class="fa fa-info-circle"></i>支持手机号与座机，可用-分隔</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.phone">请输入正确的联系电话</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item form-item-lg',((!@validJson.gbCode || !@validJson.gbCodeUnique) ? 'has-error' : '')]">
+                            <label>
+                                <i>* </i>国标编号:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.gbCode}" :duplex="@inputJson.gbCode" :focus="@handleFocus('gbCode',$event)"
+                                    :blur="@handleFormat('gbCode',@gbCodeReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('gbCode',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.gbCode">
+                                <i class="fa fa-info-circle"></i>支持数字与字母组合，长度只能为20位（当前长度为{{@inputJson.gbCode.length}}）</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.gbCode">请输入/生成正确的国标编号</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.gbCodeUnique">请输入/生成唯一的国标编号</div>
+                        </ms-form-item>
+
+                        <div class="modal-title">策略配置信息</div>
+                        <ms-form-item :class="['form-item', !@validJson.expireDays && 'has-error']">
+                            <label>
+                                <i>* </i>存储天数:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.expireDays}" :duplex="@inputJson.expireDays" :focus="@handleFocus('expireDays',$event)"
+                                    :blur="@handleFormat('expireDays',@expireDaysReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('expireDays',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.expireDays">
+                                <i class="fa fa-info-circle"></i>仅支持不大于9位的非0正整数
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.expireDays">请输入正确的存储天数</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+
+        <!-- 策略配置弹窗 -->
+        <div :controller="cjgzzgl-ploysetting-vm" class="sbzygl-modal cjgzzgl-modal-ploysetting">
+            <xmp :widget="{is:'common-ms-modal', title:'策略配置', modalSelector:'#cjgzzgl-modal-ploysetting', modalWidth:380, modalHeight: 100, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="cjgzzgl-modal-ploysetting">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <ms-form-item :class="['form-item',!daysValid && 'has-error']">
+                            <label>存储天数:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@defaultDays}" :duplex="@defaultDays" :focus="@handleFocus" :blur="@handleFormat">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showTip">
+                                <i class="fa fa-info-circle"></i>仅支持不大于9位的非0正整数</div>
+                            <div class="form-tip invalid-tip" :if="!@daysValid">请输入正确的存储天数</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 安全配置弹窗 -->
+        <div :controller="cjgzzgl-safesetting-vm" class="sbzygl-modal cjgzzgl-modal-safesetting">
+            <xmp :widget="{is:'common-ms-modal', title:'安全配置', modalSelector:'#cjgzzgl-modal-safesetting', modalWidth:436, modalHeight: 340, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="cjgzzgl-modal-safesetting">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <div class="safesetting-form-group">
+                            <input type="checkbox" :attr="{'id':'deviceAll'}" :duplex-checked="@deviceAllStatus" data-duplex-changed="@handleAllDeviceSelect($event)">
+                            <label :attr="{'for':'deviceAll'}" :class="['select-label', @isDeviceAllchecked ? 'check_selected' : (@isDeviceSomeChecked ? 'check_selected_some' : 'check_unselected')]"></label>
+                            <label>设备控制策略</label>
+                            <ul class="checkbox-group device-checkbox-group">
+                                <li :for="($index,el) in @deviceOptions" :class="[$index == 2 && 'third-checkbox']">
+                                    <input type="checkbox" :attr="{'id': 'device'+$index}" :duplex-checked="@deviceCheck[el.value]" data-duplex-changed="@handleDeviceCheck($event)">
+                                    <label :attr="{'for':'device'+$index}" :class="['select-label', @deviceCheck[el.value] ? 'check_selected' : 'check_unselected']"></label>
+                                    <label>{{el.label}}</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="safesetting-form-group">
+                            <input type="checkbox" :attr="{'id':'exportAll'}" :duplex-checked="@exportAllStatus" data-duplex-changed="@handleAllExportSelect($event)">
+                            <label :attr="{'for':'exportAll'}" :class="['select-label', isExportAllchecked ? 'check_selected' : (@isExportSomeChecked ? 'check_selected_some' : 'check_unselected')]"></label>
+                            <label>导出策略</label>
+                            <ul class="checkbox-group export-checkbox-group">
+                                <li :for="($index,el) in @exportOptions">
+                                    <input type="checkbox" :attr="{'id': 'export'+$index}" :duplex-checked="@exportCheck[el.value]" data-duplex-changed="@handleExportCheck($event)">
+                                    <label :attr="{'for':'export'+$index}" :class="['select-label', @exportCheck[el.value] ? 'check_selected' : 'check_unselected']"></label>
+                                    <label>{{el.label}}</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="safesetting-form-group radio-group">
+                            <label class="type-title net-title">网络控制策略</label>
+                            <div>
+                                <input type="radio" :attr="{'id':'net-on'}" value="true" :duplex="@netCheck">
+                                <label :attr="{'for':'net-on'}" :class="['select-label', @boolNetCheck ? 'radio_selected' : 'radio_unselected']"></label>
+                                <label>启用</label>
+                            </div>
+                            <div>
+                                <input type="radio" :attr="{'id':'net-off'}" value="false" :duplex="@netCheck">
+                                <label :attr="{'for':'net-off'}" :class="['select-label', !@boolNetCheck ? 'radio_selected' : 'radio_unselected']"></label>
+                                <label>禁用</label>
+                            </div>
+                        </div>
+                        <div class="safesetting-form-group radio-group">
+                            <label class="type-title net-title">执法记录仪注册模式</label>
+                            <div>
+                                <input type="radio" :attr="{'id':'mode-on'}" value="true" :duplex="@modeAuto">
+                                <label :attr="{'for':'mode-on'}" :class="['select-label', @boolModeAuto ? 'radio_selected' : 'radio_unselected']"></label>
+                                <label>手动</label>
+                            </div>
+                            <div>
+                                <input type="radio" :attr="{'id':'mode-off'}" value="false" :duplex="@modeAuto">
+                                <label :attr="{'for':'mode-off'}" :class="['select-label', !@boolModeAuto ? 'radio_selected' : 'radio_unselected']"></label>
+                                <label>自动</label>
+                            </div>
+                        </div>
+                        <ms-form-item :class="['form-item safesetting-form-group',!whiteValid && 'has-error']">
+                            <label class="type-title">进程管理策略（白名单）:</label>
+                            <!-- <ms-input :widget="{col:'whiteList',value:@whiteListValue}"></ms-input> -->
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@whiteListValue}" :duplex="@whiteListValue" :focus="@handleFocus" :blur="@handleFormat">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@whiteValid">最多只可输入15位字符</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 修改弹窗 -->
+        <div :controller="cjgzzgl-modify-vm" class="sbzygl-modal cjgzzgl-modal-modify">
+            <xmp :widget="{is:'common-ms-modal', title:'修改', modalSelector:'#cjgzzgl-modal-modify', modalWidth:700, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="cjgzzgl-modal-modify">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <div class="modal-title">设备信息</div>
+                        <ms-form-item :class="['form-item disabled-select',!@validJson.manufacturer && 'has-error']">
+                            <label>
+                                <i>* </i>设备厂商:</label>
+                            <input type="text" class="form-control" :attr="{title:@inputJson.manufacturerName}" :duplex="@inputJson.manufacturerName"
+                                disabled>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.manufacturer">设备厂商不能为空</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.modelnum && 'has-error']">
+                            <label>
+                                <i>* </i>设备型号:</label>
+                            <div class="has-icon has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.modelnum}" :duplex="@inputJson.modelnum" disabled>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.modelnum">设备型号不能为空</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.wsName && 'has-error']">
+                            <label>
+                                <i>* </i>设备名称:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.wsName}" :duplex="@inputJson.wsName" :focus="@handleFocus('wsName',$event)"
+                                    :blur="@handleFormat('wsName',null,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('wsName',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.wsName">{{@inputJson.wsName.length > 30 ? '最多只可输入30位字符' : '请输入唯一的设备名称'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="'form-item disabled-select'">
+                            <label>所属部门:</label>
+                            <ms-tree-selecting :widget="{tree:@orgData, disabledSelect:true, showSearch:true, selectedKey:@orgId, selectedTitle:@orgName,wrapId: 'cjgzzgl-tree-select-3', getSelected:@getSelected, onChange:@handleTreeChange, extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',((!@validJson.ip || !@validJson.ipUnique) ? 'has-error' : '')]">
+                            <label>
+                                <i>* </i>设备IP:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.ip}" :duplex="@inputJson.ip" :focus="@handleFocus('ip',$event)"
+                                    :blur="@handleFormat('ip',@ipReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('ip',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.ip">
+                                <i class="fa fa-info-circle"></i>支持0~255的数字与.的组合</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.ip">请输入正确的设备IP</div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.ipUnique">请输入唯一的设备IP</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item']">
+                            <label>上级存储服务:</label>
+                            <input type="text" class="form-control" :attr="{title:@inputJson.storageName}" :duplex="@inputJson.storageName" disabled>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.wsAddr && 'has-error']">
+                            <label>
+                                <i>* </i>设备地址:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.wsAddr}" :duplex="@inputJson.wsAddr" :focus="@handleFocus('wsAddr',$event)"
+                                    :blur="@handleFormat('wsAddr',null,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('wsAddr',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.wsAddr">{{@inputJson.wsAddr.length > 30 ? '最多只可输入30位字符' : '请输入设备地址'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item form-item-lg',!@validJson.gbCode && 'has-error']">
+                            <label>
+                                <i>* </i>国标编号:</label>
+                            <div class="has-icon has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.gbCode}" :duplex="@inputJson.gbCode" disabled>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.gbCode">国标编号不能为空</div>
+                        </ms-form-item>
+                        <div class="modal-title">负责人信息</div>
+                        <ms-form-item :class="['form-item',!@validJson.admin && 'has-error']">
+                            <label>维护负责人:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.admin}" :duplex="@inputJson.admin" :focus="@handleFocus('admin',$event)"
+                                    :blur="@handleFormat('admin',@allotReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('admin',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip form-tip-admin" :if="@showJson.admin">
+                                <i class="fa fa-info-circle"></i>支持中文、英文、数字、括号字符</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.admin">{{@inputJson.admin.length > 30 ? '最多只可输入30位字符' : '请输入正确的维护负责人'}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.phoneNumber && 'has-error']">
+                            <label>联系电话:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.phoneNumber}" :duplex="@inputJson.phoneNumber" :focus="@handleFocus('phoneNumber',$event)"
+                                    :blur="@handleFormat('phoneNumber',@telReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('phoneNumber',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.phoneNumber">
+                                <i class="fa fa-info-circle"></i>支持手机号与座机，可用-分隔</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.phoneNumber">请输入正确的联系电话</div>
+                        </ms-form-item>
+                        <div class="modal-title">策略配置信息</div>
+                        <ms-form-item :class="['form-item', !@validJson.expireDays && 'has-error']">
+                            <label>
+                                <i>* </i>存储天数:</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.expireDays}" :duplex="@inputJson.expireDays" :focus="@handleFocus('expireDays',$event)"
+                                    :blur="@handleFormat('expireDays',expireDaysReg,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('expireDays',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.expireDays">
+                                <i class="fa fa-info-circle"></i>仅支持不大于9位的非0正整数
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.expireDays">请输入正确的存储天数</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 删除弹窗 -->
+        <div :controller="cjgzzgl-delete-vm" class="sbzygl-modal sbzygl-modal-tip sbzygl-modal-delete">
+            <xmp :widget="{is:'common-ms-modal', title:'确定删除', modalSelector:'#cjgzzgl-modal-delete', btnalign:'center', modalWidth:300, modalHeight: 80, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <p :if="!@isBatch" class="tip-text" id="cjgzzgl-modal-delete">是否确定删除该项数据？</p>
+                <p :if="@isBatch" class="tip-text" id="cjgzzgl-modal-delete">是否确定删除选中的{{@selectedRowsLength}}条数据？</p>
+            </xmp>
+        </div>
+
+        <!-- 升级弹窗新 -->
+        <div :controller="cjgzzgl-update-vm" class="sbzygl-modal sbzygl-modal-update">
+            <xmp :widget="{is:'common-ms-modal', title:'升级', modalSelector:'#cjgzzgl-modal-update',okText:'升级',cancelText:'取消', modalWidth:800, modalHeight: 300, btnalign: 'center', okDisabled:@okDisabled, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <div id="cjgzzgl-modal-update">
+                    <div class="update-title">
+                        <span class="col-10"></span>
+                        <span class="col-20">设备厂商</span>
+                        <span class="col-15">设备型号</span>
+                        <span class="col-15">版本</span>
+                        <span class="col-10">更新内容</span>
+                        <span class="col-30">上传时间</span>
+                    </div>
+                    <ul class="update-package-list">
+                        <li :for="($index,el) in @updateData | orderBy(@order, @dir)">
+                            <div class="col-10">
+                                <input type="radio" :attr="{'id':'update'+$index,'name':'updateCheck','value':@el.id}" :duplex="@el.checked" data-duplex-changed="@handleCheckChange($index,el,$event)">
+                                <label :attr="{'for':'update'+$index}" :class="['select-label', @checkedIndex == $index ? 'radio_selected' : 'radio_unselected']"></label>
+                            </div>
+                            <div class="col-20" :attr="{title:el.manufacturerName || '','data-toggle':'popover'}">
+                                {{el.manufacturerName || '-'}}
+                            </div>
+                            <div class="col-15" :attr="{title:el.model || '','data-toggle':'popover'}">
+                                {{el.model || '-'}}
+                            </div>
+                            <div class="col-15" :attr="{title:el.version || '','data-toggle':'popover'}">
+                                {{el.version || '-'}}
+                            </div>
+                            <div class="col-10">
+                                <a class="oparate" :click="@handleLook(el)">查看</a>
+                            </div>
+                            <div class="col-30" :attr="{title:el.insertTime || '','data-toggle':'popover'}">
+                                {{el.insertTime || '-'}}
+                            </div>
+                        </li>
+                        <li :if="@updateData.length == 0">暂无升级包</li>
+                    </ul>
+                </div>
+            </xmp>
+        </div>
+        <!-- 查看弹窗 -->
+        <div :controller="cjgzzgl-look-vm" class="sbzygl-modal sbzygl-modal-look">
+            <xmp :widget="{is:'common-ms-modal', title:'更新内容', modalSelector:'#cjgzzgl-modal-look', drag:true, btnalign:'center', modalWidth:600, modalHeight:200, show:@show,ifcancelBtn:false,onOk:@handleOk,onCancel:@handleOk}">
+                <div id="cjgzzgl-modal-look" ms-html="@updateContent">
+                </div>
+            </xmp>
+        </div>
+        <!-- 升级下发提示弹窗 -->
+        <div :controller="cjgzzgl-allottip-vm" class="sbzygl-modal sbzygl-modal-tip sbzygl-modal-allottip">
+            <xmp :widget="{is:'common-ms-modal', title:'提示', modalSelector:'#cjgzzgl-modal-allottip', drag:true, btnalign:'center', modalWidth:300, modalHeight:80, show:@show,ifcancelBtn:false,onOk:@handleOk}">
+                <p class="tip-text" id="cjgzzgl-modal-allottip">升级任务已下达</p>
+            </xmp>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,36 @@
+{
+  "code": 0,
+  "msg": "成功！",
+  "data": {
+    "totalPages": 1,
+    "totalElements": 1,
+    "currentPages": 0,
+    "perPages": 20,
+    "currentElements": [
+      {
+        "xh": "FO0",
+        "orgCode": "GM000",
+        "orgName": "0号部门",
+        "userCode": "0",
+        "userName": "0号员工",
+        "idCard": "420582199902123212",
+        "pzbh": "凭证编号0",
+        "wfsj": 1524624135230,
+        "dsr": "张三force",
+        "jszh": "422801197507232815",
+        "hphm": "粤A88888",
+        "hpzlmc": null,
+        "wfdz": "广州",
+        "wfxw": [
+          "占用紧急车道",
+          "非法赛车"
+        ],
+        "relation": true,
+        "evaStatus": true,
+        "reviewStatus": true,
+        "evaResult": "1",
+        "reviewResult": "0"
+      }
+    ]
+  }
+}

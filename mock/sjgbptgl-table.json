@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "state":"成功",
+        "name":"第一部门",
+        "xieyi":"GB28181-2015",
+        "pingtaics":"国迈",
+        "banben":"2.0",
+        "ardess":"0.0.0.0",
+        "port":"80",
+        "guojibianma":"dase"
+    },
+    {
+        "id": 2,
+        "state":"等待",
+        "name":"第二部门",
+        "xieyi":"GB28181-2017",
+        "pingtaics":"国迈",
+        "banben":"2.0",
+        "ardess":"0.0.0.1",
+        "port":"8080",
+        "guojibianma":"d7987"
+    },
+    {
+        "id": 3,
+        "state":"成功",
+        "name":"第一部门",
+        "xieyi":"GB28181-2016",
+        "pingtaics":"国迈",
+        "banben":"2.0",
+        "ardess":"0.0.0.2",
+        "port":"8081",
+        "guojibianma":"46544"
+    }
+]

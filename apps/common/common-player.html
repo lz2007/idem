@@ -1,0 +1,27 @@
+<template>
+    <div class="h5-player">
+        <div :if="@media_type == 2" class="img-panel" :mouseenter="@mouseenter" :mouseleave="@mouseleave">
+            <img :attr="{src: @src}" class="img-class"
+                onerror="javascript:this.src='../../static/image/404/img_abnormal.png';document.getElementsByClassName('img-class')[0].className='error-img';"
+                :if="@src&&@extra_class">
+            <img :attr="{src: @src}" class="img-class"
+                onerror="javascript:this.src='../../static/image/404/img_abnormal_zhcn.png';document.getElementsByClassName('img-class')[0].className='error-img';"
+                :if="@src&&!@extra_class">
+            <div class="media-no-img" :if="!@src">
+                <img src="/static/image/zfsypsjglpt/pic_img.png" />
+                <!-- 抱歉，由于网络、数据等原因，图片暂时无法查看 -->
+                <span>{{@languageTxt.zfsypsjglpt.zfsypsjglpt_sypgl.sorryTips}}</span>
+            </div>
+            <div class="control-bar">
+                <a :click="downloadClick" class="downloadBtn"
+                    :attr="{title: @languageTxt.zfsypsjglpt.common.downloadTxt}">
+                    <img src="/static/image/zfsypsjglpt/downloadVideo_icon.png" class="img-class">
+                </a>
+            </div>
+        </div>
+        <div :if="@media_type != 2" style="width:100%; height:100%;">
+            <ms-video :widget="{src: @src, special_id: @special_id, media_type: @media_type, downloadUrl:@downloadUrl}">
+            </ms-video>
+        </div>
+    </div>
+</template>

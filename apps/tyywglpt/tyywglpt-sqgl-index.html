@@ -1,0 +1,41 @@
+<template>
+    <div class="tyywglpt_sqgl">
+        <div class="headerHbox">
+            <h2 :class="[licenseToggle? 'alreadyLic':'noneLic']">{{@licenseToggle ? @alreadyLicense : @noneLicense}}</h2>
+            <!-- <h2 :class="[licenseToggle? 'none':'noneLic']">未授权</h2> -->
+            <button type="button" class="updateBtn" :click='@updateLicenseEvt'>
+                <span>更新授权信息</span>
+            </button>
+        </div>
+        <div class="tyywglpt_sqgl_panel">
+            <div class="licenseInfo">
+                <div class="tyywglpt-list-header-wrap">
+                    <ul class="tyywglpt-list-header">
+                        <li class="sqgl-special-header">项</li>
+                        <li>值</li>
+                        <li>项</li>
+                        <li class="last-item">值</li>
+                    </ul>
+                </div>
+                <ul class="tyywglpt-list-content">
+                    <li :for='item in @licenseList'>
+                        <div class="name first">{{item.name1}}</div>
+                        <div class='value' :attr="@item.value1?{'data-toggle':'tooltip'}:''" :class="[item.lastLi?'lastLiValue1 sqgl-special-item':'']">{{item.value1 | fillterEmpty}}</div>
+                        <div :if="!item.lastLi" class="name" :class="[item.lastLi?'lastLiSecond':'']">{{item.name2}}</div>
+                        <div :if="!item.lastLi" class='value' :attr="@item.value2?{'data-toggle':'tooltip'}:''" :class="[item.lastLi?'lastLiSecond':'']">{{item.value2 | fillterEmpty}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 更新授权信息 -->
+        <div :controller="updateLicense_Cont" class="updateLicenseBox">
+            <xmp :widget="{is:'common-ms-modal', title:'更新授权信息', modalSelector:'.update', drag: true, btnalign:'right',
+             modalWidth:500, modalHeight: 320, show:@updateShow, onOk:@updateOk, onCancel:@handleCancel}">
+                <div class="inputHbox update">
+                    <div class="machineBox">机器码: {{@machineCode}}</div>
+                    <ms-textarea :widget="{value: @licenseValue,onChange:@getLicenseVal}" :class="['licenseText']"></ms-textarea>
+                </div>
+            </xmp>
+        </div>
+    </div>
+</template>

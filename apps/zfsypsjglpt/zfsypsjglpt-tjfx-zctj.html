@@ -1,0 +1,193 @@
+<template>
+    <div class="zfsypsjglpt_tjfx_zctj_jjb">
+        <div class="search_box" :if="@authority.SEARCH || @authority.EXPORT">
+            <div class="hBox">
+                <div class="dataFormBox" :if="@authority.SEARCH">
+                    <!-- 所属部门 -->
+                    <span style="margin-right: 3px;">{{@zctj_txt.departmentP}}:</span>
+                    <div class="dep_tree" :controller="zcqktj_tree_jjb">
+                        <ms-tree-selecting :widget="{tree: @yspk_data, showSearch: true, wrapId: 'zfyps-tree-select', getSelected: @getSelected, selectedKey: @tree_key ? @tree_key : '', selectedTitle: @tree_title ? @tree_title : '', onChange: @select_change, extraExpandHandle: @extraExpandHandle}"></ms-tree-selecting>
+                    </div>
+                </div>
+                <!-- <div class="dataFormBox" :controller="zctj_count_type_jjb" :if="@authority.SEARCH">
+                    <span style="margin-right: 3px;">统计对象:</span>
+                    <ms-select :widget="{col: 'con', options:@count_type_options, value: @count_type, onChange: @onChangeT}" :class="['formInput']"></ms-select>
+                </div> -->
+            </div>
+            <div class="zctj_btnClass">
+                <a :if="!@extra_class&&@authority.EXPORT" class="export_btn" :click="@exportBtn">{{@zctj_txt.export}}</a>
+                <a :if="@authority.SEARCH" class="search_btn" :click="@searchBtn(0)">{{@zctj_txt.query}}</a>
+            </div>
+        </div>
+        <div class="zfsypsjglpt-tjfx-breadcrumb">
+            <ms-org-breadcrumb :widget="{cid:'zfsypsjglpt_tjfx_zctj_jjb', list: @breadcrumbList, handleclick: @breadcrumbClick}"
+                :visible="@breadcrumbList.length>0"></ms-org-breadcrumb>
+        </div>
+        <div :controller="zfsypsjglpt_tjfx_zcqktj_table_jjb">
+            <div :class="['tjfx_zctj_tabCont']" :css="{top:@tjfx_zctj_tabCont_top}">
+                <div :controller="tjfx_zctj_table" :class="['table-index']" id="tjfx_zctj_table">
+                    <div class="table-index-thead-fixed">
+                        <ul class="zctjjj_table_parent" :css="{paddingRight:@paddingRight}">
+                            <li parent="1" :class="[@extra_class ? 'col-5' : 'col-4']">
+                                <!-- 序号 -->
+                                <span style="visibility: hidden;">{{@zctj_txt.tableNo}}</span>
+                            </li>
+                            <li parent="2" class="col-20">
+                                <!-- 执勤部门 -->
+                                <span style="visibility: hidden;">{{@zctj_txt.department}}</span>
+                            </li>
+                            <li parent="3" :class="[@extra_class ? 'col-8' : 'col-6']">
+                                <!-- 人数 -->
+                                <span style="visibility: hidden;">{{@zctj_txt.peopleNum}}</span>
+                            </li>
+                            <li parent="4" :class="[@extra_class ? 'col-40' : 'col-34']">
+                                <!-- 执法记录仪 -->
+                                <span>{{@zctj_txt.bodyCameras}}</span>
+                            </li>
+                            <li parent="5" :class="[@extra_class ? 'col-27' : 'col-36']">
+                                <!-- 采集工作站 -->
+                                <span>{{@zctj_txt.dockingStation}}</span>
+                            </li>
+                        </ul>
+                        <ul class="table-index-thead zctjjj_table_son" :css="{paddingRight:@paddingRight}">
+                            <li data-order="1" son="1" :class="[@extra_class ? 'col-5' : 'col-4']" style="border-top: none">
+                                <!-- 序号 -->
+                                <span class="zctjjj_table_son_span">{{@zctj_txt.tableNo}}</span>
+                            </li>
+                            <li data-order="2" son="2" class="col-20">
+                                <!-- 执勤部门 -->
+                                <span class="zctjjj_table_son_span">{{@zctj_txt.department}}</span>
+                            </li>
+                            <li data-order="3" son="3" :class="[@extra_class ? 'col-8' : 'col-6']">
+                                <!-- 执法人数 -->
+                                <span class="zctjjj_table_son_span">{{@zctj_txt.quantityPolice}}</span>
+                            </li>
+                            <!-- 总台数 -->
+                            <li data-order="4" son="4" class="zctjjj_table_down" :class="[@extra_class ? 'col-6' : 'col-4']">
+                                {{@zctj_txt.totalQuantity}}
+                            </li>
+                            <!-- 正常 -->
+                            <li data-order="5" son="4" class="col-4 zctjjj_table_down"> {{@zctj_txt.normal}}
+                            </li>
+                            <!-- 维修 -->
+                            <li data-order="6" son="4" class="col-4 zctjjj_table_down"> {{@zctj_txt.repairing}}
+                            </li>
+                            <!-- 停用 -->
+                            <li data-order="7" son="4" class="zctjjj_table_down" :class="[@extra_class ? 'col-6' : 'col-4']">
+                                {{@zctj_txt.outOfService}}
+                            </li>
+                            <!-- 注销 -->
+                            <li data-order="8" son="4" class="col-4 zctjjj_table_down"> {{@zctj_txt.logout}}
+                            </li>
+                            <!-- 执法仪配发率 -->
+                            <li data-order="9" son="4" class="zctjjj_table_down" :class="[@extra_class ? 'col-16' : 'col-14']"
+                                id="zctj-jjb-pfl">{{@zctj_txt.distributionRate}}
+                                <span class="hint_Pfl" :click="@hint_Pfl">
+                                    <div :if="@hintPfl_flag" class="zctj-hint-content1">
+                                        <div class="zctj-hint-triangle1"></div>
+                                        <!-- <p>执法记录仪配发率</p> -->
+                                        <!-- <div style="text-align: left">执法记录仪配发率=（部门所有执法记录仪总数量/部门终端用户数）*100%，</div>
+                                        <div style="text-align: left">执法记录仪总数量含正常、维修、停用、注销状态的执法记录仪数量。</div> -->
+                                        <!-- 执法记录仪配发率=（部门正常使用执法记录仪总数量 / 总执法人数）*100% -->
+                                        <div style="text-align: left">{{@zctj_txt.distributionRateFormula}}</div>
+                                        <!-- <div style="text-align: left">总执法人数包括辅警和警员。</div> -->
+                                    </div>
+                                </span>
+                            </li>
+                            <!-- 台数 -->
+                            <li data-order="10" son="5" class="zctjjj_table_down" :class="[@extra_class ? 'col-6' : 'col-10']">
+                                {{@zctj_txt.quantity}} </li>
+                            <!-- 总容量(GB) -->
+                            <li data-order="11" son="5" class="zctjjj_table_down" :class="[@extra_class ? 'col-8' : 'col-10']">
+                                {{@zctj_txt.totalCapacity}}
+                            </li>
+                            <!-- 人均存储量(GB) -->
+                            <li data-order="12" son="5" class="zctjjj_table_down" :class="[@extra_class ? 'col-13' : 'col-16']"
+                                id="zctj-jjb-ccl">
+                                {{@zctj_txt.averageStorage}}
+                                <span class="hint_Rjccl" :click="@hint_Rjccl">
+                                    <div :if="@hintRjccl_flag" class="zctj-hint-content2">
+                                        <div class="zctj-hint-triangle2"></div>
+                                        <!-- <p>执法记录仪配发率</p> -->
+                                        <!-- 人均存储量=部门所有采集站工作站总存储容量/部门执法人数。 -->
+                                        <div style="text-align: left">{{@zctj_txt.averageStorageFormula}}</div>
+                                    </div>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <ul class="table-index-tbody">
+                        <li class="list-null" :if="!@data.length">{{@zctj_txt.noRecords}}</li>
+                        <li :for="($index, record) in @data">
+                            <div class="tbody" :class="[@extra_class ? 'col-5' : 'col-4']">
+                                <div class="table-cont">{{(@currentPage - 1) * @prePageSize + $index + 1}}</div>
+                            </div>
+                            <div class="tbody col-20">
+                                <div class="table-cont" :click="@searchBtn(1,record)" style="color: #0419dc; cursor: pointer;"
+                                    :attr="record['orgName'] && (record['orgName'] != '-') ? {rel:'drevil',tdval:record['orgName']}:''">
+                                    {{record['orgName']}}
+                                </div>
+                            </div>
+                            <div class="tbody" :class="[@extra_class ? 'col-8' : 'col-6']">
+                                <div class="table-cont" :attr="record['orgUserTotal'] && (record['orgUserTotal'] != '-') ? {rel:'drevil',tdval:record['orgUserTotal']}:''">
+                                    {{record['orgUserTotal']}}
+                                </div>
+                            </div>
+                            <div class="tbody" :class="[@extra_class ? 'col-6' : 'col-4']">
+                                <div class="table-cont" :attr="record['countTotal'] && (record['countTotal'] != '-') ? {rel:'drevil',tdval:record['countTotal']}:''">
+                                    {{record['countTotal']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-4">
+                                <div class="table-cont" :attr="record['normalTotal'] && (record['normalTotal'] != '-') ? {rel:'drevil',tdval:record['normalTotal']}:''">
+                                    {{record['normalTotal']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-4">
+                                <div class="table-cont" :attr="record['repairTotal'] && (record['repairTotal'] != '-') ? {rel:'drevil',tdval:record['repairTotal']}:''">
+                                    {{record['repairTotal']}}
+                                </div>
+                            </div>
+                            <div class="tbody" :class="[@extra_class ? 'col-6' : 'col-4']">
+                                <div class="table-cont" :attr="record['deactiveTotal'] && (record['deactiveTotal'] != '-') ? {rel:'drevil',tdval:record['deactiveTotal']}:''">
+                                    {{record['deactiveTotal']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-4">
+                                <div class="table-cont" :attr="record['scrapTotal'] && (record['scrapTotal'] != '-') ? {rel:'drevil',tdval:record['scrapTotal']}:''">
+                                    {{record['scrapTotal']}}
+                                </div>
+                            </div>
+                            <div class="tbody" :class="[@extra_class ? 'col-16' : 'col-14']">
+                                <div class="table-cont" :attr="record['allotRatio'] && (record['allotRatio'] != '-') ? {rel:'drevil',tdval:record['allotRatio']}:''">
+                                    {{record['allotRatio']}}
+                                </div>
+                            </div>
+                            <div class="tbody" :class="[@extra_class ? 'col-6' : 'col-10']">
+                                <div class="table-cont" :attr="record['workstationTotal'] && (record['workstationTotal'] != '-') ? {rel:'drevil',tdval:record['workstationTotal']}:''">
+                                    {{record['workstationTotal']}}
+                                </div>
+                            </div>
+                            <div class="tbody" :class="[@extra_class ? 'col-8' : 'col-10']">
+                                <div class="table-cont" :attr="record['spaceTotal'] && (record['spaceTotal'] != '-') ? {rel:'drevil',tdval:record['spaceTotal']}:''">
+                                    {{record['spaceTotal']}}
+                                </div>
+                            </div>
+                            <div class="tbody" :class="[@extra_class ? 'col-13' : 'col-16']">
+                                <div class="table-cont" :attr="record['spacePerDsjUser'] && (record['spacePerDsjUser'] != '-') ? {rel:'drevil',tdval:record['spacePerDsjUser']}:''">
+                                    {{record['spacePerDsjUser']}}
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+                    <div class="table-index-loading" :if="@loading">
+                        <span class="loadingSpan">{{@zctj_txt.loading}}</span>
+                    </div>
+                    <!-- <div :if="!@loading && !@data.length" class="noData">暂无数据</div> -->
+                </div>
+            </div>
+            <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent,getPageSize:@getPageSize}"></ms-pages>
+        </div>
+    </div>
+</template>

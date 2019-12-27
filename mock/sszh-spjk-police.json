@@ -1,0 +1,88 @@
+{
+    "code": 0,
+    "data": [
+        {
+            "policeId": "666",
+            "policeName": "广东交警总队",
+            "childs": [
+                {
+                    "policeId": "GMO4001141505389640896",
+                    "policeName": "警员2",
+                    "childs": []
+                },
+                {
+                    "policeId": "GMO4001141505446573399",
+                    "policeName": "警员3",
+                    "childs": []
+                },
+                {
+                    "policeId": "345",
+                    "policeName": "警员4",
+                    "childs": []
+                },
+                {
+                    "policeId": "GMO4001141505454924000",
+                    "policeName": "警员5",
+                    "childs": []
+                },
+                {
+                    "policeId": "GMO4001141505388576054",
+                    "policeName": "广州市天河区第一支队",
+                    "childs": [
+                        {
+                            "policeId": "GMO4001141505390089772",
+                            "policeName": "警员7",
+                            "childs": []
+                        }
+                    ]
+                },
+                {
+                    "policeId": "GMO4001141505391493181",
+                    "policeName": "警员8",
+                    "childs": []
+                },
+                {
+                    "policeId": "GMO4001141505454899181",
+                    "policeName": "警员9",
+                    "childs": []
+                },
+                {
+                    "policeId": "GMO4001141505454989474",
+                    "policeName": "警员10",
+                    "childs": []
+                },
+                {
+                    "policeId": "GMO4001141505446680306",
+                    "policeName": "警员11",
+                    "childs": []
+                },
+                {
+                    "policeId": "GMO4001141505380478688",
+                    "policeName": "广州市天河区第二支队",
+                    "childs": [
+                        {
+                            "policeId": "GMO4001141505389731221",
+                            "policeName": "警员13",
+                            "childs": []
+                        }
+                    ]
+                },
+                {
+                    "policeId": "GMO4001141505391584956",
+                    "policeName": "警员14",
+                    "childs": []
+                },
+                {
+                    "policeId": "GMO4001141505388984011",
+                    "policeName": "警员15",
+                    "childs": []
+                },
+                {
+                    "policeId": "GMO4001141505454548991",
+                    "policeName": "警员6",
+                    "childs": []
+                }
+            ]
+        }
+    ]
+}

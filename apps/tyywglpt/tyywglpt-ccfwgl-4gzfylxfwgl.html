@@ -1,0 +1,328 @@
+<template>
+    <article class="ccfwgl-wrap tyywglpt">
+        <!--查询下拉-->
+        <div class="tyywglpt-search-box">
+            <xmp :widget="{is:'ms-form',$form:@$form,inline:true}">
+                <ms-form-item :widget="{label:'归属机构:'}" :class="'form-item form-org'">
+                    <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'tree-select-wrap-1', getSelected:@getSelected,selectedTitle:@selectedTitle,selectedKey:@orgId,onChange:@handleTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                </ms-form-item>
+                <button :if="@authority.SEARCH" type="button" class="btn btn-query" :click="@querySearch">查询</button>
+            </xmp>
+        </div>
+        <!--按钮组-->
+        <div class="tyywglpt-tool-bar">
+            <input :if="@authority.SAVE" :class="['btn','btn-tool',(@checkBox.length == 0 ? '' : 'disabled')]" type="button" value="添加" :click="@handleAddClick()">
+            <!-- <input :if="@authority.CCCL" :class="['btn','btn-tool',(@btnDisabled ? 'disabled' : '')]" type="button" value="存储策略" :click="@handleMethodClick()"> -->
+            <input :if="@authority.CCCL" :class="['btn','btn-tool',(@btnDisabled ? 'disabled' : '')]" type="button" value="存储策略" :click="@handleMethodClick2()">
+            <!-- <input :if="@authority.CCFX" :class="['btn','btn-tool',(@btnDisabled ? 'disabled' : '')]" type="button" value="存储分析" :click="@handleAnalysisClick()"> -->
+            <!-- <input :if="@authority.ZFJLYFP" :class="['btn','btn-tool','width-130',(@btnDisabled ? 'disabled' : '')]" type="button" value="执法记录仪分配" :click="@handleStationAllocation()"> -->
+            <input :if="@authority.ZFJLYFP" :class="['btn','btn-tool','width-130',(@btnDisabled ? 'disabled' : '')]" type="button" value="存储分配"
+                :click="@handleZfyAllocation()">
+
+        </div>
+        <div :controller="4gzfyCcfwglLookDialog">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.ccfwglLookDialog',drag:true,modalWidth:660,show: @show, onCancel: @handleCancel, onOk: @handleOk,ifcancelBtn:fasle}">
+                <div class="  commonDialog ccfwgl ccfwglLookDialog">
+                    <div class="ccfwgl-row"><label for="">服务名称:</label><span :attr="{title:json.name}">{{json.name}}</span></div>
+                    <div class="ccfwgl-row double"><label for="">IP:</label><span :attr="{title:json.ip}">{{json.ip}}</span></div>
+                    <div class="ccfwgl-row"><label for="">归属机构:</label><span :attr="{title:json.belong}">{{json.belong}}</span></div>
+                    <div class="ccfwgl-row double"><label for="">端口:</label><span :attr="{title:json.port}">{{json.port}}</span></div>
+                    <div class="ccfwgl-row"><label for="">账号:</label><span :attr="{title:json.account}">{{json.account}}</span></div>
+                    <div class="ccfwgl-row double"><label for="">密码:</label><span :attr="{title:json.password}">{{json.password}}</span></div>
+                    <div class="path"><label for="">服务ID:</label><span :attr="{title:json.id}">{{json.id}}</span></div>
+                    <div class="path"><label for="">服务时段:</label><span :attr="{title:json.serviceTime}">{{json.serviceTime}}</span></div>
+                    <div class="path"><label for="">上传路径:</label><span :attr="{title:json.uploadUrl}">{{json.uploadUrl}}</span></div>
+                    <div class="path"><label for="">下载路径:</label><span :attr="{title:json.downloadUrl}">{{json.downloadUrl}}</span></div>
+                    <!-- <div class="path"><label for="">点播路径:</label><span>{{json.pointPlayUrl}}</span></div> -->
+                    <div class="clear"></div>
+                </div>
+            </xmp>
+        </div>
+        <div :controller="4gzfyCcfwglModifyDialog">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.ccfwglModifyDialog',drag:true,modalWidth:660,show: @show, onCancel: @handleCancel, onOk: @handleOk}">
+                <div class="  commonDialog ccfwgl ccfwglModifyDialog">
+                    <div class="ccfwgl-row  ccfwgl-serviceName"><label for=""><i>*</i>服务名称:</label><input type="text" class="form-control" :duplex="@json.name" :focus="@handleInputFocus('serviceName',$event)"
+                            :blur="@handleInputBlur('serviceName','ccfwglModifyDialog',$event)"><em class="fa fa-close close-clear"
+                            :mousedown="@handleCloseClear" name="ccfwglModifyDialog.name"></em></div>
+                    <div class="ccfwgl-row double ccfwgl-ip"><label for=""><i>*</i>IP:</label><input type="text" class="form-control" :duplex="@json.ip" :focus="@handleInputFocus('ip',$event)"
+                            :blur="@handleInputBlur('ip','ccfwglModifyDialog',$event)"><span class="ccfwgl-form-tips" :visible="@showIpBelowTips"><em class="fa fa-info-circle"></em>&nbsp;支持0~255的数字与.的组合</span>
+                        <em
+                            class="fa fa-close close-clear" :mousedown="@handleCloseClear" name="ccfwglModifyDialog.ip"></em>
+                    </div>
+                    <div class="ccfwgl-row organazition">
+                        <ms-form :widget="{$form:@$form,inline:true}">
+                            <ms-form-item :widget="{label:'归属机构:'}" :class="'form-item'">
+                                <ms-tree-selecting :widget="{tree:@orgData, showSearch:true,selectedKey:@orgId, selectedTitle:@selectedTitle,wrapId: 'tree-select-ccfwgl-3', getSelected:@getSelected,onChange:@handleTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                            </ms-form-item>
+                        </ms-form>
+                    </div>
+                    <div class="ccfwgl-row double  ccfwgl-port"><label for=""><i>*</i>端口:</label><input type="text" class="form-control" :duplex="@json.port" :focus="@handleInputFocus('port',$event)"
+                            :blur="@handleInputBlur('port','ccfwglModifyDialog',$event)"><span class="ccfwgl-form-tips" :visible="@showPortBelowTips"><em class="fa fa-info-circle"></em>&nbsp;支持数字组合[0~65535]大小范围</span>
+                        <em
+                            class="fa fa-close close-clear" :mousedown="@handleCloseClear" name="ccfwglModifyDialog.port"></em>
+                    </div>
+                    <div class="ccfwgl-row ccfwgl-account"><label for=""><i>*</i>账号:</label><input type="text" class="form-control" :duplex="@json.account" :focus="@handleInputFocus('account',$event)"
+                            :blur="@handleInputBlur('account','ccfwglModifyDialog',$event)"><em class="fa fa-close close-clear"
+                            :mousedown="@handleCloseClear" name="ccfwglModifyDialog.account"></em></div>
+                    <div class="ccfwgl-row double ccfwgl-password"><label for=""><i>*</i>密码:</label><input type="text" class="form-control" :duplex="@json.password" :focus="@handleInputFocus('password',$event)"
+                            :blur="@handleInputBlur('password','ccfwglModifyDialog',$event)"><em class="fa fa-close close-clear"
+                            :mousedown="@handleCloseClear" name="ccfwglModifyDialog.password"></em></div>
+                    <div class="ccfwgl-row ccfwgl-beginTime">
+                        <label for=""><i>*</i>开始时段:</label>
+                        <ms-timepicker :widget="{
+                        value:@beginTime,onChange:@handleTimePiker1
+                       }"></ms-timepicker>
+                    </div>
+                    <div class="ccfwgl-row double ccfwgl-endTime">
+                        <label for=""><i>*</i>结束时段:</label>
+                        <ms-timepicker :widget="{
+                            value:@endTime,onChange:@handleTimePiker2
+                        }"></ms-timepicker>
+                    </div>
+                    <div class="path ccfwgl-uploadPath"><label for=""><i>*</i>上传路径:</label><input type="text" class="form-control" :duplex="@json.uploadUrl"
+                            :focus="@handleInputFocus('uploadPath',$event)" :blur="@handleInputBlur('uploadPath','ccfwglModifyDialog',$event)">
+                        <em
+                            class="fa fa-close close-clear" :mousedown="@handleCloseClear" name="ccfwglModifyDialog.uploadUrl"></em>
+                    </div>
+                    <div class="path ccfwgl-downloadPath"><label for=""><i>*</i>下载路径:</label><input type="text" class="form-control" :duplex="@json.downloadUrl"
+                            :focus="@handleInputFocus('downloadPath',$event)" :blur="@handleInputBlur('downloadPath','ccfwglModifyDialog',$event)">
+                        <em
+                            class="fa fa-close close-clear" :mousedown="@handleCloseClear" name="ccfwglModifyDialog.downloadUrl"></em>
+                    </div>
+                    <!-- <div class="path "><label for=""><i>*</i>点播路径:</label><input type="text"  class="form-control" :duplex="@json.pointPlayUrl"></div> -->
+                    <div class='warn'><i class="fa fa-hand-o-right"></i>温馨提示：开始时段，结束时段请按顺序选择时，分，秒</div>
+                    <div class="ccfwgl-row test-btn-wrap"><input class="test-btn" type="button" value="配置测试" :click="@handleTest('ccfwglModifyDialog')"> </div>
+                    <div class="clear"></div>
+                </div>
+            </xmp>
+        </div>
+        <div :controller="4gzfyCcfwglAddDialog">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.ccfwglAddDialog',drag:true,modalWidth:660,show: @show, onCancel: @handleCancel, onOk: @handleOk}">
+                <div class="  commonDialog ccfwgl ccfwglAddDialog">
+                    <div class="ccfwgl-row  ccfwgl-serviceName"><label for=""><i>*</i>服务名称:</label><input type="text" class="form-control" :duplex="@json.name" :focus="@handleInputFocus('serviceName',$event)"
+                            :blur="@handleInputBlur('serviceName','ccfwglAddDialog',$event)"><em class="fa fa-close close-clear"
+                            :mousedown="@handleCloseClear" name="ccfwglAddDialog.name"></em></div>
+                    <div class="ccfwgl-row double ccfwgl-ip"><label for=""><i>*</i>IP:</label><input type="text" class="form-control" :duplex="@json.ip" :focus="@handleInputFocus('ip',$event)"
+                            :blur="@handleInputBlur('ip','ccfwglAddDialog',$event)"><span class="ccfwgl-form-tips" :visible="@showIpBelowTips"><em class="fa fa-info-circle"></em>&nbsp;支持0~255的数字与.的组合</span>
+                        <em
+                            class="fa fa-close close-clear" :mousedown="@handleCloseClear" name="ccfwglAddDialog.ip"></em>
+                    </div>
+                    <div class="ccfwgl-row organazition">
+                        <ms-form>
+                            <ms-form-item :widget="{label:'归属机构:'}" :class="'form-item'">
+                                <ms-tree-selecting :widget="{tree:@orgData, showSearch:true,selectedKey:@json.orgId, selectedTitle:@selectedTitle,wrapId: 'tree-select-ccfwgl-2', getSelected:@getSelected,onChange:@handleTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                            </ms-form-item>
+                        </ms-form>
+                    </div>
+                    <div class="ccfwgl-row double ccfwgl-port"><label for=""><i>*</i>端口:</label><input type="text" class="form-control" :duplex="@json.port" :focus="@handleInputFocus('port',$event)"
+                            :blur="@handleInputBlur('port','ccfwglAddDialog',$event)"><span class="ccfwgl-form-tips" :visible="@showPortBelowTips"><em class="fa fa-info-circle"></em>&nbsp;支持数字组合[0~65535]大小范围</span>
+                        <em
+                            class="fa fa-close close-clear" :mousedown="@handleCloseClear" name="ccfwglAddDialog.port"></em>
+                    </div>
+                    <div class="ccfwgl-row  ccfwgl-account"><label for=""><i>*</i>账号:</label><input type="text" class="form-control" :duplex="@json.account" :focus="@handleInputFocus('account',$event)"
+                            :blur="@handleInputBlur('account','ccfwglAddDialog',$event)"><em class="fa fa-close close-clear"
+                            :mousedown="@handleCloseClear" name="ccfwglAddDialog.account"></em></div>
+                    <div class="ccfwgl-row double ccfwgl-password"><label for=""><i>*</i>密码:</label><input type="text" class="form-control" :duplex="@json.password" :focus="@handleInputFocus('password',$event)"
+                            :blur="@handleInputBlur('password','ccfwglAddDialog',$event)"><em class="fa fa-close close-clear"
+                            :mousedown="@handleCloseClear" name="ccfwglAddDialog.password"></em></div>
+                    <div class="ccfwgl-row ccfwgl-beginTime">
+                        <label for=""><i>*</i>开始时段:</label>
+                        <ms-timepicker :widget="{
+                                value:@json.worktimeBegin,onChange:@handleTimePiker3
+                            }"></ms-timepicker>
+                    </div>
+                    <div class="ccfwgl-row double  ccfwgl-endTime">
+                        <label for=""><i>*</i>结束时段:</label>
+                        <ms-timepicker :widget="{
+                                value:@json.worktimeEnd,onChange:@handleTimePiker4
+                            }"></ms-timepicker>
+                    </div>
+                    <div class="path ccfwgl-uploadPath"><label for=""><i>*</i>上传路径:</label><input type="text" class="form-control" :duplex="@json.uploadUrl"
+                            :focus="@handleInputFocus('uploadPath',$event)" :blur="@handleInputBlur('uploadPath','ccfwglAddDialog',$event)">
+                        <em
+                            class="fa fa-close close-clear" :mousedown="@handleCloseClear" name="ccfwglAddDialog.uploadUrl"></em>
+                    </div>
+                    <div class="path ccfwgl-downloadPath"><label for=""><i>*</i>下载路径:</label><input type="text" class="form-control" :duplex="@json.downloadUrl"
+                            :focus="@handleInputFocus('downloadPath',$event)" :blur="@handleInputBlur('downloadPath','ccfwglAddDialog',$event)">
+                        <em
+                            class="fa fa-close close-clear" :mousedown="@handleCloseClear" name="ccfwglAddDialog.downloadUrl"></em>
+                    </div>
+                    <!-- <div class="path "><label for=""><i>*</i>点播路径:</label><input type="text"  class="form-control" :duplex="@json.pointPlayUrl"></div> -->
+                    <div class='warn'><i class="fa fa-hand-o-right"></i>温馨提示：开始时段，结束时段请按顺序选择时，分，秒</div>
+                    <div class="ccfwgl-row test-btn-wrap"><input class="test-btn" type="button" value="配置测试" :click="@handleTest('ccfwglAddDialog')"> </div>
+                    <div class="clear"></div>
+                </div>
+            </xmp>
+        </div>
+        <!-- 配置测试弹框 -->
+        <div :controller="zfyDeviceTest">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.deviceTest',drag:true,modalWidth:@modalWidth,show: @show, onCancel: @handleCancel, onOk: @handleOk,ifcancelBtn:false,ifokBtn:false}">
+                <div class="commonDialog ccfwgl deviceTest">
+                    <div class="confirm-tip">{{@testResult}}</div>
+                    <div class="yes"><button :click="@deviceTestClick">确定</button></div>
+                </div>
+            </xmp>
+        </div>
+        <!-- 删除弹框 -->
+        <div :controller="4gzfyCcfwglDelete">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.delete',drag:true,modalWidth:@modalWidth,show: @show, onCancel: @handleCancel, onOk: @handleOk}">
+                <div class="commonDialog ccfwgl delete">
+                    <div :visible="toggle" class="confirm-tip">是否确定删除该项数据？</div>
+                    <div :visible="!toggle" class="confirm-tip">是否确定删除选中的&nbsp;{{deleteCount}}&nbsp;条数据？</div>
+                </div>
+            </xmp>
+        </div>
+        <!-- 存储策略弹框 -->
+        <!-- <div :controller="4gzfyCcfwglMethodDialog">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.ccfwglMethodDialog',drag:true,modalWidth:@modalWidth,show: @show, onCancel: @handleCancel, onOk: @handleOk}">
+                <div class="commonDialog ccfwgl ccfwglMethodDialog">
+                    <div class="ccfwgl-row  ccfwgl-normalDay"><label for=""><i>*</i>普通视音频存储期限:</label><input type="text" class="form-control" :duplex="@json.expireDaysNormal"
+                            :focus="@handleInputFocus('normalDay',$event)" :blur="@handleInputBlur('normalDay','ccfwglMethodDialog',$event)">
+                        <span
+                            class="ccfwgl-form-tips" :visible="@shownNormalDayBelowTips"><em class="fa fa-info-circle"></em>&nbsp;支持数字组合,最大9位数</span><a>天</a><em class="fa fa-close close-clear"  :mousedown="@handleCloseClear" name="ccfwglMethodDialog.expireDaysNormal"></em></div>
+                    <div class="ccfwgl-row  ccfwgl-specialDay"><label for=""><i>*</i>重要视音频存储期限:</label><input type="text" class="form-control" :duplex="@json.expireDaysSpecial"
+                            :focus="@handleInputFocus('specialDay',$event)" :blur="@handleInputBlur('specialDay','ccfwglMethodDialog',$event)">
+                        <span
+                            class="ccfwgl-form-tips" :visible="@showSpecialDayBelowTips"><em class="fa fa-info-circle"></em>&nbsp;支持数字组合,最大9位数</span><a>天</a><em class="fa fa-close close-clear"  :mousedown="@handleCloseClear" name="ccfwglMethodDialog.expireDaysSpecial"></em></div>
+                    <div class="clear"></div>
+                </div>
+            </xmp>
+        </div> -->
+        <div :controller="4gzfyCcfwglMethodDialog">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.ccfwglMethodDialog',drag:true,modalWidth:@modalWidth,show: @show, onCancel: @handleCancel, onOk: @handleOk}">
+                <div class="commonDialog ccfwgl ccfwglMethodDialog">
+                    <div class="ccfwgl-row  ccfwgl-normalDay"><label for=""><i>*</i>普通视音频存储期限:</label><input :visible="@showNormalInput" type="text" class="form-control"
+                            :duplex="@json.expireDaysNormal" :focus="@handleInputFocus('normalDay',$event)" :blur="@handleInputBlur('normalDay','ccfwglMethodDialog',$event)">
+                        <span class="ccfwgl-form-tips" :visible="@shownNormalDayBelowTips"><em class="fa fa-info-circle"></em>&nbsp;支持数字组合,最大9位数</span>
+                        <a
+                            :visible="!@showNormalInput">{{@json.expireDaysNormal}}</a><a class="day">天</a><em class="fa fa-close close-clear" :mousedown="@handleCloseClear"
+                                name="ccfwglMethodDialog.expireDaysNormal"></em><button :visible="@showNormalInput" :click="@handleComfirm(0,$event)"
+                                class="confirm">确定</button><a :visible="!@showNormalInput" :click="@handleModify(0)" class="modify">修改</a></div>
+                    <div class="ccfwgl-row  ccfwgl-specialDay"><label for=""><i>*</i>重要视音频存储期限:</label><input :visible="@showSpecialInput" type="text" class="form-control"
+                            :duplex="@json.expireDaysSpecial" :focus="@handleInputFocus('specialDay',$event)" :blur="@handleInputBlur('specialDay','ccfwglMethodDialog',$event)">
+                        <span class="ccfwgl-form-tips" :visible="@showSpecialDayBelowTips"><em class="fa fa-info-circle"></em>&nbsp;支持数字组合,最大9位数</span>
+                        <a
+                            :visible="!@showSpecialInput">{{@json.expireDaysSpecial}}</a><a class="day">天</a><em class="fa fa-close close-clear" :mousedown="@handleCloseClear"
+                                name="ccfwglMethodDialog.expireDaysSpecial"></em><button :visible="@showSpecialInput" :click="@handleComfirm(1,$event)"
+                                class="confirm">确定</button><a :visible="!@showSpecialInput" :click="@handleModify(1)" class="modify">修改</a></div>
+                    <div style="height:330px;width:380px" :controller="zfyMethodChart" class="method-pie"></div>
+                    <div class="clear"></div>
+                </div>
+            </xmp>
+        </div>
+        <!--存储分析弹框-->
+        <!-- <div :controller="ccfwglAnalysisDialog">
+            <ms-dialog :widget="{$innerVm: 'ccfwglAnalysisDialog', show: @show, onCancel: @handleCancel, onOk: @handleOk,okText:'确定'}">
+                <div slot="body" ms-skip class="ccfwglAnalysisDialog common-btn">
+                    <xmp is="ms-form" :widget="{$form: @$form,inline: @inline}">
+                            <ms-radio-group :widget="{
+                                options:@radioOptions,
+                                onChange:@handleChange,
+                                value :@curValue
+                            }">
+                            </ms-radio-group>
+                    </xmp>
+                    <div class="time-form-wrap" :visible="@showTime" >
+                        <xmp is="ms-form" :widget="{$form: @$timeForm,inline: @inline}">
+                            <ms-form-item :widget="{label:'开始时间'}">
+                                <ms-datepicker :widget="@options1"></ms-datepicker>
+                            </ms-form-item>
+                            <ms-form-item :widget="{label:'结束时间'}">
+                                <ms-datepicker :widget="@options2"></ms-datepicker>
+                            </ms-form-item>
+                            <input type="button" :click="@handleSearchClick" value="查询" class="analysisQuery">
+                        </xmp>
+                    </div>
+                    <div id="chart-container" style="height:420px;width:540px" :controller="ccfwglAnalysisChart"></div>
+                </div>
+            </ms-dialog>
+        </div> -->
+        <div :controller="ccfwglAnalysisDialog">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.ccfwglAnalysisDialog',drag:true,modalWidth:@modalWidth,show: @show, onCancel: @handleCancel, onOk: @handleOk}">
+                <div class="ccfwglAnalysisDialog common-btn">
+                    <ms-form>
+                        <ms-radio-group :widget="{
+                                options:@radioOptions,
+                                onChange:@handleChange,
+                                value :@curValue
+                            }">
+                        </ms-radio-group>
+                    </ms-form>
+                    <div class="time-form-wrap" :visible="@showTime">
+                        <ms-form :widget="{$form: @$timeForm,inline: @inline}">
+                            <ms-form-item :widget="{label:'开始时间'}">
+                                <ms-datepicker :widget="@options1"></ms-datepicker>
+                            </ms-form-item>
+                            <ms-form-item :widget="{label:'结束时间'}">
+                                <ms-datepicker :widget="@options2"></ms-datepicker>
+                            </ms-form-item>
+                            <input type="button" :click="@handleSearchClick" value="查询" class="analysisQuery">
+                        </ms-form>
+                    </div>
+                    <div id="chart-container" style="height:570px;width:670px" :controller="ccfwglAnalysisChart"></div>
+                </div>
+            </xmp>
+        </div>
+        <!-- 执法仪分配新弹框 -->
+        <div :controller="4gzfyStationAllocation">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.ccfwglAllocationDialog',drag:true,modalWidth:@modalWidth,show: @show, onCancel: @handleCancel, onOk: @handleOk}">
+                <div class="ccfwglAllocationDialog  AllocationDialog">
+                    <!--<ms-tree-ccfwglassign :widget="{tree:@orgData,listStorageId:@listStorageId,parentsNodeOrgIds:@parentsNodeOrgIds,searchAjax:@searchAjax,getItemsByOrgIdAjax:@getItemsByOrgIdAjax,getRightItemsByStorageId:@getRightItemsByStorageId,returnRightItems:@returnRightItems,curClickSelectNodes:@curClickSelectNodes,curClickRightItems:@curClickRightItems,settings:@settings,searchInputValue:@searchInputValue,searchResults:@searchResults,returnHasAddNodes:@returnHasAddNodes,getOrgByOrgIdAjax:@extraExpandHandle}"></ms-tree-ccfwglassign>-->
+                    <ms-ccfwglassign :widget="{tree:@orgData,listStorageId:@listStorageId,parentsNodeOrgIds:@parentsNodeOrgIds,searchAjax:@searchAjax,getItemsByOrgIdAjax:@getItemsByOrgIdAjax,getRightItemsByStorageId:@getRightItemsByStorageId,returnRightItems:@returnRightItems,curClickSelectNodes:@curClickSelectNodes,curClickRightItems:@curClickRightItems,settings:@settings,searchInputValue:@searchInputValue,searchResults:@searchResults,returnHasAddNodes:@returnHasAddNodes,getOrgByOrgIdAjax:@extraExpandHandle,getOrgArrByOrgId:@getOrgArrByOrgId}"></ms-ccfwglassign>
+                </div>
+            </xmp>
+        </div>
+        <!--列表-->
+        <div class="tyywglpt-list-panel">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <li class="col-2 first-item">
+                        <input type="checkbox" id="checkall" :duplex-checked="@checkAll" data-duplex-changed="@handleCheckAll($event)">
+                        <label for="checkall" :class="[@checkAll ? 'check_selected' : 'check_unselected']"></label>
+                    </li>
+                    <li class="col-4">序号</li>
+                    <li class="col-10">操作</li>
+                    <li class="col-12">归属机构</li>
+                    <li class="col-20">服务ID</li>
+                    <li class="col-12">服务名称</li>
+                    <li class="col-12">IP</li>
+                    <li class="col-6">端口</li>
+                    <li class="col-6">在线状态</li>
+                    <li class="col-8">总容量(GB)</li>
+                    <li class="col-8 last-item">剩余容量(GB)</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@loading" class="list-loading"><span>结果加载中</span></li>
+                <li :if="@noData" class="list-null">暂无数据</li>
+                <li :if="!@loading" :for="($index, item) in @tableData">
+                    <div class="col-2 first-item">
+                        <input type="checkbox" :attr="{'id':$index}" :duplex-checked="item.checked" data-duplex-changed="@handleCheck($index,item,$event)">
+                        <label :attr="{'for':$index}" :class="[item.checked ? 'check_selected' : 'check_unselected']"></label>
+                    </div>
+                    <div class="col-4">{{(@currentPage-1)*@pageSize+$index+1}}</div>
+                    <div class="col-10">
+                        <a :if="@authority.CHECK" class="oparate" href="javascript:void(0)" :click="@handleLookClick ($index,item)">查看</a>
+                        <a :if="@authority.MODIFY" class="oparate" href="javascript:void(0)" :class="[item.source && 'disabled']" :click="@handleModifyClick ($index,item)">修改</a>
+                        <a :if="@authority.DELETE" class="oparate" href="javascript:void(0)" :class="[item.source && 'disabled']" :click="@handleSingleDeleteClick ($index,item)">删除</a>
+                        <span :if="@authority.OPT_SHOW"> - </span>
+                    </div>
+                    <div class="col-12" :attr="{title:item.orgName,'data-toggle':'popover'}">{{item.orgName}}</div>
+                    <div class="col-20" :attr="{title:item.rid,'data-toggle':'popover'}">{{item.rid}}</div>
+                    <div class="col-12" :attr="{title:item.name,'data-toggle':'popover'}">{{item.name}}</div>
+                    <div class="col-12" :attr="{title:item.ip,'data-toggle':'popover'}">{{item.ip}}</div>
+                    <div class="col-6" :attr="{title:item.port,'data-toggle':'popover'}">{{item.port}}</div>
+                    <div :class="['col-6',(item.status==1 ? '' : 'isoffline')]" :attr="{'data-toggle':'popover',title:item.status==1 ? '在线' : '离线'}">{{item.status==1 ? online : offline}}</div>
+                    <div class="col-8" :attr="{title:item.totalCapacity,'data-toggle':'popover'}">{{item.totalCapacity}}</div>
+                    <div class="col-8" :attr="{title:item.remainCapacity,'data-toggle':'popover'}">{{item.remainCapacity}}</div>
+                </li>
+            </ul>
+        </div>
+        <div class="bottom-tool-bar">
+            <input :if="@authority.BATCHDELETE" :class="['btn','btn-tool',(@checkBox.length == 0 || @checkedIsSource) && 'disabled']" type="button" value="批量删除"
+                :click="@handleDeleteClick()">
+        </div>
+        <!--分页-->
+        <ms-pages :widget="{total:@total,onChange:@handlePageChange,current:@currentPage,getCurrent:@getCurrent}"></ms-pages>
+    </article>
+</template>

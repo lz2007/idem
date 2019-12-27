@@ -1,0 +1,22 @@
+<template>
+	<div :class="['common-ms-select','common-ms-select-'+@owner]">
+		<div class="form-control" :click="@handleTrigger">
+			<span :visible="@loading" class="loading">{{@msSelect_language.dataLoading}}</span>
+			<span class="common-ms-select-selected" :attr="{title:@selectedLabel}" :visible="isLabelVisible(isDown,options,loading,showSearch)">{{@selectedLabel}}</span>
+			<input class="common-ms-select-search" name="search" type="text" autocomplete="off" :duplex="@searchValue" :visible="@isDown && @showSearch" />
+			<!-- 该input框是用来防止在[name=search]框中按回车而刷新页面的问题 -->
+			<input type="text" style="display:none" />
+			<i :visible="!@loading && @options.length" class="fa" :class="@isDown ? 'fa-caret-up' : 'fa-caret-down'"></i>
+		</div>
+		<!-- 全部可选列表 -->
+		<ul :visible="isAllVisible(isDown, searchValue)" class="option-list all-list" :click="@handleSelect">
+		</ul>
+		<!-- 无可选项时 -->
+		<div :visible="!@options.length && !@loading" class="no-data">{{@displayValue}}</div>
+		<!-- 搜索列表 -->
+		<ul :visible="isSearchVisible(isDown, showSearch, searchValue)" class="option-list search-list" :click="@handleSelect">
+		</ul>
+		<!-- 无匹配项时 -->
+		<div :visible="@isDown && !@searchOptions.length" class="no-match">{{@msSelect_language.noResult}}</div>
+	</div>
+</template>

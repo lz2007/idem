@@ -1,0 +1,56 @@
+<template>
+    <div id="test">
+        <div class="bord">
+            <div style="margin-top: 17px">
+                <ms-treeselect :widget="{css:@css, input:@zqbm}"> </ms-treeselect>
+                <ms-inputs :widget="{css:@css,input:@xmjh}"></ms-inputs>
+                <ms-datepick :widget="{css:@css, input:@date}"></ms-datepick>
+            </div>
+            <div>
+                <ms-selects :widget="{css:@css,input:@kpzt}"></ms-selects>
+                <ms-selects :widget="{css:@css,input:@kpjg}"></ms-selects>
+                <ms-inputs :widget="{css:@css,input:@dsr}"></ms-inputs>
+                <ms-inputs :widget="{css:@css,input:@jszh}"></ms-inputs>
+                <ms-inputs :widget="{css:@css,input:@jdsbh}"></ms-inputs>
+            </div>
+            <div>
+                <ms-selects :widget="{css:@css,input:@glmt}"></ms-selects>
+                <ms-inputs :widget="{css:@css,input:@wfdd}"></ms-inputs>
+                <ms-selects :widget="{css:@css,input:@khzt}"></ms-selects>
+                <ms-selects :widget="{css:@css,input:@khjg}"></ms-selects>
+                <button class="btn" :click="@search" style="float: right;">查询</button>
+            </div>
+        </div>
+
+        <div id="list">comtable
+            <ms-comtable cached="true" :widget="{id:'dasdsasdsad',data:@list,actions:@actions,panelCss:{marginTop: 20,height: 600}}">
+                <ms-comtable-header :widget="{title:'序号',type:'index',colwidth:'20%',popover:true}"></ms-table-header>
+                <ms-comtable-header :widget="{title:'地址',dataIndex:'address',colwidth:'20%',popover:true,isHide:true}"></ms-table-header>
+                <ms-comtable-header :widget="{title:'省份',dataIndex:'province',colwidth:'20%',popover:true}"></ms-table-header>
+                <ms-comtable-header :widget="{title:'名称',colwidth:'20%',popover:true}">
+                    <span :skip>{{record.name}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'操作',dataIndex:'name',colwidth:'20%'}">
+                    <button type="button" class="btn btn-danger btn-xs" :click="handle('delete')">删除</button>
+                </ms-comtable-header>
+            </ms-comtable>
+        </div>
+        <!-- <div id="list">comtable
+            <ms-comtable cached="true" :widget="{id:'dasdsasdsad',data:@list,actions:@actions,panelCss:{marginTop: 20,height: 600}}">
+                <ms-comtable-header :widget="{title:'序号',type:'index',colwidth:'20%',popover:true}"></ms-table-header>
+                <ms-comtable-header :widget="{title:'地址',dataIndex:'address',colwidth:'10%',popover:true}">
+                    <ms-comtable-header :widget="{title:'地址1',dataIndex:'address',colwidth:'5%',popover:true}"></ms-table-header>
+                    <ms-comtable-header :widget="{title:'地址2',dataIndex:'address',colwidth:'5%',popover:true}"></ms-table-header>
+                </ms-table-header>
+                <ms-comtable-header :widget="{title:'地址2',dataIndex:'address',colwidth:'10%',popover:true}"></ms-table-header>
+                <ms-comtable-header :widget="{title:'省份',dataIndex:'province',colwidth:'20%',popover:true}"></ms-table-header>
+                <ms-comtable-header :widget="{title:'名称',colwidth:'20%',popover:true}">
+                    <span :skip>{{record.name}}</span>
+                </ms-comtable-header>
+                <ms-comtable-header :widget="{title:'操作',dataIndex:'name',colwidth:'20%'}">2
+                    <button type="button" class="btn btn-danger btn-xs" :click="handle('delete')">删除</button>
+                </ms-comtable-header>
+            </ms-comtable>
+        </div> -->
+    </div>
+</template>

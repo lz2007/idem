@@ -1,0 +1,37 @@
+<template>
+    <div class="ane-datepicker-panel ms-month-panel" style="overflow: auto">
+        <div class="ane-datepicker-panel-header">
+            <a class="ane-datepicker-prev-year-btn" :click="mutate('subtract', 1, 'years')">
+                <i class="fa fa-angle-double-left"></i>
+            </a>
+            <span>
+                <a class="ane-datepicker-year-select">{{@currentYear}}</a>
+            </span>
+            <a class="ane-datepicker-next-month-btn" :click="mutate('add', 1, 'years')" :class="[(@double_right_disabled ? 'double_right_disabled_class' : '')]">
+                <i class="fa fa-angle-double-right"></i>
+            </a>
+        </div>
+        <div class="ane-datepicker-panel-body">
+            <div class="ane-datepicker-panel-body">
+                <div class="ane-calendar">
+                    <table class="ane-calendar-year-view">
+                        <tbody>
+                            <tr :for="（i, row) in @table">
+                                <td class="ane-calendar-cell" :class="[(@isSelected(cell) ? 'ane-calendar-selected-day' : ''), (@isDisabled(cell) ? 'isDisabled_class' : '')]"
+                                    :for="(j, cell) in row">
+                                    <div class="ane-calendar-date" :click="@handleCellClick(cell)">{{cell.label}}</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <ms-calendar-year-view :widget="{currentMonth:@currentMonth,currentYear:@currentYear,view:@viewMode,onSelect:@handleYearViewSelect}"></ms-calendar-year-view> -->
+            </div>
+        </div>
+        <div class="ane-datepicker-panel-footer">
+            <span class="ane-datepicker-panel-footer-btn">
+                <a class="ane-datepicker-panel-today-btn" :click="@today">本月</a>
+            </span>
+        </div>
+    </div>
+</template>

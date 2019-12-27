@@ -1,0 +1,478 @@
+<template>
+    <div class="row myrow">
+        <!--<input type="text" :keydown="@showmap($event)" style="z-index: 9999">-->
+        <!--<input type="text" :keydown="@hidemap($event)" style="z-index: 9999">-->
+        <div style="width: 100%;height: 100%;">
+            <div class="sszh-left">
+                <!--<ms-poll-sidebar :widget="{owner:'mapConduct',onCheck:@handleTreeCheck,extraProcessWhenExpand:@extraProcessWhenExpand,extraProcessWhenPersonChange:@extraProcessWhenPersonChange,handleDeviceClick:@handleDeviceClick,handlePersonDeviceClick:@handlePersonDeviceClick}">-->
+                <!--</ms-poll-sidebar>-->
+                <ms-sszh-sidebar :widget="{owner:'mapConduct',useSearch:@useSearch,onCheck:@handleTreeCheck,extraProcessWhenExpand:@extraProcessWhenExpand,extraProcessWhenPersonChange:@extraProcessWhenPersonChange,extraHandleWhenCheckOrg:@extraHandleWhenCheckOrg,returnTreeObj:@returnTreeObj}">
+                </ms-sszh-sidebar>
+            </div>
+            <div class="sszhrightcontainer ">
+                <div class="sszh-map" :controller="sszhmap" :class="[@extra_class ? 'sszhmap_en' : '']">
+                    <!--mapinfowindow这样写是为了能在iframe中读到avalon.vmodels-->
+                    <div style="display: none" :controller="mapinfowindow"></div>
+                    <!--<div class="sszhmapsearch">-->
+                    <!--<input type="text" class="form-control" :class="[@placeholderstatue ==0?'placeholderinput':'']" id="mapsearch" :duplex="@mapsearchvalue" :keyup="@handleQuickSearch" :focus="@focusinput" :blur="@restoretip">-->
+                    <!--<span class="input-group-btn">-->
+                    <!--<button class="btn" :click="@mapsearch">-->
+                    <!--<i class="fa fa-search fa-lg"></i>-->
+                    <!--</button>-->
+                    <!--</span>-->
+                    <!--<i class="fa fa-times mapclose" :visible="@showmapclose" :click="@emptyinput"></i>-->
+                    <!--</div>-->
+                    <!--地图左侧工具栏-->
+                    <!-- <div class="sszhmaptool" :if="toolUse">
+                        <div class="sszhmaptoolhead city" :click="@showcitylist" :if="!@extra_class">
+                            <span :click="@citylocate">{{@showcityName}}</span>
+                            <i class="fa fa-lg fa-angle-down"></i>
+                        </div>
+                        <span style="padding: 0 15px;" :if="!@extra_class">|</span>
+                        <div class="sszhmaptoolhead tool" :click="@showtool">
+                            <label></label>
+                            <span>{{@sszhmap_txt.tool}}</span>
+                            <i class="fa fa-lg fa-angle-down"></i>
+                        </div>
+                        <div class="sszhmaptoolcontent">
+                            <div class="mapcljl">
+                                <label><span style="opacity: 0;" data-toggle="popover">Click to select starting point,click to select location, and double click to finish it</span></label>
+                                <span :click="@mearsurelength" style="font-size: 12px">{{@sszhmap_txt.measuredRange}}</span>
+                            </div>
+                            <div class="mapcljl" :if="false">
+                                <label class="bkfw-ico"></label>
+                                <span :click="@showBkfw" style="font-size: 12px">Dispatch Radius</span>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!--全国城市列表-->
+                    <!--<xmp :widget="{is:'common-sszh-mapcity'}"></xmp>-->
+                    <!--地图-->
+                    <!--<div id="sszhallmap"></div>-->
+                    <!--语音对讲-->
+                    <div :controller="sszhyyth" :visible="@sszhyytoggle">
+                        <div class="sszhyyth" id="sszhyyth" style="left: 50px;top: 100px;z-index:9996">
+                            <p class="sszhyythtitle" id="sszhyythtitle" :mousedown="@move($event)">
+                                <span>{{@sszhthjy}}</span>
+                                <!-- <span class="fa fa-times sszhyythclose" :click="@closesszhhyyth"></span> -->
+                                <span class="fa sszhyythminimize" :click="@hidesszhyythaction"></span>
+                            </p>
+                            <div style="margin: 10px 0 0 20px;text-align: left;">
+                                <label :class="[@signal<50?(@signal<15?'xhbad':'xhbetter'):'xhgood']"></label>
+                                <!-- <span :class="[@signal<50?(@signal<15?'sszhspxhwzbad':'sszhspxhwzbetter'):'sszhspxhwzgood']">{{xhword}}</span> -->
+                            </div>
+                            <div class="sszhyythcontent">
+                                <div class="sszhyythimg">
+                                    <img src="../../static/image/sszhxt-sszh/u301.png">
+                                    <!--<xmp :widget="{is:'common-sszh-voiceTool',handleSoundLevel:@handleSoundLevel,index:@ocxindex}"></xmp>-->
+                                    <p></p>
+                                    <!-- <p>{{@sszhyyth_txt.calling}}</p> -->
+                                    <p class="sszhyythtimecount" :visible="@sszhyyth_waiting">
+                                        <i class="fa fa-spinner fa-spin"></i>
+                                        {{@sszhyyth_txt.waiting}}</p>
+                                    <p class="sszhyythtimecount" :visible="!@sszhyyth_waiting">{{@sszhyythtime}}</p>
+                                </div>
+                                <!--<button class="btn" :click="@slience">静音</button>-->
+                                <button class="btn btn-danger" :click="@closesszhhyyth">{{@sszhyyth_txt.hangup}}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--左侧视频语音缩小标记-->
+                    <div class="sszhleftcontianer">
+                        <div class="sszhyythmincontianer" :visible="@sszhthmintitletoggle">
+                            <p :for="($index, item) in @sszhyyhtml" class="sszhthmintitle">
+                                <a :click="@expandsszhyy(item)">{{item.showName}}</a>
+                                <!--<a :click="@expandsszhsp(item)" :if="!item.username">{{'与'+ item.name+'视频通话中'}}</a>-->
+                                <img :click="@locate(item)" src="../../static/image/sszhxt-sszh/u173.png" style="position:absolute;right:5px;cursor: pointer;padding-top: 2px">
+                            </p>
+                        </div>
+                        <div class="sszhspthmincontianer">
+                            <p :for="($index, item) in @devhtmllist" :visible="@item.show" class="sszhthmintitle">
+                                <a :click="@expandsszhsp(item)">{{item.showName}}</a>
+                                <!--<a :click="@expandsszhsp(item)" :if="!item.username">{{'与'+ item.name+'视频通话中'}}</a>-->
+                                <img :click="@locate(item)" src="../../static/image/sszhxt-sszh/u173.png" style="position:absolute;right:5px;cursor: pointer;padding-top: 2px">
+                            </p>
+                        </div>
+                    </div>
+                    <!--录制视频-->
+                    <div class="sszhlzsp" id="sszhlzsp" style="left: 400px;top: 150px;z-index:9997" :controller="sszhlzsp"
+                        :visible="@sszhlzsptoggle">
+                        <p class="sszhlzsptitle" id="sszhlzsptitle" :mousedown="@move($event)">
+                            <span>设置录制时长</span>
+                            <span class="fa fa-times sszhlzspesclose" :click="@sszhlzspcancel"></span>
+                        </p>
+                        <div class="sszhlzspcontent">
+                            <div class="sszhlzsc">
+                                <label>
+                                    <input ms-duplex-checked="checkedone" value="1" type="radio" data-duplex-changed="@handleChange">15分钟
+                                </label>
+                                <label>
+                                    <input ms-duplex-checked="checkedtwo" value="2" type="radio" data-duplex-changed="@handleChange">30分钟
+                                </label>
+                                <label>
+                                    <input ms-duplex-checked="checkedthere" value="3" type="radio" data-duplex-changed="@handleChange">自定义
+                                </label>
+
+                                <div class="zdylzsc" :visible="@checkedthere">
+                                    <input type="text" :duplex="@lzsch">
+                                    <lable> 时 </lable>
+                                    <input type="text" :duplex="@lzscm">
+                                    <lable> 分 </lable>
+                                    <input type="text" :duplex="@lzscs">
+                                    <lable> 秒 </lable>
+                                </div>
+                            </div>
+                            <div style="position: absolute;bottom: 10px;right: 50px">
+                                <button class="btn btn-primary" :click="@sszhlzspsure">确定</button>
+                                <button class="btn btn-danger" :click="@sszhlzspcancel">取消</button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--消息下发 sbxxxf拼音全程设备消息下发-->
+                    <div class="sbxxxf" :controller="sbxxxf" :visible="@showsbxxxf" style="left: 500px;top: 160px;z-index:9998">
+                        <p class="sbxxxftitle" id="sbxxxftitle" :mousedown="@move($event)">
+                            <span>消息下发</span>
+                            <span class="fa fa-times sbxxxfclose" :click="@closesbxxxf"></span>
+                        </p>
+                        <div class="sbxxxfcontent">
+                            <label>消息内容:</label>
+                            <textarea class="form-control" rows="3" :duplex="@messagecontent"></textarea>
+                        </div>
+                        <button class="btn btn-primary" :click="@sentmessage">确定</button>
+                    </div>
+                    <!--视频播放器-->
+                    <div class="sszhdtspck" :controller="sszhdtspck">
+                        <div class="sszhspth" style="left: 50px;top: 100px;z-index: -1;width:1px;height: 1px;position: absolute;">
+                            <!-- <div class="sszhspth" style="left: 50px;top: 100px;z-index: 9999;width:700px;height: 500px;position: absolute;"> -->
+                            <!--<div class="sszhspth"  style="z-index: 222;position: absolute;">-->
+
+                            <div class="sszhspthtitle" :mousedown="@move($event)">
+                                <span>{{name}}</span>
+                                <!-- <span class="fa fa-times sszhspthclose" :click="@closesszhspth"></span> -->
+                                <span class="fa sszhspthminimize" :click="@hidesszhspth"></span>
+                            </div>
+                            <div class="sszhocxcontainer">
+                                <div class="sshzhspthocx" style="position: relative;">
+                                    <embed :if="!@isie" id="npGSVideoPlugin" type="application/npGSVideoPlugin-plugin"
+                                        name="npGSVideoPlugin" width="690px" height="400px" style="position: absolute;width: 690px;height: 400px;z-index: 0;">
+
+                                    <!--<object :if="!@isie" id="regOcxDiv1" CLSID="{455791d4-4095-4f70-b2b3-f5c424f25ad9}"  TYPE="application/x-itst-activex" Event_OcxEventProxy="_onOcxEventProxy" width="690px" height="400px"></object>-->
+                                    <object :if="@isie" id="npGSVideoPlugin" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9"
+                                        width="690px" height="400px"></object>
+                                    <!--<iframe name="mapIframe" id="" frameborder="0" style="width: 690px;height: 400px;position: absolute;top:0;z-index: 1;"></iframe>-->
+
+                                </div>
+                                <div class="sszhspthfoot" style="position: absolute;top: 465px;width: 100%;">
+                                    <p style="margin-right: 10px;">
+                                        <label :class="[@signal<50?(@signal<15?'xhbad':'xhbetter'):'xhgood']"></label>
+                                        <!-- <span :class="[@signal<50?(@signal<15?'sszhspxhwzbad':'sszhspxhwzbetter'):'sszhspxhwzgood']">{{xhword}}</span> -->
+                                    </p>
+                                    <p class="sszhspthtimecount">{{@sszhspthtime}}</p>
+                                    <p class="jyp">
+                                        <!--<label class="jy"></label>-->
+                                        <label style="width: 20px;" :attr="{title: @word}"></label>
+                                        <label style="position: relative;top:-22px;left: -21px;display: inline-block;">
+                                            <xmp :widget="{is:'common-sszh-voiceTool',soundLevel:@soundLevel,handleSoundLevel:@handleSoundLevel,index:@ocxindex}"></xmp>
+                                        </label>
+                                        <!-- <span style="padding-left: 5px">{{word}}</span> -->
+                                    </p>
+                                    <!--<p :if="@ifallowtalk" class="djp" :click="@starttalk">-->
+                                    <!--<label :class="[@sszhsptalkcontrol ? 'yydjtalk':'yydjstop']"></label>-->
+                                    <!--<span style="padding-left: 5px">{{sszhsptalkword}}</span>-->
+                                    <!--</p>-->
+                                    <p class="jtp" :click="@printscreen">
+                                        <label :attr="{title: @sszhsp_txt.screenshot}"></label>
+                                        <!-- <span style="padding-left: 5px">{{@sszhsp_txt.screenshot}}</span> -->
+                                    </p>
+                                    <p class="qpp" :click="@maxView">
+                                        <label :attr="{title: @sszhsp_txt.fullScreen}"></label>
+                                        <!-- <span style="padding-left: 5px">{{@sszhsp_txt.fullScreen}}</span> -->
+                                    </p>
+                                    <p style="float: right;margin: 0;">
+                                        <button class="btn btn-danger" :click="@closesszhspth">{{@sszhsp_txt.hangup}}</button>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="sszhocxTools" :if="isShowTools" style="float: right;">
+                                <div class="sszhocxToolshead">
+                                    <p>{{@sszhsp_txt.deviceName}}：{{deviceName}}</p>
+                                    <p>{{@sszhsp_txt.deviceType}}：{{deviceType}}</p>
+                                </div>
+                                <ul>
+                                    <li :for="(index, item) in gbcodeArr" class="tongdaoli" :attr="{title: item.name}">
+                                        <input type="radio" name="radio1" :attr="{value: item.gbcode}" :duplex="@checkItem"
+                                            data-duplex-changed="@checkIndexFn($event,item)">
+                                        <label class="tongdaoLiNocheckImg" :class="[@checkItem == item.gbcode && 'tongdaoLicheckImg']"></label>
+                                        <span>{{item.name}}</span>
+                                    </li>
+                                </ul>
+                                <div class="sszhToolsContainer" :visible="@showToolBtn">
+                                    <div class="toolsLeft">
+                                        <div class="toolLeftMiddleImg">
+                                            <span class="toolLeftMiddleImgReback" title="还原预置点" :click="@ResetPreset"></span>
+                                        </div>
+                                        <span class="toolsLeftimg fa fa-lg fa-caret-left" :mousedown="@cloudPlatformControl($event, 'PAN_LEFT')" :mouseup="@cloudPlatformControl($event, 'PAN_LEFT')" :mouseleave="@cloudPlatformControl($event, 'PAN_LEFT')"></span>
+                                        <span class="toolsTopimg fa fa-lg fa-caret-up" :mousedown="@cloudPlatformControl($event, 'TILT_UP')" :mouseup="@cloudPlatformControl($event, 'TILT_UP')" :mouseleave="@cloudPlatformControl($event, 'TILT_UP')"></span>
+                                        <span class="toolsRightimg fa fa-lg fa-caret-right" :mousedown="@cloudPlatformControl($event, 'PAN_RIGHT')" :mouseup="@cloudPlatformControl($event, 'PAN_RIGHT')" :mouseleave="@cloudPlatformControl($event, 'PAN_RIGHT')"></span>
+                                        <span class="toolsBottomimg fa fa-lg fa-caret-down" :mousedown="@cloudPlatformControl($event, 'TILT_DOWN')" :mouseup="@cloudPlatformControl($event, 'TILT_DOWN')" :mouseleave="@cloudPlatformControl($event, 'TILT_DOWN')"></span>
+                                    </div>
+                                    <div class="toolsMiddle">
+                                        <p class="toolsMiddleP1">
+                                            <span class="toolsMiddleSpanOne spanone" title="焦距变小" :mousedown="@cloudPlatformControl($event, 'ZOOM_OUT')" :mouseup="@cloudPlatformControl($event, 'ZOOM_OUT')" :mouseleave="@cloudPlatformControl($event, 'ZOOM_OUT')"></span>
+                                            <span class="spantwo" title="焦距变大" :mousedown="@cloudPlatformControl($event, 'ZOOM_IN')" :mouseup="@cloudPlatformControl($event, 'ZOOM_IN')" :mouseleave="@cloudPlatformControl($event, 'ZOOM_IN')"></span>
+                                        </p>
+                                        <p class="toolsMiddleP2">
+                                            <span class="toolsMiddleSpanOne spanthree" title="焦距变远" :mousedown="@cloudPlatformControl($event, 'FOCUS_FAR')" :mouseup="@cloudPlatformControl($event, 'FOCUS_FAR')" :mouseleave="@cloudPlatformControl($event, 'FOCUS_FAR')"></span>
+                                            <span class="spanfour" title="焦距变近" :mousedown="@cloudPlatformControl($event, 'FOCUS_NEAR')" :mouseup="@cloudPlatformControl($event, 'FOCUS_NEAR')" :mouseleave="@cloudPlatformControl($event, 'FOCUS_NEAR')"></span>
+                                        </p>
+                                        <p class="toolsMiddleP3">
+                                            <span class="toolsMiddleSpanOne spanfive" title="光圈变小" :mousedown="@cloudPlatformControl($event, 'IRIS_CLOSE')" :mouseup="@cloudPlatformControl($event, 'IRIS_CLOSE')" :mouseleave="@cloudPlatformControl($event, 'IRIS_CLOSE')"></span>
+                                            <span class="spansix" title="光圈变大" :mousedown="@cloudPlatformControl($event, 'IRIS_OPEN')" :mouseup="@cloudPlatformControl($event, 'IRIS_OPEN')" :mouseleave="@cloudPlatformControl($event, 'IRIS_OPEN')"></span>
+                                        </p>
+                                    </div>
+                                    <div class="toolsRight" title="自转" :click="rotation">
+
+                                    </div>
+                                    <div class="toolsFoot" :mouseleave="@moveUpImg($event)" :mousemove="@moveImg($event)"
+                                        :mouseup="@moveUpImg($event)">
+                                        <div class="toolsFootBg"></div>
+                                        <label class="toolsFoolMoveImg" :css="{'left': @imgMoveX}" :mousedown="@moveDownImg($event)"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--人脸布控-->
+                    <div class="sszhrlbk" :controller="sszhrlbk">
+                        <div class="sszhrlbk-wrap" style="left: 50px; top: 100px; z-index: -1; width: 1px; height: 1px; position: absolute;"
+                            :class="[@rlbkExtra_class ? 'sszhrlbk_en':'']">
+                            <div class="sszh-rlbk-title" id="sszh-rlbk-title" :mousedown="@move($event)">
+                                <span>{{@rlbk_txt.suspects}}<span :if="noLocaltionInfo != ''">（{{noLocaltionInfo}}）</span></span>
+                                <span class="fa fa-times sszhspthclose" :click="@close_click"></span>
+                            </div>
+                            <div class="sszhrlbk-body">
+                                <div class="sszhrlbk-content">
+                                    <div class="scene">
+                                        <span>{{@rlbk_txt.sceneImgTxt}}</span>
+                                        <img :attr="{src:@scene_img}" onerror="javascript:this.src='../../static/image/sszhxt-znsb/rlbk_404.png';">
+                                    </div>
+                                    <div class="percent">
+                                        <div id="show_percent" style="height:100%;"> </div>
+                                        <span class="percent_span">{{@rlbk_txt.resemblance}}</span>
+                                    </div>
+                                    <div class="recognition_content">
+                                        <div class="recognition">
+                                            <span>{{@rlbk_txt.recognitionImgTxt}}</span>
+                                            <img :attr="{src:@recognition_info.regImg}" onerror="javascript:this.src='../../static/image/sszhxt-znsb/rlbk_404.png';">
+                                        </div>
+                                        <div class="recognition_label">
+                                            <label>{{@rlbk_txt.name}}：</label>
+                                            <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@recognition_info.name|isNull}}</label><br>
+                                            <label>{{@rlbk_txt.sex}}：</label>
+                                            <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{rlbkExtra_class?
+                                                (@recognition_info.gender ==
+                                                1?'Male':'Female'):(@recognition_info.gender == 1? '男':'女')}}</label><br>
+                                            <label>{{@rlbk_txt.race}}：</label>
+                                            <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@recognition_info.nation|isNull}}</label><br>
+                                            <label>{{@rlbk_txt.identityCard}}：</label>
+                                            <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@recognition_info.certificateId|isNull}}</label><br>
+                                            <label>{{@rlbk_txt.birthplace}}：</label>
+                                            <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@recognition_info.birthPlace|isNull}}</label><br>
+                                            <label>{{@rlbk_txt.personType}}：</label>
+                                            <label class="label_content" :attr="{'data-toggle':'tooltip'}">{{@recognition_info.personTypeName|isNull}}</label><br>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="comparison_result">
+                                    <span class="result_title">{{@rlbk_txt.queryingResult}}</span>
+                                    <div class="control_bar">
+                                        <a class="next"></a>
+                                        <ul></ul>
+                                        <a class="prev"></a>
+                                        <span class="pageState"></span>
+                                    </div>
+                                    <ul class="result_list">
+                                        <li ms-for="el in @result_list" :class="['result_li']">
+                                            <div :click="@result_list_click(@el.index)" style="width:100%; height:100%;">
+                                                <img :attr="{src:@el.regImg}" onerror="javascript:this.src='../../static/image/sszhxt-znsb/rlbk_404.png';">
+                                                <div :class="['result_txt']">
+                                                    <span style="padding-left: 5px;">{{@el.similarityTxt}}</span>
+                                                    <span>{{@el.similarity | numberShowPercent}}</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="sszhrlbk-footer">
+                                    <div class="dl">
+                                        <p style="position: relative">{{@rlbk_txt.power}}:
+                                            <span style="display:inline-block;width: 34px;height: 28px;background:url(/static/image/sszhxt-sszh/battery.png) no-repeat scroll;vertical-align: middle;"></span>
+                                            <span :css="{width:@width}" :class="[@battery > 45 ? 'green' : (@battery <=25? 'red':'orange')]"
+                                                style="height: 16px;position:  relative;left: -32px;vertical-align:top; top: 6px;;display: inline-block;"></span>
+                                            <span style="position:  absolute;left: 45px;top:4px;font-size: 12px;color: #333;">{{@battery}}</span>
+                                        </p>
+                                    </div>
+                                    <a class="common_btn bk" :click="@bk">{{@rlbk_txt.control}}</a>
+                                    <a class="common_btn spjk" :click="@sphj">{{@rlbk_txt.videoCall}}</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- 车牌布控 -->
+                    <div class="sszh-cpbk-wrap" :controller="sszh-cpbk">
+                        <div class="sszh-cpbk" style="left: 50px;top: 100px;z-index: -1;width:1px;height: 1px;position: absolute;">
+                            <div class="sszh-cpbk-title" id="sszh-cpbk-title" :mousedown="@move($event)">
+                                <span>车牌布控<span :if="noLocaltionInfo != ''">（{{noLocaltionInfo}}）</span></span>
+                                <span class="fa fa-times sszhspthclose" :click="@closeSszhCpbf"></span>
+                            </div>
+                            <div class="sszh-cpbk-content">
+                                <div class="cpbk-photo-wrap">
+                                    <div class="cpbk-photo photo-left">
+                                        <img ms-attr="{src: @leftPhoto}" alt="">
+                                        <h4>现场图片</h4>
+                                    </div>
+                                    <div class="cpbk-photo photo-right">
+                                        <img ms-attr="{src: @rightPhoto}" alt="">
+                                        <h4>识别内容</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <p>号牌号码：{{recognitionCarInfo.carNumber}}</p>
+                                        <p>车辆类型：{{recognitionCarInfo.carType }}</p>
+                                        <p>所有人：{{recognitionCarInfo.carOwner}}</p>
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <p>品牌型号：{{recognitionCarInfo.carBrand}}</p>
+                                        <p>车辆识别代号：{{recognitionCarInfo.carIdCard}}</p>
+                                        <p>住址：{{recognitionCarInfo.carOwnerAddress}}</p>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <p>发动机号码：{{recognitionCarInfo.carEngineNo}}</p>
+                                        <p>使用性质：{{recognitionCarInfo.carUse}}</p>
+                                        <p>有效期：{{recognitionCarInfo.carValid}}</p>
+                                    </div>
+                                </div>
+                                <div class="cpbk-btn-wrap">
+                                    <p style="position: relative">电量:
+                                        <span style="display:inline-block;width: 34px;height: 28px;background:url(/static/image/sszhxt-sszh/battery.png) no-repeat scroll;vertical-align: middle;"></span>
+                                        <span :css="{width:@width}" :class="[@battery > 45 ? 'green' : (@battery <=25? 'red':'orange')]"
+                                            style="height: 16px;position:  relative;left: -32px;vertical-align:top;top:6px;display: inline-block;"></span>
+                                        <span style="position:  absolute;left: 45px;top:4px;font-size: 12px;color: #333;">{{@battery}}</span>
+                                    </p>
+                                    <div class="cpbk-btn-inline">
+                                        <button :click="@videoplay" class="btn btn-primary btn-sm" style="width: 70px; margin-right: 5px;background: rgb(7, 124, 225);">视频呼叫</button>
+                                        <button :click="@executeControl" class="btn btn-danger btn-sm" style="width: 70px; margin-right: 5px;">布控</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--右下角告警-->
+                    <!--<div class="sszhgjxx">-->
+                    <!--<p class="gjxxtitle">-->
+                    <!--<span>告警信息</span>-->
+                    <!--<img style="width: 20px;height:20px;vertical-align: text-top;" src="../../static/image/sszhxt-sszh/u263.gif">-->
+                    <!--<span class="fa fa-angle-down fa-2x gjxxdown" :click="@togglehide"></span>-->
+                    <!--</p>-->
+                    <!--<div class="gjxxcontianerhead">-->
+                    <!--<span style="width: 65px">告警类型</span>-->
+                    <!--<span style="width: 65px">处理状态</span>-->
+                    <!--<span style="width: 90px;">配发消息</span>-->
+                    <!--<span style="width: 80px;">国标编号</span>-->
+                    <!--<span style="width: 120px">告警经/纬度</span>-->
+                    <!--</div>-->
+                    <!--<div class="gjxxcontianer" :controller="sszhgjxxManage">-->
+                    <!--<div class="gjxxcontianerblock" :class= "[item.state == 1? 'weichakanspan':'yichakanspan']" :for="($index, item) in @gjxxlist">-->
+                    <!--<span style="width: 65px">{{item.type}}</span>-->
+                    <!--<span :click="@gotogj(item)" :class= "[item.state == 1? 'gjxxcontianerblockspanred':'']" style="width: 65px">{{item.state | filterByState}}</span>-->
+                    <!--<span style="width: 90px;word-break: break-all;">{{item.person}}</span>-->
+                    <!--<span style="width: 80px;word-break: break-all;">{{item.gbcode}}</span>-->
+                    <!--<span style="width: 120px;word-break: break-all;">-->
+                    <!--<font style="display: inline-block">{{item.longitude}}</font>-->
+                    <!--<font>{{item.latitude}}</font>-->
+                    <!--</span>-->
+                    <!--</div>-->
+
+                    <!--</div>-->
+
+                    <!--</div>-->
+                    <!--<button class="btn btn-primary sszhgj" :click="@toggleshow">告警信息 <i style="vertical-align: initial;" class="fa fa-lg fa-angle-up"></i></button>-->
+                </div>
+
+            </div>
+        </div>
+        <ms-download-tip :widget="{show:@downloadTipShow,getShowStatus:@getShowStatus}">
+            <div>
+                <p>{{@tipText}}<br /><span :if="@showtip">{{@downloadTipTxt.downloadConfirm}}</span></p>
+                <p class="tip-text"><i class="fa fa-info-circle"></i>{{@downloadTipTxt.rebootBrowser}}</p>
+            </div>
+        </ms-download-tip>
+        <!--给没有定位的设备使用-->
+        <div class="sszhdeviceInfo" :controller="sszhdeviceInfo" :visible="@visible">
+            <p class="title-wrap">{{@sszhdeviceInfo_txt.noLocation}}
+                <span class="close-icon" :click="@hideInfo"></span>
+            </p>
+            <p :if="@mytype== 0 && !@source && @username">{{@sszhdeviceInfo_txt.nameId}}: {{@username + '(' + @usercode
+                + ')'}}</p>
+            <p :if="@source || !@username">{{@sszhdeviceInfo_txt.deviceName}}：{{@devName}}</p>
+            <p :if="@mytype!= 0 || @source">{{@sszhdeviceInfo_txt.deviceType}}：{{@type}}</p>
+            <p :if="@mytype== 0 && !@source">{{@sszhdeviceInfo_txt.nSNumber}}: {{@gbcode}}</p>
+            <p :if="@mytype!= 0 || @source">{{@sszhdeviceInfo_txt.deviceModel}}：{{@devmodel}}</p>
+            <p style="position: relative; margin-bottom: 14px;" :if="@mytype== 0 && !@source">{{@sszhdeviceInfo_txt.dumpEnergy}}:
+                <span style="display:inline-block;width: 34px;height: 28px;background:url(/static/image/sszhxt-sszh/battery.png) no-repeat scroll;vertical-align: middle;"></span>
+                <span :css="{width:@width}" :class="[@battery > 45 ? 'green' : (@battery <=25? 'red':'orange')]" style="height: 16px;position:  relative;left: -32px;vertical-align:top;top:6px;display: inline-block;"></span>
+                <span :if="!@extra_class" style="position:  absolute;left: 90px;top:4px;font-size: 12px;color: #333;">{{@battery}}%</span>
+                <span :if="@extra_class" style="position:  absolute;left: 128px;top:4px;font-size: 12px;color: #333;">{{@battery}}%</span>
+            </p>
+            <!-- <p :if="!@source && @mytype== 0">{{@sszhdeviceInfo_txt.storage}}:
+                <span style="display: inline-block;border-radius: 4px;width: 180px;height: 17px;background: #cccccc;font-size: 12px;margin-right: 5px;">
+                    <span :css="{width:@usedWidth}" style="display:inline-block;border-radius: 4px;height: 17px;vertical-align:top;background:red;"></span>
+                    <span :css="{left:@spanTwowidth}" style="color:#ffffff;position: absolute;vertical-align: top;">{{@capacityUsed
+                        + 'GB'}}</span>
+                </span>
+                <span>{{ @capacityTotal + 'GB'}}</span>
+            </p> -->
+            <p :if="@isAllowRecord && !@source && @mytype== 0">
+                {{@sszhdeviceInfo_txt.videotape}}:
+                <button id="onspan" class="btn" :class="[@videoStatus ==0?'white':'green']" :attr="{disabled : @disabled}"
+                    :click="@record" style="color: #ffffff;padding: 0px 5px;border-radius: 0;">ON</button>
+                <button class="btn" :click="@record" :class="[@videoStatus ==1?'white':'green']" :attr="{disabled : @disabled}"
+                    id="offspan" style="color: #999999;padding: 0px 5px;border-radius: 0;">OFF</button>
+
+            </p>
+            <p style="margin: 0;">
+                <button :click="@vedioplay" :attr="{disabled : @disabled}" class="btn btn-primary btn-common-sty">{{@sszhdeviceInfo_txt.videoCall}}</button>
+                <button :if="@isAllowSpeak" :attr="{disabled : @disabled}" :click="@startTalk" class="btn btn-primary btn-common-sty">{{@sszhdeviceInfo_txt.voiceCall}}</button>
+                <button :if="@isAllowPhotograph && !@source && @mytype== 0" :click="@photograph" :attr="{disabled : @disabled}" class="btn btn-primary btn-common-sty">{{@sszhdeviceInfo_txt.photograph}}</button>
+                <button :if="@isAllowLock && !@source && @mytype== 0" :click="@lock" class="btcd n btn-primary btn-common-sty">{{@lockword}}</button>
+            </p>
+        </div>
+        <!-- 布控范围弹窗 -->
+        <div :controller="sszh-bkfw-vm" class="sszh-modal-bkfw">
+            <xmp :widget="{is:'common-ms-modal', title:@bkfwTitle, btnalign:'center', modalSelector:'#sszh-modal-bkfw-cont', modalWidth:380, modalHeight: 100, show:@show, onOk:@handleOk, onCancel:@handleCancel, extramove:@extramove, okText: '确定', cancelText: '取消'}">
+                <div id="sszh-modal-bkfw-cont">
+                    <label>搜索半径：</label><input type="text" :duplex="@rangeRadius" data-duplex-changed="@rangeRadiusChange"/>km
+                    <div class="bkfw-tool">
+                        <div class="tool-slider" :click="sliderClick($event)">
+                            <div class="slider-pointer" :css="{left: @imgMoveX}" :mousedown="pointerMouseDown($event)" ></div>
+                        </div>
+                        <ul class="tool-slider-text">
+                            <li :for="($index, item) in @rangeList">
+                                <span :click="rangItemClick($index)">{{item}}km</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%; height:100%;z-index:-1;opacity:0;filter:alpha(opacity=0);"></iframe>
+                </div>
+            </xmp>
+        </div>
+        <iframe id="back-iframe-for-modal" src="about:blank" marginheight="0" marginwidth="0" style="display: none; position:absolute; visibility:inherit; top:257px;left:643px;width:360px; height:200px;z-index:992;opacity:1;filter:alpha(opacity=0);background: #fff;"
+            frameborder="0"></iframe>
+    </div>
+</template>

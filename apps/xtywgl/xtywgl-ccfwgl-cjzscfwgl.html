@@ -1,0 +1,359 @@
+<template>
+    <article class="ccfwgl-wrap tyywglpt-cjzscfwgl">
+        <!--查询下拉-->
+        <div class="ywzx-ccgl-left">
+            <div class="departmentTree">
+                <div :controller="lineTree_cjzscfwgl" class="yhgl-dataIpt ywzx-fixmargin">
+                    <div id="cjzscfwgl-depTree" class="ztree"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tyywglpt-tool-bar ywzx-ccgl-bar">
+            <div class="btnIcon" :if="@authority.SAVE" :click="@handleAddClick()" :class="['btn','btn-tool',(@checkBox.length == 0 ? '' : 'disabled')]">
+                <i class="icon icon_addUser"></i>
+                <span class="btn-tool-ywxz">{{@cjzscfwgl_language.add}}</span>
+            </div>
+            <div class="btnIcon" :if="@authority.CCCL" :class="['btn','btn-tool',(@btnDisabled ? 'disabled' : '')]"
+                :click="@handleMethodClick2()">
+                <i class="icon icon_storageStrategy"></i>
+                <span class="btn-tool-ywxz">{{@cjzscfwgl_language.storageStrategy}}</span>
+            </div>
+            <div class="btnIcon" :if="@authority.CJGZZFP" :class="['btn','btn-tool','width-130',(@btnDisabled ? 'disabled' : '')]"
+                :click="@handleAllocation()">
+                <i class="icon icon_storageAllocation"></i>
+                <span class="btn-tool-ywxz">{{@cjzscfwgl_language.storageAllocation}}</span>
+            </div>
+        </div>
+
+        <!-- <div class="tabPanel">
+            <span :class="[@selectTab == '0' ? 'selectTab' : '']" :click="@tabClick(0)" :if="@authority_zfy">{{@cjzscfwgl_language.videoStorage}}</span>
+            <span :class="[@selectTab == '1' ? 'selectTab' : '']" :click="@tabClick(1)" :if="@authority_wj">{{@cjzscfwgl_language.fileUpload}}</span>
+        </div> -->
+
+        <div :controller="ccfwglLookDialog" class="ccfwglLookDialogWrap">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.ccfwglLookDialog',okText:@okText, drag:true,modalWidth:400,show: @show, onCancel: @handleCancel, onOk: @handleOk,ifcancelBtn:fasle}">
+                <div class="commonDialog ccfwgl ccfwglLookDialog">
+                    <div class="ccfwgl-row"><label for="">{{@cjzscfwgl_language.serviceName}} :</label><span :attr="{title:json.name}">{{json.name}}</span></div>
+                    <div class="ccfwgl-row "><label for="">{{@cjzscfwgl_language.serviceIP}} :</label><span :attr="{title:json.ip}">{{json.ip}}</span></div>
+                    <div class="ccfwgl-row"><label for="">{{@cjzscfwgl_language.ownershipOrganization}} :</label><span
+                            :attr="{title:json.belong}">{{json.belong}}</span></div>
+                    <div class="ccfwgl-row "><label for="">{{@cjzscfwgl_language.port}} :</label><span :attr="{title:json.port}:">{{json.port}}</span></div>
+                    <div class="ccfwgl-row"><label for="">{{@cjzscfwgl_language.accountNumber}} :</label><span :attr="{title:json.accoun:t}">{{json.account}}</span></div>
+                    <!-- <div class="ccfwgl-row "><label for="">{{@cjzscfwgl_language.password}} :</label><span :attr="{title:json.password}">{{json.password}}</span></div> -->
+                    <div class="path"><label for="">{{@cjzscfwgl_language.serviceID}} :</label><span :attr="{title:json.id}">{{json.id}}</span></div>
+                    <div class="path"><label for="">{{@cjzscfwgl_language.serviceScope}} :</label><span :attr="{title:json.serviceTime}">{{json.serviceTime}}</span></div>
+                    <div class="path"><label for="">{{@cjzscfwgl_language.uploadPath}} :</label><span :attr="{title:json.uploadUrl}">{{json.uploadUrl}}</span></div>
+                    <div class="path"><label for="">{{@cjzscfwgl_language.downloadPath}} :</label><span :attr="{title:json.downloadUrl}">{{json.downloadUrl}}</span></div>
+                    <!-- <div class="path"><label for="">点播路径:</label><span>{{json.pointPlayUrl}}</span></div> -->
+                    <div class="clear"></div>
+                </div>
+            </xmp>
+        </div>
+        <div :controller="ccfwglModifyDialog" class="zfyCcfwglModifyDialog">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.ccfwglModifyDialog',drag:true,modalWidth:400,show: @show, onCancel: @handleCancel, onOk: @handleOk}">
+                <div class="commonDialog ccfwgl ccfwglModifyDialog">
+                    <div class="ccfwgl-row  ccfwgl-serviceName"><label for=""><i>*</i>{{@cjzscfwgl_language.serviceName}}</label><input
+                            type="text" class="form-control" :duplex="@json.name" :focus="@handleInputFocus('serviceName',$event)"
+                            :blur="@handleInputBlur('serviceName','ccfwglModifyDialog',$event)"><em class="fa input-close-ywzx close-clear"
+                            :mousedown="@handleCloseClear" name="ccfwglModifyDialog.name"></em></div>
+                    <div class="ccfwgl-row ccfwgl-ip"><label for=""><i>*</i>{{@cjzscfwgl_language.serviceIP}}</label><input
+                            type="text" class="form-control" :duplex="@json.ip" :focus="@handleInputFocus('ip',$event)"
+                            :blur="@handleInputBlur('ip','ccfwglModifyDialog',$event)">
+                        <span class="ccfwgl-form-tips" :visible="@showIpBelowTips" :attr="{title:@cjzscfwgl_language.combinationsOfDigitsFrom0To255AndAreAvailable}">
+                            <em class="fa fa-info-circle"></em>&nbsp;{{@cjzscfwgl_language.combinationsOfDigitsFrom0To255AndAreAvailable}}
+                        </span>
+                        <em class="fa input-close-ywzx close-clear" :mousedown="@handleCloseClear" name="ccfwglModifyDialog.ip"></em>
+                    </div>
+                    <div class="ccfwgl-row organazition">
+                        <ms-form :widget="{$form:@$form,inline:true}">
+                            <ms-form-item :widget="{label:@cjzscfwgl_language.ownershipOrganization}" :class="'form-item'">
+                                <ms-tree-selecting :widget="{tree:@orgData, showSearch:true,selectedKey:@orgId, selectedTitle:@selectedTitle,wrapId: 'tree-select-ccfwgl-3', getSelected:@getSelected,onChange:@handleTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                            </ms-form-item>
+                        </ms-form>
+                    </div>
+                    <div class="ccfwgl-row   ccfwgl-port"><label for=""><i>*</i>{{@cjzscfwgl_language.port}}</label><input
+                            type="text" class="form-control" :duplex="@json.port" :focus="@handleInputFocus('port',$event)"
+                            :blur="@handleInputBlur('port','ccfwglModifyDialog',$event)"><span class="ccfwgl-form-tips"
+                            :visible="@showPortBelowTips"><em class="fa fa-info-circle"></em>&nbsp;{{@cjzscfwgl_language.scopeTips}}</span>
+                        <em class="fa input-close-ywzx close-clear" :mousedown="@handleCloseClear" name="ccfwglModifyDialog.port"></em>
+                    </div>
+                    <div class="ccfwgl-row ccfwgl-account"><label for=""><i>*</i>{{@cjzscfwgl_language.accountNumber}}</label><input
+                            type="text" class="form-control" :duplex="@json.account" :focus="@handleInputFocus('account',$event)"
+                            :blur="@handleInputBlur('account','ccfwglModifyDialog',$event)"><em class="fa input-close-ywzx close-clear"
+                            :mousedown="@handleCloseClear" name="ccfwglModifyDialog.account"></em></div>
+                    <div class="ccfwgl-row  ccfwgl-password"><label for=""><i>*</i>{{@cjzscfwgl_language.password}}</label><input
+                            type="password" class="form-control" :duplex="@json.password" :focus="@handleInputFocus('password',$event)"
+                            :blur="@handleInputBlur('password','ccfwglModifyDialog',$event)"><em class="fa input-close-ywzx close-clear"
+                            :mousedown="@handleCloseClear" name="ccfwglModifyDialog.password"></em></div>
+                    <div class="ccfwgl-row ccfwgl-beginTime">
+                        <label for=""><i>*</i>{{@cjzscfwgl_language.startTime}}</label>
+                        <ms-timepicker :widget="{
+                        value:@beginTime,onChange:@handleTimePiker1
+                        }"></ms-timepicker>
+                    </div>
+                    <div class="ccfwgl-row ccfwgl-endTime">
+                        <label for=""><i>*</i>{{@cjzscfwgl_language.endTime}}</label>
+                        <ms-timepicker :widget="{
+                            value:@endTime,onChange:@handleTimePiker2
+                        }"></ms-timepicker>
+                    </div>
+                    <div class="path ccfwgl-uploadPath"><label for=""><i>*</i>{{@cjzscfwgl_language.uploadPath}}</label><input
+                            type="text" class="form-control" :duplex="@json.uploadUrl" :focus="@handleInputFocus('uploadPath',$event)"
+                            :blur="@handleInputBlur('uploadPath','ccfwglModifyDialog',$event)">
+                        <em class="fa input-close-ywzx close-clear" :mousedown="@handleCloseClear" name="ccfwglModifyDialog.uploadUrl"></em>
+                    </div>
+                    <div class="path ccfwgl-downloadPath"><label for=""><i>*</i>{{@cjzscfwgl_language.downloadPath}}</label><input
+                            type="text" class="form-control" :duplex="@json.downloadUrl" :focus="@handleInputFocus('downloadPath',$event)"
+                            :blur="@handleInputBlur('downloadPath','ccfwglModifyDialog',$event)">
+                        <em class="fa input-close-ywzx close-clear" :mousedown="@handleCloseClear" name="ccfwglModifyDialog.downloadUrl"></em>
+                    </div>
+                    <div class='warn'>
+                        <p><i class="fa fa-hand-o-right"></i>{{@cjzscfwgl_language.tips}}</p>
+                        <span style="margin-left:25px;">{{@cjzscfwgl_language.define}}</span>
+                    </div>
+                    <div class="ccfwgl-row test-btn-wrap">
+                        <input class="test-btn" type="button" :attr="{value: @cjzscfwgl_language.test}" :click="@handleTest('ccfwglModifyDialog')">
+                        <input class="test-btn" type="button" :attr="{value: @cjzscfwgl_language.save}" :click="@handleOk">
+                        <input class="test-btn" type="button" :attr="{value: @cjzscfwgl_language.cancel}" :click="@handleCancel">
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </xmp>
+        </div>
+        <div :controller="ccfwglAddDialog" class="zfyCcfwglAddDialog">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.ccfwglAddDialog',drag:true,modalWidth:400,show: @show, onCancel: @handleCancel, onOk: @handleOk}">
+                <div class="commonDialog ccfwgl ccfwglAddDialog">
+                    <div class="ccfwgl-row  ccfwgl-serviceName"><label for=""><i>*</i>{{@cjzscfwgl_language.serviceName}}</label><input
+                            type="text" class="form-control" :duplex="@json.name" :focus="@handleInputFocus('serviceName',$event)"
+                            :blur="@handleInputBlur('serviceName','ccfwglAddDialog',$event)"><em class="fa input-close-ywzx close-clear"
+                            :mousedown="@handleCloseClear" name="ccfwglAddDialog.name"></em></div>
+                    <div class="ccfwgl-row ccfwgl-ip"><label for=""><i>*</i>{{@cjzscfwgl_language.serviceIP}}</label><input
+                            type="text" class="form-control" :duplex="@json.ip" :focus="@handleInputFocus('ip',$event)"
+                            :blur="@handleInputBlur('ip','ccfwglAddDialog',$event)">
+                        <span class="ccfwgl-form-tips" :visible="@showIpBelowTips" :attr="{title:@cjzscfwgl_language.combinationsOfDigitsFrom0To255AndAreAvailable}">
+                            <em class="fa fa-info-circle"></em>&nbsp;{{@cjzscfwgl_language.combinationsOfDigitsFrom0To255AndAreAvailable}}
+                        </span>
+                        <em class="fa input-close-ywzx close-clear" :mousedown="@handleCloseClear" name="ccfwglAddDialog.ip"></em>
+                    </div>
+                    <div class="ccfwgl-row organazition">
+                        <ms-form>
+                            <ms-form-item :widget="{label:@cjzscfwgl_language.ownershipOrganization}" :class="'form-item'">
+                                <ms-tree-selecting :widget="{tree:@orgData, showSearch:true,selectedKey:@json.orgId, selectedTitle:@selectedTitle,wrapId: 'tree-select-ccfwgl-2', getSelected:@getSelected,onChange:@handleTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                            </ms-form-item>
+                        </ms-form>
+                    </div>
+                    <div class="ccfwgl-row ccfwgl-port"><label for=""><i>*</i>{{@cjzscfwgl_language.port}}</label><input
+                            type="text" class="form-control" :duplex="@json.port" :focus="@handleInputFocus('port',$event)"
+                            :blur="@handleInputBlur('port','ccfwglAddDialog',$event)"><span class="ccfwgl-form-tips"
+                            :visible="@showPortBelowTips"><em class="fa fa-info-circle"></em>&nbsp;{{@cjzscfwgl_language.scopeTips}}</span>
+                        <em class="fa input-close-ywzx close-clear" :mousedown="@handleCloseClear" name="ccfwglAddDialog.port"></em>
+                    </div>
+                    <div class="ccfwgl-row  ccfwgl-account"><label for=""><i>*</i>{{@cjzscfwgl_language.accountNumber}}</label><input
+                            type="text" class="form-control" :duplex="@json.account" :focus="@handleInputFocus('account',$event)"
+                            :blur="@handleInputBlur('account','ccfwglAddDialog',$event)"><em class="fa input-close-ywzx close-clear"
+                            :mousedown="@handleCloseClear" name="ccfwglAddDialog.account"></em></div>
+                    <div class="ccfwgl-row ccfwgl-password"><label for=""><i>*</i>{{@cjzscfwgl_language.password}}</label><input
+                            type="password" class="form-control" :duplex="@json.password" :focus="@handleInputFocus('password',$event)"
+                            :blur="@handleInputBlur('password','ccfwglAddDialog',$event)"><em class="fa input-close-ywzx close-clear"
+                            :mousedown="@handleCloseClear" name="ccfwglAddDialog.password"></em></div>
+                    <div class="ccfwgl-row ccfwgl-beginTime">
+                        <label for=""><i>*</i>{{@cjzscfwgl_language.startTime}}</label>
+                        <ms-timepicker :widget="{
+                                value:@json.worktimeBegin,onChange:@handleTimePiker3
+                            }"></ms-timepicker>
+                    </div>
+                    <div class="ccfwgl-row ccfwgl-endTime">
+                        <label for=""><i>*</i>{{@cjzscfwgl_language.endTime}}</label>
+                        <ms-timepicker :widget="{
+                                value:@json.worktimeEnd,onChange:@handleTimePiker4
+                            }"></ms-timepicker>
+                    </div>
+                    <div class="path ccfwgl-uploadPath"><label for=""><i>*</i>{{@cjzscfwgl_language.uploadPath}}</label><input
+                            type="text" class="form-control" :duplex="@json.uploadUrl" :focus="@handleInputFocus('uploadPath',$event)"
+                            :blur="@handleInputBlur('uploadPath','ccfwglAddDialog',$event)">
+                        <em class="fa input-close-ywzx close-clear" :mousedown="@handleCloseClear" name="ccfwglAddDialog.uploadUrl"></em>
+                    </div>
+                    <div class="path ccfwgl-downloadPath"><label for=""><i>*</i>{{@cjzscfwgl_language.downloadPath}}</label><input
+                            type="text" class="form-control" :duplex="@json.downloadUrl" :focus="@handleInputFocus('downloadPath',$event)"
+                            :blur="@handleInputBlur('downloadPath','ccfwglAddDialog',$event)">
+                        <em class="fa input-close-ywzx close-clear" :mousedown="@handleCloseClear" name="ccfwglAddDialog.downloadUrl"></em>
+                    </div>
+                    <div class='warn'>
+                        <p><i class="fa fa-hand-o-right"></i>{{@cjzscfwgl_language.tips}}</p>
+                        <span style="margin-left:25px;">{{@cjzscfwgl_language.define}}</span>
+                    </div>
+                    <div class="ccfwgl-row test-btn-wrap">
+                        <input class="test-btn" type="button" :attr="{value: @cjzscfwgl_language.test}" :click="@handleTest('ccfwglAddDialog')">
+                        <input class="test-btn" type="button" :attr="{value: @cjzscfwgl_language.save}" :click="@handleOk">
+                        <input class="test-btn" type="button" :attr="{value: @cjzscfwgl_language.cancel}" :click="@handleCancel">
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </xmp>
+        </div>
+        <!-- 配置测试弹框 -->
+        <div :controller="deviceTest">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.deviceTest',drag:true,modalWidth:@modalWidth,show: @show, onCancel: @handleCancel, onOk: @handleOk,ifcancelBtn:false,ifokBtn:false,okText:@cjzscfwgl_language.save, cancelText: @cjzscfwgl_language.cancel}">
+                <div class="commonDialog ccfwgl deviceTest">
+                    <div class="confirm-tip">{{@testResult}}</div>
+                    <div class="yes"><button :click="@deviceTestClick">{{@okText}}</button></div>
+                </div>
+            </xmp>
+        </div>
+        <!-- 删除弹框 -->
+        <div :controller="delete" class="zfyCcfwglDeleteDialog">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.delete',drag:true,modalWidth:@modalWidth,show: @show, onCancel: @handleCancel, onOk: @handleOk,okText:@cjzscfwgl_language.save, cancelText: @cjzscfwgl_language.cancel}">
+                <div class="commonDialog ccfwgl delete">
+                    <div :visible="toggle" class="confirm-tip">{{@cjzscfwgl_language.delTips}}</div>
+                    <!-- <div :visible="!toggle" class="confirm-tip">是否确定删除选中的&nbsp;{{deleteCount}}&nbsp;条数据？</div> -->
+                    <div :visible="!toggle" class="confirm-tip">
+                        <span>{{@cjzscfwgl_language.moredelTips1}}</span>
+                        <span>{{@deleteCount}}</span>
+                        <span>{{@cjzscfwgl_language.moredelTips2}}</span>
+                    </div>
+                </div>
+            </xmp>
+        </div>
+
+        <div :controller="ccfwglMethodDialog" class="zfyCcfwglMethodDialog">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.ccfwglMethodDialog',drag:true,modalWidth:@modalWidth,show: @show, onCancel: @handleCancel, onOk: @handleOk, okText:@okText, cancelText:@cancelText}">
+                <div class="commonDialog ccfwgl ccfwglMethodDialog">
+                    <div class="ccfwgl-row  ccfwgl-normalDay">
+                        <p><i>*</i>{{@cjzscfwgl_language.normalVideoandAudioStoragePeriod}}</p>
+                        <input :visible="@showNormalInput" type="text" class="form-control" :duplex="@json.expireDaysNormal"
+                            :focus="@handleInputFocus('normalDay',$event)" :blur="@handleInputBlur('normalDay','ccfwglMethodDialog',$event)">
+                        <!-- <span class="ccfwgl-form-tips" :visible="@shownNormalDayBelowTips">
+                            <em class="fa fa-info-circle"></em>&nbsp;支持数字组合,最大9位数
+                        </span> -->
+                        <a :visible="!@showNormalInput">{{@json.expireDaysNormal}}</a>
+                        <a class="day">{{@cjzscfwgl_language.days}}</a>
+                        <em class="fa input-close-ywzx close-clear" :mousedown="@handleCloseClear" name="ccfwglMethodDialog.expireDaysNormal"></em>
+                        <button :visible="@showNormalInput" :click="@handleComfirm(0,$event)" class="confirm">{{@cjzscfwgl_language.save}}</button>
+                        <a :visible="!@showNormalInput" :click="@handleModify(0)" class="modify"></a>
+                    </div>
+                    <div class="ccfwgl-row ccfwgl-specialDay">
+                        <!-- <label for=""><i>*</i>重要视音频存储期限:</label> -->
+                        <p><i>*</i>{{@cjzscfwgl_language.importantVideoadnAudioStoragePeriod}}</p>
+                        <input :visible="@showSpecialInput" type="text" class="form-control" :duplex="@json.expireDaysSpecial"
+                            :focus="@handleInputFocus('specialDay',$event)" :blur="@handleInputBlur('specialDay','ccfwglMethodDialog',$event)">
+                        <!-- <span class="ccfwgl-form-tips" :visible="@showSpecialDayBelowTips"><em class="fa fa-info-circle"></em>&nbsp;支持数字组合,最大9位数</span> -->
+                        <a :visible="!@showSpecialInput">{{@json.expireDaysSpecial}}</a>
+                        <a class="day">{{cjzscfwgl_language.days}}</a>
+                        <em class="fa input-close-ywzx close-clear" :mousedown="@handleCloseClear" name="ccfwglMethodDialog.expireDaysSpecial"></em>
+                        <button :visible="@showSpecialInput" :click="@handleComfirm(1,$event)" class="confirm">{{@cjzscfwgl_language.save}}</button>
+                        <a :visible="!@showSpecialInput" :click="@handleModify(1)" class="modify"></a>
+                    </div>
+                    <div style="height:430px;width:380px" :controller="ccfwglMethodChart" class="method-pie"></div>
+                    <div class="clear"></div>
+                </div>
+            </xmp>
+        </div>
+
+        <div :controller="ccfwglAnalysisDialog">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.ccfwglAnalysisDialog',drag:true,modalWidth:@modalWidth,show: @show, onCancel: @handleCancel, onOk: @handleOk}">
+                <div class="ccfwglAnalysisDialog common-btn">
+                    <ms-form>
+                        <ms-radio-group :widget="{
+                                options:@radioOptions,
+                                onChange:@handleChange,
+                                value :@curValue
+                            }">
+                        </ms-radio-group>
+                    </ms-form>
+                    <div class="time-form-wrap" :visible="@showTime">
+                        <ms-form :widget="{$form: @$timeForm,inline: @inline}">
+                            <ms-form-item :widget="{label:'Begin Time'}">
+                                <ms-datepicker :widget="@options1"></ms-datepicker>
+                            </ms-form-item>
+                            <ms-form-item :widget="{label:'End Time'}">
+                                <ms-datepicker :widget="@options2"></ms-datepicker>
+                            </ms-form-item>
+                            <input type="button" :click="@handleSearchClick" value="Query" class="analysisQuery">
+                        </ms-form>
+                    </div>
+                    <div id="chart-container" style="height:570px;width:670px" :controller="ccfwglAnalysisChart"></div>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 采集站分配新弹框 -->
+        <div :controller="stationAllocation2">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.ccfwglAllocationDialog',drag:true,modalWidth:@modalWidth, okText:@okText, cancelText:@cancelText,show: @show, onCancel: @handleCancel, onOk: @handleOk}">
+                <div class="ccfwglAllocationDialog  AllocationDialog">
+                    <!--<ms-tree-ccfwglassign :widget="{tree:@orgData,listStorageId:@listStorageId,parentsNodeOrgIds:@parentsNodeOrgIds,searchAjax:@searchAjax,getItemsByOrgIdAjax:@getItemsByOrgIdAjax,getRightItemsByStorageId:@getRightItemsByStorageId,returnRightItems:@returnRightItems,curClickSelectNodes:@curClickSelectNodes,curClickRightItems:@curClickRightItems,settings:@settings,searchInputValue:@searchInputValue,searchResults:@searchResults,returnHasAddNodes:@returnHasAddNodes,getOrgByOrgIdAjax:@extraExpandHandle}"></ms-tree-ccfwglassign>-->
+                    <ms-tree-ccfwglassign :widget="{tree:@orgData,listStorageId:@listStorageId,parentsNodeOrgIds:@parentsNodeOrgIds,searchAjax:@searchAjax,getItemsByOrgIdAjax:@getItemsByOrgIdAjax,getRightItemsByStorageId:@getRightItemsByStorageId,returnRightItems:@returnRightItems,curClickSelectNodes:@curClickSelectNodes,curClickRightItems:@curClickRightItems,settings:@settings,searchInputValue:@searchInputValue,searchResults:@searchResults,returnHasAddNodes:@returnHasAddNodes,getOrgByOrgIdAjax:@extraExpandHandle}"></ms-tree-ccfwglassign>
+                    <!-- <ms-ccfwglassign :widget="{tree:@orgData,listStorageId:@listStorageId,parentsNodeOrgIds:@parentsNodeOrgIds,searchAjax:@searchAjax,getItemsByOrgIdAjax:@getItemsByOrgIdAjax,getRightItemsByStorageId:@getRightItemsByStorageId,returnRightItems:@returnRightItems,curClickSelectNodes:@curClickSelectNodes,curClickRightItems:@curClickRightItems,settings:@settings,searchInputValue:@searchInputValue,searchResults:@searchResults,returnHasAddNodes:@returnHasAddNodes,getOrgByOrgIdAjax:@extraExpandHandle,getOrgArrByOrgId:@getOrgArrByOrgId}"></ms-ccfwglassign> -->
+                </div>
+            </xmp>
+        </div>
+
+        <!--列表-->
+        <div class="tyywglpt-list-panel">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <li class="col-3 first-item" data-order="1">
+                        <input type="checkbox" id="checkall" :duplex-checked="@checkAll" data-duplex-changed="@handleCheckAll($event)">
+                        <label for="checkall" :class="[@checkAll ? 'check_selected' : 'check_unselected']"></label>
+                    </li>
+                    <li class="col-4" data-order="2">{{@cjzscfwgl_language.tableNo}}</li>
+                    <li class="col-11" data-order="4">{{@cjzscfwgl_language.ownershipOrganization}}</li>
+                    <li class="col-20" data-order="5">{{@cjzscfwgl_language.serviceID}}</li>
+                    <li class="col-12" data-order="6">{{@cjzscfwgl_language.serviceName}}</li>
+                    <li class="col-12" data-order="7">{{@cjzscfwgl_language.serviceIP}}</li>
+                    <li class="col-6" data-order="8">{{@cjzscfwgl_language.port}}</li>
+                    <li class="col-6" data-order="9">{{@cjzscfwgl_language.onlineStatue}}</li>
+                    <li class="col-7" data-order="10">{{@cjzscfwgl_language.totalCapacity}}</li>
+                    <li class="col-7 " data-order="11">{{@cjzscfwgl_language.remainingCapacity}}</li>
+                    <li class="col-12 last-item" data-order="3">{{@cjzscfwgl_language.operations}}</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@loading" class="list-loading"><span>{{@cjzscfwgl_language.loading}}</span></li>
+                <li :if="@noData" class="list-null">{{@cjzscfwgl_language.noRecords}}</li>
+                <li :if="!@loading" :for="($index, item) in @tableData">
+                    <div class="col-3 first-item">
+                        <input type="checkbox" :attr="{'id':$index}" :duplex-checked="item.checked" data-duplex-changed="@handleCheck($index,item,$event)">
+                        <label :attr="{'for':$index}" :class="[item.checked ? 'check_selected' : 'check_unselected']"></label>
+                    </div>
+                    <div class="col-4">{{(@currentPage-1)*@pageSize+$index+1}}</div>
+
+                    <div class="col-11" :attr="{title:item.orgName,'data-toggle':'popover'}">{{item.orgName}}</div>
+                    <div class="col-20" :attr="{title:item.rid,'data-toggle':'popover'}">{{item.rid}}</div>
+                    <div class="col-12" :attr="{title:item.name,'data-toggle':'popover'}">{{item.name}}</div>
+                    <div class="col-12" :attr="{title:item.ip,'data-toggle':'popover'}">{{item.ip}}</div>
+                    <div class="col-6" :attr="{title:item.port,'data-toggle':'popover'}">{{item.port}}</div>
+                    <div :class="['col-6',(item.status==1 ? '' : 'isoffline')]" :attr="{'data-toggle':'popover',title:item.status==1 ? @cjzscfwgl_language.online : @cjzscfwgl_language.offline}">{{item.status==1
+                        ? @cjzscfwgl_language.online : @cjzscfwgl_language.offline}}</div>
+                    <div class="col-7" :attr="{title:item.totalCapacity,'data-toggle':'popover'}">{{item.totalCapacity}}</div>
+                    <div class="col-7" :attr="{title:item.remainCapacity,'data-toggle':'popover'}">{{item.remainCapacity}}</div>
+                    <div class="col-12">
+                        <!-- 
+                            :if="@authority.CHECK"
+                            :if="@authority.MODIFY"
+                            :if="@authority.DELETE"
+                            -->
+                        <a class="oparate checklook" href="javascript:void(0)" :click="@handleLookClick ($index,item)"
+                            :if="@authority.CHECK" :attr="{title: @cjzscfwgl_language.look}"></a>
+                        <a class="oparate modify" href="javascript:void(0)" :class="[item.source && 'disabled']" :click="@handleModifyClick ($index,item)"
+                            :if="@authority.MODIFY" :attr="{title: @cjzscfwgl_language.modify}"></a>
+                        <a class="oparate del" href="javascript:void(0)" :class="[item.source && 'disabled']" :click="@handleSingleDeleteClick ($index,item)"
+                            :if="@authority.DELETE" :attr="{title: @cjzscfwgl_language.delete}"></a>
+                        <span :if="@authority.OPT_SHOW"> - </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- <div class="bottom-tool-bar">
+            <input :if="@authority.BATCHDELETE" class="btn btn-tool" :class="[(@checkBox.length == 0 || @checkedIsSource) ? 'disabled': '']" type="button" value="批量删除"
+                :click="@handleDeleteClick()">
+        </div> -->
+        <div class="bottom-tool-bar" :class="['btn','btn-tool',(@checkBox.length == 0 || @checkedIsSource) && 'disabled']"
+            :click="@handleDeleteClick()" :if="@authority.BATCHDELETE">
+            <i class="icon icon_addUser"></i>
+            <span class="btn-tool-ywxz">{{@cjzscfwgl_language.batchDelete}}</span>
+        </div>
+        <!--分页-->
+        <ms-pages :widget="{total:@total,onChange:@handlePageChange,current:@currentPage,getCurrent:@getCurrent}"></ms-pages>
+    </article>
+</template>

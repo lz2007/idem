@@ -1,0 +1,180 @@
+<template>
+    <div class="sjgl-sjbgl sjbgl tyywglpt">
+        <!-- 顶部表单 begin -->
+        <div class="sjbgl-form-box tyywglpt-search-box" :if="@authority.SEARCH">
+            <xmp is="ms-form" :widget="{$form:@$searchForm,inline:true}">
+                <!-- 设备厂商影响设备型号 -->
+                <!-- 此处的设备厂商/型号包含已废弃的 -->
+                <ms-form-item :widget="{label: '设备产商:'}" :class="['form-item', (@manufacturerOptions.length === 0 && 'disabled')]">
+                    <ms-select :widget="{col:'manufacturer', value:[@getDefaultManu(manufacturerOptions,dataJson)], displayValue:'暂无可选的设备厂商', options:@manufacturerOptions, onChange:@handleManuChange}">
+                    </ms-select>
+                </ms-form-item>
+                <ms-form-item :widget="{label: '设备型号:'}" :class="['form-item', (@modelOptions.length === 0 && 'disabled')]">
+                    <ms-select :widget="{col:'model', value:[@getDefaultModel(modelOptions, isManuSelectMode, dataJson)], displayValue:'暂无可选的设备型号', options:@modelOptions, onChange:@handleModelChange}">
+                    </ms-select>
+                </ms-form-item>
+                <ms-form-item :widget="{label: '上传时间:'}" :class="'form-item time-item'">
+                    <ms-datepicker :widget="{placeholder:'请选择开始时间',col:'startTime', value:@startTime,onChange:@handleStartTimeChange}"></ms-datepicker>
+                    <span class="date-line">-</span>
+                    <ms-datepicker :widget="{placeholder:'请选择结束时间',col:'endTime', value:@endTime,onChange:@handleEndTimeChange}"></ms-datepicker>
+                </ms-form-item>
+                <button type="button" class="btn btn-query" :click="@query">
+                    查询
+                </button>
+            </xmp>
+        </div>
+        <!-- 上传删除 -->
+        <div class="sjbgl-btn-group tyywglpt-tool-bar">
+            <div class="tyywglpt-tool-bar-inner" :css="{'max-height':'30px'}">
+                <button :if="@authority.UPLOAD" class="btn btn-tool" :class="[delDate.length?'disabled':'']" :click="@handleUploadInfo">上传升级包</button>
+                <button :if="@authority.DELETE" type="button" class="btn btn-tool btn-del" :class="[delDate.length?'':'disabled']" :click="@handleDeleteClick">删除</button>
+            </div>
+        </div>
+        <!-- 表格数据begin -->
+        <div class="tyywglpt-list-panel">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <li class="col-5 first-item">
+                        <span :click="@checkedAll" :class="[@checkeds ? 'check_selected' : 'check_unselected']" :css="{display:'inline-block'}">
+                        </span>
+                    </li>
+                    <li class="col-5">序号</li>
+                    <li class="col-10">设备产商</li>
+                    <li class="col-10">设备型号</li>
+                    <li class="col-15">升级包名称</li>
+                    <li class="col-15">版本号</li>
+                    <li class="col-20">上传时间</li>
+                    <li class="col-20 last-item">更新内容</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@loading" class="list-loading">
+                    <span>结果加载中</span>
+                </li>
+                <li :if="@isNull" class="list-null">暂无数据</li>
+                <li :if="!@loading && !@isNull" :for="($index, item) in @tableData">
+                    <div class="col-5 first-item" :click="@tableClick($index,item,$event)">
+                        <span style="padding-left: 0px;" :class="[item.checked ? 'check_selected' : 'check_unselected']" :css="{display:'inline-block'}">
+                        </span>
+                    </div>
+                    <div class="col-5">{{((current-1)*pageSize+1)+$index}}</div>
+                    <div class="col-10" :attr="{'title':item.manufacturerName || '','data-toggle':'popover'}">{{item.manufacturerName | fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.model || '','data-toggle':'popover'}">{{item.model | fillterEmpty}}</div>
+                    <div class="col-15" :attr="{'title':item.name || '','data-toggle':'popover'}">{{item.name | fillterEmpty}}</div>
+                    <div class="col-15" :attr="{'title':item.version || '','data-toggle':'popover'}">{{item.version | fillterEmpty}}</div>
+                    <div class="col-20" :attr="{'title':item.insertTime || '','data-toggle':'popover'}">{{item.insertTime | fillterEmpty}}</div>
+                    <div class="col-20">
+                        <a :if="@authority.CHECK" class="oparate" :click="@handleLook(item)">查看</a>
+                        <span :if="!@authority.CHECK"> - </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- 页码 -->
+        <div class="pagebars" :if="@total > 0">
+            <ms-pages :widget="{total:@total,pageSize:@pageSize,onChange:@onChangePage,current:@current,getCurrent:@getCurrent}"></ms-pages>
+        </div>
+        <!-- 上传前弹窗 -->
+        <div :controller="cjzsjbgl-upload-info-vm" class="sjbgl-modal-upload-info">
+            <xmp :widget="{is:'common-ms-modal', title:'上传升级包', modalSelector:'#cjzsjbgl-modal-upload-info', drag:true, btnalign:'center', modalWidth:400, modalHeight:350, okText:'上传',show:@show,onOk:@handleOk,onCancel:@handleCancle}">
+                <div id="cjzsjbgl-modal-upload-info">
+                    <!-- 设备厂商影响设备型号 -->
+                    <!-- 此处的设备厂商/型号过滤掉已废弃的了(注释不要放到ms-form内的最开始，否则将解析出错) -->
+                    <ms-form :widget="{$form:@$uploadform,inline:true}">
+                        <ms-form-item :class="['form-item manu-item',!@validJson.manufacturer && 'has-error',(@manufacturerOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>设备厂商:</label>
+                            <ms-select :widget="{col:'manufacturer', value:[@defaultManufacturer], displayValue:'暂无可选的设备厂商', options:@manufacturerOptions,onChange:@handleManuChange}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.manufacturer">请选择设备厂商</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item model-item',!@validJson.model && 'has-error',(@modelOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>设备型号:</label>
+                            <ms-select :widget="{col:'model', value:[@defaultModel], displayValue:'暂无可选的设备型号', options:@modelOptions, onChange:@handleModelChange}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.model">请选择设备型号</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',((!@validJson.path || !@validJson.pathUnique) ? 'has-error' : '')]">
+                            <label>
+                                <i>* </i>上传升级包:</label>
+                            <div class="has-icon has-icon-input-wrap has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.path}" :duplex="@inputJson.path" disabled>
+                            </div>
+                            <input type="button" id="fileupload" class="btn btn-normal" value="打开">
+                            <div class="form-tip invalid-tip" :if="!@validJson.path">请选择要上传的升级包</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.pathUnique">您选择的升级包已存在于服务器</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',((!@validJson.version || !@validJson.versionAccept) ? 'has-error' : '')]">
+                            <label>
+                                <i>* </i>版本号:</label>
+                            <div class="has-icon has-icon-input-wrap">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.version}" :duplex="@inputJson.version" :focus="@handleFocus('version',$event)"
+                                    :blur="@handleFormat('version',@versionReg,30,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('version',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.version">
+                                <i class="fa fa-info-circle"></i>支持英文、数字下划线_、中线-、小数点.的组合</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.version">{{@inputJson.version.length > 30 ? '最多只可输入30位字符' : '请输入正确的版本号'}}</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.versionAccept">您输入的版本号已存在</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item textarea-item',!@validJson.updateInfo && 'has-error']">
+                            <label>
+                                <i>* </i>更新内容:</label>
+                            <div class="has-icon">
+                                <textarea class="form-control" :attr="{title:@inputJson.updateInfo}" :duplex="@inputJson.updateInfo" :focus="@handleFocus('updateInfo',$event)"
+                                    :blur="@handleFormat('updateInfo',@updateInfoReg,null,$event)"></textarea>
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('updateInfo',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.updateInfo">请输入更新内容</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+        <!-- 上传弹窗 -->
+        <div :controller="cjzsjbgl-upload-vm" class="sjbgl-modal-upload">
+            <xmp :widget="{is:'common-ms-modal',title:'上传升级包',modalSelector:'.sjbgl-upload-body',drag:true,modalWidth:420,show:@show,onOk:@handleOk,onCancel:@handleCancel,ifcancelBtn:!@uploadCompelete,ifokBtn:(@uploadCompelete && @ifsuccess),btnalign:'center',closeIconShow:!@uploadCompelete}">
+                <div class="sjbgl-upload-body">
+                    <div :visible="!@ifsuccess">
+                        <div class="row">
+                            <div class="col-md-2 uploadstatetext">上传中：</div>
+                            <div class="col-md-9 uploadstateprogress">
+                                <ms-progress :widget="{progress:@progress}"></ms-progress>
+                            </div>
+                        </div>
+                    </div>
+                    <div :visible="!@ifsuccess && @uploadCompelete">
+                        <div class="waittext">正在解析升级包，请稍等...</div>
+                    </div>
+                    <div :visible="@ifsuccess && @uploadCompelete">
+                        <div class="uploadfinish"></div>
+                        <div class="uploadfinishtext">上传完成!</div>
+                    </div>
+                </div>
+            </xmp>
+        </div>
+        <!-- 删除弹窗 -->
+        <div :controller="cjzsjbgl-delete-vm" class="sjbgl-modal-delete">
+            <xmp :widget="{is:'common-ms-modal', title:'确定删除', modalSelector:'.sjbgl-del-body', drag:true, btnalign:'center', modalWidth:300, modalHeight:80, show:@show,onOk:@handleOk,onCancel:@handleCancel}">
+                <div class="sjbgl-del-body">
+                    <p class="tip-text">是否确定删除选中的{{@delNums}}条数据？</p>
+                </div>
+            </xmp>
+        </div>
+        <!-- 查看弹窗 -->
+        <div :controller="cjzsjbgl-look-vm" class="sjbgl-modal-look sbzygl-modal-look">
+            <xmp :widget="{is:'common-ms-modal', title:'更新内容', modalSelector:'#cjzsjbgl-modal-look', drag:true, btnalign:'center', modalWidth:600, modalHeight:200, show:@show,ifcancelBtn:false,onOk:@handleOk,onCancel:@handleOk}">
+                <div id="cjzsjbgl-modal-look" ms-html="@updateContent">
+                </div>
+            </xmp>
+        </div>
+        <ms-download-tip :widget="{show:@downloadTipShow,plugLink:'/static/flash_player.zip',getShowStatus:getShowStatus}">
+            <div>
+                <p>上传升级包功能需要Flash插件的支持，您未安装Flash插件，是否下载？</p>
+                <p class="tip-text">
+                    <i class="fa fa-info-circle"></i>下载完成后请关闭浏览器安装</p>
+            </div>
+        </ms-download-tip>
+    </div>
+</template>

@@ -1,0 +1,305 @@
+<template>
+    <div class="zfsypsjglpt_tjfx_khqktj">
+        <div>
+            <div class="search_box" :if="@authority.SEARCH || @authority.QZPZ || @authority.EXPORT">
+                <div class="hBox" style="padding-top:10px;">
+                    <div class="dataFormBox" :if="@authority.SEARCH">
+                        <span class="span_cls">执勤部门：</span>
+                        <div class="dep_tree" :controller="khqktj_ga_tree">
+                            <!-- <ms-tree-select :widget="{treeData: @zhkp_data, onChange: @select_change, value: @zhkp_value, expandedKeys: @zhkp_expandedKeys}"
+                                :class="['formInput']"></ms-tree-select> -->
+                            <ms-tree-selecting :widget="{tree: @zhkp_data, showSearch: true, wrapId: 'zhkp-tree-select', getSelected: @getSelected, selectedKey: @tree_key ? @tree_key : '', selectedTitle: @tree_title ? @tree_title : '', onChange: @select_change, extraExpandHandle: @extraExpandHandle}"></ms-tree-selecting>
+                        </div>
+                    </div>
+                    <div class="dataFormBox" :controller="manType_ga">
+                        <span class="span_cls">人员类别：</span>
+                        <ms-select :widget="{col: 'con', options:@count_type_options, value: @count_type, onChange: @onChangeType}" :class="['formInput']"></ms-select>
+                    </div>
+                    <!-- <div class="dataFormBox" :controller="countType_ga">
+                        <span class="span_cls">统计对象：</span>
+                        <ms-select :widget="{col: 'con', options:@count_type_options, value: @count_value, onChange: @onChangeType}" :class="['formInput']"></ms-select>
+                    </div> -->
+                </div>
+                <div class="hBox" style="padding-top:10px;" :controller="zhkp_time_range_ga">
+                    <div class="dataFormBox">
+                        <span class="span_cls" style="width: 76px;text-align: right;">时间范围：</span>
+                        <ms-select :widget="{col: 'con', options:@time_range_options, value: @time_range, onChange: @onChangeTR}" :class="['formInput timeSelect']"></ms-select>
+                    </div>
+                    <div class="dataTimeBox" :if="@select_time">
+                        <span class="span_cls" style="display:none;">开始时间：</span>
+                        <div class="zhkp-dataRight" :controller="zhkp_startTime_ga">
+                            <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'请选择开始时间', value:@zhkp_startTime, showTime: false, endDate:@endDate}"></ms-datepicker>
+                            <div class="zhkp_tip_box zhkp_start_time_tip">
+                                <span :class="['zhkp_tip']" :css="{display:@start_null}">
+                                    <i class="fa fa-exclamation-circle">&nbsp;开始时间不能为空</i>
+                                </span>
+                            </div>
+                        </div>
+                        <span style="float: left; margin: 4px 4px 0 0; color: #536b82">-</span>
+                        <span class="span_cls" style="display:none;">结束时间：</span>
+                        <div class="zhkp-dataRight" :controller="zhkp_endTime_ga">
+                            <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'请选择结束时间', value:@zhkp_endTime, showTime: false, endDate:@endDate}"></ms-datepicker>
+                            <div class="zhkp_tip_box zhkp_end_time_tip">
+                                <span :class="['zhkp_tip']" :css="{display:@end_null}">
+                                    <i class="fa fa-exclamation-circle">&nbsp;结束时间不能为空</i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="dataFormBox" style="width: 690px!important;" :controller="zhkp_time_range">
+                        <span class="span_cls">时间范围：</span>
+                        <ms-select :widget="{col: 'con', options:@time_range_options, value: @time_range, onChange: @onChangeTR}" :class="['formInput timeSelect']"></ms-select>
+                        <div class="dataTimeBox" style="margin-left: 48px;" :if="@select_time">
+                            <div class="zhkp-dataRight" :controller="zhkp_startTime">
+                                <ms-month-picker :widget="{format: 'YYYY-MM',value:@zhkp_time_val,showTime: false,onChange:@handleTimeChange}"></ms-month-picker>
+                            </div>
+                            <span style="display: inline-block;float: left;padding: 0 10px 0 8px;">-</span>
+                            <div class="zhkp-dataRight" :controller="zhkp_endTime">
+                                <ms-month-picker :widget="{format: 'YYYY-MM',value:@zhkp_time_val,showTime: false,onChange:@handleTimeChange}"></ms-month-picker>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="btn-wrap">
+                    <a class="weight_setting_btn" :click="@config" :if="@authority.QZPZ">{{@btnName}}</a>
+                    <a class="common_export_btn" :click="@exportBtn" :if="@authority.EXPORT">导出</a>
+                    <a class="common_search_btn" :click="@searchBtn" :if="@authority.SEARCH">查询</a>
+                </div>
+                <a :if="false" class="tips-img" :click="@alert_tips">
+                    <img src="/static/image/zfsypsjglpt/u4131.png?__sprite">
+                </a>
+                <!-- <div class="hBox" style="padding-top:10px;" :controller="zhkp_time_range_ga" :if="@authority.SEARCH">
+                    <div class="dataFormBox">
+                        <span class="span_cls" style="width: 76px;text-align: right;">时间范围：</span>
+                        <ms-select :widget="{col: 'con', options:@time_range_options, value: @time_range, onChange: @onChangeTR}" :class="['formInput timeSelect']"></ms-select>
+                    </div>
+                    <div class="dataTimeBox" :if="@select_time">
+                        <span class="span_cls">开始时间：</span>
+                        <div class="zhkp-dataRight" :controller="zhkp_startTime_ga">
+                            <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'请选择开始时间', value:@zhkp_startTime, showTime: false, endDate:@endDate}"></ms-datepicker>
+                            <div class="zhkp_tip_box zhkp_start_time_tip">
+                                <span :class="['zhkp_tip']" :css="{display:@start_null}">
+                                    <i class="fa fa-exclamation-circle">&nbsp;开始时间不能为空</i>
+                                </span>
+                            </div>
+                        </div>
+                        <span class="span_cls" style="padding-left: 44px;">结束时间：</span>
+                        <div class="zhkp-dataRight" :controller="zhkp_endTime_ga">
+                            <ms-datepicker :widget="{onChange:@handlerChange, placeholder:'请选择结束时间', value:@zhkp_endTime, showTime: false, endDate:@endDate}"></ms-datepicker>
+                            <div class="zhkp_tip_box zhkp_end_time_tip">
+                                <span :class="['zhkp_tip']" :css="{display:@end_null}">
+                                    <i class="fa fa-exclamation-circle">&nbsp;结束时间不能为空</i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <div :controller="zfsypsjglpt_tjfx_khqktj_ga_table">
+                <ms-org-breadcrumb :widget="{cid:'khqktj-breadcrumb',list: @breadcrumbList, handleclick: @breadcrumbClick}"></ms-org-breadcrumb>
+                <div class="zfsypsjglpt_tjfx_khqktj_jj_table" :css="{display: @tableShowObj.tableMain ? 'block' : 'none'}">
+                    <div class="khqktj-list-panel table-index" :controller="zhkp_table_vm_ga" id="zhkp_table_id">
+                        <ul class="khqktj-list-header-upper" style="border-left: 1px solid #eee;">
+                            <li parent="1" class="col-3 borberb">
+                                <span style="visibility: hidden;">序号</span>
+                            </li>
+                            <li parent="2" class="col-5 borberb">
+                                <span style="visibility: hidden;">执勤部门</span>
+                            </li>
+                            <li parent="3" class="col-5 borberb">
+                                <span style="visibility: hidden;">
+                                    人员类别
+                                </span>
+                            </li>
+                            <li :if="@tableToggle" parent="4" class="col-5 borberb">
+                                <span style="visibility: hidden;">
+                                    警员/警号
+                                </span>
+                            </li>
+                            <li :attr="{'parent':  @tableToggle ? 5 : 4 }" class="col-3 borberb">
+                                <span style="visibility: hidden;">总排名</span>
+                            </li>
+                            <li :attr="{'parent':  @tableToggle ? 6 : 5 }" class="col-4 borberb">
+                                <span style="visibility: hidden;">总分</span>
+                            </li>
+                            <li :attr="{'parent':  @tableToggle ? 7 : 6 }" class="col-15">建档情况统计({{@configPoint.jdlkh}}分)</li>
+                            <li :attr="{'parent':  @tableToggle ? 8 : 7 }" class="col-15">使用情况统计({{@configPoint.sylkh}}分)</li>
+                            <li :attr="{'parent':  @tableToggle ? 9 : 8 }" class="col-15">时长情况统计({{@configPoint.sclkh}}分)</li>
+                            <li :attr="{'parent':  @tableToggle ? 10 : 9 }" class="col-15">关联情况统计({{@configPoint.cclkh}}分)</li>
+                            <li :attr="{'parent':  @tableToggle ? 11 : 10 }" class="col-20">抽查通过统计({{@configPoint.gllkh}}分)</li>
+                        </ul>
+                        <!-- 防止表格出现滚动条表格列偏移 -->
+                        <div class="header-fill" :if="@showScroll" style="display: none;"></div>
+                        <ul class="khqktj-list-header" style="border-left: 1px solid #eee;">
+                            <li data-order="1" son="1" class="col-3 borbert">
+                                <div style="visibility: hidden;">序号</div>
+                                <span>序号</span>
+                            </li>
+                            <li data-order="2" son="2" class="col-5 borbert">
+                                <div style="visibility: hidden;">执勤部门</div>
+                                <span>执勤部门</span>
+                            </li>
+                            <li data-order="3" son="3" class="col-5 borbert">
+                                <div style="visibility: hidden;">人员类别</div>
+                                <span>人员类别</span>
+                            </li>
+                            <li :if="@tableToggle" data-order="4" son="4" class="col-5 borbert">
+                                <div style="visibility: hidden;">警员/警号</div>
+                                <span>警员/警号</span>
+                            </li>
+                            <li :attr="{'son':  @tableToggle ? 5 : 4 ,'data-order': @tableToggle ? 5 : 4 }" class="col-3 borbert">
+                                <div style="visibility: hidden;">总排名</div>
+                                <span>总排名</span>
+                            </li>
+                            <li :attr="{'son':  @tableToggle ? 6 : 5 ,'data-order': @tableToggle ? 6 : 5 }" class="col-4 borbert">
+                                <div style="visibility: hidden;">总分</div>
+                                <span>总分</span>
+                            </li>
+                            <li :attr="{'son':  @tableToggle ? 7 : 6 ,'data-order': @tableToggle ? 7 : 6 }" class="col-5">建档率</li>
+                            <li :attr="{'son':  @tableToggle ? 7 : 6 ,'data-order': @tableToggle ? 8 : 7 }" class="col-5">得分</li>
+                            <li :attr="{'son':  @tableToggle ? 7 : 6 ,'data-order': @tableToggle ? 9 : 8 }" class="col-5">名次</li>
+                            <li :attr="{'son':  @tableToggle ? 8 : 7 ,'data-order': @tableToggle ? 10 : 9 }" class="col-5">使用率</li>
+                            <li :attr="{'son':  @tableToggle ? 8 : 7 ,'data-order': @tableToggle ? 11 : 10 }" class="col-5">得分</li>
+                            <li :attr="{'son':  @tableToggle ? 8 : 7 ,'data-order': @tableToggle ? 12 : 11 }" class="col-5">名次</li>
+                            <li :attr="{'son':  @tableToggle ? 9 : 8 ,'data-order': @tableToggle ? 13 : 12 }" class="col-5">时长率</li>
+                            <li :attr="{'son':  @tableToggle ? 9 : 8 ,'data-order': @tableToggle ? 14 : 13 }" class="col-5">得分</li>
+                            <li :attr="{'son':  @tableToggle ? 9 : 8 ,'data-order': @tableToggle ? 15 : 14 }" class="col-5">名次</li>
+                            <li :attr="{'son':  @tableToggle ? 10 : 9 ,'data-order': @tableToggle ? 16 : 15 }" class="col-5">关联率</li>
+                            <li :attr="{'son':  @tableToggle ? 10 : 9 ,'data-order': @tableToggle ? 17 : 16 }" class="col-5">得分</li>
+                            <li :attr="{'son':  @tableToggle ? 10 : 9 ,'data-order': @tableToggle ? 18 : 17 }" class="col-5">名次</li>
+                            <li :attr="{'son':  @tableToggle ? 11 : 10 ,'data-order': @tableToggle ? 19 : 18 }" class="col-5">抽查数</li>
+                            <li :attr="{'son':  @tableToggle ? 11 : 10 ,'data-order': @tableToggle ? 20 : 19 }" class="col-5">通过率</li>
+                            <li :attr="{'son':  @tableToggle ? 11 : 10 ,'data-order': @tableToggle ? 21 : 20 }" class="col-5">得分</li>
+                            <li :attr="{'son':  @tableToggle ? 11 : 10 ,'data-order': @tableToggle ? 22 : 21 }" class="col-5">名次</li>
+                        </ul>
+                        <ul class="khqktj-list-content">
+                            <div class="table-index-loading" :if="@loading">
+                                <span class="loadingSpan">结果加载中</span>
+                            </div>
+                            <li class="list-null" :if="!@list.length">暂无数据</li>
+                            <!-- <div :if="!@loading && !@list.length" class="noData">暂无数据</div> -->
+                            <li :for="($index, item) in @list">
+                                <div class="col-3" :attr="{'data-toggle':'tooltip'}">{{@item.index | fillterEmpty}}</div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">
+                                    <a class="checkLook" :click="@rowClick(item, 'main')">{{@item.orgName | fillterEmpty}}</a>
+                                </div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">{{@item.policeTypeName | fillterEmpty}}</div>
+                                <div :if="@tableToggle" class="col-5" :attr="{'data-toggle':'tooltip'}">{{@item.userName | fillterEmpty}}</div>
+                                <div class="col-3" :attr="{'data-toggle':'tooltip'}">{{@item.totalRank | fillterEmpty}}</div>
+                                <div class="col-4" :attr="{'data-toggle':'tooltip'}">{{@item.totalScore | fillterEmpty}}</div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">
+                                    <a :class="[item.parentOrgId ? 'checkLook' : '']" :click="@rowClick(item, 'jdqk')">{{@item.jdrate | showPercent}}</a>
+                                </div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">{{@item.jdpoint | fillterEmpty}}</div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">{{@item.jdrange | fillterEmpty}}</div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">
+                                    <a :class="[item.parentOrgId ? 'checkLook' : '']" :click="@rowClick(item, 'syqk')">{{@item.syrate | showPercent}}</a>
+                                </div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">{{@item.sypoint | fillterEmpty}}</div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">{{@item.syrange | fillterEmpty}}</div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">
+                                    <a :class="[item.parentOrgId ? 'checkLook' : '']" :click="@rowClick(item, 'scqk')">{{@item.scrate | showPercent}}</a>
+                                </div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">{{@item.scpoint | fillterEmpty}}</div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">{{@item.scrange | fillterEmpty}}</div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">
+                                    <a :class="[item.parentOrgId ? 'checkLook' : '']" :click="@rowClick(item, 'glqk')">{{@item.glrate | showPercent}}</a>
+                                </div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">{{@item.glpoint | fillterEmpty}}</div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">{{@item.glrange | fillterEmpty}}</div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">{{@item.ccnum | fillterEmpty}}</div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">
+                                    <a :class="[item.parentOrgId ? 'checkLook' : '']" :click="@rowClick(item, 'ccqk')">{{@item.ccrate | showPercent}}</a>
+                                </div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">{{@item.ccpoint | fillterEmpty}}</div>
+                                <div class="col-5" :attr="{'data-toggle':'tooltip'}">{{@item.ccrange | fillterEmpty}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="tjfx_khqktj_detail_table" :if="@tableShowObj.tableJdqk">
+                    <ms-comtable :widget="{id:'table-jdqk',loading: @tableLoading,data:@list,panelCss:{marginTop: 20,position: 'absolute',width: '100%', bottom: 0,top: 0}}">
+                        <ms-comtable-header :widget="{title:'序号',dataIndex:'index',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'名称',dataIndex:'name',colwidth:'20%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'类型',dataIndex:'type',colwidth:'14%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'人数',dataIndex:'userCount',colwidth:'14%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'建档情况',dataIndex:'fileCreateInfo',colwidth:'14%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'建档时间',dataIndex:'fileCreateDate',colwidth:'14%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'建档率',dataIndex:'fileCreateRate | showPercent',colwidth:'14%',popover:true}"></ms-comtable-header>
+                    </ms-comtable>
+                </div>
+                <div class="tjfx_khqktj_detail_table" :if="@tableShowObj.tableSyqk">
+                    <ms-comtable :widget="{id:'table-syqk',loading: @tableLoading,data:@list,panelCss:{marginTop: 20,position: 'absolute',width: '100%', bottom: 0,top: 0}}">
+                        <ms-comtable-header :widget="{title:'序号',dataIndex:'index',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'名称',dataIndex:'name',colwidth:'20%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'类型',dataIndex:'type',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'人数',dataIndex:'userCount',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'绑定情况',dataIndex:'fileCreateInfo',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'查询天数',dataIndex:'days',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'使用天数/使用情况',dataIndex:'usageInfo',colwidth:'20%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'使用率',dataIndex:'usageRate | showPercent',colwidth:'10%',popover:true}"></ms-comtable-header>
+                    </ms-comtable>
+                </div>
+                <div class="tjfx_khqktj_detail_table" :if="@tableShowObj.tableScqk">
+                    <ms-comtable :widget="{id:'table-scqk',loading: @tableLoading,data:@list,panelCss:{marginTop: 20,position: 'absolute',width: '100%', bottom: 0,top: 0}}">
+                        <ms-comtable-header :widget="{title:'序号',dataIndex:'index',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'名称',dataIndex:'name',colwidth:'20%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'类型',dataIndex:'type',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'人数',dataIndex:'userCount',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'绑定情况',dataIndex:'fileCreateInfo',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'视频数量',dataIndex:'videoCount',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'要求时长',dataIndex:'expectDuration',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'实际时长',dataIndex:'realDuration',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'时长率',dataIndex:'durationRate | showPercent',colwidth:'10%',popover:true}"></ms-comtable-header>
+                    </ms-comtable>
+                </div>
+                <div class="tjfx_khqktj_detail_table" :if="@tableShowObj.tableCcqk">
+                    <ms-comtable :widget="{id:'table-ccqk',loading: @tableLoading,data:@list,panelCss:{marginTop: 20,position: 'absolute',width: '100%', bottom: 0,top: 0}}">
+                        <ms-comtable-header :widget="{title:'序号',dataIndex:'index',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'名称',dataIndex:'name',colwidth:'20%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'类型',dataIndex:'type',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'人数',dataIndex:'userCount',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'视频数量',dataIndex:'videoCount',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'关联数',dataIndex:'matchCount',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'抽查数量',dataIndex:'spotCheckCount',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'通过数量',dataIndex:'passCount',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'抽查通过率',dataIndex:'checkPassRate | showPercent',colwidth:'10%',popover:true}"></ms-comtable-header>
+                    </ms-comtable>
+                </div>
+                <div class="tjfx_khqktj_detail_table" :if="@tableShowObj.tableGlqk">
+                    <ms-comtable :widget="{id:'table-glqk',loading: @tableLoading,data:@list,panelCss:{marginTop: 20,position: 'absolute',width: '100%', bottom: 0,top: 0}}">
+                        <ms-comtable-header :widget="{title:'序号',dataIndex:'index',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'名称',dataIndex:'name',colwidth:'20%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'类型',dataIndex:'type',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'人数',dataIndex:'userCount',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'绑定情况',dataIndex:'fileCreateInfo',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'视频数量',dataIndex:'videoCount',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'总业务数',dataIndex:'leCount',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'关联数',dataIndex:'matchCount',colwidth:'10%',popover:true}"></ms-comtable-header>
+                        <ms-comtable-header :widget="{title:'关联率',dataIndex:'matchRate | showPercent',colwidth:'10%',popover:true}"></ms-comtable-header>
+                    </ms-comtable>
+                </div>
+                <!-- <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent,getPageSize:@getPageSize}"></ms-pages> -->
+                <ms-pages :widget="{total:@table_pagination.total, onChange:@handlePageChange, current:@table_pagination.current, getCurrent:@getCurrent, pageSize:@table_pagination.pageSize}"></ms-pages>
+            </div>
+        </div>
+    </div>
+    <!-- xx率计算描述弹窗 -->
+    <div class="zhkp-tips" :controller="zhkp-tips_ga">
+        <ms-dialog :widget="{$innerVm:'zhkp-tipsVm', show:@show,onCancel:@handleCancel, onOk:@handleOk,height:320,width:630,isMove:true}">
+            <div slot="body" ms-skip>
+                <div slot="body" ms-skip>
+                    <p>1、执法记录仪配发率=（部门所有执法记录仪总数量 / 部门终端用户数）*100%，执法记录仪总数量含正常、维修、停用、注销状态的执法记录仪数量。</p>
+                    <p>2、执法记录仪使用率(统计对象为部门): 执法记录仪使用率=（执法记录仪在线天数总和 /每天执法记录仪数量总和）*100%；</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;执法记录仪使用率(统计对象为人员) : 执法记录仪使用率=（选定时间内执法记录仪在线天数 /选定的天数）*100%；</p>
+                    <p>3、视频及时导入率=[1-（超过24小时导入执法视频数 / 执法视频数）]*100%</p>
+                    <p>4、警情/案件关联率=已关联数量 / 执法数量*100%</p>
+                    <p>5、考评率=（考评的警情数+考评的案件数）/（警情总数+案件总数）*100%</p>
+                </div>
+            </div>
+            <div slot="footer" ms-skip>
+            </div>
+        </ms-dialog>
+    </div>
+</template>

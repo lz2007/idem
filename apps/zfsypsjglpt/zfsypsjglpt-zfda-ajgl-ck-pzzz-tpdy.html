@@ -1,0 +1,80 @@
+<template>
+    <div class="pzzz-tpdy">
+        <div class="tpdy-head">
+            <button class="screenshot" type="button" :click="@screenshotClick">选择截图</button>
+        </div>
+        <div class="tpdy-content-dy">
+            <div class="tpdy-content" id="tpdyContent">
+                <div class="tpdy01_null" >
+                    <div class="tpdy01_null_top"></div>
+                    <div class="tpdy01_null_mid"></div>
+                    <div class="tpdy01_null_bottom"></div>
+                </div>
+                <div class="tpdy02_null" ></div>
+                <div class="tpdy-c" :controller="tpdy_c">
+                    <div :if="!@tpCheckedData.length">
+                        <ms-canvas :widget="{imgUrl:'/static/image/canvas_img/yipin.jpg',canvasId:'canvasIdNull01',width:998,height:498,dyImgShow:@dyImgShow01,jyaq:@jyaq}"></ms-canvas>
+                        <div style="width: 100%;height: 10px;"></div>
+                        <ms-canvas :widget="{imgUrl:'/static/image/canvas_img/yipin.jpg',canvasId:'canvasIdNull02',width:998,height:498,dyImgShow:@dyImgShow02,jyaq:@jyaq}"></ms-canvas>
+                    </div>
+                    <div :for="($index,record) in @tpCheckedData" :css="{display:($index == @currentPage ? 'block':'none')}">
+                        <div :for="(n,item) in @record">
+                            <ms-canvas :widget="{imgUrl:item.httpUrl,base64:item.base64,canvasId:item.rid,width:998,height:498,dyImgShow:@dyImgShow,jyaq:@jyaq}"></ms-canvas>
+                            <div :if="n == 0" style="width: 100%;height: 10px;"></div>
+                        </div>
+                        <!-- <div style="width: 100%;height: 10px;"></div>
+                        <div>
+                            <ms-canvas :if="record[1]" :widget="{imgUrl:record[1].httpUrl,canvasId:record[1].rid,width:998,height:498,dyImgShow:@dyImgShow02}"></ms-canvas>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="tpdy-zd">
+                    <p><span>装</span></p>
+                    <p><span>订</span></p>
+                    <p><span>线</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="tpdy-footer">
+            <div class="page-btn">
+                <button class="tpdy-btn pre pageDisable" type="button" :click="@handlePre">上一页</button>
+                <button class="tpdy-btn next pageDisable" type="button" :click="@handleNext">下一页</button>
+            </div>
+            <div class="dy-btn">
+                <button class="tpdy-btn" type="button" :click="@printCurrent">打印当前页</button>
+            </div>
+        </div>
+        <!-- 选择截图弹框-->
+        <div class="tpdy-jtslt" :controller="tpdy_jtslt">
+            <xmp :widget="{is:'ms-dialog',$innerVm:'tpdy-jtsltVm',show:@jtsltShow,onCancel:@handleCancel,height:550,width:877,isMove:true}">
+                <div slot="body" ms-skip>
+                    <div class="tpdy-jtsltDialog">
+                        <div class="top">
+                            <input type="checkbox" class="tpdy-jtslt-all" id="tpdyJtsltAll" :duplex-checked="@tpdyJtsltCheckAll" data-duplex-changed="@tpdyJtsltCheckFnc($event)"/>
+                            <label for="tpdyJtsltAll" class="tpdy-jtslt-allLabel">
+                                <span :class="@tpdyJtsltCheckAll ? 'tpdyJtsltChecked':'tpdyJtsltCheck'"></span>全选
+                            </label>
+                        </div>
+                        <ul class="cont">
+                            <li class="first-li" :for="($index, record) in @tcResult">
+                                <div class="jtslt-d" :for="(n,item) in @record">
+                                    <input type="checkbox" class="jtslt-d-check" :attr="{'id':$index+'_'+n}" :duplex-checked="item.checked" data-duplex-changed="@jtsltDCheckFnc($index,n,item,$event)"/>
+                                    <label :attr="{'for':$index+'_'+n}" class="jtslt-d-label">
+                                        <span :class="[item.checked ? 'jtslt-dChecked':'jtslt-dCheck']"></span>
+                                    </label>
+                                    <div class="jtslt-d-img" :attr="{id:item.rid,rel:'Picasa['+item.encodeURI+']'}"><img :attr="{'src':item.httpUrl}"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div slot="footer" ms-skip>
+                    <div class="tpdy-jtslt-modalFooter">
+                        <button class="tpdy-jtslt-save tpdy-jtslt-btn" type="button" :click="@tpdyJtsltSave">确定所选</button>
+                        <button class="tpdy-jtslt-cancel tpdy-jtslt-btn" type="button" :click="@tpdyJtsltCancel">取    消</button>
+                    </div>
+                </div>
+            </xmp>
+        </div>
+    </div>
+</template>

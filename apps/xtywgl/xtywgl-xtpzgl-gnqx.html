@@ -1,0 +1,90 @@
+<template>
+	<div class="tyyhrzpt_jsgl ywzx_jsgl">
+		<div class="contentBox">
+			<div class="roleLists">
+				<div class="common_header">{{gnqx_language.roleList}}</div>
+				<ul class="roleLists_body" :controller='roleItem_cont' id="scrollBox">
+					<li ms-for='item in roleItemsLists' :attr="{title: item.roleName}">
+						<!-- click事件和class绑定在li上渲染有问题,传递item拿不到当前数据信息-avalon解析问题 -->
+						<span :click='@clickRoleItem(this,$event)' :attr='{id:item.id}'>{{item.roleName}}</span>
+						<div class="edit" id="gnqxEdit">
+							<img src="/static/image/xtywgl/edit.png?__sprite" :click="@editRole(this,$event)" :attr='{id:item.id,title: @gnqx_language.edit}' :visible='@gnqx_opt.authority.EDIT'>
+							<img src="/static/image/xtywgl/del.png?__sprite" :click="@deleteRole(this,$event)" :attr="{id:item.id,title: @gnqx_language.delTitle}" :visible='@gnqx_opt.authority.DELETE'>
+						</div>
+					</li>
+					<div :class="@gnqxClass":click="@addRole" :if="@gnqx_opt.authority.CREATE">
+						<i class="icon icon_addUser"></i>
+						<span class="btn-tool-ywxz">{{@gnqx_language.newRole}}</span>
+					</div>
+				</ul>
+			</div>
+			<div class="authority_tree_box">
+				<div class="common_header" style="padding-left:15px">
+					{{gnqx_language.permissionsSettings}}
+				</div>
+				<div id="authority_tree" :controller='authority_tree'>
+					<ms-tree :widget="{tree: @authority_data, onCheck:@checkedTree,checkable: @checkable,checkedKeys:@checkedKeys, expandedKeys: @expandedKeys,beforeCollapse:@handleBeforeCollapse,beforeExpand:@handleBeforeExpand}"></ms-tree>
+				</div>
+				<div class="btn-qxsz" :if="@gnqx_opt.authority.BJQX">
+					<input type="button" :attr="{value: @gnqx_language.edit}" :click="@editAuthority" class="btn btn-tool" :class="@selectedRowsLength !== 0 && 'disabled'"
+					 :if="@editAuthorityStatu">
+					<input type="button" :attr="{value: @gnqx_language.save}" :click="@saveAuthority" class="btn btn-tool" :class="@selectedRowsLength !== 0 && 'disabled'"
+					 :if="!@editAuthorityStatu">
+					<input type="button" :attr="{value: @gnqx_language.reset}" :click="@cancelEditAuthority" class="btn btn-tool"
+					 :class="@selectedRowsLength !== 0 && 'disabled'" :if="!@editAuthorityStatu">
+				</div>
+			</div>
+		</div>
+
+		<!-- 新增 and 编辑角色 -->
+		<div class="add_edit" :controller='add_edit_cont'>
+			<ms-dialog :widget="{$innerVm:'add_editVm', show:@add_editShow,onCancel:@add_editCancel,className:'add_edit_dialog_ywzx common_dialog',okText:@okText,cancelText:@cancelText,onOk:@add_editOk,height:220,width:415,isMove:true}">
+				<div slot="body" ms-skip>
+					<div class="common_input_ywzx">
+						<span class="red_start">*</span>
+						<label>{{gnqx_language.rolename}}</label>
+						<div class="gnqx_input_panel_ywzx" :class="[(@roleNameTips == 'block' || @name_isNull == 'block')? 'has-error':'']">
+							<input type="text" ms-duplex="@roleName" class="roleName_input" :attr='{title:@roleName}' :keyup="@roleNameEvt"
+							 :focus="@focusRoleName" :blur="@blurRoleName">
+							<span class="jsgl_right_close input_name" :mousedown="@close_click()" :if="@jsgl_close_name"></span>
+						</div>
+					</div>
+					<div class="roleNameTips">
+						<span class="roleNameSpan" :class="['jsgl_tip']" :css="{display:@name_display}">
+							<i class="fa fa-exclamation-circle">{{gnqx_language.englishLettersAndDigitsAreAvailable}}</i>
+						</span>
+						<span class="roleNameSpan" :class="['jsgl_null_tip']" :css="{display:@name_isNull}">
+							<i class="fa fa-exclamation-circle">{{gnqx_language.roleNameCannotBeNull}}</i>
+						</span>
+						<span class="roleNameSpan" :class="['jsgl_null_tip']" :css="{display:@roleNameTips}">
+							<i class="fa fa-exclamation-circle">{{gnqx_language.pleaseEnterTheCorrectFormat}}</i>
+						</span>
+					</div>
+				</div>
+			</ms-dialog>
+		</div>
+
+
+		<!-- 删除角色 -->
+		<div class="deleteRole_ywzx" :controller='deleteRole_cont'>
+			<ms-dialog :widget="{$innerVm:'deleteRoleVm', show:@deleteRoleShow,okText: @gnqx_language.ok,cancelText: gnqx_language.cancel,onCancel:@deleteRoleCancel,className:'deleteRole_dialog common_dialog', onOk:@deleteRoleOk,height:218,width:383,isMove:true}">
+				<div slot="body" ms-skip>
+					<p>{{gnqx_language.delMessage}}</p>
+					<p>{{gnqx_language.sureDel}}</p>
+				</div>
+			</ms-dialog>
+		</div>
+
+		<!-- 权限保存成功提示 -->
+		<div class="saveAuthority" :controller='saveAuthority_cont'>
+			<ms-dialog :widget="{$innerVm:'saveAuthorityVm', show:@saveAuthorityShow,className:'authority_dialog common_dialog',onCancel:@saveAuthorityCancel,height:180,width:300,isMove:true}">
+				<div slot="body" ms-skip>
+					{{gnqx_language.success}}
+				</div>
+				<div slot='footer' class="modal-footer" ms-skip>
+					<a class="btn btn-primary" :click="@saveAuthorityOk">{{gnqx_language.save}}</a>
+				</div>
+			</ms-dialog>
+		</div>
+	</div>
+</template>

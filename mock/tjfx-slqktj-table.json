@@ -1,0 +1,33 @@
+{
+    "totalPages": 1,
+    "totalElements": 2,
+    "currentPages": 20,
+    "perPages": 20,
+    "currentElements": [
+        {
+            "orgId": "GMO1100000020171101170922ff6fffffe",
+            "orgName": "质量部",
+            "dqrs": 15,
+            "zfys": 0,
+            "zfysps": 2,
+            "zfyspzdx": 2,
+            "zfyspzsc": 2,
+            "over24fileNum": 1,
+            "jsdrl": 0.5,
+            "userCode": "12312",
+            "zfysyl": 0.125
+        }, {
+            "orgId": "1",
+            "orgName": "国迈一级",
+            "dqrs": 166,
+            "zfys": 0,
+            "zfysps": 32,
+            "zfyspzdx": 1234582,
+            "zfyspzsc": 333352,
+            "over24fileNum": 21,
+            "jsdrl": 0.34375,
+            "userCode": "",
+            "zfysyl": 0.125
+        }
+    ]
+}

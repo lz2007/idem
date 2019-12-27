@@ -1,0 +1,142 @@
+<template>
+    <div class="common-layout">
+        <div class="layout-header">
+            <div class="logo">
+                <img src="/static/image/configure-logo/main-logo.png" alt="" :if="@hasLogo">
+                <h4></h4>
+            </div>
+
+            <div class="downloadcloud">
+                <div class="div_msg img_downloadCenter" :class="@cloudClass" :click="openOrderCenter">
+                </div>
+                <div class="div_msg txt_downloadCenter">
+                    <p :click="@openOrderCenter">{{downloadCenter}}</p>
+                </div> 
+            </div>
+           
+            <div class="user-info" :click="@userInfoClick">
+                <i class="user_icon"></i>
+                <span>{{@userName}}</span>
+                <div class="user-drop-triangle"></div>
+                <div class="user-drop-down" :visible="false" :mouseleave="@userDropdownShow = false">
+                    <ul>
+                        <!-- 二维码 -->
+                        <!-- <li :click="@qrCodeClick" :if="@authority.EWM">{{layout_txt.qrCode}}</li> -->
+                        <!-- 修改密码 -->
+                        <li :click="@editPassword">{{layout_txt.changePassword}}</li>
+                        <!-- 退出登录 -->
+                        <li :click="@loginOut">{{layout_txt.exit}}</li>
+                        <iframe src="about:blank" marginheight="0" marginwidth="0" style="position:absolute; visibility:inherit; top:0;left:0;width:100%; height:100%;z-index:-1;opacity:1;filter:alpha(opacity=0);"
+                            frameborder="0"></iframe>
+                    </ul>
+                </div>
+                <ms-header-operation></ms-header-operation>
+            </div>
+            <div class="nav">
+                <ul>
+                    <li :for="($index, item) in @topMenu" :class="[item.icon, @selectedNavKey == item.key ? 'meunActive' : '']"
+                        :click="@topMenuItemClick(item, $event, $index)" :mouseover="@topMenuItemMouseOver(item, $event, $index)"
+                        :mouseleave="@topMenuItemMouseLeave(item, $event, $index)">
+                        <h4>{{item.title}}</h4>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="layout-sider" :if="@showSidemenu">
+            <ms-menu :widget="{menu:@sideMenu, openKeys:@sideOpenKeys, selectedKeys:@sideSelectedKeys, onClick:@sideMenuItemClick, onOpenChange:@sideMenuOpenChange}"></ms-menu>
+        </div>
+        <div class="layout-container">
+            <slot></slot>
+            <ul :if="@showLevelNavigation && @thirdLevelNavigation.length > 0" class="thirdLevelNavigationPanel">
+                <li :for="($index, item) in @thirdLevelNavigation"
+                    :class="[@thirdLevelKey == item.key ? 'navActive' : '']"
+                    :click="@thirdLevelClick(item, $index) | stop">
+                    <span>{{item.title}}</span>
+                </li>
+            </ul>
+        </div>
+        <!--下载中心弹窗-->
+        <div :controller="confirm-downLoad" class="main-index-dialog">
+            <xmp :widget="{title : @title,is: 'ms-dialog', $innerVm:'confirm-ctl-inner', className: 'main-index-dialog', isMove: true, show:@show, width: 680, height: 280, onCancel:@editCancel, onOk:@editOk, okText:'确认', cancelText:'', move_return:@move_return}">
+                <div slot="body" ms-skip>
+                    <div class="centerContent">
+                        <div class="necessary">
+                            <p>{{essentialPlug}}</p>
+                            <ul :click="@iconDownLoad($event)">
+                                <li>
+                                    <!-- <a id="aFlashDL" href="/static/flash_player.zip">{{flashPlug}}</a> -->
+                                    <a id="aFlashDL" :click="ocxDownload(1)" class="cursor_pointer">{{flashPlug}}</a>
+                                    <i class="iconDownload"></i>
+                                </li>
+                                <li>
+                                    <!-- <a :attr="{href: @certificatePlugHref}">{{certificatePlug}}</a> -->
+                                    <a  :click="ocxDownload(2)" class="cursor_pointer">{{certificatePlug}}</a>
+                                    <i class="iconDownload"></i>
+                                </li>
+                                <li class="lilong">
+                                    <!-- <a :attr="{href: @version}" class="along">{{gosuncnPlayer}}</a> -->
+                                    <a  :click="ocxDownload(3)" class="along cursor_pointer">{{gosuncnPlayer}}</a>
+                                    <i class="iconDownload"></i>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="necessary optional">
+                            <p>{{availableBrowsers}}</p>
+                            <ul :click="@iconDownLoad($event)">
+                                <!-- <li>
+                                    <a id="ffactivex" :attr="{href: @defaultDownloadUrl}">{{gosuncnBrowser}}</a>
+                                    <i class="iconDownload"></i>
+                                </li> -->
+                                <li>
+                                    <!-- <a href="/static/IE11-Windows6.1-x86-en-us.exe">{{IE32}}</a> -->
+                                    <a  :click="ocxDownload(4)" class="cursor_pointer">{{IE32}}</a>
+                                    <i class="iconDownload"></i>
+                                </li>
+                                <!-- <li>
+                                    <a href="/static/IE11-Windows6.1-x64-en-us.exe">{{IE64}}</a>
+                                    <i class="iconDownload"></i>
+                                </li> -->
+                                <li>
+                                    <!-- <a  href="/static/Firefox-51.0(32-bit).exe">{{firefox32}}</a> -->
+                                    <a  :click="ocxDownload(5)" class="cursor_pointer">{{firefox32}}</a>
+                                    <i class="iconDownload"></i>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div slot="footer" class="modal-footer" ms-skip>
+                    <div class="centerFooter">
+                        <p :click="@openDownLoadHelp">{{help}}</p>
+                        <div class="iconHelp" :click="@openDownLoadHelp"></div>
+                    </div>
+                </div>
+            </xmp>
+        </div>
+        <div :controller="question-ctl" class="main-index-dialog">
+            <xmp :widget="{is: 'ms-dialog',$innerVm:'question-ctl-inner', className: 'main-index-dialog', isMove: true, show:@show, width: 550, height: 250, onCancel:@editCancel, onOk:@editOk, okText:'', cancelText:'', move_return:@move_return}">
+                <div slot="body" ms-skip>
+                    <div class="centerHelp">
+                        <ol>
+                            <li><span>{{helpTip1}}</span></li>
+                            <li><span>{{helpTip2}}</span></li>
+                            <!--<li><span>{{helpTip3}}</span></li>-->
+                            <!--<li><span>{{helpTip4}}</span></li>-->
+                        </ol>
+                        <!--<dl>
+                            <dt></dt>
+                            <dd>1.<dt>请务必安装“Flash插件”及“高新兴媒体播放器插件”。前者支撑批量选择本地文件上传支持；后者给您提供媒体播放、实时点流功能及图像增强功能等。如未安装则会导致部分功能异常，影响您的正常使用。</dt></dd>
+
+                            <dd>2. 如您的操作系统为Windows 7 （32位 / 64 位）及以上版本，推荐您将IE浏览器升级到IE 11浏览器（Windows 7 32位 / Windows 7
+                                64位）再进行使用。</dd>
+                            <dd>3. 如您的操作系统为Windows 7 及以上版本，但想性能更佳且体验更好，推荐您下载并选用安装“高新兴国迈安全浏览器”。</dd>
+                            <dd>4. 如您的操作系统为Windows XP，推荐您下载并安装“高新兴国迈安全浏览器”再进行使用。</dd>
+                        </dl>-->
+                    </div>
+                </div>
+                <div slot="footer" class="modal-footer" style="display: none" ms-skip>
+                </div>
+            </xmp>
+        </div>
+    </div>
+</template>

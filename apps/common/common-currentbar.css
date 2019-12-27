@@ -1,0 +1,78 @@
+.menubar_wrap
+{
+    width: 100%;
+    height: 48px;
+    margin: 0 auto;
+    background: #fff;
+}
+.menubar_cont
+{
+    width: 1300px;
+    height: 100%;
+    margin: 0 auto;
+}
+.menubar_li
+{
+    line-height: 50px;
+
+    float: left;
+
+    height: 48px;
+    padding-right: 10px;
+    padding-left: 10px;
+
+    list-style: none;
+
+    text-align: left;
+    white-space: nowrap;
+}
+.menubar_li>a:active{
+	color: #fff;
+}
+.menubar_li>a:visited{
+	color: #fff;
+}
+.menubar_li>a:focus{
+	color: #fff;
+}
+.active_bar
+{
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 30px;
+
+    display: block;
+
+    height: 30px;
+    margin-top: 9px;
+    padding-right: 10px;
+    padding-left: 10px;
+
+    cursor: pointer;
+
+    border: 1px solid #2d99e4;
+    border-radius: 30px;
+    background-color: #2d99e4;
+    color: #fff;
+}
+.barlink
+{
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 30px;
+
+    display: block;
+
+    height: 30px;
+    margin-top: 9px;
+    padding-right: 10px;
+    padding-left: 10px;
+
+    cursor: pointer;
+
+    border: 1px solid #e5edf0;
+    border-radius: 30px;
+    background-color: #e5edf0;
+    color: #607f93;
+}
+

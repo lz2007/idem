@@ -1,0 +1,177 @@
+/* 权重配置样式 */
+
+.qzpz-wrap .qzpz-tabs {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.qzpz-wrap .qzpz-tabs li {
+    display: inline-block;
+    height: 40px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 40px;
+    color: #536b82;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.qzpz-wrap .qzpz-tabs li:hover {
+    background: rgb(238, 238, 238);
+    position: relative;
+}
+
+.qzpz-wrap .qzpz-tabs .activeTabs {
+    border-bottom: 2px solid #05599a;
+    color: #05599a;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.qzpz-wrap .panel {
+    margin-bottom: 8px;
+}
+
+.qzpz-wrap .panel,
+.qzpz-wrap .panel .panel-heading h3,
+.qzpz-wrap .panel .panel-heading .weight-wrap,
+.well .weight-wrap,
+.well b {
+    color: #536b82;
+}
+
+.qzpz-wrap .panel .panel-body {
+    padding: 13px 15px 7px 15px;
+}
+
+.qzpz-wrap .panel .panel-heading,
+.qzpz-wrap .well {
+    position: relative;
+}
+
+.qzpz-wrap .panel .panel-heading h3 {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.qzpz-wrap .panel .title-wrap {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.qzpz-wrap .well>span {
+    font-size: 12px;
+    color: #999;
+    padding-left: 20px;
+}
+
+.qzpz-wrap .panel .panel-heading .weight-wrap,
+.qzpz-wrap .well .weight-wrap {
+    position: absolute;
+    right: 8px;
+    top: 4px;
+}
+
+.qzpz-wrap .panel .panel-heading .weight-wrap input,
+.qzpz-wrap .well .weight-wrap input {
+    display: inline-block;
+    width: 50px;
+    margin: 0 6px;
+    text-align: center;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 12px;
+    color: #536b82;
+}
+
+.qzpz-wrap .qzpz-btn {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.qzpz-wrap .input_error {
+    border-color: #d2403d !important;
+}
+
+.qzpz-wrap .qzpz-btn .common_btn {
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 10px;
+    background-color: #0078d7;
+    display: inline-block;
+}
+
+.qzpz-wrap .qzpz-btn .common_btn:hover {
+    background-color: #0057A1;
+}
+
+.qzpz-wrap .zhkp_tip {
+    font-size: 12px;
+    line-height: 13px;
+    height: 14px;
+    margin-bottom: 0;
+    color: #d2403d;
+}
+
+.qzpz-wrap .tips-wrap {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    width: 150px;
+    text-align: right;
+}
+
+.min-width-class {
+    min-width: 1353px;
+}
+
+.qzpz_fresh_tips_class .modal-header {
+    background-color: #0078D7;
+    color: #fff;
+    cursor: move;
+}
+
+.qzpz_fresh_tips_class .modal-footer {
+    border: none;
+    text-align: center;
+    padding: 0;
+}
+
+.qzpz_fresh_tips_class .modal-footer button {
+    width: 120px;
+    height: 30px;
+    line-height: 28px;
+    color: #fff;
+    background-color: #0078D7;
+    border: 1px solid #0078D7;
+    border-radius: 2px;
+    outline: none;
+    padding: 0;
+}
+
+.qzpz_fresh_tips_class .modal-footer button:hover {
+    color: #fff;
+    background-color: #0057a1;
+    border: 1px solid #0057a1;
+}
+
+.qzpz_fresh_tips_class .modal-footer button:first-child {
+    margin-right: 15px;
+}
+
+.qzpz_fresh_tips_class .modal-body span {
+    display: block;
+    height: 78px;
+    line-height: 78px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.qzpz_fresh_tips_class .modal-body {
+    padding: 0;
+}

@@ -1,0 +1,22 @@
+{
+    "code": 0,
+    "msg": "成功！",
+    "data": [{
+        "fileId": "99999999_87s5463y901281586510201804170908100000201805021534583498",
+        "wsFileURL": "http://10.10.17.93/mp4_test2.mp4",
+        "wsTransFileURL": "http://10.10.17.93/mp4_test2.mp4",
+        "storageFileURL": null,
+        "storageTransFileURL": null,
+        "storageThumbnailURL": null,
+        "wsThumbnailURL": "http://10.10.18.59:8080/disk0/2018-05-02/111111_00000000901311508248/111111@2018-04-17_09-08-10.jpg",
+        "ocxvideoInfo": {
+            "ip": "10.10.18.59",
+            "port": 10100,
+            "account": "admin",
+            "password": "admin",
+            "playUrl": "",
+            "startTime": 1523927290000,
+            "endTime": 1523927347000
+        }
+    }]
+}

@@ -1,0 +1,14 @@
+<template>
+	<div :class="['common-search-select','common-search-select-'+@owner]">
+		<div class="form-control" :click="@handleTrigger">
+			<input type="text" class="common-search-select-search" :attr="{title:@searchLabel,name:'search'}" :duplex="@searchLabel"
+			    :focus="@handleFocus" :blur="@handleBlur">
+			<input type="text" style="display:none" />
+			<i class="fa" :if="isIcon" :click="handleFocus" :class="getTriangleDir"></i>
+		</div>
+
+		<ul class="option-list all-list" :click="@handleSelect" :visible="@toggle">
+			<li :for="($index, item) in @searchData" class="list-item" :attr="{'data-label':item.label,'data-value':item.value}">{{item.label}}</li>
+		</ul>
+	</div>
+</template>

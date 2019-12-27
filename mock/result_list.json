@@ -1,0 +1,40 @@
+[{
+	"indexNum": 1,
+	"menuUrl": null,
+	"sysMenuAppCode": "gmvcsworkstation",
+	"sysMenuCode": "ws0001",
+	"sysMenuId": 47,
+	"sysMenuName": "查看",
+	"sysMenuParentId": -1,
+	"sysMenuType": 2
+},
+{
+	"indexNum": 1,
+	"menuUrl": null,
+	"sysMenuAppCode": "gmvcsworkstation",
+	"sysMenuCode": "ws0002",
+	"sysMenuId": 48,
+	"sysMenuName": "导出",
+	"sysMenuParentId": -1,
+	"sysMenuType": 2
+},
+{
+	"indexNum": 1,
+	"menuUrl": null,
+	"sysMenuAppCode": "gmvcsworkstation",
+	"sysMenuCode": "ws0003",
+	"sysMenuId": 49,
+	"sysMenuName": "删除",
+	"sysMenuParentId": -1,
+	"sysMenuType": 2
+},
+{
+	"indexNum": 1,
+	"menuUrl": null,
+	"sysMenuAppCode": "gmvcsworkstation",
+	"sysMenuCode": "ws0004",
+	"sysMenuId": 50,
+	"sysMenuName": "查看他人权限",
+	"sysMenuParentId": -1,
+	"sysMenuType": 2
+}]

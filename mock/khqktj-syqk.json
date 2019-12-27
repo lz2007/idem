@@ -1,0 +1,38 @@
+{
+    "code": 0,
+    "msg": "成功！",
+    "data": {
+        "totalPages": 5,
+        "totalElements": 100,
+        "currentPages": 0,
+        "perPages": 20,
+        "currentElements": [{
+                "name": "一级部门",
+                "type": "部门",
+                "userCount": 70,
+                "fileCreateInfo": 56,
+                "days": 20,
+                "usageInfo": "1120",
+                "usageRate": " 1.0000"
+            },
+            {
+                "name": "张三(10000)",
+                "type": "警员",
+                "userCount": 1,
+                "fileCreateInfo": "绑定",
+                "days": 20,
+                "usageInfo": "15,16,17,18",
+                "usageRate": " -"
+            },
+            {
+                "name": "李四(10000)",
+                "type": "辅警",
+                "userCount": 1,
+                "fileCreateInfo": "未绑定",
+                "days": 20,
+                "usageInfo": "-",
+                "usageRate": " -"
+            }
+        ]
+    }
+}

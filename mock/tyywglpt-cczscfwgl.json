@@ -1,0 +1,185 @@
+{
+    "code": 0,
+    "msg": "成功！",
+    "data": [
+        {
+            "orgId": "666",
+            "orgCode": "666",
+            "orgName": "666",
+            "childs": [
+                {
+                    "orgId": "GMO4001141505454989474",
+                    "orgCode": "csb224",
+                    "orgName": "测试部22224",
+                    "childs": [],
+                    "orderNo": null,
+                    "path": "/666/csb224",
+                    "updateTime": 1506041325000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO4001141505389640896",
+                    "orgCode": "ansyb",
+                    "orgName": "案管事业部",
+                    "childs": [],
+                    "orderNo": null,
+                    "path": "/666/ansyb",
+                    "updateTime": 1505389641000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO4001141505454548991",
+                    "orgCode": "ydptb",
+                    "orgName": "移动平台部",
+                    "childs": [],
+                    "orderNo": null,
+                    "path": "/666/ydptb",
+                    "updateTime": 1505454549000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO4001141505454924000",
+                    "orgCode": "999999999999",
+                    "orgName": "风险管理部",
+                    "childs": [],
+                    "orderNo": null,
+                    "path": "/666/fxglb",
+                    "updateTime": 1505454924000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO4001141505391493181",
+                    "orgCode": "rlzib",
+                    "orgName": "人力资源部",
+                    "childs": [],
+                    "orderNo": null,
+                    "path": "/666/rlzib",
+                    "updateTime": 1505391493000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO4001141505446573399",
+                    "orgCode": "ptyfb",
+                    "orgName": "平台研发部",
+                    "childs": [],
+                    "orderNo": null,
+                    "path": "/666/ptyfb",
+                    "updateTime": 1505446573000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO4001141505388576054",
+                    "orgCode": "32156",
+                    "orgName": "安全私有云",
+                    "childs": [
+                        {
+                            "orgId": "GMO4001141505390089772",
+                            "orgCode": "syyweb",
+                            "orgName": "私有云前端组",
+                            "childs": [],
+                            "orderNo": null,
+                            "path": "/32156/syyweb",
+                            "updateTime": 1505390090000,
+                            "dutyRange": null,
+                            "extend": null
+                        }
+                    ],
+                    "orderNo": null,
+                    "path": "/666/32156",
+                    "updateTime": 1505388576000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO4001141505388984011",
+                    "orgCode": "246578975",
+                    "orgName": "测试部223",
+                    "childs": [],
+                    "orderNo": null,
+                    "path": "/666/246578975",
+                    "updateTime": 1505388984000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "345",
+                    "orgCode": "345",
+                    "orgName": "345",
+                    "childs": [],
+                    "orderNo": 345,
+                    "path": "/123/666/345",
+                    "updateTime": 1502863055000,
+                    "dutyRange": "345",
+                    "extend": "345"
+                },
+                {
+                    "orgId": "GMO4001141505454899181",
+                    "orgCode": "txsyb",
+                    "orgName": "通信事业部",
+                    "childs": [],
+                    "orderNo": null,
+                    "path": "/666/txsyb",
+                    "updateTime": 1505454899000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO4001141505380478688",
+                    "orgCode": "zhifa1",
+                    "orgName": "软件研发部",
+                    "childs": [
+                        {
+                            "orgId": "GMO4001141505389731221",
+                            "orgCode": "faajweb",
+                            "orgName": "faaj前端组",
+                            "childs": [],
+                            "orderNo": null,
+                            "path": "/zhifa1/faajweb",
+                            "updateTime": 1505389731000,
+                            "dutyRange": null,
+                            "extend": null
+                        }
+                    ],
+                    "orderNo": 123,
+                    "path": "/666/zhifa1",
+                    "updateTime": 1505380479000,
+                    "dutyRange": "123",
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO4001141505446680306",
+                    "orgCode": "ptyyb",
+                    "orgName": "平台应用部",
+                    "childs": [],
+                    "orderNo": null,
+                    "path": "/666/ptyyb",
+                    "updateTime": 1505446680000,
+                    "dutyRange": null,
+                    "extend": null
+                },
+                {
+                    "orgId": "GMO4001141505391584956",
+                    "orgCode": "qdkfz",
+                    "orgName": "前端开发组",
+                    "childs": [],
+                    "orderNo": null,
+                    "path": "/666/qdkfz",
+                    "updateTime": 1505391585000,
+                    "dutyRange": null,
+                    "extend": null
+                }
+            ],
+            "orderNo": 666,
+            "path": "/123/666",
+            "updateTime": 1505997383000,
+            "dutyRange": "123",
+            "extend": "123"
+        }
+    ]
+}

@@ -1,0 +1,291 @@
+<template>
+    <div class="jdkp-container-jqkp-qjzb">
+        <div :visible="@authority.SEARCH" class="top-form">
+            <xmp is="ms-form" :widget="{$form:@$searchForm,type:'search',inline:true}">
+                <div class="top-form-inline">
+                    <span style="margin-left: 13px;">处警单位:</span>
+                    <div class="inline-component" :controller="searchForm_cjdw_qjzb">
+                        <ms-select-option :widget="{treeData:@rdata,selectedKey: @checkedKeys,showSearch:true,selectedTitle:@selectedTitle,onChange:@handleChange}"></ms-select-option>
+                    </div>
+
+                    <!-- 抽查 -->
+                    <div class="ccDivBlock">
+                        <input class="ccBtn" type="checkbox" id="ccNumber" :duplex-checked="!@ccNumBtn" :click="onClickCCBtn" />
+                        <span>抽查数:</span>
+                        <!-- <input class="search_num" ms-duplex="@search_num" type="text" :keyup="@jycxkp_search"> -->
+                        <input :if="!@ccNumBtn" class="search_num" ms-duplex="@search_num" type="text" :keyup="@enter_click" :attr="{maxlength: 2}">
+                        <input :if="@ccNumBtn" class="search_num" type="text" disabled>
+                        <span style="margin-right:16px;">条</span>
+                    </div>
+
+                    <span class="bjsj">报警时间:</span>
+                    <div class="inline-component" :controller="jqgl_searchForm_bjsj_jdkp_qjzb">
+                        <ms-select :widget="{
+                                col:'bjsj',
+                                value: @bjsj,
+                                onChange:@searchForm_bjsj_Change
+                            }">
+                            <ms-select-option :widget="{value:'last-week'}">本周</ms-select-option>
+                            <ms-select-option :widget="{value:'last-month'}">本月</ms-select-option>
+                            <ms-select-option :widget="{value:'last-past-of-time'}">自定义时间</ms-select-option>
+                        </ms-select>
+                    </div>
+                    <div class="inline-component timeCover_jq" :visible="@dateShow">
+                        <ms-form-item :widget="{label: ''}">
+                            <ms-datepicker :widget="{
+                                    placeholder:'开始时间',
+                                    value: @topform_start_time,
+                                    onChange:@startTimeHandleChange,
+                                    endDate:@endDate,     
+                                    showTime: false
+                                }"></ms-datepicker>
+                        </ms-form-item>
+                        <span class="between-date">-</span>
+                        <ms-form-item :widget="{label: ''}">
+                            <ms-datepicker :widget="{
+                                    placeholder:'结束时间',
+                                    value: @topform_end_time,
+                                    onChange:@endTimeHandleChange,
+                                    endDate:@endDate,     
+                                    showTime: false
+                                }"></ms-datepicker>
+                        </ms-form-item>
+                        <div class="yhgl-yhtc-prompt jqgl-prompt-st">
+                            <span :css="{display:@kssj_isNull}">
+                                <i class="fa fa-exclamation-circle"> 请输入开始时间</i>
+                            </span>
+                        </div>
+                        <div class="yhgl-yhtc-prompt jqgl-prompt-et">
+                            <span :css="{display:@jssj_isNull}">
+                                <i class="fa fa-exclamation-circle"> 请输入结束时间</i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="top-form-inline bottomForm">
+                    <span :if="!@ccNumBtn" style="margin-left:27px;">处警人:</span>
+                    <input :if="!@ccNumBtn" class="form-control" style="margin-right:16px;" value="" disabled/>
+                    <ms-form-item :widget="{label: '处警人:'}" ms-visible="@ccNumBtn">
+                        <ms-input :widget="{col: 'cjr' , value: @cjr,placeholder:'处警人'}" :focus="@input_focus('zbmj')" :blur="@input_blur($event,'zbmj')"
+                            :keyup="@enter_click"></ms-input>
+                        <span class="fa fa-close jqgl_right_close zbmj_close" :mousedown="@close_click('zbmj')" :visible="@jqgl_close_zbmj"></span>
+                    </ms-form-item>
+                    <span :if="!@ccNumBtn" style="margin-left:13px;">报警电话:</span>
+                    <input :if="!@ccNumBtn" class="form-control" style="margin-right:49px;" value="" disabled/>
+                    <ms-form-item :widget="{label: '报警电话:'}" :class="'bjdh-item'" ms-visible="@ccNumBtn">
+                        <ms-input :widget="{col: 'bjdh', value:@bjdh}" :focus="@input_focus('bjdh')" :blur="@input_blur($event,'bjdh')" :keyup="@enter_click"></ms-input>
+                        <span class="fa fa-close jqgl_right_close bjdh_close" :mousedown="@close_click('bjdh')" :visible="@jqgl_close_bjdh"></span>
+                    </ms-form-item>
+                    <div class="qjzb-jdkp-jqkp-glmt">
+                        <span class="glmt">关联媒体:</span>
+                        <div class="inline-component glmt-com" :controller="searchForm_glmt_jdkp_qjzb">
+                            <ms-select :widget="{
+                                        col:'glmt',
+                                        value: @glmt,
+                                        onChange:@searchForm_glmt_Change
+                                    }">
+                                <ms-select-option :widget="{value:'ALL'}">不限</ms-select-option>
+                                <ms-select-option :widget="{value:'1'}">已关联</ms-select-option>
+                                <ms-select-option :widget="{value:'0'}">未关联</ms-select-option>
+                            </ms-select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="top-form-inline jqbottomForm">
+                    <span :if="!@ccNumBtn" style="margin-left:27px;">报警人:</span>
+                    <input :if="!@ccNumBtn" class="form-control" style="margin-right:24px;" value="" disabled/>
+                    <ms-form-item :widget="{label: '报警人:'}" :class="'bjr-item'" ms-visible="@ccNumBtn">
+                        <ms-input :widget="{col: 'bjr', value:@bjr, placeholder:'报警人'}" :focus="@input_focus('bjr')" :blur="@input_blur($event,'bjr')"
+                            :keyup="@enter_click"></ms-input>
+                        <span class="fa fa-close jqgl_right_close bjr_close" :mousedown="@close_click('bjr')" :visible="@jqgl_close_bjr"></span>
+                    </ms-form-item>
+                    <span :if="!@ccNumBtn" style="margin-left:5px;">警情编号:</span>
+                    <input :if="!@ccNumBtn" class="form-control" style="margin-right:24px;" value="" disabled/>
+                    <ms-form-item :widget="{label: '警情编号:'}" :class="['jqbhFixLeft']" ms-visible="@ccNumBtn">
+                        <ms-input :widget="{col: 'jqbh' , value: @jqbh}" :focus="@input_focus('jqbh')" :blur="@input_blur($event,'jqbh')" :keyup="@enter_click"></ms-input>
+                        <span class="fa fa-close jqgl_right_close jqbh_close" :mousedown="@close_click('jqbh')" :visible="@jqgl_close_jqbh"></span>
+                    </ms-form-item>
+                    <span :if="!@ccNumBtn" style="margin-left:17px;">事发地点:</span>
+                    <input :if="!@ccNumBtn" class="form-control" style="margin-right:24px;" value="" disabled/>
+                    <ms-form-item :widget="{label: '事发地点:'}" :class="['sfddFixLeft']" ms-visible="@ccNumBtn">
+                        <ms-input :widget="{col: 'sfdd', value:@sfdd}" :focus="@input_focus('sfdd')" :blur="@input_blur($event,'sfdd')" :keyup="@enter_click"></ms-input>
+                        <span class="fa fa-close jqgl_right_close sfdd_close" :mousedown="@close_click('sfdd')" :visible="@jqgl_close_sfdd"></span>
+                    </ms-form-item>
+
+                </div>
+
+                <div class="top-form-inline leaderORpolice">
+                    <span style="margin-left: 13px;">考评状态:</span>
+                    <input :if="!@ccNumBtn" class="form-control" style="margin-right:16px;" value="不限" disabled/>
+                    <div class="inline-component kpzt-com" :controller="searchForm_jqkp_kpzt_qjzb" ms-visible="@ccNumBtn">
+                        <ms-select :widget="{
+                                    col:'evaStatus',
+                                    value: @evaStatus,
+                                    onChange:@searchForm_kpzt_Change
+                                }">
+                            <ms-select-option :widget="{value:'ALL'}">不限</ms-select-option>
+                            <ms-select-option :widget="{value:'1'}">已考评</ms-select-option>
+                            <ms-select-option :widget="{value:'0'}">未考评</ms-select-option>
+                        </ms-select>
+                    </div>
+                    <span style="margin-left: 13px;">考评结果:</span>
+                    <input :if="!@notEvaStatus" class="form-control" value="不限" disabled style="margin-right: 16px;" />
+                    <div class="inline-component kpzt-com" :controller="searchForm_jqkpQjzb_kpjg" style="margin-right: 16px;" :if="@notEvaStatus">
+                        <ms-select :widget="{
+                                    col:'evaResult',
+                                    value: @evaResult,
+                                    onChange:@searchForm_kpjg_Change
+                                }">
+                            <ms-select-option :widget="{value:'ALL'}">不限</ms-select-option>
+                            <ms-select-option :widget="{value:'1'}">通过</ms-select-option>
+                            <ms-select-option :widget="{value:'0'}">不通过</ms-select-option>
+                        </ms-select>
+                    </div>
+                    <span style="display:inline-block;margin-left: 25px;">核查状态:</span>
+                    <input :if="!@ccNumBtn" class="form-control" style="margin-right:17px;" value="不限" disabled/>
+                    <div style="display:inline-block;margin-right:22px;" :controller="searchForm_jqkpQjzb_hczt" ms-visible="@ccNumBtn">
+                        <ms-select :widget="{
+                                    col:'reviewStatus',
+                                    value: @reviewStatus,
+                                    onChange:@searchForm_hczt_Change
+                                }">
+                            <ms-select-option :widget="{value:'ALL'}">不限</ms-select-option>
+                            <ms-select-option :widget="{value:'1'}">已核查</ms-select-option>
+                            <ms-select-option :widget="{value:'0'}">未核查</ms-select-option>
+                        </ms-select>
+                    </div>
+                    <span style="display:inline-block;margin-left: 15px;">核查结果:</span>
+                    <input :if="!@notReviewStatus" class="form-control" value="不限" disabled/>
+                    <div style="display:inline-block;margin-right:22px;" :controller="searchForm_jqkpQjzb_khjg" :if="@notReviewStatus">
+                        <ms-select :widget="{
+                                    col:'reviewResult',
+                                    value: @reviewResult,
+                                    onChange:@searchForm_hcjg_Change
+                                }">
+                            <ms-select-option :widget="{value:'ALL'}">不限</ms-select-option>
+                            <ms-select-option :widget="{value:'1'}">属实</ms-select-option>
+                            <ms-select-option :widget="{value:'0'}">不属实</ms-select-option>
+
+                        </ms-select>
+                    </div>
+                </div>
+            </xmp>
+            <button class="jqgl_search_btn" :if="@authority.SEARCH" :click="jqgl_search">查询</button>
+        </div>
+        <div class="ajgl-table jqtb" :controller="jqgl-table-jdkp_qjzb">
+            <div :class="['jqkp-tabCont-gab']">
+                <div :controller="jqkp_table_qjzb" :class="['table-index']" id="jqkp_table">
+                    <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                        <li class="col-5" data-order="1">序号</li>
+                        <li class="col-5" data-order="2">操作</li>
+                        <li class="col-10" data-order="3">处警单位</li>
+
+                        <li class="col-10" data-order="4">报警时间</li>
+                        <li class="col-5" data-order="5">处警人</li>
+                        <li class="col-5" data-order="6">报警人</li>
+
+                        <li class="col-10" data-order="7">报警电话</li>
+                        <li class="col-10" data-order="8">警情编号</li>
+                        <li class="col-10" data-order="9">事发地点</li>
+                        <li class="col-5" data-order="10">警情类别</li>
+
+                        <li class="col-5" data-order="11">关联媒体</li>
+                        <li class="col-5" data-order="12">考评状态</li>
+                        <li class="col-5" data-order="13">考评结果</li>
+                        <li class="col-5" data-order="14">核查状态</li>
+                        <li class="col-5" data-order="15">核查结果</li>
+                    </ul>
+                    <ul class="table-index-tbody">
+                        <li :for="($index, record) in @data">
+                            <div class="tbody col-5">
+                                <div class="table-cont">{{(@currentPage-1)*@prePageSize+$index + 1}}</div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont">
+                                    <span>
+                                        <a class="checkLook" :click="@handle('checkLook','space',record,$index)">查看</a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['cjdwmc'] && (record['cjdwmc'] != '-') ? {rel:'drevil',tdval:record['cjdwmc']}:''">
+                                    {{record['cjdwmc']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['bjsj'] && (record['bjsj'] != '-') ? {rel:'drevil',tdval:record['bjsj']}:''">
+                                    {{record['bjsj']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['cjr'] && (record['cjr'] != '-') ? {rel:'drevil',tdval:record['cjr']}:''">
+                                    {{record['cjr']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['bjrxm'] && (record['bjrxm'] != '-') ? {rel:'drevil',tdval:record['bjrxm']}:''">
+                                    {{record['bjrxm']}}
+                                </div>
+                            </div>
+
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['bjrdh'] && (record['bjrdh'] != '-') ? {rel:'drevil',tdval:record['bjrdh']}:''">
+                                    {{record['bjrdh']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['jqbh'] && (record['jqbh'] != '-') ? {rel:'drevil',tdval:record['jqbh']}:''">
+                                    {{record['jqbh']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['sfdd'] && (record['sfdd'] != '-') ? {rel:'drevil',tdval:record['sfdd']}:''">
+                                    {{record['sfdd']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['jqlb'] && (record['jqlb'] != '-') ? {rel:'drevil',tdval:record['jqlb']}:''">
+                                    {{record['jqlb']}}
+                                </div>
+                            </div>
+
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['relation'] && (record['relation'] != '-') ? {rel:'drevil',tdval:record['relation']}:''">
+                                    {{record['relation']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['evaStatus'] && (record['evaStatus'] != '-') ? {rel:'drevil',tdval:record['evaStatus']}:''">
+                                    {{record['evaStatus']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['evaResult'] && (record['evaResult'] != '-') ? {rel:'drevil',tdval:record['evaResult']}:''">
+                                    {{record['evaResult']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['reviewStatus'] && (record['reviewStatus'] != '-') ? {rel:'drevil',tdval:record['reviewStatus']}:''">
+                                    {{record['reviewStatus']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont" :attr="record['reviewResult'] && (record['reviewResult'] != '-') ? {rel:'drevil',tdval:record['reviewResult']}:''">
+                                    {{record['reviewResult']}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="table-index-loading" :if="@loading">
+                        <span class="loadingSpan">结果加载中</span>
+                    </div>
+                    <div :if="!@loading && !@data.length" class="noData">暂无数据</div>
+                </div>
+            </div>
+            <ms-pages :widget="{total:@pagination.total,overLimit:@pagination.overLimit,pageSize:@pagination.pageSize,current:@pagination.current,onChange:@handleTableChange,getCurrent:@getCurrent}"></ms-pages>
+        </div>
+    </div>
+</template>

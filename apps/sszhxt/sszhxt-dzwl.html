@@ -1,0 +1,105 @@
+<template>
+    <div class="sszhxt-dzwl-layout">
+        <!-- 左侧内容 begin -->
+        <div class="left left-layout border">
+            <!-- 标题 -->
+            <h1 class="dzwl-title">警员</h1>
+            <!-- 搜索框 -->
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="">
+                    <div class="input-group-addon">搜索</div>
+                </div>
+            </div>
+
+            <!-- 树 -->
+            <!-- <ms-tree :widget="{tree: @dzwl_tdata, onSelect:@selectfuc}"></ms-tree> -->
+            <ul id="dzwltree" class="ztree" style="width:230px; overflow:auto;"></ul>
+        </div>
+        <!-- 左侧内容-树 end -->
+       
+        <!-- 右侧主体内容 begin -->
+        <div class="right right-layout" :controller="dzwlMapVm">
+            <!-- 操作选择 begin -->
+            <ul class="dzwl-caozuo" id="toolsPanel">
+                <li class="choose" :click="@RectChooseArea">框选围栏范围</li>
+                <li class="chooseRadom" :click="RadomChooseArea">自定义围栏范围</li>
+                <li class="look" :click="@look_dzwl">查看电子围栏</li>
+                <!-- <li class="lookChooseArea" :click="@lookChooseArea">查看电子围栏</li>
+                <li :click="@delChooseArea">删除</li> -->
+            </ul>
+            <!-- 地图展示 begin -->
+            <div class="dzwl-map" id="dzwl-map">
+                <!-- <div class="map-loading" :visible="@loadingtoggle"><span class="fa fa-spinner fa-pulse"></span>正在加载</div> -->
+            </div>
+            <div :visible="@buttontoggle" :css="{position: 'absolute', top: @top, left: @left}">
+                <button>确定</button>
+                <button>取消</button>
+            </div>
+        </div>
+        <!-- 右侧主体内容 end -->
+
+        <!-- 查看电子围栏弹框 begin -->
+        <div :controller="look_dewl_dialog">
+            <ms-dialog :widget="{$innerVm: 'look_dewl_dialogVm', show: @show ,onCancel: @handleCancel, onOk: @handleOk, size: 'large'}">
+                <div slot="body" ms-skip>
+                    <ul class="dzwl_dialog_form">
+                        <li>
+                            <label for="结束时间">结束时间</label>   
+                            <ms-datepicker :widget="{
+                                placeholder:'请选择结束时间'
+                            }"></ms-datepicker>
+                        </li>
+                        <li>
+                            <label for="结束时间">结束时间</label>   
+                                <ms-datepicker :widget="{
+                                    placeholder:'请选择结束时间'
+                                }"></ms-datepicker>
+                        </li>
+                        <li>
+                            <button type="button" class="dzwl-search-btn" :click="@dzwlSearch">搜索</button>
+                        </li>
+                    </ul>
+                    
+                    <!-- 弹框下方 表格内容 begin -->
+                    <div :controller="table_vm" class="dzwl-table-box">
+                        <!-- 表格内容 -->
+                        <table class="table" ms-html="@dzwlTableContent"></table>
+                        <!-- 页码 -->
+                        <div class="pagebar" :keyup="@handleEnter" :if="@total > 0">
+                            <ul class="page-item-list">
+                                <li>
+                                    共{{@total}}条数据
+                                </li>
+                                <li>
+                                    <span>每页显示</span>
+                                    <input ms-duplex="@pageSize" type="text" class="page-input pagesize"/>
+                                    <span>条</span>
+                                </li>
+                                <li>
+                                    <a :click="@toStartPage" href="javascript:void(0);" title="跳转到第一页">首页</a>
+                                </li>
+                                <li>
+                                    <a :click="@prevPage" href="javascript:void(0);" title="上一页">上一页</a>
+                                </li>
+                                <li>
+                                    <input ms-duplex="@current" type="text" class="page-input current"/>
+                                    <span>/{{@pageTotal}}页</span>
+                                </li>
+                                <li>
+                                    <a :click="@nextPage" href="javascript:void(0);" title="下一页">下一页</a>
+                                </li>
+                                <li>
+                                    <a :click="@toEndPage" href="javascript:void(0);" title="跳转到最后一页">末页</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div slot="footer" class="modal-footer" ms-skip :class="['dzwl-modal-footer']"></div>
+            </ms-dialog>
+        </div>
+        <!-- 查看电子围栏弹框 end -->
+
+    </div>
+</template>

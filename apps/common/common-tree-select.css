@@ -1,0 +1,122 @@
+.tree-select-wrap {
+    position: relative;
+    display: inline-block;
+    color: #414f5c;
+}
+
+.tree-select-wrap .tree-select-selected {
+    position: absolute;
+    top: 0;
+    width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+.tree-select-wrap .form-control.tree-select-form {
+    padding: 0 12px;
+}
+
+.tree-select-wrap .tree-select-search {
+    width: 100%;
+    height: 96%;
+}
+
+.tree-select-wrap .tree-panel {
+    position: absolute;
+    width: 240px;
+    height: 300px;
+    z-index: 10000;
+    overflow: auto;
+    background: rgb(255, 255, 255);
+    border: 1px solid #ccc;
+}
+
+.tree-select-wrap .ztree li a.curSelectedNode {
+    color: #536b82;
+    border: 1px #e0e7ec solid;
+    background-color: #e0e7ec;
+}
+
+.tree-select-wrap .ztree span {
+    font-size: 14px;
+    color: #536b82;
+}
+
+.tree-select-wrap .fa {
+    position: absolute;
+    top: 7px;
+    right: 9px;
+    line-height: 20px;
+}
+
+.tree-select-wrap .no-match {
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    z-index: 999;
+    color: #999;
+    background: rgb(255, 255, 255);
+    border: 1px solid #ccc;
+}
+
+.tree-select-wrap .no-data {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    color: rgb(204, 204, 204);
+    padding-left: 12px;
+    cursor: not-allowed;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tree-select-wrap .treeSearchResult li {
+    padding: 5px 15px 0px;
+    cursor: pointer;
+}
+
+.tree-select-wrap .included_dep img {
+    margin-right: 3px;
+    margin-bottom: 2px;
+}
+
+.tree-select-wrap .included_dep {
+    width: 100%;
+    display: inline-block;
+    color: #536b82;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 10px;
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+}
+
+.tree-select-wrap .ane-tree-select-arrow {
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+    position: absolute;
+    top: 4px;
+    right: 8px;
+}
+
+.tree-select-wrap .caret-up {
+    background: url(/static/image/sszhxt/caret-up.png) 0 0 no-repeat;
+}
+
+.tree-select-wrap .caret-down {
+    background: url(/static/image/sszhxt/caret-down.png) 0 0 no-repeat;
+}

@@ -1,0 +1,168 @@
+<template>
+    <div class="xtpzgl_sjzd">
+        <div class="sidebar_tree" :controller="sjzd_menu">
+            <!-- <ms-menu :widget="{menu:@sjzd_data, openKeys:@openKeys, selectedKeys:@selectedKeys, onClick:@handleMenuClick, onOpenChange:@handleOpenChange}"></ms-menu> -->
+            <ms-tree :widget="{tree: @sjzd_data, onSelect:@onSelectFuc, checkable: false, expandedKeys: @expandedKeys}"></ms-tree>
+
+        </div>
+        <div class="panel_right">
+            <div class="btn_panel">
+                <a :click="@addBtn" class="commonBtn" :class="[@click_node && @selected_arr.length == 0 ? '':'disabled']">新增</a>
+                <a :click="@editBtn" class="commonBtn" :class="[(@edit_disabled && @selected_arr.length == 1)? '':'disabled']">编辑</a>
+            </div>
+        </div>
+
+        <div :class="['xtpzgl_sjzd_table']" :controller="xtpzgl_sjzd_table">
+            <div :controller="sjzd_table" :class="['table-index']" id="sjzd_table">
+                <div class="table-index-thead-fixed">
+                    <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                        <li class="col-5" data-order="1">
+                            <ms-checkbox :widget="{checked:@isAllChecked, onChange:@handleCheckAll}"></ms-checkbox>
+                        </li>
+                        <li class="col-5" data-order="2">序号</li>
+                        <li class="col-15" data-order="3">字段名称</li>
+                        <li class="col-15" data-order="4">字段值</li>
+                        <li class="col-15" data-order="5">字段描述</li>
+                        <li class="col-10" data-order="6">排序</li>
+                        <li class="col-15" data-order="7">创建时间</li>
+                        <li class="col-10" data-order="8">创建人</li>
+                        <li class="col-10" data-order="9">状态</li>
+                    </ul>
+                </div>
+
+                <ul class="table-index-tbody">
+                    <li class="list-null" :if="!@data.length">暂无数据</li>
+
+                    <li :for="($index, record) in @data">
+                        <div class="tbody col-5 table-index-checkbox">
+                            <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1, onChange:function(){@handleCheck(arguments[0].target.checked, record)}}"></ms-checkbox>
+                        </div>
+                        <div class="tbody col-5">
+                            <div class="table-cont">{{(@currentPage - 1) * @prePageSize + $index + 1}}</div>
+                        </div>
+                        <div class="tbody col-15">
+                            <div class="table-cont" :attr="record['name'] && (record['name'] != '-') ? {rel:'drevil',tdval:record['name']}:''">
+                                {{record['name']}}
+                            </div>
+                        </div>
+                        <div class="tbody col-15">
+                            <div class="table-cont" :attr="record['value'] && (record['value'] != '-') ? {rel:'drevil',tdval:record['value']}:''">
+                                {{record['value']}}
+                            </div>
+                        </div>
+                        <div class="tbody col-15">
+                            <div class="table-cont" :attr="record['desc'] && (record['desc'] != '-') ? {rel:'drevil',tdval:record['desc']}:''">
+                                {{record['desc']}}
+                            </div>
+                        </div>
+                        <div class="tbody col-10">
+                            <div class="table-cont" :attr="record['order'] && (record['order'] != '-') ? {rel:'drevil',tdval:record['order']}:''">
+                                {{record['order']}}
+                            </div>
+                        </div>
+                        <div class="tbody col-15">
+                            <div class="table-cont" :attr="record['createdTime'] && (record['createdTime'] != '-') ? {rel:'drevil',tdval:record['createdTime']}:''">
+                                {{record['createdTime']}}
+                            </div>
+                        </div>
+                        <div class="tbody col-10">
+                            <div class="table-cont" :attr="record['createdBy'] && (record['createdBy'] != '-') ? {rel:'drevil',tdval:record['createdBy']}:''">
+                                {{record['createdBy']}}
+                            </div>
+                        </div>
+                        <div class="tbody col-10">
+                            <div class="table-cont" :attr="record['status'] && (record['status'] != '-') ? {rel:'drevil',tdval:record['status']}:''">
+                                <span :class="[@record.deleted ? 'dic_status':'']">{{@record.status}}</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="table-index-loading" :if="@loading">
+                    <span class="loadingSpan">结果加载中</span>
+                </div>
+                <!-- <div :if="!@loading && !@data.length" class="noData">暂无数据</div> -->
+            </div>
+            <div class="sjzd_page">
+                <ms-pages :widget="{total:@table_pagination.total, pageSize:@table_pagination.pageSize, current:@table_pagination.current, onChange:@handlePageChange, getCurrent:@getCurrent}"></ms-pages>
+            </div>
+        </div>
+
+        <!-- 新增&&编辑 -->
+        <div class="add_edit" :controller="sjzd_dialog_out">
+            <ms-dialog :widget="{$innerVm: 'sjzd_dialog_in', okText: '确认', className:'sjzd_dialog_common', show: @dialog_show, onCancel: @dialogCancel, onOk:@dialogOk, isMove:true, width:450, height:@dialogHeight}">
+                <div slot="body" ms-skip>
+                    <div class="sjzd_dialog_item">
+                        <span class="red_start">*</span>
+                        <span class="sjzd_input_title_small">字段名称：</span>
+                        <div class="input_panel" :class="[(@name_format == 'inline-block' || @name_isNull == 'inline-block')? 'input_error':'']">
+                            <input type="text" ms-duplex="@dic_name" class="form-control-input sjzd_name_dialog" :focus="@input_focus('name')" :blur="@input_blur('name')"
+                                :attr="{title:@dic_name}" :keyup="@name_change">
+                            <span class="fa fa-close sjzd_right_close input_name" :mousedown="@close_click('name')" :if="@sjzd_close_name"></span>
+                        </div>
+                        <div class="sjzd_tip_box">
+                            <span :class="['sjzd_tip']" :css="{display:@name_display}">
+                                <i class="fa fa-exclamation-circle">支持中文、数字、字母</i>
+                            </span>
+                            <span :class="['sjzd_null_tip']" :css="{display:@name_format}">
+                                <i class="fa fa-exclamation-circle">请输入正确的格式</i>
+                            </span>
+                            <span :class="['sjzd_null_tip']" :css="{display:@name_isNull}">
+                                <i class="fa fa-exclamation-circle">字段名称不能为空</i>
+                            </span>
+                        </div>
+
+                    </div>
+                    <!-- <div class="sjzd_dialog_item" :class="[@add_flag ? 'sjzd_item_show' : 'sjzd_item_hide']"> -->
+                    <div class="sjzd_dialog_item">
+                        <!-- <span class="red_start">*</span> -->
+                        <span class="sjzd_input_title">字段值：</span>
+                        <div class="input_panel" :class="[(@code_format == 'inline-block' || @code_isNull == 'inline-block')? 'input_error':'']">
+                            <input type="text" ms-duplex="@dic_value" class="form-control-input sjzd_code_dialog" :focus="@input_focus('code')" :blur="@input_blur('code')"
+                                :attr="{title:@dic_value}" :keyup="@code_change">
+                            <span class="fa fa-close sjzd_right_close input_code" :mousedown="@close_click('code')" :if="@sjzd_close_code"></span>
+                        </div>
+                        <div class="sjzd_tip_box">
+                            <span :class="['sjzd_tip']" :css="{display:@code_display}">
+                                <i class="fa fa-exclamation-circle">支持中文、数字、字母</i>
+                            </span>
+                            <span :class="['sjzd_null_tip']" :css="{display:@code_format}">
+                                <i class="fa fa-exclamation-circle">请输入正确的格式</i>
+                            </span>
+                            <span :class="['sjzd_null_tip']" :css="{display:@code_isNull}">
+                                <i class="fa fa-exclamation-circle">字段值不能为空</i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="sjzd_dialog_item">
+                        <span class="sjzd_input_title">字段描述：</span>
+                        <div class="input_panel">
+                            <input type="text" ms-duplex="@dic_txt" class="form-control-input sjzd_txt_dialog" :attr="{title:@dic_txt}" :focus="@input_focus('txt')"
+                                :blur="@input_blur('txt')" :keyup="@txt_change">
+                            <span class="fa fa-close sjzd_right_close input_txt" :mousedown="@close_click('txt')" :if="@sjzd_close_txt"></span>
+                        </div>
+                    </div>
+                    <div class="sjzd_dialog_item">
+                        <span class="sjzd_input_title">序号：</span>
+                        <div class="input_panel" :class="[@num_format == 'inline-block' ? 'input_error':'']">
+                            <input type="text" ms-duplex="@dic_num" class="form-control-input sjzd_num_dialog" :attr="{title:@dic_num}" :focus="@input_focus('num')"
+                                :blur="@input_blur('num')" :keyup="@num_change">
+                            <span class="fa fa-close sjzd_right_close input_num" :mousedown="@close_click('num')" :if="@sjzd_close_num"></span>
+                        </div>
+                        <div class="sjzd_tip_box">
+                            <span :class="['sjzd_tip']" :css="{display:@num_display}">
+                                <i class="fa fa-exclamation-circle">仅支持数字</i>
+                            </span>
+                            <span :class="['sjzd_null_tip']" :css="{display:@num_format}">
+                                <i class="fa fa-exclamation-circle">请输入正确的格式</i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="sjzd_dialog_item dialog_item_status" :class="[@add_flag ? 'sjzd_item_hide' : 'sjzd_item_show']" :controller="status_select">
+                        <span>状态：</span>
+                        <ms-select :widget="{col: 'status', options:@status_options, value: @status_type, onChange: @onChangeS}" :class="['formInput']"></ms-select>
+                    </div>
+                </div>
+            </ms-dialog>
+        </div>
+    </div>
+</template>

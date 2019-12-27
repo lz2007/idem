@@ -1,0 +1,461 @@
+.ms-canvas{
+    padding: 0;
+    margin: 0;
+}
+.ms-canvas-screen{
+    position: relative;
+}
+.ms-canvas .textStyle-select{
+    position: absolute;
+    bottom: 47px;
+    left: 700px;
+    width: 270px;
+    height: 25px;
+    background-color: #fff;
+    text-align: left;
+    padding-top: 1px;
+}
+.ms-canvas .textStyle-select .li{
+    list-style: none;
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    vertical-align: middle;
+    text-align: center;
+}
+.ms-canvas .textStyle-select .ane-select-selection input.ane-select-search-field{
+    width: 50px;
+}
+.ms-canvas .textStyle-select .font-family{
+    margin-left: 5px;
+}
+.ms-canvas .textStyle-select .font-family .form-control{
+    padding: 0 6px;
+    width: 100px;
+    height: 20px;
+    font-size: 12px;
+}
+.ms-canvas .textStyle-select .font-family .ane-select .ane-select-arrow{
+    top: 0;
+}
+.ms-canvas .textStyle-select .font-size{
+    margin-left: 5px;
+}
+.ms-canvas .textStyle-select .font-size .form-control{
+    padding: 0 6px;
+    width: 70px;
+    height: 20px;
+    font-size: 12px;
+}
+.ms-canvas .textStyle-select .font-size .ane-select .ane-select-arrow{
+    top: 0;
+}
+.ms-canvas .textStyle-select .font-bold{
+    margin-left: 10px;
+    border: 1px solid #fff;
+}
+.ms-canvas .textStyle-select .font-bold:hover{
+    border-color: #e4e4e4;
+}
+.ms-canvas .textStyle-select .boldActive{
+    border-color: #e4e4e4;
+    background-color: #e4e4e4;
+}
+.ms-canvas .textStyle-select .font-bold span{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+}
+.ms-canvas .textStyle-select .font-italic{
+    margin-left: 10px;
+    border: 1px solid #fff;
+}
+.ms-canvas .textStyle-select .font-italic:hover{
+    border-color: #e4e4e4;
+}
+.ms-canvas .textStyle-select .italicActive{
+    border-color: #e4e4e4;
+    background-color: #e4e4e4;
+}
+.ms-canvas .textStyle-select .font-italic span{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+}
+.ms-canvas .textStyle-select .font-color{
+    margin-left: 10px;
+    border: 1px solid #fff;
+}
+.ms-canvas .textStyle-select .font-color:hover{
+    border-color: #e4e4e4;
+}
+.ms-canvas .textStyle-select .font-color{
+    display: inline-block;
+    width: 18px;
+    height: 20px;
+    text-align: center;
+}
+.ms-canvas .textStyle-select .font-color .sp-replacer{
+    height: 20px;
+    width: 20px;
+    padding: 0;
+    vertical-align: top;
+}
+.ms-canvas .textStyle-select .font-color  .sp-dd{
+    display: none;
+}
+div[class$= "-panel-family"]{
+    font-size: 12px;
+}
+div[class$= "-panel-family"] .ane-select-dropdown-menu-item{
+    padding: 1px 10px;
+}
+div[class$= "-panel-size"]{
+    font-size: 12px;
+}
+div[class$= "-panel-size"] .ane-select-dropdown-menu-item{
+    padding: 1px 10px;
+}
+.ms-canvas .canvas-opt{
+    list-style: none;
+    height: 30px;
+    width: 150px;
+    text-align: left;
+    position: absolute;
+    /* z-index: 2; */
+    background-color: #fff;
+    border: 1px solid;
+    bottom: 15px;
+    border-radius: 5px;
+    display: none;
+}
+.ms-canvas .canvas-opt li{
+    display: inline-block;
+    width: 20px;
+    margin-left: 8px;
+    vertical-align: middle;
+    line-height: 30px;
+    height: 30px;
+    text-align: center;
+}
+.ms-canvas .canvas-opt li img{
+    vertical-align: middle;
+    line-height: 16px;
+}
+.ms-canvas .canvas-opt .rectangle{
+    background: url('/static/image/canvas_img/rectangle.png') no-repeat center center;
+}
+.ms-canvas .canvas-opt .rectangle-over{
+    background: url('/static/image/canvas_img/rectangle-over.png') no-repeat center center;
+}
+.ms-canvas .canvas-opt .circle{
+    background: url('/static/image/canvas_img/circle.png') no-repeat center center;
+}
+.ms-canvas .canvas-opt .circle-over{
+    background: url('/static/image/canvas_img/circle-over.png') no-repeat center center;
+}
+.ms-canvas .canvas-opt .arrow{
+    background: url('/static/image/canvas_img/arrow.png') no-repeat center center;
+}
+.ms-canvas .canvas-opt .arrow-over{
+    background: url('/static/image/canvas_img/arrow-over.png') no-repeat center center;
+}
+.ms-canvas .canvas-opt .text{
+    background: url('/static/image/canvas_img/text.png') no-repeat center center;
+}
+.ms-canvas .canvas-opt .text-over{
+    background: url('/static/image/canvas_img/text-over.png') no-repeat center center;
+}
+.ms-canvas .canvas-opt .return{
+    background: url('/static/image/canvas_img/return.png') no-repeat center center;
+}
+.ms-canvas .canvas-opt .return-over{
+    background: url('/static/image/canvas_img/return-over.png') no-repeat center center;
+}
+
+.ms-canvas .text{
+    position: absolute;
+    left: 20px;
+    top: 30px;
+    height: auto;
+    padding: 2px;
+    border: 1px dotted #a0b3d6;
+    z-index: 9999;
+}
+.ms-canvas .text:hover{
+    cursor: move;
+}
+/* .ms-canvas .text textarea:hover{
+    cursor: move;
+} */
+.ms-canvas .text textarea{
+    background:transparent;
+    border-style:none;
+    color: #fff;
+    min-width: 10px;
+    resize: none;
+    margin: 0 auto;  
+    overflow: hidden;  
+    font-size: 14px;  
+    height: 18px;  
+    line-height: 24px;  
+    padding: 2px;
+    outline: none;
+    color: red;
+}
+.ms-canvas .textAble{
+    color: #fff;
+    position: absolute;
+    left: 100px;
+    top: 60px;
+    border: 1px dotted #a0b3d6;
+    min-width: 10px; 
+    /* min-height: 120px; 
+    max-height: 300px;
+    _height: 120px;  */
+    margin-left: auto; 
+    margin-right: auto; 
+    padding: 3px; 
+    outline: 0;  
+    font-size: 12px; 
+    word-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-user-modify: read-write-plaintext-only;
+}
+
+/* 下方文字内容样式 */
+.ms-canvas-word{
+    padding: 15px 0;
+    margin: 0;
+}
+.ms-canvas-word .tpdy-jyaj{
+    width: 100%;
+    height: 100px;
+    position: relative;
+}
+.ms-canvas-word .tpdy-jyaj .jyaj{
+    width: 80px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0px;
+}
+.ms-canvas-word .jyaj-textarea{
+    position: absolute;
+    left: 80px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+.ms-canvas-word .jyaj-textarea textarea{
+    width: 100%;
+    height: 100%;
+    resize: none;
+    border: 1px solid #A9A9A9;
+}
+.ms-canvas-word .tpdy-xx {
+    margin-top: 15px;
+    text-align: right;
+}
+.ms-canvas-word .tpdy-xx .rs{
+    display: inline-block;
+    width: 200px;
+}
+.ms-canvas-word .tpdy-xx .downline{
+    height: 20px;
+    border-bottom: 1px solid;
+    width: 120px;
+    display:inline-block;
+    vertical-align: bottom;
+}
+.ms-canvas-word .tpdy-xx .jzr,
+.ms-canvas-word .tpdy-xx .zzr{
+    margin-left: 180px;
+}
+.ms-canvas-word .wordSpan{
+    font-size: 16px;
+}
+
+/************************************矩形颜色选择样式**********************************************/
+.ms-canvas .rectangle-color{
+    position: absolute;
+    bottom: 47px;
+    left: 766px;
+    width: 220px;
+    height: 35px;
+    background-color: #fff;
+    text-align: left;
+    padding-top: 1px;
+    text-align: left;
+    padding: 2px 5px;
+}
+.ms-canvas .rectangle-color .c{
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+.ms-canvas .rectangle-color .rectangle-show{
+    width: 30px;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+.ms-canvas .rectangle-color .rectangle-show img{
+    width: 100%;
+    height: 100%;
+    /* background: red; */
+}
+.ms-canvas .rectangle-color .rectangle-border{
+    width: 105px;
+    border-right: 1px solid #A9A9A9;
+    border-left: 1px solid #A9A9A9;
+    text-align: left;
+    padding: 0  5px;
+}
+.ms-canvas .rectangle-color .rectangle-border .b{
+    height: 100%;
+    width: 30px;
+    text-align: center;
+    display: inline-block;
+    /* margin: 0 10px; */
+}
+.ms-canvas .rectangle-color .rectangle-border .b:hover{
+    background-color: #B3FFFF;
+}
+.ms-canvas .rectangle-color .rectangle-border .activeBorder{
+    background-color: #B3FFFF;
+}
+.ms-canvas .rectangle-color .rectangle-border .b-1{
+    width: 20px;
+    height: 3px;
+    line-height: 3px;
+    vertical-align: middle;
+    background-color: #1E1E1E;
+    margin-top: 14px;
+    margin-left: 5px;
+}
+.ms-canvas .rectangle-color .rectangle-border .b-2{
+    width: 20px;
+    height: 5px;
+    line-height: 5px;
+    vertical-align: middle;
+    background-color: #1E1E1E;
+    margin-top: 12px;
+    margin-left: 5px;
+}
+.ms-canvas .rectangle-color .rectangle-border .b-3{
+    width: 20px;
+    height: 8px;
+    line-height: 8px;
+    vertical-align: middle;
+    background-color: #1E1E1E;
+    margin-top: 11px;
+    margin-left: 5px;
+}
+.ms-canvas .rectangle-color .rectangle-c{
+    width: 50px;
+    margin-left: 10px;
+    text-align: center;
+}
+.ms-canvas .rectangle-color .rectangle-c input{
+    margin-top: 4px;
+}
+.ms-canvas .rectangle-color .sp-replacer{
+    height: 22px;
+    width: 27px;
+    padding: 0;
+    vertical-align: top;
+    margin-top: 4px;
+}
+.ms-canvas .rectangle-color  .sp-dd{
+    display: none;
+}
+
+/************************************箭头颜色选择样式**********************************************/
+.ms-canvas .arrow-color{
+    position: absolute;
+    bottom: 47px;
+    left: 766px;
+    width: 115px;
+    height: 35px;
+    background-color: #fff;
+    text-align: left;
+    padding-top: 1px;
+    text-align: left;
+    padding: 2px 5px;
+}
+.ms-canvas .arrow-color .c{
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+.ms-canvas .arrow-color .arrow-show{
+    width: 40px;
+    margin-left: 5px;
+}
+.ms-canvas .arrow-color .arrow-show img{
+    width: 100%;
+    height: 100%;
+    /* background: red; */
+}
+.ms-canvas .arrow-color .arrow-c{
+    width: 50px;
+    margin-left: 10px;
+    text-align: center;
+    border-left: 1px solid #A9A9A9;
+}
+.ms-canvas .arrow-color .arrow-c input{
+    margin-top: 4px;
+}
+.ms-canvas .arrow-color .sp-replacer{
+    height: 22px;
+    width: 27px;
+    padding: 0;
+    vertical-align: top;
+    margin-top: 4px;
+}
+.ms-canvas .arrow-color  .sp-dd{
+    display: none;
+}
+
+/*******************************来自盘证制作--图像打印的样式*******************************************/
+.tpdy-content{
+    position:absolute;
+    left:0;
+    top:0;
+    bottom:0;
+    right:0;
+}
+.tpdy-content .tpdy01_null{
+    position: absolute;
+    width: 64px;
+    height: 100%;
+    left:0; 
+    /* border-right: 1px solid; */
+}
+.tpdy-content  .tpdy01_null_top,
+.tpdy-content  .tpdy01_null_bottom{
+    width: 100%;
+    height: 46%;
+    border-right:1px solid;
+}
+.tpdy-content  .tpdy01_null_mid{
+    width: 100%;
+    height: 8%;
+}
+.tpdy-content .tpdy-zd-border{
+    width: 2px;background-color: #1E1E1E;position: absolute;left: 28px;top: 0;bottom: 0;
+}
+.tpdy-content .tpdy02_null{
+    position: absolute;width: 20px;height: 100%;left:65px;
+}
+.tpdy-content .tpdy-c{
+    position: absolute;left: 90px;top: 0;bottom: 0;right:0;
+} 
+.tpdy-content .tpdy-zd{
+    width: 20px;position: absolute;top: 50%;margin-top:-58px;left: 55px;background-color: #fff;padding-top: 10px;font-size: 18px;font-weight: 400;z-index: 999;
+}

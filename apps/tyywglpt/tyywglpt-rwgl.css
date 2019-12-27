@@ -1,0 +1,68 @@
+/* 圆为红色表示离线，绿色表示在线 */
+
+.online {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 3px;
+    background: url(/static/image/tyywglpt/online.png?__sprite) 0 0 no-repeat;
+}
+
+.notOnline {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 3px;
+    background: url(/static/image/tyywglpt/unOnline.png?__sprite) 0 0 no-repeat;
+}
+
+.tyyw-form-box .ane-select-selection .ane-select-selected {
+    position: static;
+}
+
+/*数据上传任务*/
+
+.sjscrw .tyywglpt-search-box .form-inline {
+    top: 0;
+}
+
+.sjscrw .search-line-second .form-item {
+    margin-bottom: 0;
+}
+
+.sjscrw .tyywglpt-search-box .label-lg {
+    width: 295px;
+}
+
+.sjscrw .tyywglpt-search-box .label-lg label {
+    width: 110px;
+}
+
+.sjscrw .duration-container {
+    display: inline-block;
+}
+
+.sjscrw .duration-container .form-control {
+    height: 30px;
+}
+
+.sjscrw .tyywglpt-list-panel {
+    top: 282px;
+}
+
+.sjscrw .sjscrw-modal-restart .tip-text {
+    height: 80px;
+    line-height: 80px;
+    font-size: 16px;
+    color: #536b82;
+    text-align: center;
+    margin-bottom: 0;
+    margin-top: -16px;
+}
+
+/* .tyyw-form-box .tyywglpt-search-box .form-inline .labelLg{
+    width: 280px;
+}
+.tyyw-form-box .tyywglpt-search-box .labelLg label{
+    width: 90px;
+} */

@@ -1,0 +1,222 @@
+<template>
+    <div class="ajgl-container">
+        <div :visible="@ajgl_check.authority.SEARCH && @toggleShow" class="top-form">
+            <xmp is="ms-form" :widget="{$form:@$searchForm,inline:true}">
+                <div class="top-form-inline">
+                    <span style="margin-left: 13px;">受理单位:</span>
+                    <div class="inline-component" :controller="searchForm_sjdw">
+                        <!-- <ms-tree-select :widget="{value:@sjdw,col:'sjdw',checkedKeys: @checkedKeys,treeData:@rdata,expandedKeys: @expandedKeys,multiple:false,onChange:@handleChange}"></ms-tree-select> -->
+                        <!-- <ms-select-option :widget="{treeData:@rdata,selectedKey: @checkedKeys,onChange:@handleChange}"></ms-select-option> -->
+                        <ms-select-option :widget="{wrapId:'ajglTree',treeData:@rdata,selectedKey: @checkedKeys,showSearch:true,selectedTitle:@selectedTitle,onChange:@handleChange}"></ms-select-option>
+                        <i class="fa includeChild" :click="@clickincludeChild(el,key) | stop" :class="[(includeChild?'fa-check-square checked':'fa-square-o')]">
+                            <span class="text">包含子部门</span>
+                        </i>
+                    </div>
+                    <!-- <i class="fa includeChild" :click="@clickincludeChild(el,key) | stop" :class="[(includeChild?'fa-check-square checked':'fa-square-o')]">
+                        <span class="text">包含子部门</span>
+                    </i> -->
+                    <span class="bjsj_aj">案发时间:</span>
+                    <div class="inline-component" :controller="ajgl_searchForm_bjsj">
+                        <!-- <ms-radio-group :widget="{
+                            options:[
+                                { label: '本周', value: 'last-week' },
+                                { label: '本月', value: 'last-month' },
+                                { label: '自定义时间', value: 'last-past-of-time' }
+                            ],
+                            value:['last-week'],
+                            onChange:@searchForm_bjsj_Change
+                        }">
+                        </ms-radio-group> -->
+                        <ms-select :widget="{
+                            col:'bjsj',
+                            value: @bjsj,
+                            onChange:@searchForm_bjsj_Change
+                        }">
+                            <ms-select-option :widget="{value:'last-week'}">本周</ms-select-option>
+                            <ms-select-option :widget="{value:'last-month'}">本月</ms-select-option>
+                            <ms-select-option :widget="{value:'last-past-of-time'}">自定义时间</ms-select-option>
+                        </ms-select>
+                    </div>
+                    <div class="inline-component timeCover" ms-visible="@dateShow">
+                        <ms-form-item :widget="{label: '开始时间:'}">
+                            <ms-datepicker :widget="{
+                                placeholder:'开始时间',
+                               
+                                value: @topform_start_time,
+                                onChange:@startTimeHandleChange,
+                                showTime: false
+                            }"></ms-datepicker>
+                        </ms-form-item>
+                        <!-- <span class="between-date">-</span> -->
+                        <ms-form-item :widget="{label: '结束时间:'}">
+                            <ms-datepicker :widget="{
+                                placeholder:'结束时间',
+                                value: @topform_end_time,
+                                onChange:@endTimeHandleChange,
+                              
+                                showTime: false
+                            }"></ms-datepicker>
+                        </ms-form-item>
+
+                    </div>
+                    <div class="ajgl-time-null" :css="{display:@show_isNull}">
+                        <div class="yhgl-yhtc-prompt jqgl-prompt-st">
+                            <span :css="{display:@kssj_isNull}">
+                                <i class="fa fa-exclamation-circle"> 请输入开始时间</i>
+                            </span>
+                        </div>
+                        <div class="yhgl-yhtc-prompt jqgl-prompt-et">
+                            <span :css="{display:@jssj_isNull}">
+                                <i class="fa fa-exclamation-circle"> 请输入结束时间</i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- 远程时候加载数据 -->
+                    <!-- <div :controller="doc-select-remote">
+                        <ms-select :widget="{mode:'multiple',showSearch:true,remote:true,remoteMethod:@fetchOptions}"></ms-select>
+                    </div> -->
+                </div>
+                <div class="top-form-inline">
+                    <ms-form-item :widget="{label: '案件编号:'}">
+                        <ms-input :focus="@input_focus('ajbh')" :blur="@input_blur($event, 'ajbh')" :widget="{col: 'ajbh', value:@ajbh}" :keyup="@enter_click"></ms-input>
+                    </ms-form-item>
+                    <ms-form-item :widget="{label: '案件名称:'}">
+                        <ms-input :focus="@input_focus('ajmc')" :blur="@input_blur($event, 'ajmc')" :widget="{col: 'ajmc', value:@ajmc}" :keyup="@enter_click"></ms-input>
+                    </ms-form-item>
+                    <ms-form-item :widget="{label: '警情编号:'}">
+                        <ms-input :focus="@input_focus('jqbh')" :blur="@input_blur($event, 'jqbh')" :widget="{col: 'jqbh', value:@jqbh}" :keyup="@enter_click"></ms-input>
+                    </ms-form-item>
+                </div>
+                <div class="X-burn">
+                    <span class="fa fa-close jqgl_right_close ajbh_close" :mousedown="@close_click('ajbh')" :visible="@ajgl_close_ajbh"></span>
+                    <span class="fa fa-close jqgl_right_close ajmc_close" :mousedown="@close_click('ajmc')" :visible="@ajgl_close_ajmc"></span>
+                    <span class="fa fa-close jqgl_right_close jqbh_close" :mousedown="@close_click('jqbh')" :visible="@ajgl_close_jqbh"></span>
+                </div>
+                <div class="top-form-inline ajbottomForm">
+                    <ms-form-item :widget="{label: '涉案人员:'}">
+                        <ms-input :focus="@input_focus('sary')" :blur="@input_blur($event, 'sary')" :widget="{col: 'sary',value:@sary,placeholder:''}"
+                            :keyup="@enter_click"></ms-input>
+                    </ms-form-item>
+                    <ms-form-item :widget="{label: '主办民警:'}">
+                        <ms-input :focus="@input_focus('jy')" :blur="@input_blur($event, 'jy')" :widget="{col: 'jy', value:@jy}" :keyup="@enter_click"></ms-input>
+                    </ms-form-item>
+                    <span class='ajglmt'>关联媒体:</span>
+                    <div class="inline-component" :controller="searchForm_gllb">
+                        <ms-select :widget="{
+                                    col:'gllb',
+                                    value: @glmt,
+                                    onChange:@searchForm_gllb_Change
+                                }">
+                            <ms-select-option :widget="{value:'99'}">不限</ms-select-option>
+                            <ms-select-option :widget="{value:'1'}">已关联</ms-select-option>
+                            <ms-select-option :widget="{value:'0'}">未关联</ms-select-option>
+                        </ms-select>
+                    </div>
+
+                </div>
+                <div class="X-burn">
+                    <span class="fa fa-close jqgl_right_close sary_close" :mousedown="@close_click('sary')" :visible="@ajgl_close_sary"></span>
+                    <span class="fa fa-close jqgl_right_close jy_close" :mousedown="@close_click('jy')" :visible="@ajgl_close_jy"></span>
+
+                </div>
+            </xmp>
+            <button :if="@ajgl_check.authority.SEARCH" class="ajgl_search_btn" :click="@ajgl_search">查询</button>
+        </div>
+        <div :visible="@toggleShow" class="ajgl-table ajtb" :controller="ajgl-table">
+            <div :visible="@toggleShow" class="ajgl-table jqtb" :controller="jqgl-table-jdkp" style="margin-top:42px;">
+                <div :class="['ajgl-tabCont']">
+                    <div :controller="ajgl_table" :class="['table-index']" id="ajgl_table">
+                        <div class="table-index-thead-fixed">
+                            <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                                <li data-order="1" class="col-5">序号</li>
+                                <li data-order="2" class="col-5">操作</li>
+                                <li data-order="3" class="col-10">受理单位</li>
+                                <li data-order="4" class="col-10">主办民警</li>
+                                <li data-order="5" class="col-15">案件编号</li>
+                                <li data-order="6" class="col-10">案发时间</li>
+                                <li data-order="7" class="col-10">案件名称</li>
+                                <li data-order="8" class="col-10">涉案人员</li>
+                                <li data-order="9" class="col-10">案件类别</li>
+                                <li data-order="10" class="col-10">警情编号</li>
+                                <li data-order="11" class="col-5">关联媒体</li>
+                            </ul>
+                        </div>
+                        <ul class="table-index-tbody">
+                            <li class="list-null" :if="!@data.length">暂无数据</li>
+                            <li :for="($index, record) in @data">
+                                <div class="tbody col-5">
+                                    <div class="table-cont">{{(@currentPage-1)*@prePageSize+$index + 1}}</div>
+                                </div>
+                                <div class="tbody col-5">
+                                    <div class="table-cont">
+                                        <span>
+                                            <a :if="@ajgl_check.authority.CHECK" class="checkLook" :click="@handle('checkLook','space',record,$index)">查看</a>
+                                            <a :if="!@ajgl_check.authority.CHECK">-</a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="tbody col-10">
+                                    <div class="table-cont" :attr="record['sldwmc'] && (record['sldwmc'] != '-') ? {rel:'drevil',tdval:record['sldwmc']}:''">
+                                        {{record['sldwmc']}}
+                                    </div>
+                                </div>
+                                <div class="tbody col-10">
+                                    <div class="table-cont" :attr="record['zbmjxm'] && (record['zbmjxm'] != '-') ? {rel:'drevil',tdval:record['zbmjxm']}:''">
+                                        {{record['zbmjxm']}}
+                                    </div>
+                                </div>
+                                <div class="tbody col-15">
+                                    <div class="table-cont" :attr="record['ajbh'] && (record['ajbh'] != '-') ? {rel:'drevil',tdval:record['ajbh']}:''">
+                                        {{record['ajbh']}}
+                                    </div>
+                                </div>
+                                <div class="tbody col-10">
+                                    <div class="table-cont" :attr="record['afsj'] && (record['afsj'] != '-') ? {rel:'drevil',tdval:record['afsj']}:''">
+                                        {{record['afsj']}}
+                                    </div>
+                                </div>
+                                <div class="tbody col-10">
+                                    <div class="table-cont" :attr="record['ajmc'] && (record['ajmc'] != '-') ? {rel:'drevil',tdval:record['ajmc']}:''">
+                                        {{record['ajmc']}}
+                                    </div>
+                                </div>
+                                <div class="tbody col-10">
+                                    <div class="table-cont" :attr="record['sary'] && (record['sary'] != '-') ? {rel:'drevil',tdval:record['sary']}:''">
+                                        {{record['sary']}}
+                                    </div>
+                                </div>
+                                <div class="tbody col-10">
+                                    <div class="table-cont" :attr="record['ajlb'] && (record['ajlb'] != '-') ? {rel:'drevil',tdval:record['ajlb']}:''">
+                                        {{record['ajlb']}}
+                                    </div>
+                                </div>
+                                <div class="tbody col-10">
+                                    <div class="table-cont" :attr="record['jqbh'] && (record['jqbh'] != '-') ? {rel:'drevil',tdval:record['jqbh']}:''">
+                                        {{record['jqbh']}}
+                                    </div>
+                                </div>
+                                <div class="tbody col-5">
+                                    <div class="table-cont" :attr="record['sfgl'] && (record['sfgl'] != '-') ? {rel:'drevil',tdval:record['sfgl']}:''">
+                                        {{record['sfgl']}}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="table-index-loading" :if="@loading">
+                            <span class="loadingSpan">结果加载中</span>
+                        </div>
+                        <!-- <div :if="!@loading && !@data.length" class="noData">暂无数据</div> -->
+                    </div>
+                </div>
+                <ms-pages :widget="{total:@pagination.total,overLimit:@pagination.overLimit,pageSize:@pagination.pageSize,current:@pagination.current,onChange:@handleTableChange,getCurrent:@getCurrent}"></ms-pages>
+                <!-- <ms-paging :widget="{current:@pagination.current,pageSize:@pagination.pageSize,total:@pagination.total,onChange:@handleTableChange,getCurrent:@getCurrent,getPageSize:@getPageSize}"></ms-paging> -->
+                <!-- <div class="jqtb-pagi">
+                <button id="jqtbnextPage" :click="@nextPage" class="jqtb-pagi-btn">下一页</button>
+                <button id="jqtblastPage" :click="@lastPage" class="jqtb-pagi-btn">上一页</button>
+                    <span class="jqtb-pagi-word">每页{{@pagination.pageSize}}条,共{{@pagination.total}}条</span>
+            </div> -->
+            </div>
+        </div>
+    </div>
+</template>

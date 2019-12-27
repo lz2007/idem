@@ -1,0 +1,225 @@
+.panel .datagrid {
+    line-height: 24px;
+    font-family: "微软雅黑";
+    color: #333;
+}
+
+.czrz-toolBar {
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    padding: 0;
+    background-color: #FFFFFF;
+}
+
+.czrzBtns {
+    width: 100%;
+    /*height: 44px;*/
+    /*line-height: 44px;*/
+    /*margin-bottom: 8px;*/
+    /*background-color: #0078d7;*/
+}
+
+.czrzlist-loading {
+    position: relative;
+    height: 100%;
+    background: #f7f7f7 url(/static/image/tyywglpt/loading.gif) center center no-repeat;
+}
+
+.czrzlist-loading span {
+    width: 100%;
+    position: absolute;
+    top: 52%;
+    left: 0;
+}
+
+.czrzBtns ul {
+    list-style: none;
+    height: 100%;
+}
+
+.czrzBtns ul li {
+    list-style: none;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+    background-color: #1c9bff
+}
+
+.czrzBtns ul li:hover {
+    background-color: #107dda;
+}
+
+.czrzOpeBtns {
+    display: block;
+    font-weight: normal;
+    cursor: pointer;
+    font-family: "microsoft yahei";
+    color: #fff;
+    vertical-align: middle;
+    line-height: 30px;
+    text-align: center;
+}
+
+.czrz-toolBar .pagebar {
+    background-color: #E8EDF1;
+    border: 0px;
+    right: 8px;
+    left: 8px;
+}
+
+.czrz-toolBar .form-control {
+    width: 200px;
+    border-radius: 0px;
+}
+
+.czrz_menubar {
+    width: 100%;
+    height: 60px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    background-color: #F4F5F7;
+    border: 1px solid #E9E9EB;
+}
+
+.toolBar-content {
+    min-width: 600px;
+    height: 60px;
+    border: 1px solid #D5DFE5;
+}
+
+.toolBar-content span {
+    position: relative;
+    top: -10px;
+    left: 15px;
+    background-color: #F5F5F5;
+    font-size: 12px;
+}
+
+.czrzHearder {
+    margin-top: 12px;
+}
+
+.czrz-table tr:hover {
+    background-color: #E6E6E6;
+}
+
+.czrz-table {
+    position: absolute;
+    bottom: 37px;
+    top: 140px;
+    right: 8px;
+    left: 8px;
+}
+
+.czrz-table .czrz_tabCont table tbody tr {
+    color: #586A7B;
+    font-size: 14px;
+    /* cursor: pointer; */
+}
+
+.czrz-table .czrz_tabCont table thead th {
+    background-color: #E0E7ED;
+    border: 1px solid #A5B3BC !important;
+    text-align: center;
+    color: #586A7B;
+    font-size: 14px;
+}
+
+.czrz-table .czrz_tabCont table {
+    table-layout: fixed;
+}
+
+.czrz-table .czrz_tabCont table>thead>tr>th {
+    vertical-align: bottom;
+}
+
+.czrz-table .czrz_tabCont tr td {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0px;
+    line-height: 30px;
+    vertical-align: middle;
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-color: #B7C3CA;
+    text-align: center;
+    font-weight: normal;
+    Word-break: break-all;
+    font-size: 14px !important;
+    /*background-color: #F7F7F7;*/
+}
+
+.czrz_tabCont {
+    position: absolute;
+    bottom: 37px;
+    top: 0px;
+    right: 8px;
+    left: 8px;
+}
+
+.czrz-fixWidth {
+    width: 300px;
+    height: 35px;
+    float: left;
+    margin-left: 10px;
+}
+
+.czrz-labelLineHeight {
+    font-weight: bold;
+    line-height: 32px;
+    font-size: 14px;
+    height: 34px;
+    color: #536b82;
+    font-family: "HiraginoSansGB-W3";
+}
+
+/* .czrzHearder a {
+    cursor: pointer;
+    height: 30px;
+    width: 120px;
+    line-height: 30px;
+    background: #FD8702;
+    color: #ffffff;
+    display: inline-block;
+    text-align: center;
+    border-radius: 5px;
+    float: right;
+    margin-right: 15px;
+} */
+
+/* .czrzHearder a:hover {
+    color: #fff;
+    background: #db7400;
+} */
+
+.allSys {
+    height: 34px;
+    width: 200px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.czrz-sys {
+    display: inline-block;
+}
+
+.czrz-sys .ane-select .ane-select-arrow {
+    right: 6px;
+}
+
+.czrz_tip {
+    font-size: 12px;
+    line-height: 13px;
+    height: 14px;
+    margin-bottom: 0;
+    color: #d2403d;
+    margin-top: 10px;
+}

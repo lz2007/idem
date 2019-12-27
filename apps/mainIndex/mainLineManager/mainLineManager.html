@@ -1,0 +1,322 @@
+<template>
+    <div :controller="main-index" class="managerIndex">
+        <ms-browser-upgrade-tips></ms-browser-upgrade-tips>
+        <xmp is="ms-layout">
+            <ms-layout :widget="">
+                <div id="main" class="w_min">
+                    <div class="w_1920">
+                        <div class="loginMsg loginMsgColor shadow">
+                            <div class="div_msg currentLogin">
+                                <p>{{loginTime}}: {{@nowlogintime}}</p>
+                            </div>
+                            <div class="div_msg lastLogin">
+                                <p>{{lastTime}}: {{@lastlogintime}}</p>
+                            </div>
+                            <div class="div_msg currentIP">
+                                <p>{{currentIP}}: {{@nowLonginIp}}</p>
+                            </div>
+                            <div class="div_msg lastIP">
+                                <p>{{lastIP}}: {{@lastLonginIp}}</p>
+                            </div>
+                            <!--<div class="div_msg" id="logFailure">
+                                <p class="adjust_p" :attr="{title: @loginFailNum}">
+                                    {{loginFailed}}：<span>{{@loginFailNum}}</span>&nbsp;{{times}}
+                                </p>
+                            </div>
+                            <div class="div_msg accountExpire">
+                                <p class="adjust_p" :attr="{title: @accountExpireNum}">
+                                    {{accountDay}}：<span>{{@accountExpireNum}}</span>&nbsp;{{days}}
+                                </p>
+                            </div>
+                            <div class="div_msg passwordExpire">
+                                <p class="adjust_p" :attr="{title: @passwordExpireNum}">
+                                    {{passwordDay}}：<span>{{@passwordExpireNum}}</span>&nbsp;{{days}}
+                                </p>
+                            </div>-->
+                            <!-- <div class="div_msg img_downloadCenter" :class="@cloudClass" :click="openOrderCenter">
+                            </div>
+                            <div class="div_msg txt_downloadCenter">
+                                <p :click="@openOrderCenter">{{downloadCenter}}</p>
+                            </div> -->
+                        </div>
+                        <div class="situationMsg">
+                            <div class="div_case shadow">
+                                <div class="case_title day">{{thisWeek}}</div>
+                                <div class="case_content video" :attr="{title: @zr_spzsc}">
+                                    <div class="case_number">
+                                        <p>{{@zr_spzsc|wordlimit(6)}}</p>
+                                    </div>
+                                    <div class="case_text">
+                                        <p>{{spscText}}</p>
+                                    </div>
+                                </div>
+                                <div class="case_content audio" :attr="{title: @zr_ypzsc}">
+                                    <div class="case_number">
+                                        <p>{{@zr_ypzsc|wordlimit(6)}}</p>
+                                    </div>
+                                    <div class="case_text">
+                                        <p>{{ypscText}}</p>
+                                    </div>
+                                </div>
+                                <div class="case_content photo" :attr="{title: @zr_tpzs}">
+                                    <div class="case_number">
+                                        <p>{{@zr_tpzs|wordlimit(6)}}</p>
+                                    </div>
+                                    <div class="case_text">
+                                        <p>{{tpscText}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="div_case shadow">
+                                <div class="case_title week">{{thisMonth}}</div>
+                                <div class="case_content video_week" :attr="{title: @bz_spzsc}">
+                                    <div class="case_number">
+                                        <p>{{@bz_spzsc|wordlimit(6)}}</p>
+                                    </div>
+                                    <div class="case_text">
+                                        <p>{{spscText}}</p>
+                                    </div>
+                                </div>
+                                <div class="case_content audio_week" :attr="{title: @bz_ypzsc}">
+                                    <div class="case_number">
+                                        <p>{{@bz_ypzsc|wordlimit(6)}}</p>
+                                    </div>
+                                    <div class="case_text">
+                                        <p>{{ypscText}}</p>
+                                    </div>
+                                </div>
+                                <div class="case_content photo_week" :attr="{title: @bz_tpzs}">
+                                    <div class="case_number">
+                                        <p>{{@bz_tpzs|wordlimit(6)}}</p>
+                                    </div>
+                                    <div class="case_text">
+                                        <p>{{tpscText}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="div_case shadow">
+                                <div class="case_title month">{{thisYear}}</div>
+                                <div class="case_content video_month" :attr="{title: @by_spzsc}">
+                                    <div class="case_number">
+                                        <p>{{@by_spzsc|wordlimit(6)}}</p>
+                                    </div>
+                                    <div class="case_text">
+                                        <p>{{spscText}}</p>
+                                    </div>
+                                </div>
+                                <div class="case_content audio_month" :attr="{title: @by_ypzsc}">
+                                    <div class="case_number">
+                                        <p>{{@by_ypzsc|wordlimit(6)}}</p>
+                                    </div>
+                                    <div class="case_text">
+                                        <p>{{ypscText}}</p>
+                                    </div>
+                                </div>
+                                <div class="case_content photo_month" :attr="{title: @by_tpzs}">
+                                    <div class="case_number">
+                                        <p>{{@by_tpzs|wordlimit(6)}}</p>
+                                    </div>
+                                    <div class="case_text">
+                                        <p>{{tpscText}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="loginMsg optionMsg">
+                            <div class="option">
+                                <ul>
+                                    <li><span :class="@dateClass" :click="@ulClick($event)">{{@dates[0]}}</span></li>
+                                    <li><span :class="@weekClass" :click="@ulClick($event)">{{@dates[1]}}</span></li>
+                                    <li><span :class="@monthClass" :click="@ulClick($event)">{{@dates[2]}}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="situationMsg chartMsg">
+                            <div class="div_case2 div_case2_margin shadow">
+                                <div class="txt_float">{{usageTimeTitle}}</div>
+                                <div class="circle_outter chart_outter">
+                                    <div id="usage_rate" class="usage_rate"></div>
+                                </div>
+                            </div>
+                            <div class="div_case2 div_case2_margin shadow">
+                                <div class="txt_float">{{annotationRate}}</div>
+                                <div class="circle_outter2 chart_outter2">
+                                    <div id="videoRate" class="usage_rate"></div>
+                                    <div class="videoRateNumber">
+                                        <p>{{keyRate}}%</p>
+                                    </div>
+                                </div>
+                                <div class="videoDataTitle">
+                                    <div class="videoNumber numberLeft">
+                                        <h3 ms-attr="{title: @sumAvideoKeyCount}">{{sumAvideoKeyCount}}</h3>
+                                        <div class="videoTitleTxt">
+                                            <div class="blue"></div>
+                                            <div class="videoLeftTitle">{{annotation}}</div>
+                                        </div>
+
+                                    </div>
+                                    <div class="videoNumber numberRight">
+                                        <h3 ms-attr="{title: @sumAbefore24h}">{{unsumAvideoKeyCount}}</h3>
+                                        <div class="videoTitleTxt">
+                                            <div class="yellow"></div>
+                                            <div class="videoLeftTitle">{{unrelated}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="div_case2 div_case2_margin shadow">
+                                <div class="txt_float">{{videoLabelingRateTitle}}</div>
+                                <div class="circle_outter2 chart_outter2">
+                                    <div id="annotationRate" class="usage_rate"></div>
+                                    <div class="videoRateNumber">
+                                        <p>{{labelRate}}%</p>
+                                    </div>
+                                </div>
+                                <div class="videoDataTitle">
+                                    <div class="videoNumber numberLeft">
+                                        <h3 ms-attr="{title: @sumAvideoLabelCount}">{{sumAvideoLabelCount}}</h3>
+                                        <div class="videoTitleTxt">
+                                            <div class="green"></div>
+                                            <div class="videoLeftTitle">{{labeling}}</div>
+                                        </div>
+
+                                    </div>
+                                    <div class="videoNumber numberRight">
+                                        <h3 ms-attr="{title: @sumAvideoNoneCount}">{{sumAvideoNoneCount}}</h3>
+                                        <div class="videoTitleTxt">
+                                            <div class="yellow"></div>
+                                            <div class="videoLeftTitle">{{unlabelled}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="div_case2 shadow">
+                                <div class="txt_float">{{rankingTitle}}</div>
+                                <div class="topTen">
+                                    <!--<ul>-->
+                                    <!--<li ms-for="el in @topFive"><div class="topCircle" :class="['topNo'+@el.index]"><p class="topNum">{{el.index}}</p><p class="topFivetxt" ms-attr="{title: @el.userName}">{{el.userName}}</p></div></li>-->
+                                    <!--</ul>-->
+                                    <ul class="ulSize">
+                                        <li ms-for="el in @topTen">
+                                            <div class="topSquare" :class="['topNo'+@el.index]">
+                                                <p class="topNum">{{el.index}}</p>
+                                                <p class="topTentxt" ms-attr="{title: @el.userName}">{{el.userName}}</p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="topTenChart">
+                                        <div id="ranking" class="usage_rate"></div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ms-layout>
+            <ms-layout-footer :widget="{fixed:true}">
+            </ms-layout-footer>
+        </xmp>
+
+        <!-- <div class="pic_ocx" :if="@is_IE">
+            <object id="gxxPlayOcx" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9" width="100%" height="100%"></object>
+        </div>
+        <div class="pic_ocx" :if="!@is_IE">
+            <embed type="application/npGSVideoPlugin-plugin" name="npGSVideoPlugin" id="npGSVideoPlugin_pic" width="100%"
+                height="100%">
+        </div> -->
+
+        <!-- <div :controller="question-ctl" class="main-index-dialog">
+            <xmp :widget="{is: 'ms-dialog',$innerVm:'question-ctl-inner', className: 'main-index-dialog', isMove: true, show:@show, width: 550, height: 250, onCancel:@editCancel, onOk:@editOk, okText:'', cancelText:''}">
+                <div slot="body" ms-skip>
+                    <div class="centerHelp">
+                        <ol>
+                            <li><span>{{helpTip1}}</span></li>
+                            <li><span>{{helpTip2}}</span></li> -->
+                            <!--<li><span>{{helpTip3}}</span></li>-->
+                            <!--<li><span>{{helpTip4}}</span></li>-->
+                        <!-- </ol> -->
+                        <!--<dl>
+                            <dt></dt>
+                            <dd>1.<dt>请务必安装“Flash插件”及“高新兴媒体播放器插件”。前者支撑批量选择本地文件上传支持；后者给您提供媒体播放、实时点流功能及图像增强功能等。如未安装则会导致部分功能异常，影响您的正常使用。</dt></dd>
+
+                            <dd>2. 如您的操作系统为Windows 7 （32位 / 64 位）及以上版本，推荐您将IE浏览器升级到IE 11浏览器（Windows 7 32位 / Windows 7
+                                64位）再进行使用。</dd>
+                            <dd>3. 如您的操作系统为Windows 7 及以上版本，但想性能更佳且体验更好，推荐您下载并选用安装“高新兴国迈安全浏览器”。</dd>
+                            <dd>4. 如您的操作系统为Windows XP，推荐您下载并安装“高新兴国迈安全浏览器”再进行使用。</dd>
+                        </dl>-->
+                    <!-- </div>
+                </div>
+                <div slot="footer" class="modal-footer" style="display: none" ms-skip>
+                </div>
+            </xmp>
+        </div> -->
+
+        <div :controller="confirm-ctl">
+            <xmp :widget="{is: 'ms-dialog', $innerVm:'confirm-ctl-inner', className: 'confirm-dialog', isMove: true, show:@show, width: 300, height: 175, onCancel:@editCancel, onOk:@editOk, okText:'确认', cancelText:''}">
+                <div slot="body" ms-skip>
+                    <div id="confirm-dialog-body">
+                        <span ms-text="@confirmMsg"></span>
+                    </div>
+                </div>
+                <div slot="footer" class="modal-footer" ms-skip>
+                    <a class="btn btn-default" style="display: none;" :click="@editOk">确认</a>
+                    <a class="btn btn-default" style="margin-right: 63px;" :click="@editCancel">关闭</a>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- <ms-header-operation></ms-header-operation> -->
+
+        <!--下载中心弹窗-->
+        <!-- <div :controller="confirm-downLoad" class="main-index-dialog">
+            <xmp :widget="{title : @title,is: 'ms-dialog', $innerVm:'confirm-ctl-inner', className: 'main-index-dialog', isMove: true, show:@show, width: 680, height: 280, onCancel:@editCancel, onOk:@editOk, okText:'确认', cancelText:''}">
+                <div slot="body" ms-skip>
+                    <div class="centerContent">
+                        <div class="necessary">
+                            <p>{{essentialPlug}}</p>
+                            <ul :click="@iconDownLoad($event)">
+                                <li>
+                                    <a id="aFlashDL" href="/static/flash_player.zip">{{flashPlug}}</a>
+                                    <i class="iconDownload"></i>
+                                </li>
+                                <li>
+                                    <a :attr="{href: @certificatePlugHref}">{{certificatePlug}}</a>
+                                    <i class="iconDownload"></i>
+                                </li> -->
+                                <!-- <li class="lilong">
+                                    <a :attr="{href: @version}" class="along">{{gosuncnPlayer}}</a>
+                                    <i class="iconDownload"></i>
+                                </li> -->
+                            <!-- </ul>
+                        </div>
+                        <div class="necessary optional">
+                            <p>{{availableBrowsers}}</p>
+                            <ul :click="@iconDownLoad($event)"> -->
+                                <!-- <li>
+                                    <a id="ffactivex" :attr="{href: @defaultDownloadUrl}">{{gosuncnBrowser}}</a>
+                                    <i class="iconDownload"></i>
+                                </li> -->
+                                <!-- <li>
+                                    <a href="/static/IE11-Windows6.1-x86-en-us.exe">{{IE32}}</a>
+                                    <i class="iconDownload"></i>
+                                </li>
+                                <li>
+                                    <a href="/static/IE11-Windows6.1-x64-en-us.exe">{{IE64}}</a>
+                                    <i class="iconDownload"></i>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div slot="footer" class="modal-footer" ms-skip>
+                    <div class="centerFooter">
+                        <p :click="@openDownLoadHelp">{{help}}</p>
+                        <div class="iconHelp" :click="@openDownLoadHelp"></div>
+                    </div>
+                </div>
+            </xmp>
+        </div> -->
+    </div>
+</template>

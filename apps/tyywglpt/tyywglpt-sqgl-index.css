@@ -1,0 +1,143 @@
+/* header begin */
+
+.headerHbox {
+    height: 60px;
+    line-height: 60px;
+    position: relative;
+    padding: 9px 8px;
+    margin-top: 8px;
+    margin-bottom: 9px;
+}
+
+.tyywglpt_sqgl .updateBtn {
+    position: absolute;
+    top: 14px;
+    right: 13px;
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 40px;
+    background: #fd8702;
+    color: #ffffff;
+}
+
+.tyywglpt_sqgl .updateBtn:hover {
+    background: #db7400;
+}
+
+.tyywglpt_sqgl .alreadyLic {
+    color: green;
+    margin-top: 5px;
+}
+
+.tyywglpt_sqgl .noneLic {
+    color: red;
+    margin-top: 5px;
+}
+
+.tyywglpt_sqgl .none {
+    display: none;
+}
+
+/* header end */
+
+/* tables begin */
+
+.tyywglpt_sqgl .tyywglpt_sqgl_panel {
+    position: absolute;
+    bottom: 40px;
+    left: 8px;
+    right: 20px;
+    top: 177px;
+    font-size: 14px;
+    color: #536b82;
+    text-align: center;
+}
+
+.tyywglpt_sqgl .licenseInfo {
+    position: relative;
+    height: 100%;
+    margin-bottom: 5px;
+    background-color: #F7F7F7;
+}
+
+.tyywglpt_sqgl .tyywglpt-list-header {
+    width: 100%;
+    background: #e0e7ed;
+    padding-right: 0;
+}
+
+.tyywglpt_sqgl .tyywglpt-list-header li {
+    display: inline-block;
+    height: 32px;
+    background: #e0e7ec;
+}
+
+.tyywglpt_sqgl .tyywglpt-list-content {
+    height: 100%;
+    min-height: 34px;
+    background: #f7f7f7;
+    border: 1px solid #e0e7ec;
+    border-top: none;
+}
+
+.tyywglpt_sqgl .tyywglpt-list-content li {
+    height: 34px;
+    line-height: 34px;
+    /* border-bottom: 1px solid #e0e7ec; */
+}
+
+.tyywglpt_sqgl .tyywglpt-list-content div {
+    display: inline-block;
+    padding: 0 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-left: 1px solid #e0e7ec;
+    cursor: default;
+}
+
+.tyywglpt_sqgl .tyywglpt-list-header li:first-child,
+.tyywglpt_sqgl .tyywglpt-list-header li+li+li,
+.tyywglpt_sqgl .tyywglpt-list-content .name {
+    width: 13%;
+}
+
+.tyywglpt_sqgl .tyywglpt-list-header li+li,
+.tyywglpt_sqgl .tyywglpt-list-header li+li+li+li,
+.tyywglpt_sqgl .tyywglpt-list-content .value {
+    width: 37%;
+}
+
+.tyywglpt_sqgl .tyywglpt-list-header li:first-child,
+.tyywglpt_sqgl .tyywglpt-list-content li .first {
+    border-left: 0px;
+}
+
+.tyywglpt_sqgl .tyywglpt-list-content .lastLiSecond {
+    display: none;
+}
+
+.tyywglpt_sqgl .tyywglpt-list-content .lastLiValue1 {
+    width: 87%;
+    text-align: left;
+}
+
+/* table end */
+
+/* dialog begin */
+
+.inputHbox textarea {
+    height: 262px;
+    outline: none;
+    resize: none;
+    color: #536b82;
+}
+
+.machineBox {
+    font-size: 14px;
+    padding-bottom: 5px;
+    color: #536b82;
+}
+
+/* dialog end */

@@ -1,0 +1,60 @@
+<template>
+    <div class="ywzx-ccms">
+        <!-- <ms-form>
+            <ms-radio-group :widget="{
+                    options:@radioOptions,
+                    onChange:@handleChange,
+                    value :@curValue
+                }">
+            </ms-radio-group>
+        </ms-form> -->
+        <div class="modeTotal" :class="@showEdit ? 'selectDisable' : ''">
+            <div class="modeList hybrid" :click="@select_mode('hybrid')" :class="[@selectMode == 2 ? 'selectedMode' : '', @isHybridLight ? 'lightTextCorlor' : '']">
+                <div class="selectIcon" :if="@selectMode == 2">
+                    <img src="/static/image/xtywgl/select_icon.png">
+                </div>
+                <div class="modeTitle">{{@ccms_txt.hybridTitle}}</div>
+                <div class="modeImg">
+                    <img src="/static/image/xtywgl/centralized_light.png" :if="@isHybridLight">
+                    <img src="/static/image/xtywgl/distributed_light.png" :if="@isHybridLight">
+                    <img src="/static/image/xtywgl/centralized_dark.png" :if="!@isHybridLight">
+                    <img src="/static/image/xtywgl/distributed_dark.png" :if="!@isHybridLight">
+                </div>
+                <div class="desc">
+                    {{@ccms_txt.hybrid}}
+                </div>
+            </div>
+            <div class="modeList centralized" :click="@select_mode('centralized')" :class="[@selectMode == 0 ? 'selectedMode' : '', @isCentralizedLight ? 'lightTextCorlor' : '']">
+                <div class="selectIcon" :if="@selectMode == 0">
+                    <img src="/static/image/xtywgl/select_icon.png">
+                </div>
+                <div class="modeTitle">{{@ccms_txt.centralizedTitle}}</div>
+                <div class="modeImg">
+                    <img src="/static/image/xtywgl/centralized_light.png" :if="@isCentralizedLight">
+                    <img src="/static/image/xtywgl/centralized_dark.png" :if="!@isCentralizedLight">
+                </div>
+                <div class="desc">
+                    {{@ccms_txt.centralized}}
+                </div>
+            </div>
+            <div class="modeList distributed" :click="@select_mode('distributed')" :class="[@selectMode == 1 ? 'selectedMode' : '', @isDistributedLight ? 'lightTextCorlor' : '']">
+                <div class="selectIcon" :if="@selectMode == 1">
+                    <img src="/static/image/xtywgl/select_icon.png">
+                </div>
+                <div class="modeTitle">{{@ccms_txt.distributedTitle}}</div>
+                <div class="modeImg">
+                    <img src="/static/image/xtywgl/distributed_light.png" :if="@isDistributedLight">
+                    <img src="/static/image/xtywgl/distributed_dark.png" :if="!@isDistributedLight">
+                </div>
+                <div class="desc">
+                    {{@ccms_txt.distributed}}
+                </div>
+            </div>
+        </div>
+        <div class="ccms-btn" :if="@authority.EDIT">
+            <button type="button" class="editBtn" :click='@handleEdit' :if="@showEdit">{{@ccms_txt.edit}}</button>
+            <button type="button" class="saveBtn" :click='@handleSave' :if="!@showEdit">{{@ccms_txt.save}}</button>
+            <button type="button" class="cancelBtn" :click='@handleCancel' :if="!@showEdit">{{@ccms_txt.cancel}}</button>
+        </div>
+    </div>
+</template>

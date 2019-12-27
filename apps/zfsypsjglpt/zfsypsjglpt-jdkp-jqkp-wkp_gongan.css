@@ -1,0 +1,586 @@
+.ajgl-back:hover,
+.jqgl-back:hover,
+.deletegl:hover,
+.addgl:hover {
+    background: #0057a1;
+}
+
+.diatable .ane-checkbox input[type="checkbox"]+.text::before,
+.glmt-cj-content .ane-checkbox input[type="checkbox"]+.text::before,
+.glmt-jj-content .ane-checkbox input[type="checkbox"]+.text::before,
+.glmt-operate .ane-checkbox input[type="checkbox"]+.text::before,
+.diaglmt .ane-checkbox input[type="checkbox"]+.text::before {
+    border-width: 0px;
+    height: 10px;
+    min-width: 10px;
+    content: url(/static/image/xtpzgl-yhgl/selectNo.png?__sprite);
+    width: 10px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.diatable .ane-checkbox input[type="checkbox"]:checked+.text::before,
+.glmt-cj-content .ane-checkbox input[type="checkbox"]:checked+.text::before,
+.glmt-jj-content .ane-checkbox input[type="checkbox"]:checked+.text::before,
+.glmt-operate .ane-checkbox input[type="checkbox"]:checked+.text::before,
+.diaglmt .ane-checkbox input[type="checkbox"]:checked+.text::before {
+    display: inline-block;
+    content: url(/static/image/xtpzgl-yhgl/selectYes.png?__sprite);
+    font-weight: bold;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.scrollInfo {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+.jqgl-ck-mid .glmt,
+.ajgl-ck-mid .glmt {
+    position: absolute;
+    right: 8px;
+}
+
+/* .jqgl-object,
+.ajgl-object {
+    width: 100%;
+    height: 100%;
+    background-color: #2b2b2b;
+    border: 1px solid #e0e7ec;
+} */
+
+.jqgl-object #gm_video,
+.jqgl-object #gm_video_dia,
+.ajgl-object #gm_video,
+.ajgl-object #gm_video_dia,
+.jqgl-object #gm_audio,
+.jqgl-object #gm_audio_dia,
+.ajgl-object #gm_audio,
+.ajgl-object #gm_audio_dia {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+.jqgl-object .gm_audio_img,
+.ajgl-object .gm_audio_img {
+    height: 48px;
+    width: 48px;
+    position: absolute;
+    top: 202px;
+    left: 46%;
+}
+
+.jdkp-container .zfsyp_footer,
+.ajgl-container .zfsyp_footer {
+    position: absolute;
+    left: -50px;
+    padding: 0px;
+}
+
+.delete-dialog {
+    color: #536b82;
+}
+
+.noDataInfo {
+    text-align: center;
+}
+
+.palyerImg,
+.palyerImg_dia {
+    border: 3px solid #e4e4e4;
+}
+
+.noDataInfo {
+    color: #536b82;
+    margin-top: 20px;
+}
+
+.finishDelete {
+    text-align: center;
+    line-height: 498px;
+    background-color: #2b2b2b;
+    color: white;
+    display: none;
+    font-size: 16px;
+}
+
+.pos-time {
+    position: relative;
+    width: 100%;
+    height: 20px;
+}
+
+.inlineSpan {
+    width: 250px;
+    display: inline-block;
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.glmt-cj-content .inlineSpan {
+    width: 240px;
+}
+
+.diatable .innerSpan {
+    width: 190px;
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    vertical-align: bottom;
+}
+
+.top-form input:-ms-input-placeholder {
+    color: #536b82;
+    opacity: 1;
+}
+
+.top-form input::-webkit-input-placeholder {
+    color: #536b82;
+    opacity: 1;
+}
+
+.btg {
+    display: inline-block;
+    position: absolute;
+    right: 8px;
+    width: 390px;
+}
+
+.diaglmt [name=user] {
+    padding-right: 5px;
+}
+
+.diaglmt .ane-checkbox {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 15px;
+    margin-bottom: 0;
+    margin-top: 2px !important;
+    vertical-align: baseline;
+}
+
+.diaglmt .ane-checkbox:after {
+    color: #536b82 !important;
+}
+
+.diamt_all_info {
+    color: #536b82;
+    font-size: 14px;
+    display: inline-block;
+    margin-top: 9px;
+    vertical-align: text-bottom;
+}
+
+.glmt-pagination {
+    background: #e9edf0;
+    text-align: right;
+    margin-top: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.glmt-pagination span {
+    color: #536b82;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.glmt-pagination button {
+    width: 80px;
+    height: 20px;
+    background-color: #0078d7;
+    font-size: 14px;
+    color: white;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.glmt-pagination button:hover {
+    background: #0057a1;
+}
+
+.glmt-pagination .pagi-info {
+    background-color: #e9edf0;
+    width: 40px;
+    height: 20px;
+}
+
+.glmt-pagination .disabeld {
+    cursor: not-allowed;
+    background: #d4d7d9;
+}
+
+.glmt-pagination button.disabeld:hover {
+    background: #d4d7d9;
+}
+
+.diaglmt .user_close {
+    left: 240px;
+    top: -36px;
+}
+
+.glmt-cj-content {
+    margin-top: 3px;
+    border: 1px solid #e0e7ec;
+    padding: 5px;
+}
+
+.glmt-cj-content .glmt-jj-div:first-child {
+    margin-top: 0px;
+}
+
+.jdkp-container ::-ms-clear,
+.diaglmt ::-ms-clear {
+    display: none;
+}
+
+.tjgl-modalDialog .modal-footer {
+    color: white;
+}
+
+.eva-comments {
+    position: relative;
+    height: 90px;
+    line-height: 90px;
+}
+
+.eva-comments .commentText {
+    resize: none;
+    position: absolute;
+    left: 45px;
+    width: 63%;
+    top: 15px;
+    height: 60px;
+    color: #536b82;
+}
+
+.eva-comments-label {
+    position: absolute;
+    left: 0px;
+    color: #536b82;
+}
+
+.commitComment {
+    line-height: 14px;
+    text-align: center;
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #0078d7;
+    color: #fff;
+    cursor: pointer;
+    top: 30px;
+    position: absolute;
+    display: inline-block;
+    left: 68%;
+}
+
+.eva-comments .commitComment:hover {
+    color: #fff;
+}
+
+.evaListBox {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: auto;
+}
+
+.evaListBox .jbxx-inline {
+    width: 25%;
+    float: left;
+    margin: 0px auto !important;
+}
+
+.jdkp-container .evaListBox .jbxx-inline span {
+    float: left;
+    text-align: left;
+    margin-right: 0px;
+    width: 60% !important;
+    min-width: auto;
+}
+
+.evaListBox .jbxx-inline .checkbox-group {
+    float: left;
+    line-height: 25px;
+}
+
+.evaListBox .jbxx-inline span {
+    line-height: 30px;
+}
+
+.alreadyKP .alreadyEvaList {
+    width: 100%;
+    color: #536b82;
+    height: 60%;
+    overflow: auto;
+    margin-left: 40px;
+    margin-bottom: 10px;
+}
+
+.alreadyKP .alreadyEvaList span {
+    width: 24%;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    text-align: left;
+    font-size: 14px;
+    color: #536b82;
+    overflow: auto;
+    margin-right: 8px;
+}
+
+.alreadyComment {
+    color: #536b82;
+    overflow: auto;
+    margin-left: 40px;
+    margin-top: -20px;
+}
+
+.alreadyComment .commentLabel {
+    margin-right: 10px;
+    color: #536b82;
+}
+
+.confirmVm_dialog {
+    color: #536b82;
+}
+
+.noneEvaList {
+    margin-bottom: 10px;
+}
+
+.confirmVm_dialog .modal-header {
+    height: 50px;
+    line-height: 50px;
+    background-color: #0078D7;
+    color: #fff;
+    border-color: #0078D7;
+}
+
+.confirmVm_dialog .modal-body {
+    text-align: center;
+}
+
+.confirmVm_dialog .modal-footer {
+    border-top: 0px;
+    padding: 0px 0px 15px 0px;
+    text-align: center;
+}
+
+.confirmVm_dialog .modal-dialog .modal-footer a {
+    line-height: 15px;
+}
+
+.confirmVm_dialog .modal-footer button,
+.confirmVm_dialog .initFooter a {
+    width: 120px;
+    height: 30px;
+    background-color: #0078D7;
+    color: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    border: 1px solid #0078D7;
+    line-height: 10px;
+    margin-left: 15px;
+}
+
+.confirmVm_dialog .modal-footer .btn+.btn {
+    margin-left: 15px;
+}
+
+.confirmVm_dialog .modal-body .bootbox-body {
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 16px;
+}
+
+.jbxx-inline>.checkbox-group {
+    width: 105px;
+}
+
+.jbxx-inline>.checkbox-group>div {
+    width: 52px;
+}
+
+.jbxx-inline>.checkbox-group>div {
+    display: inline-block;
+    color: #536b82;
+}
+
+.jdkp-container .glmt-jj-div .firtmtinfoQjzb {
+    padding-left: 0px;
+}
+
+.eva-comments .commentText::-webkit-input-placeholder {
+    color: #536b82 !important;
+}
+
+.eva-comments .commentText::-moz-placeholder {
+    color: #536b82 !important;
+}
+
+.eva-comments .commentText:-moz-placeholder {
+    color: #536b82 !important;
+}
+
+.eva-comments .commentText:-ms-input-placeholder {
+    color: #536b82 !important;
+}
+
+.jdkp-container .commonSpan {
+    display: inline-block;
+    margin-left: -75px;
+    padding-left: 75px;
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+    vertical-align: middle;
+    margin-right: 13px;
+    margin-top: -5px;
+}
+
+.jdkp-container .jbxx-inline b {
+    height: 25px;
+    line-height: 25px;
+    display: inline-block;
+}
+
+.jdkp-container .ddxcsj {
+    margin-left: -100px;
+    padding-left: 100px;
+}
+
+.jdkp-container .commonSpan div {
+    /* cursor: pointer; */
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    width: 100%;
+}
+
+.jdkp-container .evaListBox .jbxx-inline span {
+    float: left;
+    text-align: left;
+    margin-right: 0px;
+    width: 60% !important;
+    min-width: auto;
+}
+
+.jdkp-container .evaListBox .jbxx-inline span {
+    float: left;
+    text-align: left;
+    margin-right: 0px;
+    width: 60% !important;
+    min-width: auto;
+}
+
+.jdkp-container .evaListBox {
+    height: 60px;
+}
+
+.jdkp-container .selectCheck {
+    margin-left: 41%;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    position: absolute;
+    margin-top: 80px;
+    color: #536b82;
+}
+
+.jdkp-container .commitComment {
+    text-align: center;
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #0078d7;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 50px;
+    margin-left: -165px;
+    display: inline-block;
+}
+
+.jdkp-container .eva-comments {
+    margin-top: -5px;
+    overflow: auto;
+    height: 111px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.glmt-jj-divQjzb {
+    margin: 5px auto;
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    background: inherit;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #e0e7ec;
+    border-radius: 0px;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    padding-left: 15px;
+}
+
+.jdkp-container .cmspan {
+    width: 30%;
+    display: inline-block;
+}
+
+.jdkp-container .jqgl-ck-head span {
+    display: inline-block;
+    width: 80%;
+    height: 44px;
+    line-height: 44px;
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.jdkp-container .jqgl-ck-footer,
+.jdkp-container .ajgl-ck-footer {
+    height: 100%;
+    position: relative;
+    background-color: #f2f2f2;
+    left: 0px;
+    /* border-left: 1px solid #e4e4e4;
+    border-right: 1px solid #e4e4e4; */
+}
+
+.jjdkp-container .jbxx,
+.jdkp-container .cjxx {
+    position: inherit;
+    border-top: 1px solid #e4e4e4;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    padding: 10px 5px 1px 17px;
+    right: 8px;
+    left: 0px;
+}
+
+.jdkp-container .glmt-jj-divQjzb:hover {
+    background: #dff1ff;
+}

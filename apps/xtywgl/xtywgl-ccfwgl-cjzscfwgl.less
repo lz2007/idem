@@ -1,0 +1,583 @@
+.tyywglpt-cjzscfwgl{
+    width: 100%;
+    height: 100%;
+    .ywzx-ccgl-left {
+        width: 360px;
+        left: 8px;
+        height: 100%;
+        background: white;
+        .departmentTree {
+            float: left;
+            width: 100%;
+            height: 100%;
+            min-width: 243px;
+            background: #fff;
+            margin: 0 auto;
+            padding: 0 1.5%;
+            .yhgl-dataIpt {
+                width: 100%;
+                display: inline-block;
+                vertical-align: middle;
+                margin-top: 13px;
+                overflow: auto;
+                height: 98%;
+            }
+            .ywzx-fixmargin{
+                ul{
+                    li{
+                        margin-top: 10px;
+                    }
+                }
+            }
+            .ztree li span.button.chk.checkbox_true_full {
+                background: url(/static/image/sszhxt/check_selected.png?__sprite)
+                    center 0 no-repeat;
+            }
+            .ztree li span.button.chk.checkbox_true_full_focus {
+                background: url(/static/image/sszhxt/check_selected.png?__sprite)
+                    center 0 no-repeat;
+            }
+            .ztree li span.button.switch {
+                display: none;
+            }
+            .ztree li a {
+                /*max-width: 162px;
+                overflow: hidden; /*自动隐藏文字*/
+                /*text-overflow: ellipsis;/*文字隐藏后添加省略号*/
+                /*white-space: nowrap;/*强制不换行*/
+            }
+            .ztree li span.button.add {
+                background: url(/static/image/xtpzgl-yhgl/icon_addDep.png?__sprite)
+                    center center no-repeat;
+            }
+        }
+        .tyywglpt-search-box {
+            position: relative;
+            padding: 9px 8px;
+            margin-top: 0px;
+            background: #ffffff;
+            border: none;
+            .form-item label {
+                width: 40%;
+                display: inline-block;
+                margin-right: 5px;
+                text-align: right;
+                font-weight: bold;
+                vertical-align: middle;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .form-inline .form-item {
+                width: 100%;
+                display: inline-block;
+                margin-bottom: 10px;
+                margin-right: 0px;
+            }
+            .search-line-second .form-item {
+                margin-bottom: 10px;
+            }
+            .btn-query {
+                position: absolute;
+                top: auto;
+                bottom: -40px;
+                right: 110px;
+                width: 120px;
+                height: 30px;
+                margin-left: 40px;
+                background: #1055b3;
+                border-radius: 2px;
+            }
+        }
+    }
+    .ywzx-ccgl-bar {
+        margin-left: 370px;
+        position: absolute;
+        top: -7px;
+        left: 8px;
+        right: 8px;
+        .btn {
+            padding: 0;
+            color: #fff;
+            font-size: 14px;
+            border-radius: 0;
+        }
+        .btnIcon {
+            background: #1055b3;
+            text-align: left;
+            width: auto;
+            height: 30px;
+            display: inline-block;
+            cursor: pointer;
+            margin-right: 10px;
+            border-radius: 2px;
+            padding-right: 15px;
+
+            .btn-tool-ywxz {
+                width: auto;
+                height: 30px;
+                line-height: 30px;
+                vertical-align: top;
+                white-space: nowrap;
+                display: inline-block;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0;
+                color: #fff;
+                font-size: 14px;
+                border-radius: 0;
+            }
+            .icon_addUser {
+                width: 30px;
+                height: 30px;
+                float: left;
+                background: url(/static/image/xtywgl/icon_addUser.png?__sprite)
+                    center center no-repeat;
+            }
+            .icon_storageStrategy {
+                width: 30px;
+                height: 30px;
+                float: left;
+                background: url(/static/image/xtywgl/icon_storageStrategy.png?__sprite)
+                    center center no-repeat;
+            }
+            .icon_storageAllocation {
+                width: 30px;
+                height: 30px;
+                float: left;
+                background: url(/static/image/xtywgl/icon_storageAllocation.png?__sprite)
+                    center center no-repeat;
+            }
+        }
+        .disabled {
+            background: #d4d7d9;
+            opacity: 1;
+            cursor: not-allowed;
+            filter: alpha(opacity=100);
+        }
+    }
+    .tabPanel {
+        height: 48px;
+        line-height: 48px;
+        background-color: #414f5c;
+        color: #fff;
+        margin-left: 370px;
+        position: absolute;
+        top: 10px;
+        left: 8px;
+        right: 8px;
+        span {
+            display: inline-block;
+            height: 48px;
+            line-height: 48px;
+            padding: 0 20px;
+            cursor: pointer;
+        }
+        .selectTab {
+            background-color: #5e7487;
+        }
+    }
+    .tyywglpt-list-panel {
+        top: 79px;
+        margin-left: 370px;
+        li {
+            height: 34px;
+            line-height: 34px;
+        }
+        li:hover {
+            background: #b8c2cc;
+        }
+        .checklook {
+            background: url(/static/image/xtywgl/view_icon.png?__sprite)
+                no-repeat;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            margin-left: 15px;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        .modify {
+            background: url(/static/image/xtywgl/edit.png?__sprite) no-repeat;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            margin-left: 5px;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        .del {
+            background: url(/static/image/xtywgl/del.png?__sprite) no-repeat;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            margin-left: 5px;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        .tyywglpt-list-content {
+            div {
+                display: inline-block;
+                padding: 0 4px;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                border-left: 1px solid #f7f7f7;
+            }
+        }
+    }
+    .tyywglpt-list-header-wrap {
+        width: 100%;
+        height: 32px;
+        margin-top: -34px;
+        background: #e0e7ec;
+        overflow: hidden;
+        border: 1px solid #f2f2f2;
+        .tyywglpt-list-header li {
+            display: inline-block;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            background: #e0e7ec;
+            position: relative;
+            padding-left: 3px;
+            padding-right: 3px;
+            border-left: 1px solid #f2f2f2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    .bottom-tool-bar {
+        margin-left: 370px;
+        left: 8px;
+        width: auto;
+        padding-right: 15px;
+        height: 30px;
+        margin-right: 10px;
+        position: absolute;
+        text-align: left;
+        bottom: 22px;
+        margin-top: 8px;
+        background: #1055b3;
+        border-radius: 2px;
+        padding: 0px;
+        padding-right: 15px;
+        .btn-tool {
+            width: 100px;
+            height: 30px;
+            margin-top: 0px;
+            margin-right: 0px;
+            bottom: 0px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .btn-tool-ywxz {
+            width: auto;
+            height: 30px;
+            line-height: 30px;
+            vertical-align: top;
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0;
+            color: #fff;
+            font-size: 14px;
+            border-radius: 0;
+        }
+        .icon_addUser {
+            width: 30px;
+            height: 30px;
+            float: left;
+            background: url(/static/image/xtywgl/deleting.png?__sprite) center
+                center no-repeat;
+        }
+    }
+    .disabled {
+        background: #d4d7d9;
+        opacity: 1;
+        cursor: not-allowed;
+        filter: alpha(opacity=100);
+    }
+    .com-modal-modal-header {
+        background: #414f5c;
+    }
+    .commonDialog.ccfwgl {
+        .close-clear {
+            // right: 18px;
+            right: 28px;
+        }
+        .has-feedback {
+            margin-left: 0px;
+            display: inline;
+        }
+        label {
+            // width: 40%;
+            width: 34%;
+            display: inline-block;
+            margin-right: 5px;
+            text-align: right;
+            font-weight: normal;
+            vertical-align: middle;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 0px !important;
+        }
+        div.ccfwgl-row {
+            width: 100%;
+            display: block;
+            position: relative;
+            // margin-bottom: 20px;
+            color: #536b82;
+            .test-btn {
+                width: 80px;
+                height: 30px;
+                background: #1055b3;
+                border-color: #1055b3;
+                margin: 8px 0 0 8px;
+                color: #fff;
+                border-radius: 0px;
+            }
+        }
+        .test-btn-wrap {
+            //position: absolute;
+            //bottom: 10px;
+            //left: 35px;
+            text-align: center;
+        }
+        .path {
+            width: 352px;
+            .form-control {
+                width: 196px;
+                height: 30px;
+                padding: 4px 12px;
+            }
+        }
+        .warn {
+            text-indent: 4px;
+            float: left;
+            margin: 0 0 15px 0;
+            font-weight: normal;
+        }
+    }
+    .ccfwglMethodDialog.ccfwgl.commonDialog {
+        .ccfwgl-normalDay {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            height: 50px;
+            p {
+                margin: 0;
+                font-weight: bold;
+                i {
+                    color: red;
+                    display: inline-block;
+                    margin-right: 5px;
+                }
+            }
+            a {
+                margin-left: 15px;
+                font-weight: normal;
+            }
+            .modify {
+                display: inline-block;
+                width: 15px;
+                height: 20px;
+                vertical-align: middle;
+                background: url(/static/image/xtywgl/edit.png?__sprite) center
+                    center no-repeat;
+            }
+            .form-control {
+                height: 25px;
+                margin-left: 15px;
+                border: 1px solid #b8c5d3;
+                padding: 4px 20px 4px 12px;
+            }
+            .confirm {
+                padding: 0 6px;
+                margin-right: 4px;
+                background: #fff;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                height: 25px;
+                line-height: 25px;
+            }
+            .close-clear {
+                left: 69px;
+                width: 25px;
+                top: 19px;
+                right: 18px;
+            }
+            .ccfwgl-error-tips {
+                left: 210px;
+                top: 15px;
+            }
+        }
+        .ccfwgl-specialDay {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            height: 50px;
+            p {
+                margin: 0;
+                font-weight: bold;
+                i {
+                    color: red;
+                    display: inline-block;
+                    margin-right: 5px;
+                }
+            }
+            a {
+                margin-left: 15px;
+                font-weight: normal;
+            }
+            .modify {
+                display: inline-block;
+                width: 15px;
+                height: 20px;
+                vertical-align: middle;
+                background: url(/static/image/xtywgl/edit.png?__sprite) center
+                    center no-repeat;
+            }
+            .form-control {
+                height: 25px;
+                margin-left: 15px;
+                border: 1px solid #b8c5d3;
+                padding: 4px 20px 4px 12px;
+            }
+            .confirm {
+                padding: 0 6px;
+                margin-right: 4px;
+                background: #fff;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                height: 25px;
+                line-height: 25px;
+            }
+            .close-clear {
+                left: 69px;
+                width: 25px;
+                top: 19px;
+                right: 18px;
+            }
+            .ccfwgl-error-tips {
+                left: 210px;
+                top: 15px;
+            }
+        }
+        .method-pie {
+            position: absolute;
+            top: 100px;
+            left: 0;
+        }
+    }
+    .zfyCcfwglAddDialog {
+        .com-modal-modal-body{
+            padding-bottom: 20px;
+        }
+        .com-modal-modal-footer {
+            display: none;
+        }
+    }
+    .zfyCcfwglMethodDialog {
+        .ccfwglMethodDialog {
+            height: 550px;
+        }
+        .com-modal-btn-lg {
+            background: #1055b3;
+            border-color: #1055b3;
+        }
+    }
+    .ccfwglLookDialogWrap {
+        .ccfwglLookDialog {
+            .path {
+                span {
+                    padding: 0 0 0 6px;
+                    width: 50%;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    display: inline-block;
+                    margin-right: 5px;
+                    text-align: left;
+                    font-weight: normal;
+                    vertical-align: middle;
+                }
+            }
+            span {
+                padding: 0 0 0 6px;
+                width: 50%;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                display: inline-block;
+                margin-right: 5px;
+                text-align: left;
+                font-weight: bold;
+                vertical-align: middle;
+            }
+        }
+        .com-modal-btn-lg {
+            background: #1055b3;
+            border-color: #1055b3;
+        }
+    }
+    .zfyCcfwglModifyDialog {
+        .com-modal-modal-footer {
+            display: none;
+        }
+    }
+    .zfyStationAllocation {
+        .ccfwglAllocationDialog .left-wrap,
+        .ccfwglAllocationDialog .right-wrap {
+            width: 320px;
+            height: 435px;
+            border: 1px solid #b9cde2;
+            border-top: none;
+        }
+        .com-modal-modal-footer {
+            text-align: center;
+            button {
+                background: #1055b3;
+                border-color: #1055b3;
+            }
+        }
+    }
+    
+}
+.ccfwglAddDialog.ccfwgl .ccfwgl-form-tips, .ccfwglAddDialog.ccfwgl .ccfwgl-error-tips,
+.ccfwglModifyDialog.ccfwgl .ccfwgl-form-tips, .ccfwglModifyDialog.ccfwgl .ccfwgl-error-tips{
+    // left: 147px;
+    left: 128px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 194px;
+}
+.ccfwglAllocationDialog{
+    .left-wrap{
+        .left-content{
+            .search-input-wrap{
+                height: 30px;
+                padding: 0; 
+                border: 1px solid #b8c5d3;
+                border-radius: 2px;
+                input{
+                    height: 28px;
+                    line-height: 28px;
+                    border-right: 1px solid #b8c5d3;
+                }
+            }
+        }
+    }
+}
+.zfyCcfwglDeleteDialog{
+    .com-modal-modal-body{
+        padding-bottom: 0;
+    }
+}

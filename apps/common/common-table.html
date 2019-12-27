@@ -1,0 +1,44 @@
+<template>
+    <div>
+        <div class="table-saika">
+            <div class="fixed-table-saika-thead">
+                <table class="table table-hover">
+                    <thead>           
+                        <tr>               
+                            <th  :if="@needSelection">                  
+                                <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}" :class="[@isAllSelected ? '' : 'visibility']"></ms-checkbox>
+                            </th>                
+                            <th  :for="el in @columns">{{el.title}}</th>            
+                        </tr>      
+                    </thead>  
+                </table>
+            </div>
+            
+            <div class="fixed-table-saika-tbody">
+                <table class="table table-hover">
+                    <thead>           
+                        <tr>               
+                            <th :if="@needSelection" :class="['table-saika-checkbox']">                  
+                                <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}" :class="[@isAllSelected ? '' : 'visibility']"></ms-checkbox>
+                            </th>                
+                            <th :for="el in @columns" :class="el.className ? ['table-saika-'+el.className] : ''">{{el.title}}</th>            
+                        </tr>      
+                    </thead>  
+                    <tbody>        
+                        <div class="fixed-table-saika-loading" :if="@loading" attr="{display:@display}"><span class="loadingSpan">结果加载中</span></div>    
+                        <tr :for="($index, record) in @data">            
+                            <td  :if="@needSelection" :class="['table-saika-checkbox']">                  
+                                <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1,onChange:function(){@handleCheck(arguments[0].target.checked,record)}}"></ms-checkbox>               
+                            </td>             
+                            <td :for="col in @columns" :class="col.className ? ['table-saika-'+col.className] : ''" >
+                                <div class="table-cont" :attr="@isTitle && record[col.dataIndex] && (record[col.dataIndex] != '-') ? {rel:'drevil',tdval:record[col.dataIndex]}:''" :html="col.template"></div>
+                                <div :if="col.promptBox" :attr="{title:record[col.promptBox]}" class="trigon"></div>
+                            </td>        
+                        </tr>
+                        <div :if="!@data.length" class="noData">暂无数据</div> 
+                    </tbody>  
+                </table>
+            </div>
+        </div>  
+    </div>
+</template>

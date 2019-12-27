@@ -1,0 +1,565 @@
+.ajgl-ck-head {
+    height: 44px;
+    line-height: 44px;
+}
+
+.ajgl-ck-head span {
+    font-family: '微软雅黑';
+    color: #536b82;
+    font-size: 14px;
+}
+
+.ajgl-back {
+    width: 120px;
+    height: 30px;
+    background-color: #0078d7;
+    color: #fff;
+    cursor: pointer;
+    /* margin-right: 4px; */
+}
+
+.ajgl-ck-container {
+    padding: 0px 10px 0px 10px;
+}
+
+.player,
+.glmt {
+    height: 450px;
+}
+
+.ajgl-ck-mid {
+    min-width: 1130px;
+    margin-top: 8px;
+}
+
+.ajgl-ck-head button {
+    float: right;
+    line-height: 14px;
+    text-align: center;
+    margin-top: 7px;
+}
+
+c {
+    margin: 15px auto;
+}
+
+.jbxx-inline {
+    margin: 15px auto;
+}
+
+.jbxx,
+.cjxx {
+    background: #f2f2f2
+}
+
+.jbxx-btn,
+.gl_zfy_data {
+    width: 130px;
+    height: 30px;
+    background: #0078d7;
+    text-align: center;
+    color: white;
+    border: none;
+    margin-right: 10px;
+}
+
+.cjxx-btn,
+.gl_sxt_data {
+    width: 130px;
+    height: 30px;
+    background: #c5E4ff;
+    text-align: center;
+    color: white;
+    border: none;
+    margin-right: 10px;
+}
+
+.gl_zfy_data:hover,
+.gl_sxt_data:hover {
+    background: #0057a1;
+}
+
+.glmt-title {
+    height: 43px;
+    background: #096EC6;
+    color: white;
+    line-height: 43px;
+    /* padding: 0px; */
+    padding-left: 10px;
+    margin-bottom: 3px;
+}
+
+.glmt_cj_new {
+    width: 80px;
+    height: 30px;
+    margin-right: 4px;
+    background: #007CE1;
+    text-align: center;
+    color: white;
+    border: none;
+}
+
+.click_btn {
+    background: #007CE1;
+}
+
+.nClick_btn {
+    background: #c5E4ff;
+}
+
+.glmt_jj_new {
+    width: 80px;
+    height: 30px;
+    margin-right: 4px;
+    background: #dff1ff;
+    text-align: center;
+    color: #7fb4e1;
+    border: none;
+}
+
+.glmt_cj_new:hover,
+.glmt_jj_new:hover {
+    background: #007CE1;
+}
+
+.glmt-jj-div {
+    margin: 3px auto;
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+    background: inherit;
+    background-color: rgba(255, 255, 255, 1);
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(204, 204, 204, 1);
+    border-radius: 0px;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.glmt-jj-inline {
+    font-size: 12px;
+    font-family: '微软雅黑';
+    margin-top: 3px;
+    color: #536b82;
+}
+
+.jj-inline-div {
+    margin: 2px 0px 2px 47px;
+}
+
+.glmt-jj-content,
+.glmt-cj-content {
+    height: 340px;
+    overflow: auto;
+    margin-top: 3px;
+    border: 1px solid #e0e7ec;
+    padding: 5px;
+}
+
+.deletegl,
+.addgl {
+    width: 80px;
+    height: 22px;
+    float: right;
+    color: white;
+    text-align: center;
+    border: none;
+    margin-left: 10px;
+    background: #077BE0
+}
+
+.tjgl_form_inline label {
+    font-size: 14px;
+    font-weight: 200;
+}
+
+#ajgl_playControll,
+#ajgl_playControll_dia {
+    background: #000000;
+    text-align: center;
+}
+
+.ajgl-ck-footer {
+    padding: 0px 15px 0px 15px;
+}
+
+.gl-zfy .tjgl_form_inline {
+    display: inline-block;
+    width: 260px;
+}
+
+.gl-sxt .tjgl_form_inline .form-control {
+    display: inline-block;
+    width: 174px !important;
+    vertical-align: middle;
+}
+
+.ajgl-tjgl-modalDialog {
+    width: 1320px !important;
+    z-index: 999999;
+}
+
+.ajgl-tjglClass {
+    width: 1100px;
+}
+
+.tjgl_firstline {
+    margin-bottom: 6px;
+}
+
+.tjgl_bm {
+    margin-left: 29px;
+}
+
+.tjgl-table table,
+.gl-sxt-table table {
+    border: 1px solid #DFE6EC;
+}
+
+.tjgl-table table thead th,
+.gl-sxt-table table thead th {
+    font-size: 14px;
+    text-align: center;
+    font-weight: 200;
+    border-bottom: 1px solid #DFE6EC;
+    border-left: 1px solid #DFE6EC;
+}
+
+.tjgl-table table tbody tr td,
+.gl-sxt-table table tbody tr td {
+    text-align: center;
+    border-bottom: 1px solid #DFE6EC;
+    border-left: 1px solid #DFE6EC;
+    font-size: 13px;
+}
+
+.tjgl_search {
+    width: 120px;
+    height: 30px;
+    background: #fd8702;
+    text-align: center;
+    float: right;
+    position: absolute;
+    top: 58px;
+    right: 8px;
+    color: white;
+}
+
+.tjgl_search:hover {
+    background: #db7400;
+}
+
+.jbxx,
+.cjxx {
+    padding: 10px 5px 1px 10px;
+}
+
+.glmt-img {
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.glmt-checkbox {
+    vertical-align: sub;
+    margin-left: 24px !important;
+}
+
+.checkAllBox {
+    vertical-align: sub;
+}
+
+.gl-ctrl {
+    margin-bottom: 10px;
+}
+
+.gl-sxt .ane-datepicker {
+    display: inline-block;
+    width: 178px;
+}
+
+.gl-sxt .tjgl_firstline .tjgl_form_inline {
+    display: inline-block;
+    width: 284px;
+}
+
+.special-span {
+    margin-left: 42px;
+}
+
+.tjgl_fjh {
+    margin-left: 57px;
+}
+
+.xyrxm label {
+    margin-left: 27px;
+}
+
+.playFile {
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.gl-zfy .tjgl_form_inline .has-feedback {
+    vertical-align: middle !important;
+}
+
+.gl-zfy .tjgl_form_inline .form-control {
+    width: 194px !important;
+}
+
+.gl-sxt .tjgl_form_inline .form-group {
+    margin-bottom: 0px;
+}
+
+.ajgl-ck-mid .col-md-7 {
+    width: 57.333333%;
+}
+
+.ajgl-ck-mid .col-md-5 {
+    width: 42.2001%;
+}
+
+.glmt-checkbox {
+    margin-left: 22px;
+}
+
+.zkCtrl {
+    float: right;
+    margin-right: 15px;
+    margin-top: -10px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.mtsecondpart {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.mtsecondpart .jj-inline-div span {}
+
+.firtmtinfo {
+    margin-top: 9px !important;
+    margin-bottom: 9px;
+}
+
+.TJGLDIA .col-md-6 {
+    width: 50%;
+    padding: 0px 8px 0px 0px;
+    float: left !important;
+}
+
+.TJGLDIA .col-md-5 {
+    width: 50%;
+    padding: 0px;
+    /* min-width: 651px; */
+    position: absolute;
+    right: 8px;
+}
+
+.TJGLDIA .form-control {
+    display: inline-block;
+    height: 28px;
+}
+
+.bjsj_aj_dia {
+    margin-left: 20px;
+    vertical-align: top;
+    margin-top: 3px;
+    display: inline-block;
+}
+
+.diatimeover .has-feedback {
+    display: inline-block;
+}
+
+.diaglmt .inline-component {
+    margin-right: 0px;
+}
+
+.diatimeover {
+    /* width: 375px; */
+    margin-left: 7px;
+    position: absolute;
+    top: 39px;
+    top: 42px\9;
+    left: 278px;
+}
+
+.diatimeover span {
+    float: left;
+}
+
+.diatimeover .ane-datepicker {
+    display: inline-block;
+    float: left;
+}
+
+.diaglmt .inline-component .form-control {
+    line-height: 1.02;
+}
+
+.diaglmt .top-form-inline {
+    margin: 5px 0px 0px 0px;
+}
+
+.diaglmt .form-group {
+    margin-bottom: 5px;
+}
+
+.diatable .glmt-jj-div {
+    height: 80px;
+    position: relative;
+    cursor: pointer;
+}
+
+.diatable .glmt-jj-div:first-child {
+    margin-top: 0px;
+}
+
+.diatable .glmt-jj-div:hover {
+    background: #dff1ff;
+}
+
+;
+.clickMT,
+.clickMTCK {
+    background: #dff1ff;
+}
+
+.diatable .jj-inline-div {
+    margin: 15px 0px 3px 23px;
+}
+
+.dia-glmt-checkbox {
+    position: absolute;
+    right: 33px;
+    top: 29px;
+}
+
+.diatable {
+    height: 348px;
+    overflow: hidden;
+    border: 1px solid #e0e7ec;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
+
+.tjglClass .btn {
+    width: 120px;
+    height: 30px;
+    background: #0078d7;
+    line-height: 1.02;
+    color: white;
+}
+
+.tjglClass .btn:hover {
+    background: #0057a1;
+}
+
+.tjglClass .modal-footer {
+    padding: 8px
+}
+
+.tjglClass .modal-body {
+    padding: 8px 8px 0px 8px !important;
+}
+
+.ajgl-ck-container,
+.jqgl-ck-container,
+.ajgl-ck-footer,
+.jqgl-ck-footer {
+    padding: 0px
+}
+
+.ajgl-ck-mid .col-md-7,
+.ajgl-ck-mid .col-md-5 {
+    padding: 0px
+}
+
+.speaiclSpan {
+    width: 51px;
+    display: inline-block;
+}
+
+.inlineSpan {
+    width: 270px;
+    display: inline-block;
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.palyerImg_dia,
+.palyerImg {
+    width: 100%;
+    height: 450px;
+    display: none;
+}
+
+.glmt {
+    margin-left: 8px;
+}
+
+.download {
+    width: 120px;
+    height: 30px;
+    float: right;
+    color: white;
+    text-align: center;
+    border: none;
+    margin-left: 10px;
+    background: #0078d7;
+}
+
+.download:hover {
+    background: #0057a1;
+}
+
+.disabled[disabled] {
+    background: #d4d7d9;
+    /* color: #0078d7; */
+}
+
+.disabled[disabled]:hover {
+    background: #d4d7d9
+}
+.glmt-new .glmt-cj-content{
+    height: 383px !important;
+}
+.glmt-jj-div-new{
+    border: 0px !important;
+  
+}
+.mtsecondpart-new{
+    margin: 0px !important;
+}
+.firtmtinfo-new{
+    margin: 0px !important;
+    padding: 3px 10px;
+    background: rgb(217, 238, 255) !important;
+}
+.firtmtinfo-new-co{
+    display: inline-block;
+    width: 45%;
+    padding: 3px;
+}
+.cmspan-new{
+    margin: 0px 0px 3px 30px;
+    /* display: inherit; */
+    display: inline-block;
+    width: 25%;
+}
+.glmt-jj-div-new:hover{
+    background: none !important;
+}
+.glmt-jj-content .zkCtrl{
+    margin-top: -3px;
+}

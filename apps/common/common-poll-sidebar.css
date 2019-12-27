@@ -1,0 +1,240 @@
+.sszh-side-bar {
+    float: left;
+    width: 260px;
+    height: 100%;
+    font-family: "Microsoft YaHei", serif;
+    border: 1px solid #d6dce1;
+    position: relative;
+}
+
+.sszh-side-bar .side-bar-title {
+    margin: 0;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    color: #536b82;
+    text-align: center;
+    border-bottom: 1px solid #d6dce1;
+    background-color: #eff4f8;
+}
+
+.sszh-side-bar .side-bar-title li {
+    display: inline-block;
+    width: 33%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.sszh-side-bar .side-bar-title li:hover,
+.sszh-side-bar .side-bar-title .active {
+    color: #0078d7;
+}
+
+.sszh-side-bar .side-bar-title .active {
+    border-bottom: 3px solid #0078d7;
+}
+
+.sszh-side-bar .side-bar-main {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    font-size: 14px;
+    padding: 5px;
+}
+
+.sszh-side-bar .input-group {
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.sszh-side-bar .input-group .fa-close {
+    position: absolute;
+    color: #536b82;
+    font-size: 16px;
+    right: 38px;
+    top: 6px;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.sszh-side-bar button {
+    width: 30px;
+    height: 30px;
+    padding: 5px 10px;
+    background: #fff url(/static/image/sszhxt/sidebar-search.png?__sprite) center center no-repeat;
+    border: 1px solid #ccc;
+}
+
+.sszh-side-bar button:focus {
+    outline: none;
+}
+
+.sszh-side-bar .input-group input {
+    height: 28px;
+    line-height: 30px;
+    color: #000;
+    padding: 0;
+    border: none;
+}
+
+.sszh-side-bar .input-group.input-tip input {
+    font-size: 12px;
+    color: #ccc;
+}
+
+.sszh-side-bar .input-group.input-error input {
+    font-size: 12px;
+    color: #d8a09f;
+}
+
+.sszh-side-bar .has-icon-input-wrap {
+    width: 100%;
+    display: inline-block;
+    padding-left: 12px;
+    padding-right: 20px;
+    margin-right: -1px;
+    border: 1px solid #d1d0d0;
+    border-radius: 4px;
+    border-right: none;
+    vertical-align: middle;
+}
+
+.sszh-side-bar .input-group.input-error .has-icon-input-wrap {
+    background: #fff;
+    border: 1px solid #d2403d;
+}
+
+.sszh-side-bar .input-group.input-error button {
+    border-left: 1px solid #d2403d;
+}
+
+.sszh-side-bar .ztree-container {
+    width: 100%;
+    height: 90%;
+    overflow: auto;
+}
+
+.sszh-side-bar .ztree-container .ztree {
+    padding-bottom: 20px;
+}
+
+.sszh-side-bar .ztree li span.button.ico_close {
+    margin-right: 2px;
+    background: url(../../static/image/sszhxt/org.png) no-repeat scroll;
+    vertical-align: top;
+}
+
+.sszh-side-bar .ztree li span.button.ico_open {
+    margin-right: 2px;
+    background: url(../../static/image/sszhxt/org.png) no-repeat scroll;
+    vertical-align: top;
+}
+
+.sszh-side-bar .ztree li span.button.chk.checkbox_true_full {
+    background: url(/static/image/sszhxt/check_selected.png?__sprite) center 0 no-repeat;
+}
+
+.sszh-side-bar .ztree li span.button.chk.checkbox_true_full_focus {
+    background: url(/static/image/sszhxt/check_selected.png?__sprite) center 0 no-repeat;
+}
+
+.sszh-side-bar .ztree li span.button.chk.checkbox_false_full {
+    background: url(/static/image/sszhxt/check_unselected.png?__sprite) center center no-repeat;
+}
+
+.sszh-side-bar .ztree li span.button.chk.checkbox_false_full_focus {
+    background: url(/static/image/sszhxt/check_unselected.png?__sprite) center center no-repeat;
+}
+
+.sszh-side-bar .ztree li span.button.chk.checkbox_false_disable {
+    opacity: .5;
+    filter: alpha(opacity=50);
+    background: url(/static/image/sszhxt/check_unselected.png?__sprite) center center no-repeat;
+}
+
+.sszh-side-bar .recent-look {
+    font-size: 12px;
+}
+
+.sszh-side-bar .recent-look .recent-item {
+    width: 100%;
+    height: 100%;
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+    padding-left: 24px;
+    cursor: pointer;
+}
+
+.sszh-side-bar .recent-look .list-null {
+    color: #3c3c3c;
+    text-align: center;
+    padding-left: 0;
+}
+
+.sszh-side-bar .recent-look .name,
+.sszh-side-bar .recent-look .time {
+    float: left;
+    text-align: left;
+}
+
+.sszh-side-bar .recent-look .name {
+    width: 102px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #3c3c3c;
+    margin-right: 2px;
+}
+
+.sszh-side-bar .recent-look .time {
+    color: #999;
+}
+
+.sszh-side-bar .recent-look .person.isonline {
+    background: url(/static/image/sszhxt/person.png?__sprite) 0 2px no-repeat;
+}
+
+.sszh-side-bar .recent-look .person.isoffline {
+    background: url(/static/image/sszhxt/person_offline.png?__sprite) 0 2px no-repeat;
+}
+
+.sszh-side-bar .recent-look .device.isonline {
+    background: url(/static/image/sszhxt/device.png?__sprite) 0 2px no-repeat;
+}
+
+.sszh-side-bar .recent-look .device.isoffline {
+    background: url(/static/image/sszhxt/device_offline.png?__sprite) 0 2px no-repeat;
+}
+
+.sszh-side-bar .recent-look .active {
+    background-color: #e8eff5 !important;
+}
+
+.sszh-side-bar .recent-look .device:hover {
+    background-color: #e8eff5;
+}
+
+.sszh-side-bar .recent-look .device.isoffline:hover {
+    background-color: #fff;
+    cursor: not-allowed;
+}
+
+.sszh-side-bar .recent-look .person:hover {
+    cursor: not-allowed;
+}
+
+.sszh-side-bar .recent-look .person-device-list {
+    padding-left: 20px;
+}
+
+.sszh-side-bar .recent-look .person-device-list li {
+    padding-left: 50px;
+    height: 24px;
+    line-height: 24px;
+    color: #3c3c3c;
+    cursor: pointer;
+    text-align: left;
+}

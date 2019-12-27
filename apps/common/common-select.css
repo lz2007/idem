@@ -1,0 +1,6 @@
+.common-input-inner .ane-select.form-control{
+    height: 100% !important;
+}
+.common-input-inner .ane-select-selection .ane-select-selected{
+    top: 3px;
+}

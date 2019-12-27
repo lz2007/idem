@@ -1,0 +1,135 @@
+.kp-content {
+    border: 1px solid #e4e4e4;
+    background: white;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.hccl {
+    position: absolute;
+    right: 8px;
+    left: 0px;
+    padding: 10px 5px;
+    background: #f2f2f2;
+    border: 1px solid #e4e4e4;
+    max-height: 260px;
+    overflow: auto;
+}
+
+.hccl-dialog .modal-header {
+    background-color: #096ec6;
+    color: white;
+}
+
+.hccl-form {
+    margin: 25px 0px;
+    color: #536b82;
+}
+
+.hcclClass {
+    height: auto !important;
+}
+
+.deletepoint {
+    width: 200px;
+    display: inline-block;
+}
+
+.hccl-form textarea {
+    display: block;
+    border: 1px solid #e4e4e4;
+    width: 100%;
+    resize: none;
+}
+
+.hccl-dialog .modal-footer .btn:hover {
+    background: #0057a1;
+}
+
+.hccl-dialog .modal-footer {
+    text-align: center;
+}
+
+.hccl-dialog .modal-footer .btn {
+    background-color: #0078d7;
+    color: white;
+    line-height: 14px;
+}
+
+.hccl-dialog .modal-footer button {
+    border-radius: 0px;
+    width: 80px;
+    height: 30px;
+    margin: 0 10px;
+}
+
+.ckkp-container {
+    /* overflow: hidden; */
+}
+
+.kp-content:hover {
+    background: rgb(223, 241, 255);
+}
+
+.hccl-btn {
+    width: 100px;
+    text-align: center;
+    color: white;
+    height: 20px;
+    background: rgb(0, 204, 0);
+    margin-top: 15px;
+}
+
+.hccl-btn:hover {
+    background: rgb(0, 153, 0)
+}
+
+.kp-content>label {
+    color: #536b82;
+}
+
+.mtxx .jbxx-inline>span {
+    min-width: 200px;
+}
+
+.hccl>label {
+    color: #536b82;
+}
+
+.block {
+    display: block;
+}
+
+.red-word {
+    color: red;
+}
+
+.hccl-form .red-word {
+    margin-left: 35px;
+    font-weight: normal;
+}
+
+.hccl-form [type=radio] {
+    vertical-align: -2px;
+}
+
+.hccl-btn[disabled] {
+    background: rgb(212, 215, 217)
+}
+
+.hccl-btn[disabled]:hover {
+    background: rgb(212, 215, 217)
+}
+
+.gxx_player_controll .btn_fullScreen {
+    width: 31px;
+    height: 31px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.jqkp-cjxx .jbxx-inline>span,
+.jqkp-cjxx .cjxx-line>span {
+    width: 20% !important;
+}

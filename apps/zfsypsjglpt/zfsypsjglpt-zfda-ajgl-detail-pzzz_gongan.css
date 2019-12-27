@@ -1,0 +1,59 @@
+.zfda-ajgl-pzzz {
+    width: 100%;
+    height: 100%;
+    padding: 0 8px;
+}
+
+.zfda-ajgl-pzzz .pzzz-menu {
+    height: 44px;
+    width: 100%;
+}
+
+.zfda-ajgl-pzzz .pzzz-menu-border {
+    width: 100%;
+    height: 1px;
+    margin: 0px auto;
+    padding: 0px;
+    background-color: #0078d7;
+}
+
+.zfda-ajgl-pzzz .pzzz-content {
+    /* height: 100%;
+    margin-top: 45px; */
+}
+
+.zfda-ajgl-pzzz .menu-li {
+    list-style: none;
+    text-align: left;
+    margin-top: 7px;
+    width: 400px;
+}
+
+.zfda-ajgl-pzzz .menu-li li {
+    display: inline-block;
+    width: 120px;
+    margin-right: 10px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #C5E4FF;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.zfda-ajgl-pzzz .pzzz-return {
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    float: right;
+    margin-top: -30px;
+}
+
+.zfda-ajgl-pzzz .pzzz-active {
+    background-color: #0078d7 !important;
+}
+
+.menu-li li:hover {
+    background: #0078d7;
+}

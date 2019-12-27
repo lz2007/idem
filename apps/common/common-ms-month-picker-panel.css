@@ -1,0 +1,10 @@
+.ms-month-panel .double_right_disabled_class,
+.ms-month-panel .isDisabled_class .ane-calendar-date {
+    cursor: not-allowed !important;
+}
+
+.ms-month-panel .isDisabled_class .ane-calendar-date,
+.ms-month-panel .isDisabled_class .ane-calendar-date:hover {
+    background-color: #eee;
+    color: #b3b3b3;
+}

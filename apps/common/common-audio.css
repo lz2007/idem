@@ -1,0 +1,133 @@
+.audio_player {
+    width: 100%;
+    height: 32px;
+    position: absolute;
+    bottom: 0;
+    background-color: #fff;
+}
+
+.h5_audio {
+    width: 100%;
+    height: 100%;
+}
+
+.ie_player {
+    width: 100%;
+    height: 32px;
+}
+
+.audio_player .audio_panel .play_btn,
+.audio_player .audio_panel .pause_btn,
+.audio_player .audio_panel .voice,
+.audio_player .audio_panel .mute {
+    cursor: pointer;
+    display: block;
+    width: 32px;
+    height: 32px;
+    float: left;
+}
+
+.audio_player .audio_panel .play_btn {
+    background: url(/static/image/zfsypsjglpt/play.png?__sprite) no-repeat;
+}
+
+.audio_player .audio_panel .pause_btn {
+    background: url(/static/image/zfsypsjglpt/pause.png?__sprite) no-repeat;
+}
+
+.audio_player .audio_panel .voice {
+    background: url(/static/image/zfsypsjglpt/voice.png?__sprite) no-repeat;
+}
+
+.audio_player .audio_panel .mute {
+    background: url(/static/image/zfsypsjglpt/mute.png?__sprite) no-repeat;
+}
+
+.audio_player .audio_panel .time_panel {
+    width: 90px;
+    height: 32px;
+    line-height: 32px;
+    float: left;
+}
+
+.audio_player .audio_panel .time_panel .slash_time {
+    margin: 0 3px;
+}
+
+.audio_player .audio_panel .progress_bar {
+    height: 32px;
+    margin-left: 10px;
+    float: left;
+    position: relative;
+}
+
+.audio_player .audio_panel .p_white_line {
+    width: 100%;
+    height: 2px;
+    margin: 15px 0;
+    background-color: #dadada;
+    position: absolute;
+    z-index: 1;
+}
+
+.audio_player .audio_panel .p_white_line {
+    width: 100%;
+    height: 2px;
+    margin: 15px 0;
+    background-color: #dadada;
+    position: absolute;
+    z-index: 1;
+}
+
+.audio_player .audio_panel .p_blue_line {
+    height: 2px;
+    margin: 15px 0;
+    background-color: #4285f4;
+    position: absolute;
+    z-index: 2;
+}
+
+.audio_player .audio_panel .volume_control {
+    width: 145px;
+    height: 32px;
+    float: right;
+}
+
+.audio_player .audio_panel .volume_control .volume_progress {
+    width: 100px;
+    height: 32px;
+    margin-left: 10px;
+    float: left;
+    position: relative;
+}
+
+.audio_player .audio_panel .volume_control .v_white_line {
+    width: 95px;
+    height: 2px;
+    margin: 15px 0;
+    background-color: #dadada;
+    position: absolute;
+    z-index: 1;
+}
+
+.audio_player .audio_panel .volume_control .v_blue_line {
+    width: 42px;
+    height: 2px;
+    margin: 15px 0;
+    background-color: #4285f4;
+    position: absolute;
+    z-index: 2;
+}
+
+.audio_player .audio_panel .circle_span {
+    cursor: pointer;
+    color: #4285f4;
+    position: absolute;
+    top: 9px;
+    left: -6px;
+    z-index: 2;
+}
+
+.audio_player .audio_panel .volume_progress .circle_span {
+    left: 42px;
+}

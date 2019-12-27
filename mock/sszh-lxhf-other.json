@@ -1,0 +1,23 @@
+{
+    "code": 0,
+    "msg": "成功！",
+    "data": [
+        {
+            "fileId": "F_11000000_1512731199_83D4477711A94FCE9A3AAAE42A08CAB1",
+            "wsFileURL": "http://10.10.18.19:8080/2017-12-08/chenying1208_7CF2992E126146BAA191A78375EC6B24/chenying1208@2017-12-07_14-09-44.mp4",
+            "wsTransFileURL": null,
+            "storageFileURL": null,
+            "storageTransFileURL": null,
+            "thumbnail": "/9j/4AAQSkZJRgABAgAAAQABAAD//gAQTGF2YzU1LjM1LjEwMAD/2wBDAAgODhAOEBMTExMTExYVFhcXFxYWFhYXFxcZGRkdHR0ZGRkXFxkZHBwdHSAhIB4",
+            "ocxvideoInfo": {
+                "ip": "10.10.9.47",
+                "port": 10086,
+                "account": "admin",
+                "password": "admin",
+                "playUrl": "local:///2017-12-08/chenying1208_7CF2992E126146BAA191A78375EC6B24/chenying1208@2017-12-07_14-09-44.mp4",
+                "startTime": 1512626984000,
+                "endTime": 1512627254000
+            }
+        }
+    ]
+}

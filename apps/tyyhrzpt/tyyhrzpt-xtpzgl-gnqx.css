@@ -1,0 +1,345 @@
+.tyyhrzpt_jsgl {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    height: 100%;
+}
+
+/* header begins*/
+
+.operationHbox {
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    color: #fff;
+    background-color: #f3f5f7;
+    margin: 8px 0px;
+    border: 1px solid #E4e4e4;
+}
+
+/* 给li设置cursor:pointer不生效 */
+
+.operationHbox ul li {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    margin: 0 10px;
+    background-color: #1c9bff;
+    text-align: center;
+}
+
+.operationHbox ul li label {
+    font-weight: normal;
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+
+.operationHbox ul li:hover {
+    background-color: #107dda;
+}
+
+.operationHbox .jsMenuBg {
+    background-color: #D4D7D9 !important;
+    cursor: not-allowed;
+}
+
+.operationHbox .jsMenuBg label {
+    cursor: not-allowed;
+}
+
+/* header ends*/
+
+/* contents begins*/
+
+.contentBox {
+    width: 100%;
+    background: #f7f7f7;
+    position: absolute;
+    top: 68px;
+    bottom: 8px;
+    border: 1px solid #D7D7D7;
+}
+
+.roleLists {
+    width: 220px;
+    display: inline-block;
+    border-right: 1px solid #D7D7D7;
+    height: 100%;
+    background: #ffffff;
+    text-align: center;
+    float: left;
+    box-sizing: border-box;
+    position: relative;
+    padding-top: 35px;
+}
+
+.roleLists .common_header {
+    height: 35px;
+    line-height: 35px;
+    background: #E4E4E4;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+}
+
+.roleLists .roleLists_body li {
+    height: 38px;
+    line-height: 38px;
+    cursor: pointer;
+}
+
+.roleLists_body {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.roleLists .roleLists_body span:hover {
+    background: #1c9bff;
+    color: #ffffff;
+}
+
+.authority_tree_box {
+    margin-left: 220px;
+    height: 100%;
+    position: relative;
+    margin-top: -1px;
+    padding-top: 35px;
+}
+
+.authority_tree_box #authority_tree {
+    margin-left: 10px;
+    overflow-y: auto;
+    height: 100%;
+}
+
+#authority_tree .ztree span {
+    color: #536b82;
+}
+
+#authority_tree .ztree li span.button.chk.checkbox_true_disable,
+#authority_tree .ztree li span.button.chk.checkbox_true_part,
+#authority_tree .ztree li span.button.chk.checkbox_true_part_focus {
+    background: url(/static/image/sszhxt/check_selected.png?__sprite) center -22px no-repeat;
+}
+
+#authority_tree .ztree li span.button.chk.checkbox_true_full,
+#authority_tree .ztree li span.button.chk.checkbox_true_full_focus {
+    background: url(/static/image/sszhxt/check_selected.png?__sprite) center 0 no-repeat;
+}
+
+#authority_tree .ztree li span.button.chk.checkbox_false_full,
+#authority_tree .ztree li span.button.chk.checkbox_false_full_focus {
+    width: 14px;
+    height: 14px;
+    background: url(/static/image/sszhxt/check_unselected.png?__sprite) center center no-repeat;
+}
+
+#authority_tree .ztree li span.button.chk.checkbox_false_disable {
+    opacity: .5;
+    filter: alpha(opacity=50);
+    background: url(/static/image/sszhxt/check_unselected.png?__sprite) center center no-repeat;
+}
+
+.authority_tree_box .common_header {
+    left: 0px;
+    right: 0px;
+    height: 35px;
+    line-height: 35px;
+    background: #E4E4E4;
+    position: absolute;
+    top: 1px;
+}
+
+.roleLists_body li .item_select {
+    background: #1c9bff;
+    color: #ffffff;
+}
+
+.roleLists_body li span {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    color: #536b82;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+/* contents ends */
+
+.add_edit_dialog .common_input {
+    width: 100%;
+    height: 34px;
+    position: relative;
+    margin-top: 17px;
+    padding-left: 17px;
+}
+
+.add_edit_dialog .red_start {
+    width: 6px;
+    display: inline-block;
+    color: red;
+}
+
+.add_edit_dialog .common_input input {
+    width: 91%;
+    float: left;
+    display: block;
+    height: 34px;
+    line-height: 34px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #536b82;
+    border-radius: 2px;
+    border: none;
+}
+
+.add_edit_dialog .common_input input:focus {
+    outline: 0;
+}
+
+.add_edit_dialog .modal-body {
+    padding-bottom: 23px;
+}
+
+.add_edit_dialog .common_input .has-error {
+    border-color: #d2403d !important;
+}
+
+.add_edit_dialog .common_input label {
+    width: 21%;
+    padding-top: 6px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.add_edit_dialog .roleNameTips {
+    height: 20px;
+    line-height: 20px;
+}
+
+.add_edit_dialog .roleNameTips {
+    padding-left: 75px;
+}
+
+.add_edit_dialog .roleNameTips span i {
+    font-size: 12px;
+}
+
+.add_edit_dialog .jsgl_tip {
+    color: #aaa;
+}
+
+.add_edit_dialog .jsgl_null_tip {
+    color: #d2403d;
+}
+
+.add_edit_dialog .jsgl_change_padding {
+    /* padding-right: 30px !important; */
+}
+
+.add_edit_dialog .roleNameSpan {
+    font-size: 12px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    float: left;
+    height: 20px;
+    padding-left: 26px;
+}
+
+.add_edit_dialog .roleNameSpan i {
+    font-style: normal;
+    float: left;
+}
+
+.add_edit_dialog .roleNameSpan .fa-exclamation-circle {
+    font-size: 12px;
+    padding-top: 6px;
+}
+
+.add_edit_dialog .jsgl_right_close {
+    position: absolute;
+    right: 0px;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    line-height: 26px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 2;
+    font-size: 16px;
+    color: #536b82;
+    top: 2px;
+}
+
+.deleteRole_dialog .modal-body {
+    text-align: center;
+}
+
+.common_dialog {
+    color: #536b82;
+}
+
+
+
+.common_dialog .modal-footer {
+    border-top: 0px;
+    padding: 0px 15px 15px 15px;
+}
+
+.common_dialog .modal-footer button,
+.authority_dialog .modal-footer a {
+    width: 80px;
+    height: 30px;
+    background-color: #1055b3;
+    color: #fff;
+    border-radius: 2px;
+    display: inline-block;
+    border: 1px solid #1055b3;
+    line-height: 10px;
+}
+
+.common_dialog .modal-dialog .modal-footer button {
+    margin-left: 20px;
+}
+
+.authority_dialog .modal-body {
+    text-align: center;
+    font-size: 16px;
+    padding: 31px 24px 31px 24px;
+}
+
+.authority_dialog .modal-footer {
+    padding: 0px 24px 15px 24px;
+    text-align: center;
+}
+
+.authority_dialog .modal-footer a {
+    line-height: 16px;
+}
+
+.common_dialog .modal-footer button:hover {
+    background-color: #0057a1;
+}
+
+/* 屏蔽输入框默认的x */
+
+.add_edit_dialog input::-ms-clear {
+    display: none;
+}
+
+.gnqx_input_panel {
+    color: #536b82;
+    border: 1px solid #ccc;
+    display: inline-block;
+    width: 72%;
+    margin-top: 6px;
+    position: absolute;
+    top: -8px;
+    border-radius: 4px;
+    background-color: #fff;
+    padding-left: 12px;
+}

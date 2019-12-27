@@ -1,0 +1,43 @@
+.sgcl-container .top-form-inline .form-control {
+  width: 180px;
+  margin-left: 5px;
+  height: 28px;
+  line-height: 1.028571;
+}
+
+.sgcl-container .top-form-inline>label,
+.sgcl-container .top-form-inline>span {
+  font-size: 14px;
+  font-weight: 200;
+  margin-left: 13px;
+  color: #536b82;
+}
+
+.sgcl-container .top-form .top-form-inline .form-group.form-item {
+  margin-left: 0;
+}
+
+.sgcl-container .top-form .top-form-inline .form-group.has-feedback.form-item {
+  margin-left: 0;
+}
+
+.sgcl-container .top-form-inline .form-control {
+  width: 138px;
+  height: 28px;
+  line-height: 1.028571;
+}
+
+.sgcl-container .top-form .inline-component .ane-datepicker {
+  width: 138px !important;
+}
+
+.sgcl-container .timeCover .has-feedback {
+  width: 220px !important;
+}
+
+.sgcl-container .timeCover {
+  margin-right: 0
+}
+.sgcl-container ::-ms-clear {
+  display: none;
+}

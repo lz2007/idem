@@ -1,0 +1,84 @@
+/* 实时指挥系统------信息采集模块----身份证采集查看详情页 */
+.sfzcj  .sfzcjDetail  .sfzcjck{
+    position: absolute;
+    left: -160px;
+    right: 0;
+    background: #fff;
+    top: 0px;
+    z-index: 999;
+    bottom: -34px;
+}
+.sfzcjck .sszhxt-tool-bar{
+   padding:26px 0 22px 22px;
+   margin-bottom:8px;
+}
+.sfzcjck .sszhxt-tool-bar .btn-query{
+    top:7px;
+    right:12px;
+    color:#fff;
+}
+.sfzcjck .sfzcjck-pesonalInfo{
+    padding:0.3%;
+}
+.sfzcjck .sfzcjck-pesonalInfo .detailInfo,.sfzcjck .mapPath {
+    height:350px;
+    display:inline-block;
+    vertical-align: top;
+}
+.sfzcjck .sfzcjck-pesonalInfo .detailInfo{
+    width:39%;
+    border:1px solid #ddd;
+    margin-right:0.4%;
+    padding-top:60px;
+}
+.sfzcjck .mapPath{
+    border:1px solid #ddd;
+    width:60%;
+}
+.sfzcjck-pesonalInfo{
+    width:100%;
+    height: auto;
+  
+}
+.sfzcjck .pic{
+    padding:40px;
+}
+.sfzcjck .pic img{
+    border:5px solid #CCCCCC;
+}
+.sfzcjck .pic,.sfzcjck  .detailInfo ul{
+  display: inline-block;
+  vertical-align: middle;
+}
+.sfzcjck  .detailInfo li{
+    height:30px;
+    line-height: 30px;
+}
+.sfzcjck  .detailInfo ul h5{
+    display: inline-block;
+    margin-right:4px;
+}
+.sfzcjck .menu-tip{
+    width:99%;
+    height:auto;
+    margin-left:0.3%;
+}
+.sfzcjck .menu-tip li{
+    height:30px;
+    line-height: 30px;
+    width:100px;
+    background:#077CE1; 
+    margin-right:8px;
+    display: inline-block;
+    text-align: center;
+    color:#fff;
+    cursor:pointer;
+}
+.sfzcjck .menu-tip li.disabled{
+    background: #C4E5F5;
+}
+.sfzcjck .sszhxt-list-panel{
+  top:489px;
+  left:0.3%;
+  right:0.9%;
+}

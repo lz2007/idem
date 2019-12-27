@@ -1,0 +1,174 @@
+.pagebar {
+	/* width: 100%; */
+	height: 30px;
+	background-color: #e8edf2;
+	/* border: 1px solid #e8edf1; */
+	position: absolute;
+	right: 0px;
+	bottom: 2px;
+	line-height: 30px;
+}
+.pagebar .page-item-list{
+	float: right;
+	color: #748ba2;
+}
+.pagebar .page-item-list a{
+	color: #748ba2;
+}
+.pagebar .page-item-list li{
+	display: inline-block;
+    height: 22px;
+	line-height: 22px;
+	margin: 0 15px;
+}
+.pagebar .page-item-list input.form-control{
+	display: inline-block;
+	padding: 0;
+	margin: 0 5px;
+    width: 30px;
+	height: 22px;
+	text-align: center;
+	color: #748ba2;
+}
+
+/* .pagebar {
+	width: 100%;
+	height: 30px;
+	background-color: #F5F5F5;
+	border-top: 1px solid #D4D4D4;
+	border-bottom: 1px solid #D4D4D4;
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	line-height: 30px;
+}
+.page-opa {
+	width: 60%;
+	height: 100%;
+	float: left;
+}
+.pagebar > .page-info {
+	width: 40%;
+	height: 100%;
+	float: right;
+	text-align: right;
+	line-height: 30px;
+	font-size: 12px;
+	padding-right: 10px;
+}
+.pagebar > .page-opa > ul > li {
+	list-style: none;
+	display: inline-block;
+	display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    padding-left: 5px;
+	padding-right: 5px;
+}
+.pagebar > .page-opa > ul > li a:hover {
+	background-color: #e6e6e6;
+}
+
+.pagebar > .page-opa ul .page_select {
+	width: 50px;
+	margin-left: 6px;
+	margin-right: 6px;
+}
+.pagebar > .page-opa ul .page_select input {
+	width: 50px;
+}
+.pagebar > .page-opa ul .page_select .form-control {
+	height: 22px;
+	padding: 0px;
+}
+.pagebar > .page-opa ul .page_select .ane-select .ane-select-arrow {
+	top: 0px;
+}
+.pagebar > .page-opa ul .page_select .ane-select-selection .ane-select-selected {
+	left: 6px;
+	right: 4px;
+}
+.pagination-btn-separator {
+    float: left;
+    height: 24px;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #fff;
+    margin: 3px 1px;
+}
+.toStart {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	background: url(/static/image/xtpzgl-yhgl/pagination_icons.png?__sprite) no-repeat 0px 3px;
+}
+.toPre {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	background: url(/static/image/xtpzgl-yhgl/pagination_icons.png?__sprite) no-repeat -16px 3px;
+}
+.toNext {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	background: url(/static/image/xtpzgl-yhgl/pagination_icons.png?__sprite) no-repeat -31px 3px;
+}
+.toEnd {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	background: url(/static/image/xtpzgl-yhgl/pagination_icons.png?__sprite) no-repeat -48px 3px;
+}
+.refresh {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	background: url(/static/image/xtpzgl-yhgl/pagination_icons.png?__sprite) no-repeat -64px 3px;
+}
+.pagebar > .page-opa input.form-control {
+	display: inline-block;
+	text-align: center;
+	width: 44px;
+	height: 22px;
+	vertical-align: middle;
+	padding: 0 5px;
+	margin-top: -3px;
+}
+.page-select-dropdown{
+	height: 22px;
+    line-height: 22px;
+    position: relative;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+.page-select-dropdown .page-selected{
+	cursor: pointer;
+	padding-right: 6px;
+}
+.page-select-dropdown .page-selected:before{
+	cursor: pointer;
+	position: absolute;
+	right: 5px;
+}
+.page-select-dropdown .page-options{
+	position: absolute;
+	left:0;
+	bottom:22px;
+	width: 48px;
+	border-radius: 5px;
+	background: #fff;
+	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+}
+.page-select-dropdown .page-options li{
+	cursor: pointer;
+	padding: 5px 10px;
+}
+.page-select-dropdown .page-options li:hover{
+	background: #c7ddef;
+}
+.page-select-dropdown .page-options li.active{
+	background: #eee;
+    color: rgba(0, 0, 0, 0.65);
+    font-weight: 700;
+} */

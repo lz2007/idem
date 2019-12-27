@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>运维管理系统</title>
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="/node_modules/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="/node_modules/ane/dist/ane.css" rel="stylesheet" />
+    <script src="/static/mod.js"></script>
+    <!--[if lt IE 9]>
+    <script src="/static/polyfill/html5shiv.js"></script>
+    <script src="/static/polyfill/respond.src.js"></script>
+    <![endif]-->
+</head>
+
+<body :controller="tyywglpt_vm" class="ms-controller tyywglpt_vm">
+    <ms-browser-upgrade-tips></ms-browser-upgrade-tips>
+    <xmp is="ms-layout">
+        <!-- header -->
+        <ms-layout-header>
+            <div class="logo">
+                <span class="logo-icon"></span> {{@titleName}}
+            </div>
+
+            <div class="setting" :controller="setting" :if='licenseStatus'>
+                <div class="setting_bar" ms-mouseenter="@showSet" ms-mouseleave="@hideSet" :visible="@toggle">
+                    <ul>
+                        <li :click="@bindModify">
+                            <i class="fa fa-key" aria-hidden="true" style="padding-right: 8px;"></i>修改密码</li>
+                        <li :click="@bindLogout">
+                            <i class="fa fa-cog" aria-hidden="true" style="padding-right: 8px;"></i>退出登录</li>
+                    </ul>
+                </div>
+                <span :click="toMain_index" class="header-home"></span>
+                <!-- <span :click="help_click" class="header-help"></span> -->
+                <span :click="setting_click" class="header-setting"></span>
+            </div>
+            <h5 class="currentUser" :if="licenseStatus">
+                <span>
+                    <span class="info_title">用户：</span>
+                    <span class="textNoWrap" ms-attr="{title: @userName}">{{@userName}}</span>
+                    <span class="info_title">| 单位：</span>
+                    <span class="textNoWrap" ms-attr="{title: @orgName}">{{@orgName}}</span>
+                    <span class="role">
+                        <span class="info_title">| 角色：</span>
+                        <span class="textNoWrap" ms-attr="{title: @firstRoleName}">{{@firstRoleName}}</span>
+                        <i ms-if="@roleShow" class="fa fa-angle-down" aria-hidden="true"></i>
+                        <i ms-if="@roleShow" class="fa fa-angle-up" aria-hidden="true"></i>
+                        <div ms-if="@roleShow" class="userWrap">
+                            <div class="triangle"></div>
+                            <ul>
+                                <li ms-for="item in @roleNames" ms-attr="{title: @item}">{{item}}</li>
+                            </ul>
+                        </div>
+                    </span>
+                </span>
+            </h5>
+
+        </ms-layout-header>
+        <!-- sidebar start-->
+        <div id="sidebar">
+            <div class="tyywglpt-menu">
+                <ul class="tyywglpt-menu tyywglpt-menu-inline  tyywglpt-menu-light tyywglpt-menu-root">
+                    <li class="tyywglpt-menu-submenu-inline tyywglpt-menu-submenu-selected tyywglpt-menu-submenu"
+                        ms-for="(index,item) in @menu">
+                        <div class="tyywglpt-menu-submenu-title open" :if="item.children" ms-click="@clickMenu(item)">
+                            <span :class="[item.icon]">{{item.title}}
+                                <i class="arrow"></i>
+                            </span>
+                        </div>
+                        <div class="tyywglpt-menu-submenu-title" :if="!item.children" ms-class="{'tyywglpt-menu-item-selected':item.url === @locationKey,'tyywglpt-menu-item-unselected':item.url !== @locationKey}">
+                            <span :class="['no-children-icon',item.icon]">
+                                <a ms-attr="{href:'#!'+item.url}" ms-click="@menuliClick(item,item.url)">{{item.title}}</a>
+                            </span>
+                        </div>
+                        <ul class="tyywglpt-menu tyywglpt-menu-sub tyywglpt-menu-hidden" ms-if="item.children"
+                            ms-effect="{is:'collapse', action:item.action}">
+                            <li class="tyywglpt-menu-item" ms-for="(index,itemli) in item.children" ms-click="@menuliClick(itemli,itemli.url)"
+                                ms-class="{'tyywglpt-menu-item-selected':itemli.url === @locationKey,'tyywglpt-menu-item-unselected':itemli.url !== @locationKey}">
+                                <a ms-attr="{href:'#!'+itemli.url}" :if="itemli.url">{{itemli.title}}</a>
+                                <div class="tyywglpt-menu-sub-submenu-title open" :if="itemli.children" ms-click="@clickMenu(itemli)">
+                                    <span>{{itemli.title}}
+                                        <i class="arrow"></i>
+                                    </span>
+                                </div>
+                                <ul class="tyywglpt-menu tyywglpt-menu-sub-sub tyywglpt-menu-hidden" ms-if="itemli.children"
+                                    ms-effect="{is:'collapse', action:itemli.action}">
+                                    <li class="tyywglpt-menu-item" ms-for="(index,subitem) in itemli.children" ms-click="@menuliClick(subitem,subitem.url)|stop"
+                                        ms-class="{'tyywglpt-menu-item-selected':subitem.url === @locationKey,'tyywglpt-menu-item-unselected':subitem.url !== @locationKey}">
+                                        <a ms-attr="{href:'#!'+subitem.url}">{{subitem.title}}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- sidebar end-->
+        <!-- content start-->
+        <div id="content">
+            <div ms-html="@currentPage"></div>
+        </div>
+        <!-- <div id="footer">
+            {{@copyRight}}
+            <br>
+            {{@telephone}}
+        </div> -->
+    </xmp>
+    <!-- content end-->
+
+    <div :controller="help_vm">
+        <xmp :widget="{is:'ms-dialog', $innerVm: 'help_inner_vm', show: @show, className:@extraClass, onCancel: @handleCancle, cancelText:@cancelText}">
+            <div slot="body" ms-skip>
+                <h5 :css="{'font-size': '16px'}" ms-text="@helpMsg"></h5>
+            </div>
+            <div slot="footer" class="modal-footer" ms-skip>
+                <a class="btn btn-default" :click="@handleClose">关闭</a>
+            </div>
+        </xmp>
+    </div>
+
+    <!-- 右上角弹窗组件 -->
+    <!-- <ms-header-operation></ms-header-operation> -->
+
+    <!-- <div :controller="editPassword">
+        <xmp :widget="{is:'ms-dialog', $innerVm:'editPwd', show:@show, onCancel:@editCancel, onOk:@editOk, okText:'提交', cancelText:'取消'}">
+            <ms-form :widget="{$form:@$editPwdForm}" slot="body" ms-skip>
+                <div id="changePwd">
+                    <div class="ipt-class">
+                        <label>原密码：</label>
+                        <ms-input :widget="{value:@record.oldPwd, type: 'password', col: 'oldPwd', onChange:@iputhandle, $rules: {required: true, message: '请输入旧密码'}}"></ms-input>
+                    </div>
+                    <div class="ipt-class">
+                        <label>新密码：</label>
+                        <ms-input :widget="{value:@record.newPwd, type: 'password', col: 'newPwd', onChange:@iputhandle, $rules: {required: true, message: '请输入新密码'}}"></ms-input>
+                    </div>
+                    <div class="ipt-class">
+                        <label>确认新密码：</label>
+                        <ms-input :widget="{value:@record.repPwd, type: 'password', col: 'repPwd', onChange:@iputhandle, $rules: {required: true, message: '请重复新密码'}}"></ms-input>
+                    </div>
+                </div>
+            </ms-form>
+        </xmp>
+    </div>
+
+    <div :controller="logout_vm">
+        <xmp :widget="{is:'ms-dialog', $innerVm: 'logout', show: @show_logout, onCancel: @cancelLogout, onOk: @handleLogout, okText:'退出'}">
+            <div slot="body" ms-skip>
+                <h5 :css="{'font-size': '16px'}" ms-text="@logoutMsg"></h5>
+            </div>
+        </xmp>
+    </div> -->
+    <script>
+        require(['./tyywglpt']);
+    </script>
+</body>
+
+</html>

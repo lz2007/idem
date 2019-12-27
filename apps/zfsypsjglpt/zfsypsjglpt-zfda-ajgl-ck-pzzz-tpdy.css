@@ -1,0 +1,233 @@
+.pzzz-tpdy{
+    width: 100%;
+}
+.pzzz-tpdy .tpdy-head{
+    height: 40px;
+    width: 1090px;
+    text-align: right;
+    margin: 0 auto;
+}
+.pzzz-tpdy .screenshot{
+    width: 100px;
+    height: 30px;
+    background-color: #0078d7;
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+}
+.tpdy-content-dy{
+    position: relative;
+    height: 1360px;
+    width: 1090px;
+    margin: 0 auto;
+}
+/* .pzzz-tpdy .tpdy-content{
+    height: 1060px;
+    width: 960px;
+    position: relative;
+    margin: 0 auto;
+}
+.pzzz-tpdy .tpdy-c{
+    height: 100%;
+    position: absolute;
+    left: 60px;
+    top: 0;
+    bottom: 0;
+    display: inline-block;
+}
+.pzzz-tpdy .null{
+    width: 30px;
+    height: 100%;
+    display: inline-block;
+}
+.pzzz-tpdy .tpdy-zd-border{
+    width: 1px;
+    display: inline-block;
+    background-color: #1E1E1E;
+    position: absolute;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+}
+.pzzz-tpdy .tpdy-zd{
+    width: 20px;
+    display: inline-block;
+    position: absolute;
+    top: 480px;
+    left: 20px;
+    background-color: #fff;
+    padding-top: 10px;
+    font-size: 18px;
+    font-weight: 400;
+} */
+.pzzz-tpdy .tpdy-img{
+    width: 100%;
+    height: 400px;
+}
+.pzzz-tpdy .tpdy-footer{
+    height: 50px;
+    width: 1090px;
+    position: relative;
+    margin: 0 auto;
+}
+.pzzz-tpdy .tpdy-footer .tpdy-btn{
+    width: 100px;
+    height: 30px;
+    background-color: #0078d7;
+    color: #fff;
+    text-align: center;
+}
+.pzzz-tpdy .tpdy-footer .pre{
+    margin-right: 10px;
+}
+.pzzz-tpdy .tpdy-footer .page-btn{
+    width: 210px;
+    display: inline-block;
+    margin-top: 10px;
+    position: absolute;
+    left: 440px;
+}
+.pzzz-tpdy .tpdy-footer .dy-btn{
+    width: 100px;
+    display: inline-block;
+    margin-top: 10px;
+    position: absolute;
+    right: 0;
+}
+.pzzz-tpdy .tpdy-footer .pageDisable{
+    background-color: #c9c9c9;
+    cursor: not-allowed;
+}
+
+/* *****************************选择截图弹窗样式******************************** */
+.tpdy-jtsltDialog{
+    width: 100%;
+    height: 420px;
+}
+.tpdy-jtsltDialog .top{
+    margin-bottom: 5px;
+}
+.tpdy-jtsltDialog .tpdy-jtslt-all{
+    width: 0;
+    padding: 0;
+    height: 0;
+    border: 0;
+    margin: 0;
+}
+.tpdy-jtslt-allLabel .tpdyJtsltCheck{
+    display: inline-block;
+    background-image: url(/static/image/xtpzgl-yhgl/selectNo.png?__sprite);
+    background-repeat: no-repeat;
+    line-height: 12px;
+    min-height: 12px;
+    min-width: 12px;
+    margin-right: 8px;
+    vertical-align: top;
+    margin-top: 4px;
+}
+.tpdy-jtslt-allLabel .tpdyJtsltChecked{
+    display: inline-block;
+    background-image: url(/static/image/xtpzgl-yhgl/selectYes.png?__sprite);
+    background-repeat: no-repeat;
+    line-height: 12px;
+    min-height: 12px;
+    min-width: 12px;
+    margin-right: 8px;
+    vertical-align: top;
+    margin-top: 4px;
+}
+.tpdy-jtslt-allLabel{
+    font-weight: normal;
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+    color: #536C80;
+    margin-bottom: 0px;
+}
+.tpdy-jtsltDialog .cont{
+    width: 100%;
+    height: 395px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-y: auto;
+}
+.tpdy-jtsltDialog .cont li{
+    text-align: left;
+    height: 128px;
+    width: 100%;
+    margin-top: 12px;
+}
+.tpdy-jtsltDialog .cont li:first-child{
+    margin-top: 0px;
+}
+.tpdy-jtsltDialog .cont .jtslt-d{
+    width: 128px;
+    height: 100%;
+    margin-left: 12px;
+    background-color: black;
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+}
+.tpdy-jtsltDialog .cont .jtslt-d:first-child{
+    margin-left: 0px;
+}
+.tpdy-jtsltDialog .cont .jtslt-d .jtslt-d-check{
+    width: 0;
+    padding: 0;
+    height: 0;
+    border: 0;
+    margin: 0;
+}
+.tpdy-jtsltDialog .cont .jtslt-d  .jtslt-d-label{
+    margin: 0;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    z-index: 99;
+}
+.tpdy-jtsltDialog .cont .jtslt-d .jtslt-dCheck{
+    display: inline-block;
+    background-image: url(/static/image/xtpzgl-yhgl/selectNo.png?__sprite);
+    background-repeat: no-repeat;
+    line-height: 12px;
+    min-height: 12px;
+    min-width: 12px;
+    vertical-align: top;
+}
+.tpdy-jtsltDialog .cont .jtslt-d .jtslt-dChecked{
+    display: inline-block;
+    background-image: url(/static/image/xtpzgl-yhgl/selectYes.png?__sprite);
+    background-repeat: no-repeat;
+    line-height: 12px;
+    min-height: 12px;
+    min-width: 12px;
+    vertical-align: top;
+}
+.tpdy-jtsltDialog .cont .jtslt-d .jtslt-d-img{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+.tpdy-jtsltDialog .cont .jtslt-d .jtslt-d-img img{
+    width: 100%;
+    height: 100%;
+}
+.tpdy-jtslt-modalFooter{
+    width: 100%;
+    padding-bottom: 15px;
+    text-align: center;
+}
+.tpdy-jtslt-btn{
+    width: 120px;
+    height: 30px;
+    background-color: #0078d7;
+    color: #fff;
+    text-align: center;
+}
+.tpdy-jtslt-save{
+    margin-right: 10px;
+    display: inline-block;
+}

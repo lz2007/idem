@@ -1,0 +1,56 @@
+<template>
+    <div :controller="login_vm" class="ms-controller shandong-line-login">
+        <ms-browser-upgrade-tips :widget="{isLogin: true}"></ms-browser-upgrade-tips>
+        <div class="wrap">
+            <div class="head">
+                <div class="longin">
+                    <div class="title">
+                        <img class="iconLogo" src="/static/image/shandong-login/title-icon.png" />
+                        <h1 id="h1Caption">山东公安交通执法执勤记录仪管理平台</h1>
+                    </div>
+                    <!-- <img class="leftPic" src="/static/image/main-login/L-pic.png" /> -->
+                    <div class="loginForm">
+                        <form method="post" action="j_security_check" autocomplete="off">
+                            <div class="filter"></div>
+
+                            <div class="formTitle">
+                                <h3 id="h3UserLogin">用户登录</h3>
+                                <img src="/static/image/shandong-login/arrow-left.png" />
+
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="user-input-icon"></span>
+                                    <input type="text" ms-duplex="@username" ms-keydown="@login | enter" placeholder="请输入用户名" tabindex="1" class="form-control">
+                                </div>
+
+                                <div id="inputGroundTip" class="input-group">
+                                    <span class="password-input-icon"></span>
+                                    <input type="password" ms-duplex="@password" ms-keydown="@login | enter" placeholder="请输入密码" tabindex="2" class="form-control">
+                                </div>
+
+                                <div class="btn_sub">
+                                    <input id="btn_login" :click="@login" ms-keydown="@login | enter" type="button" class="btn btn-warning btn-lg col-sm-12"
+                                        value="登 录" />
+                                </div>
+
+                                <div class="btn_sub" :if="@singleSignOn">
+                                    <input id="btn_pki_login" :click="@pki_login" type="button" class="btn btn-warning btn-lg col-sm-12" value="PKI 登 录" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <p id="pHost" style="line-height: 28px;letter-spacing: .5px;">
+                    <span>{{@version}}
+                        <span></span>{{@telephone}}
+                        <br>{{@copyRight}}</span>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</template>

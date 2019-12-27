@@ -1,0 +1,41 @@
+<template>
+	<div class="sszh-side-bar">
+		<ul class="side-bar-title" :click="@handleModeChange">
+			<li :class="@sidebarMode == 0 && 'active'">设备</li>
+			<li :class="@sidebarMode == 1 && 'active'">人员</li>
+			<li :class="@sidebarMode == 2 && 'active'">最近</li>
+		</ul>
+		<div class="side-bar-main">
+			<div class="input-group" :if="@sidebarMode !== 2" :class="[@inputStatus === 0 && 'input-tip',@inputStatus === 1 && 'input-error']">
+				<div class="has-icon-input-wrap">
+					<input type="text" class="form-control" ms-duplex="@keyword" :focus="@handleSearchInputFocus" :blur="@handleSearchInputBlur"
+					    :keyup="@handleQuickSearch">
+					<i class="fa fa-close" :visible="false" :mousedown="@handleKeyClear|prevent"></i>
+				</div>
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default" :click="@handleSearch"></button>
+				</span>
+			</div>
+			<div class="ztree-container" :visible="@sidebarMode !== 2">
+				<ul id="poll-tree" class="ztree"></ul>
+			</div>
+			<div class="recent-look" :visible="@sidebarMode == 2">
+				<ul>
+					<li :if="@recentData.length == 0" class="list-null">暂无数据</li>
+					<li :for="($index, el) in @recentData">
+						<!-- 不知道为什么 下面的:class和:click挂到上面的li 渲染会出问题 -->
+						<div class="recent-item" :class="[el.commandType == 'DEVICE'? 'device' : 'person', el.online ? 'isonline' : 'isoffline']"
+						    :click="@handleDeviceClick(el,$event)">
+							<span class="name" :attr="{title:el.name}">{{el.name}}</span>
+							<span class="time">{{el.insertTime|date("yyyy-M-d H:mm:ss")}}</span>
+						</div>
+						<ul :if="@el.commandType == 'USER' && el.gbCodeList && el.gbCodeList.length !== 0" class="person-device-list">
+							<li :for="($i, item) in @el.gbCodeList" class="device isonline" :click="@handlePersonDeviceClick(item,$event)">{{item}}</li>
+						</ul>
+					</li>
+					<slot></slot>
+				</ul>
+			</div>
+		</div>
+	</div>
+</template>

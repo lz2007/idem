@@ -1,0 +1,378 @@
+<!-- 统一运维管理平台--设备资源管理--执法仪管理 -->
+<!-- caojiacong -->
+<template>
+    <div class="tyywglpt ywzx-zfygl" :controller="zfygl-vm">
+
+        <!-- 查询表单 -->
+        <div class="ywzx-zfjly-left">
+            <div class="tyywglpt-search-box">
+                <ms-form :widget="{$form:@$form,inline:true}">
+                    <div>
+                        <ms-form-item :widget="{label:@zfjlygl_language.equipmentDepartment}" :class="'form-item label-lg'">
+                            <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'zfygl-tree-select-1', getSelected:@getSelected, selectedKey:@orgId, selectedTitle:@orgName, onChange:@handleTreeChange, extraExpandHandle:@extraExpandHandle, branchShow:true, clickBranchBack:@clickBranchBack, includedStatus:@included_status}"></ms-tree-selecting>
+                        </ms-form-item>
+                        <!-- 设备厂商影响设备类型和设备型号，设备厂商为空或不限时设备类型不影响设备型号，设备厂商为具体值时设备类型影响设备型号 -->
+                        <!-- 此处的设备厂商/类型/型号包含已废弃的(注释不要放到ms-form内的最开始，否则将解析出错)  -->
+                        <!-- <ms-form-item :widget="{label: '设备厂商:'}" :class="['form-item', (@manufacturerOptions.length === 0 && 'disabled')]">
+                            <ms-select :widget="{col:'manufacturer', value:[@getDefaultManu(manufacturerOptions,dataJson)], displayValue:'暂无可选的设备厂商', options:@manufacturerOptions, onChange:@handleManuChange}">
+                            </ms-select>
+                        </ms-form-item> -->
+                        <!-- 设备类型的默认值要用queryDefaultType,如果类似设备厂商那样做的话，ie8堆栈溢出 -->
+                        <ms-form-item :widget="{label:@zfjlygl_language.equipmentType}" :class="['form-item hiddenType', (@typeOptions.length === 0 && 'disabled')]">
+                            <ms-select :widget="{col:'type', value:[@queryDefaultType], displayValue:@zfjlygl_language.noOptionalDeviceType, options:@typeOptions, onChange:@handleTypeChange}">
+                            </ms-select>
+                        </ms-form-item>
+                        <ms-form-item :widget="{label:@zfjlygl_language.equipmentModel}" :class="['form-item', (@modelOptions.length === 0 && 'disabled')]">
+                            <ms-select :widget="{col:'model', value:[@getDefaultModel(modelOptions, isManuOrTypeSelectMode, dataJson)], displayValue:@zfjlygl_language.noOptionalDeviceModel, options:@modelOptions, onChange:@handleModelChange}">
+                            </ms-select>
+                        </ms-form-item>
+                    </div>
+                    <div class="search-line-second">
+                        <ms-form-item :widget="{label:@zfjlygl_language.namePoliceId}" :class="'form-item label-lg'">
+                            <div class="has-icon-input-wrap">
+                                <input type="input" class="form-control" ms-duplex="@userName" :keypress="@handlePress"
+                                    :focus="@handleFocus" :blur="@handleBlur" :attr="{title: @userName}">
+                                <span class="input-close-ywzx-user" :mousedown="@handleClear('userName',$event)|prevent"
+                                    :visible="false"></span>
+                            </div>
+                        </ms-form-item>
+                        <!-- <ms-form-item :widget="{label:'设备状态:'}" :class="['form-item', (@statusOptions.length === 0 && 'disabled')]">
+                            <ms-select :widget="{col:'status', value:[@getDefaultStatus(statusOptions, dataJson)], displayValue:'暂无可选的设备状态', options:@statusOptions}">
+                            </ms-select>
+                        </ms-form-item> -->
+                        <ms-form-item :widget="{label:@zfjlygl_language.captureTime}" :class="'form-item duration-item'">
+                            <div class="chooseDate">
+                                <ms-datepicker :widget="{
+                                        col:'beginTime',
+                                        placeholder:@zfjlygl_language.pleaseselectTheStartDate,
+                                        value: @beginTime,
+                                        onChange: @datepickerChangeStart,
+                                        showTime: false,
+                                        languageSelect: @extra_class ? 'en' : ''
+                                    }"></ms-datepicker>
+                                <!-- <span class="date-line">-</span> -->
+                                <ms-form-item>
+                                    <ms-datepicker :widget="{
+                                            col:'endTime',
+                                            placeholder:@zfjlygl_language.pleaseselectTheEndDate,
+                                            value: @endTime,
+                                            onChange: @datepickerChangeEnd,
+                                            showTime: false,
+                                            languageSelect: @extra_class ? 'en' : ''
+                                        }"
+                                        :class="'datepickerEndTime'"></ms-datepicker>
+                                </ms-form-item>
+                                <div class="captureTime">
+                                    <div class="time thisWeek active" :click="@chooseDate('week')">{{@zfjlygl_language.thisWeek}}</div>
+                                    <div class="time thisMonth" :click="@chooseDate('month')">{{@zfjlygl_language.thisMonth}}</div>
+                                </div>
+                            </div>
+                        </ms-form-item>
+                    </div>
+                    <button type="button" class="btn btn-query" :click="@query" :if="@authority.SEARCH">{{@zfjlygl_language.query}}</button>
+                </ms-form>
+            </div>
+        </div>
+
+        <!-- 工具操作 -->
+        <div class="tyywglpt-tool-bar ywzx-zfjly-bar">
+            <div class="tyywglpt-tool-bar-inner">
+                <div class="btnIcon" :click="@handleRegister" :if="@authority.REGISTRY" :class="@selectedRowsLength !== 0 && 'disabled'">
+                    <i class="icon icon_addUser"></i>
+                    <input type="button" :attr="{value: @zfjlygl_language.register}" class="btn btn-tool" :class="@selectedRowsLength !== 0 && 'disabled'">
+                </div>
+                <!--<div class="btnIcon divBulkRegistration" style="display: none" :click="@handleRegistermodel">-->
+                    <!--&lt;!&ndash; :if="@authority.REGISTRY" &ndash;&gt;-->
+                    <!--<i class="icon icon_bulkRegister"></i>-->
+                    <!--<input type="button" :attr="{value: @zfjlygl_language.bulkRegistrationTemplates}" class="btn btn-tool btn-bulkRegistration">-->
+                <!--</div>-->
+                <!--<div class="btnIcon" style="display: none" :click="@showDownLoadTip">-->
+                    <!--&lt;!&ndash; :if="@authority.BATCHREGISTRY"  &ndash;&gt;-->
+                    <!--<i class="icon icon_addUser"></i>-->
+                    <!--<button id="fileupload" class="btn btn-tool" :class="@selectedRowsLength !== 0 && 'disabled'">{{@zfjlygl_language.batchRegistration}}</button>-->
+                <!--</div>-->
+            </div>
+        </div>
+
+
+        <!-- 表格 -->
+        <div class="tyywglpt-list-panel">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <li class="col-3 first-item">
+                        <input type="checkbox" id="checkall" :duplex-checked="@checkAll" data-duplex-changed="@handleCheckAll($event)">
+                        <label for="checkall" :class="[@checkAll ? 'check_selected' : 'check_unselected']"></label>
+                    </li>
+                    <li class="col-4">{{@zfjlygl_language.sn}}</li>
+                    <li class="col-20">{{@zfjlygl_language.deviceDepartment}}</li>
+                    <!-- <li class="col-20">{{@zfjlygl_language.department}}</li> -->
+                    <li class="col-13">{{@zfjlygl_language.user}}</li>
+                    <!-- <li class="col-11">{{@zfjlygl_language.manufacturer}}</li> -->
+                    <li class="col-5">{{@zfjlygl_language.model}}</li>
+                    <!-- <li class="col-4">{{@zfjlygl_language.type}}</li> -->
+                    <li class="col-10">{{@zfjlygl_language.deviceName}}</li>
+                    <li class="col-20">{{@zfjlygl_language.communicationCode}}</li>
+                    <li class="col-6">{{@zfjlygl_language.battery}}</li>
+                    <li class="col-5">{{@zfjlygl_language.online}}</li>
+                    <!-- <li class="col-6">{{@zfjlygl_language.locationState}}</li> -->
+                    <li class="col-6">{{@zfjlygl_language.version}}</li>
+                    <!-- <li class="col-6">{{@zfjlygl_language.qrcode}}</li> -->
+                    <li class="col-6">{{@zfjlygl_language.operation}}</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@loading" class="list-loading">
+                    <span>{{zfjlygl_language.loading}}</span>
+                </li>
+                <li :if="@isNull" class="list-null">{{zfjlygl_language.noData}}</li>
+                <li :if="!@loading && !isNull" :for="($index, item) in @list">
+                    <div class="col-3 first-item">
+                        <input type="checkbox" :attr="{'id':$index}" :duplex-checked="item.checked" data-duplex-changed="@handleCheck($index,item,$event)">
+                        <label :attr="{'for':$index}" :class="[item.checked ? 'check_selected' : 'check_unselected']"></label>
+                    </div>
+                    <!--序号-->
+                    <div class="col-4">{{((@current - 1) * @pageSize) + $index+1}}</div>
+                    <!--设备所属部门-->
+                    <div class="col-20" :attr="{'title':item.orgName || '', 'data-toggle':'popover'}">{{@item.orgName |
+                        fillterEmpty}}</div>
+                    <!--姓名/警号-->
+                    <div class="col-13" :attr="{'title':item.userName || '', 'data-toggle':'popover'}">{{@item.userName
+                        |
+                        fillterEmpty}}</div>
+                    <!--设备厂商-->
+                    <!-- <div class="col-11" :attr="{'title':item.manufactruerName || '', 'data-toggle':'popover'}">{{@item.manufactruerName
+                        | fillterEmpty}}</div> -->
+                    <!--设备型号-->
+                    <div class="col-5" :attr="{'title':item.model || '', 'data-toggle':'popover'}">{{@item.model |
+                        fillterEmpty}}</div>
+                    <!--设备类型-->
+                    <!-- <div class="col-4" :attr="{'title':item.typeName || '','data-toggle':'popover'}">{{@item.typeName |
+                        fillterEmpty}}</div> -->
+                    <!--设备名称-->
+                    <div class="col-10" :attr="{'title':item.name || '','data-toggle':'popover'}">{{@item.name |
+                        fillterEmpty}}</div>
+                    <!--国标编号-->
+                    <div class="col-20" :attr="{'title':item.gbcode || '','data-toggle':'popover'}">{{@item.gbcode |
+                        fillterEmpty}}</div>
+                    <!--电池电量-->
+                    <div class="col-6" :attr="{'title':item.battery || '','data-toggle':'popover'}">{{@item.battery |
+                        fillterEmpty}}</div>
+                    <!--在线状态-->
+                    <div class="col-5" :class="[item.online !== 1 && 'isoffline']" :attr="{'title':item.onlineStatusName || '','data-toggle':'popover'}">{{@item.onlineStatusName
+                        | fillterEmpty}}</div>
+                    <!--定位状态-->
+                    <!-- <div class="col-6" :attr="{'title':item.locationStatus || '','data-toggle':'popover'}">{{@item.locationStatus
+                        | fillterEmpty}}</div> -->
+                    <!--设备版本-->
+                    <div class="col-6" :attr="{'title':item.version || '','data-toggle':'popover'}">{{@item.version |
+                        fillterEmpty}}</div>
+                    <!-- 二维码 -->
+                    <!-- <div class="tbody col-6">
+                        <div class="qrcode" :click="@handleQRcode(item, $event, 'create')"></div>
+                        <div class="showQRcode">
+                            <div class="qrcode-head">
+                                <span>QR code</span>
+                                <div class="closeQRcode" :click="closeQRcode($event)">x</div>
+                                <div class="refreshQRcode" :click="handleQRcode(item, $event, 'refresh')"></div>
+                            </div>
+                            <div class="qrcode-body">
+                                <div class="imgQRcode">
+                                    <img src="" alt="" class="qrcode">
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!--操作-->
+                    <div class="col-6">
+                        <div class="op_edit" :class="[item.source && 'disabled']" :click="@handleModify(item)" :if="@authority.MODIFY" :attr="{title: @zfjlygl_language.modify}"></div>
+                        <div class="op_delete" :class="[item.source && 'disabled']" :click="@handleDelete(item)" :if="@authority.DELETE" :attr="{title: @zfjlygl_language.delete}"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 批量删除 -->
+        <div class="bottom-tool-bar" :class="[(!@checkedIsSource || @selectedRowsLength < 1) && 'disabled']" :if="@authority.BATCHDELETE"
+            :click="@handleBatchDelete">
+            <i class="icon icon_batchDel"></i>
+            <input class="btn btn-tool" :class="[(!@checkedIsSource || @selectedRowsLength < 1) && 'disabled']" type="button"
+                :attr="{value: @zfjlygl_language.batchDeleting}">
+        </div>
+
+        <!-- 分页 -->
+        <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent}"></ms-pages>
+
+        <!-- 注册弹窗 -->
+        <div :controller="zfygl-register-vm" class="sbzygl-modal zfygl-modal-register">
+            <xmp :widget="{is:'common-ms-modal', title:@title, modalSelector:'#zfygl-modal-register', modalWidth:360, modalHeight: auto, 
+            show:@show, okDisabled:@allotLoading, onOk:@handleOk, onCancel:@handleCancel, cancelText: @cancel, okText: @save, btnalign:'center'}">
+                <div id="zfygl-modal-register">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <div class="modal-title top"></div>
+                        <ms-form-item :class="['form-item model-item', !@validJson.model && 'has-error', (@modelOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>{{zfjlygl_language.equipmentModel}}</label>
+                            <!-- <ms-select :widget="{col:'model', value:[@defaultModel], displayValue:@zfjlygl_language.noOptionalEquipmentModel, options:@modelOptions, onChange:@handleModelChange}">
+                            </ms-select> -->
+                            <ms-search-select :widget="{owner:'model', searchLabel:@inputJson.model,options:@modelOptions,getSearchLabel:@getSearchLabel,onFocus:@handleSearchSelectFocus,onBlur:@handleSearchSelectFormat}"></ms-search-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.model">{{@zfjlygl_language.chooseTheDeviceType}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item form-item-lg',((!@validJson.gbcode || !@validJson.gbcodeUnique) ? 'has-error' : '')]">
+                            <label>
+                                <i>* </i>{{@zfjlygl_language.communicationCode}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.gbcode}" :duplex="@inputJson.gbcode"
+                                    :focus="@handleFocus('gbcode',$event)" :blur="@handleFormat('gbcode',@gbcodeReg,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('gbcode',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.gbcode" :attr="{title:@zfjlygl_language.supportTheCombinationOfNumbers + @inputJson.gbcode.length + ')'}">
+                                <i class="fa fa-info-circle"></i>
+                                <span>{{@zfjlygl_language.supportTheCombinationOfNumbers}}</span>
+                                <span>{{@inputJson.gbcode.length}}</span>
+                                <span>)</span>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.gbcode" :attr="{title:@zfjlygl_language.inputOrCreateAValidCommunicationCode}">
+                                {{@zfjlygl_language.inputOrCreateAValidCommunicationCode}}
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.gbcodeUnique">{{@zfjlygl_language.inputTheUniqueCommunicationCode}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['form-item',!@validJson.name && 'has-error']">
+                            <label>
+                                <i>* </i> {{@zfjlygl_language.deviceName}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.name}" :duplex="@inputJson.name"
+                                    :focus="@handleFocus('name',$event)" :blur="@handleFormat('name',null,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('name',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.name">{{@inputJson.name.length > 30 ?
+                                @zfjlygl_language.noMoreThan30Characters : @zfjlygl_language.inputTheUniqueDeviceName}}</div>
+                        </ms-form-item>
+                        <div class="modal-title allot-title">{{@zfjlygl_language.distributionInformation}}</div>
+                        <div :visible="!@allotQuery" class="allot-container">
+                            <ms-form-item :class="'form-item'">
+                                <label>{{@zfjlygl_language.department}}</label>
+                                <!-- ms-tree-selecting组件的源码在aaps/common/common-tree-select.js -->
+                                <!-- 这里isTriggerWhenChange设为false, onChange时不需要触发getSelected -->
+                                <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, isTriggerWhenChange:false, selectedKey:@allotOrgId, selectedTitle: @allotOrgName, height:200, wrapId: 'zfygl-tree-select-3', getSelected:@getAllotSelected, onChange:@handleAllotTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                            </ms-form-item>
+                            <ms-form-item :class="['form-item allot-item-org', (@allotOptions.length === 0 && 'disabled')]">
+                                <label>{{@zfjlygl_language.personnel}}</label>
+                                <!-- ms-large-select组件的源码在aaps/common/common-ms-select.js -->
+                                <ms-large-select :widget="{owner:'allot-org',options:allotOptions,value:@defaultAllot,showSearch:true,loading:@allotLoading,page:@allotPageByOrg,pageTotal:@allotPageTotal,pageSize:@allotPageSize,displayValue:@noOptionalPersonnel,onChange:@allotChange,getLoading:@getLoading}"></ms-large-select>
+                            </ms-form-item>
+                        </div>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 修改弹窗 -->
+        <div :controller="zfygl-modify-vm" class="sbzygl-modal zfygl-modal-modify">
+            <xmp :widget="{is:'common-ms-modal', title:@title, modalSelector:'#zfygl-modal-modify', modalWidth:360, show:@show, ifokBtn: !@isDump,
+             cancelText: @isDump ? @close : @cancel, okText: @save, okDisabled:@allotLoading, onOk:@handleOk, onCancel:@handleCancel, btnalign:'center'}">
+                <div id="zfygl-modal-modify">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <div class="modal-title"></div>
+                        <ms-form-item :class="['form-item', (@statusOptions.length === 0 && 'disabled'),(@isDump && 'disabled-select')]">
+                            <label>
+                                <i>* </i>{{zfjlygl_language.equipmentModel}}</label>
+                            <!-- <ms-select :widget="{col:'model', value:[@inputJson.model], disabledSelect: @isDump,displayValue:@zfjlygl_language.noOptionalEquipmentModel, options:@modelOptions,onChange:@handleModelChange}">
+                            </ms-select> -->
+                            <ms-search-select :widget="{owner:'model', searchLabel:@inputJson.model,options:@modelOptions,getSearchLabel:@getSearchLabel,onFocus:@handleSearchSelectFocus,onBlur:@handleSearchSelectFormat}"></ms-search-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.model">{{@zfjlygl_language.chooseTheDeviceType}}</div>
+                        </ms-form-item>
+
+                        <ms-form-item :class="['form-item form-item-lg',!@validJson.gbcode && 'has-error']">
+                            <label>
+                                <i>* </i>{{@zfjlygl_language.communicationCode}}</label>
+                            <div class="has-icon has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.gbcode}" :duplex="@inputJson.gbcode"
+                                    disabled>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.gbcode">{{@zfjlygl_language.communicationCodeCanNotBeEmpty}}</div>
+                        </ms-form-item>
+
+                        <ms-form-item :class="['form-item',!@validJson.name && 'has-error']">
+                            <label>
+                                <i>* </i> {{@zfjlygl_language.deviceName}}</label>
+                            <div class="has-icon" :class="@isDump && 'has-icon-disabled'">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.name,disabled:@isDump}"
+                                    :duplex="@inputJson.name" :focus="@handleFocus('name',$event)" :blur="@handleFormat('name',null,$event)">
+                                <i class="input-close-ywzx" :visible="false" :mousedown="@handleClear('name',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.name">{{@inputJson.name.length > 30 ?
+                                @zfjlygl_language.noMoreThan30Characters : @zfjlygl_language.inputTheUniqueDeviceName}}</div>
+                        </ms-form-item>
+
+                        <ms-form-item :class="['form-item form-item-lg',!@validJson.orgName && 'has-error']">
+                            <label>
+                                <i>* </i>{{@zfjlygl_language.deviceDepartment}}</label>
+                            <div class="has-icon has-icon-disabled">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.userDepartment}" :duplex="@inputJson.userDepartment"
+                                    disabled>
+                            </div>
+                            <div class="form-tip invalid-tip tip-md" :if="!@validJson.orgName">{{@zfjlygl_language.communicationCodeCanNotBeEmpty}}</div>
+                        </ms-form-item>
+
+                        <div class="modal-title" :if="!@isAbnormal">{{@zfjlygl_language.distributionInformation}}</div>
+                        <div :visible="!@allotQuery && !@isAbnormal" class="allot-container">
+                            <ms-form-item :class="'form-item'">
+                                <label>{{@zfjlygl_language.department}}</label>
+                                <!-- 使用lastOrgId来设置上一次注册或修改时的默认选中的部门值 -->
+                                <!-- ms-tree-selecting组件的源码在aaps/common/common-tree-select.js -->
+                                <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, selectedKey: @allotOrgId, selectedTitle: @allotOrgName, height:200, wrapId: 'zfygl-tree-select-5', getSelected:@getAllotSelected, onChange:@handleAllotTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                                <!-- <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, selectedKey:(@lastOrgId ? @lastOrgId : @allotOrgId), selectedTitle: (@lastOrgName ? @lastOrgName : @allotOrgName), height:200, wrapId: 'zfygl-tree-select-5', getSelected:@getAllotSelected, onChange:@handleAllotTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting> -->
+                            </ms-form-item>
+                            <ms-form-item :class="['form-item allot-item-org', (@allotOptions.length === 0 && 'disabled')]">
+                                <label>{{@zfjlygl_language.personnel}}</label>
+                                <!-- 使用defaultAllot来设置更换部门时的默认选中值，使用lastUserId来设置上一次注册或修改时的默认选中值 -->
+                                <!-- ms-large-select组件的源码在aaps/common/common-ms-select.js                                 
+                                ,displayValue:(@allotOptions.length === 0 ? '暂无可选的配发对象' : '暂未选择，请选择')-->
+                                <ms-large-select :widget="{owner:'allot-org',options:allotOptions,value:(@defaultAllot ? @defaultAllot : @lastUserId),showSearch:true,loading:@allotLoading,page:@allotPageByOrg,pageTotal:@allotPageTotal,pageSize:@allotPageSize,onChange:@allotChange,getLoading:@getLoading}"></ms-large-select>
+                            </ms-form-item>
+                        </div>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 查看弹窗 -->
+        <div :controller="zfygl-look-vm" class="sbzygl-modal sbzygl-modal-look">
+            <xmp :widget="{is:'common-ms-modal', title:'更新内容', modalSelector:'#zfygl-modal-look', drag:true, btnalign:'center', modalWidth:600, modalHeight:200, show:@show,ifcancelBtn:false,onOk:@handleOk,onCancel:@handleOk}">
+                <div id="zfygl-modal-look" ms-html="@updateContent">
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 删除弹窗 -->
+        <div :controller="zfygl-delete-vm" class="sbzygl-modal sbzygl-modal-tip sbzygl-modal-delete">
+            <xmp :widget="{is:'common-ms-modal', title:@title, modalSelector:'#zfygl-modal-delete', btnalign:'center', modalWidth:300, modalHeight: 80, 
+            show:@show, onOk:@handleOk, onCancel:@handleCancel, cancelText: @cancel, okText: @save}">
+                <p :if="!@isBatch" class="tip-text" id="zfygl-modal-delete">
+                    {{@zfjlygl_language.areYouSureToDeleteThisItem}}
+                </p>
+                <p :if="@isBatch" class="tip-text" id="zfygl-modal-delete">
+                    <span>{{@zfjlygl_language.areYouSureToDelete}}</span>
+                    <span>{{@selectedRowsLength}}</span>
+                    <span>{{@zfjlygl_language.item}}</span>
+                </p>
+            </xmp>
+        </div>
+
+        <!-- 注销确认弹窗 -->
+        <div :controller="zfygl-dump-vm" class="sbzygl-modal sbzygl-modal-tip sbzygl-modal-dump">
+            <xmp :widget="{is:'common-ms-modal', title:'确定注销', modalSelector:'#zfygl-modal-dump', btnalign:'center', modalWidth:400, modalHeight: 80, show:@show, onOk:@handleOk, onCancel:@handleCancel}">
+                <p class="tip-text" id="zfygl-modal-dump">注销操作为不可逆操作，您是否确定注销该设备？</p>
+            </xmp>
+        </div>
+
+        <!-- 下载提醒 -->
+        <ms-download-tip :widget="{show:@downloadTipShow,plugLink:'/static/flash_player.zip',getShowStatus:getShowStatus}">
+            <div>
+                <p>{{@zfjlygl_language.batchRegistrationFunctionRequiresFlashPlugInSupportYouDoNotInstallFlashPlugInDoYouWantToDownload}}</p>
+                <p class="tip-text">
+                    <i class="fa fa-info-circle"></i>{{@zfjlygl_language.pleaseCloseTheBrowserInstallationAfterDownloading}}</p>
+            </div>
+        </ms-download-tip>
+    </div>
+</template>

@@ -1,0 +1,269 @@
+<template>
+    <div class="sjgl-sjbgl sjbgl tyywglpt sjbglPadRig">
+        <!-- 顶部表单 begin -->
+        <!-- <div class="sjbgl-form-box tyywglpt-search-box" :if="@authority.SEARCH"> -->
+        <div class="sjbgl-form-box tyywglpt-search-box sjbglSearBg" >
+            <xmp is="ms-form" :widget="{$form:@$searchForm,inline:true}">
+                <!-- 设备厂商影响设备型号 -->
+                <!-- 此处的设备厂商/型号包含已废弃的 -->
+                <!-- <label class="yhgl-dataSpan">Package Name</label>
+                <div class="yhgl-dataIpt yhglRight">
+                    <span class="yhgl-iptPoliceNum" :class="[@policeKeyShowX ? 'yhgl-iptPoliceNum-focus':'']">
+                        <input name="policeKey" type="text" :blur="@policeKey_blur" :focus="@policeKey_focus" ms-duplex="@policeKey"
+                            ms-keydown="@policeEnter | enter" :attr="{placeholder: 'Enter Package Name'}">
+                        <i :if="@policeKeyShowX" class="yhgl-iptPoliceNum-clear" :mousedown="@yhgl_handleClear('policeKey')"></i>
+                    </span>
+                </div> -->
+                <ms-form-item :widget="{label: @sjbgl_txt.packageName}" :class="['form-item','longPacketName']">
+                    <span class="sjbgl-iptpackageName" :class="[@packageNameShowX ? 'sjbgl-iptpackageName-focus':'']">
+                        <input name="packageName" type="text" :blur="@packageName_blur" :focus="@packageName_focus" ms-duplex="@packageName"
+                            ms-keydown="@searchNamePress | enter" :attr="{placeholder: @sjbgl_txt.enterPackageName}">
+                        <i :if="@packageNameShowX" class="sjbgl-iptpackageName-clear" :mousedown="@sjbgl_handleClear('packageName')"></i>
+                    </span>
+                </ms-form-item>
+                <!-- <ms-form-item :widget="{label: '设备产商:'}" :class="['form-item', (@manufacturerOptions.length === 0 && 'disabled')]">
+                    <ms-select :widget="{col:'manufacturer', value:[@getDefaultManu(manufacturerOptions,dataJson)], displayValue:'暂无可选的设备厂商', options:@manufacturerOptions, onChange:@handleManuChange}">
+                    </ms-select>
+                </ms-form-item> -->
+                <ms-form-item :widget="{label: @sjbgl_txt.model}" :class="['sjbglModelSearch', 'form-item', (@modelOptions.length === 0 && 'disabled')]">
+                    <ms-select :widget="{col:'model', value:[@getDefaultModel(modelOptions, isManuSelectMode, dataJson)], displayValue:@sjbgl_txtnoDeviceModel, options:@modelOptions, onChange:@handleModelChange}">
+                    </ms-select>
+                </ms-form-item>
+                <ms-form-item :widget="{label: @sjbgl_txt.uploadTime}" :class="'form-item time-item dataMoveLeft'">
+                    <ms-datepicker :widget="{placeholder:@sjbgl_txt.startTime,col:'startTime', value:@startTime,onChange:@handleStartTimeChange,showTime: false,languageSelect: @extra_class ? 'en' : ''}"></ms-datepicker>
+                    <span class="date-line">-</span>
+                    <ms-datepicker :widget="{placeholder:@sjbgl_txt.endTime,col:'endTime', value:@endTime,onChange:@handleEndTimeChange,showTime: false,languageSelect: @extra_class ? 'en' : ''}"></ms-datepicker>
+                    <a class="sjbgldateControl month" :click="@monthClick" :class="@monthActive ? 'dataBtnActive' : ''">{{@sjbgl_txt.month}}</a>
+                    <a class="sjbgldateControl week" :click="@weekClick" :class="@weekActive ? 'dataBtnActive' : ''">{{@sjbgl_txt.week}}</a>
+                </ms-form-item>
+                <button :if="@authority.SEARCH" type="button" class="btn btn-query sjbglQuery" :click="@query">
+                    {{@sjbgl_txt.query}}
+                </button>
+            </xmp>
+        </div>
+        <!-- 上传删除 -->
+        <div class="sjbgl-btn-group tyywglpt-tool-bar">
+            <div class="tyywglpt-tool-bar-inner" :css="{'max-height':'30px'}">
+                <!-- <button :if="@authority.UPLOAD" class="btn btn-tool" :class="[delDate.length?'disabled':'']" :click="@handleUploadInfo">上传升级包</button> -->
+                <button :if="@authority.UPLOAD" class="btn btn-tool sjbglUploadBtn" :class="[delDate.length?'disabled':'']" :click="@handleUploadInfo">{{@sjbgl_txt.upload}}</button>
+                <!-- <button :if="@authority.DELETE" type="button" class="btn btn-tool btn-del" :class="[delDate.length?'':'disabled']" :click="@handleDeleteClick">删除</button> -->
+            </div>
+        </div>
+        <!-- 表格数据begin -->
+        <div class="tyywglpt-list-panel sjbglTable" :css="{'top':'153px'}">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <!-- <li class="col-5 first-item">
+                        <span :click="@checkedAll" :class="[@checkeds ? 'check_selected' : 'check_unselected']" :css="{display:'inline-block'}">
+                        </span>
+                    </li> -->
+                    <li class="col-5">{{@sjbgl_txt.num}}</li>
+                    <!-- <li class="col-10">设备产商</li> -->
+                    <li class="col-20">{{@sjbgl_txt.packageName}}</li>
+                    <li class="col-10">{{@sjbgl_txt.model}}</li>
+                    <li class="col-15">{{@sjbgl_txt.version}}</li>
+                    <li class="col-20">{{@sjbgl_txt.uploadTime}}</li>
+                    <li class="col-20">{{@sjbgl_txt.instruction}}</li>
+                    <li class="col-10 last-item">{{@sjbgl_txt.operation}}</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@loading" class="list-loading">
+                    <span>{{@sjbgl_txt.loading}}</span>
+                </li>
+                <li :if="@isNull" class="list-null">{{@sjbgl_txt.noData}}</li>
+                <li :if="!@loading && !@isNull" :for="($index, item) in @tableData">
+                    <!-- <div class="col-5 first-item" :click="@tableClick($index,item,$event)">
+                        <span style="padding-left: 0px;" :class="[item.checked ? 'check_selected' : 'check_unselected']" :css="{display:'inline-block'}">
+                        </span>
+                    </div> -->
+                    <div class="col-5">{{((current-1)*pageSize+1)+$index}}</div>
+                    <!-- <div class="col-10" :attr="{'title':item.manufacturerName || '','data-toggle':'popover'}">{{item.manufacturerName | fillterEmpty}}</div> -->
+                    <div class="col-20" :attr="{'title':item.name || '','data-toggle':'popover'}">{{item.name | fillterEmpty}}</div>
+                    <div class="col-10" :attr="{'title':item.model || '','data-toggle':'popover'}">{{item.model | fillterEmpty}}</div>
+                    <div class="col-15" :attr="{'title':item.version || '','data-toggle':'popover'}">{{item.version | fillterEmpty}}</div>
+                    <div class="col-20" :attr="{'title':item.insertTime || '','data-toggle':'popover'}">{{item.insertTime | fillterEmpty}}</div>
+                    <div class="col-20" :attr="{'title':item.changeLog || '','data-toggle':'popover'}">{{@item.changeLog | fillterEmpty}}</div>
+                    <div class="col-10">
+                        <!-- <div class="op_edit" :class="[item.source && 'disabled']" :click="@handleModify(item)" :if="@authority.MODIFY"></div> -->
+                        
+                        <!-- <div class="op_edit" :class="[item.source && 'disabled']" :click="@handleLook(item)"></div> -->
+
+                        <!-- <div class="op_delete" :class="[item.source && 'disabled']" :click="@handleDelete(item)" :if="@authority.DELETE"></div> -->
+                        <div :if="@authority.DELETE" :attr="{title: @sjbgl_txt.delete}" class="op_delete" :class="[item.source && 'disabled']" :click="@handleDeleteClick(item)"></div>
+                        <!-- <span :if="@authority.OPT_SHOW"> - </span> -->
+                    </div>
+                    <!-- <div class="col-20">
+                        <a :if="@authority.CHECK" class="oparate" :click="@handleLook(item)">查看</a>
+                        <span :if="!@authority.CHECK"> - </span>
+                    </div> -->
+                </li>
+            </ul>
+        </div>
+        <!-- 页码 -->
+        <div class="pagebars" :if="@total > 0">
+            <ms-pages :widget="{total:@total,pageSize:@pageSize,onChange:@onChangePage,current:@current,getCurrent:@getCurrent}"></ms-pages>
+        </div>
+        <!-- 上传前弹窗 -->
+        <div :controller="cjzsjbgl-upload-info-vm" class="sjbgl-modal-upload-info">
+            <xmp :widget="{is:'common-ms-modal', title:@sjbgl_txt.uploadPackage, modalSelector:'#cjzsjbgl-modal-upload-info', drag:true, btnalign:'center', modalWidth:400, modalHeight:320, okText: @sjbgl_txt.ok,cancelText:@sjbgl_txt.cancel,show:@show,onOk:@handleOk,onCancel:@handleCancle}">
+                <div id="cjzsjbgl-modal-upload-info">
+                    <!-- 设备厂商影响设备型号 -->
+                    <!-- 此处的设备厂商/型号过滤掉已废弃的了(注释不要放到ms-form内的最开始，否则将解析出错) -->
+                    <ms-form :widget="{$form:@$uploadform,inline:true}">
+                        <ms-form-item :class="['sjbglLN', 'hideManu', 'form-item manu-item',!@validJson.manufacturer && 'has-error',(@manufacturerOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>设备厂商:</label>
+                            <ms-select :widget="{col:'manufacturer', value:[@defaultManufacturer], displayValue:'暂无可选的设备厂商', options:@manufacturerOptions,onChange:@handleManuChange}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.manufacturer">请选择设备厂商</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['sjbglmodel', 'sjbglLN', 'form-item model-item',!@validJson.model && 'has-error',(@modelOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>{{@sjbgl_txt.deviceModel}}</label>
+                            <ms-select :widget="{col:'model', value:[@defaultModel], displayValue:@sjbgl_txt.noDeviceModel, options:@modelOptions, onChange:@handleModelChange}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.model">{{@sjbgl_txt.selectDeviceModel}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['sjbglLN','versionBottom', 'form-item',((!@validJson.version || !@validJson.versionAccept) ? 'has-error' : '')]">
+                            <label>
+                                <i>* </i>{{@sjbgl_txt.version}}</label>
+                            <div class="has-icon has-icon-input-wrap">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.version}" :duplex="@inputJson.version" :focus="@handleFocus('version',$event)"
+                                    :blur="@handleFormat('version',@versionReg,30,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('version',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.version">
+                                <i class="fa fa-info-circle"></i>{{@sjbgl_txt.supportVersion}}</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.version">{{@inputJson.version.length > 30 ? @sjbgl_txt.upTo30 : @sjbgl_txt.correctVersion}}</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.versionAccept">{{@sjbgl_txt.versionExists}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['sjbglLN', 'form-item',((!@validJson.path || !@validJson.pathUnique) ? 'has-error' : '')]">
+                            <label>
+                                <i>* </i>{{@sjbgl_txt.uploadPackage}}</label>
+                            <div class="has-icon has-icon-input-wrap has-icon-disabled">
+                            <!-- <div class="has-icon has-icon-input-wrap"> -->
+                                <input type="text" class="form-control" :attr="{title:@inputJson.path}" :duplex="@inputJson.path" disabled>
+                                <!-- <input type="text" class="form-control" :attr="{title:@inputJson.path}" :duplex="@inputJson.path"> -->
+                            </div>
+                            <input type="button" id="fileupload" class="btn btn-normal sjbglUploadOpenBtn" :duplex="@fileUploadBtnTxt">
+                            <div class="form-tip invalid-tip" :if="!@validJson.path">{{@sjbgl_txt.selectUpgrade}}</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.pathUnique">{{@sjbgl_txt.upgradeExists}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['sjbglLN', 'form-item textarea-item',!@validJson.updateInfo && 'has-error']">
+                            <label>
+                                <i>* </i>{{@sjbgl_txt.instruction}}</label>
+                            <div class="has-icon">
+                                <textarea class="form-control" :attr="{title:@inputJson.updateInfo}" :duplex="@inputJson.updateInfo" :focus="@handleFocus('updateInfo',$event)"
+                                    :blur="@handleFormat('updateInfo',@updateInfoReg,null,$event)"></textarea>
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('updateInfo',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.updateInfo">{{@sjbgl_txt.enterUpdates}}</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+        <!-- 上传弹窗 -->
+        <div :controller="cjzsjbgl-upload-vm" class="sjbgl-modal-upload">
+            <xmp :widget="{is:'common-ms-modal',title:@sjbgl_txt.upload,modalSelector:'.sjbgl-upload-body',drag:true,modalWidth:420,show:@show,onOk:@handleOk,onCancel:@handleCancel,ifcancelBtn:!@uploadCompelete,ifokBtn:(@uploadCompelete && @ifsuccess),btnalign:'center',closeIconShow:!@uploadCompelete, okText: @sjbgl_txt.ok,cancelText: @sjbgl_txt.cancel}">
+                <div class="sjbgl-upload-body">
+                    <div :visible="!@ifsuccess">
+                        <div class="row">
+                            <div class="col-md-2 uploadstatetext">{{@sjbgl_txt.uploading}}</div>
+                            <div class="col-md-9 uploadstateprogress">
+                                <ms-progress :widget="{progress:@progress}"></ms-progress>
+                            </div>
+                        </div>
+                    </div>
+                    <div :visible="!@ifsuccess && @uploadCompelete">
+                        <div class="waittext">{{@sjbgl_txt.beingParsed}}</div>
+                    </div>
+                    <div :visible="@ifsuccess && @uploadCompelete">
+                        <div class="uploadfinish"></div>
+                        <div class="uploadfinishtext">{{@sjbgl_txt.uploadCompleted}}</div>
+                    </div>
+                </div>
+            </xmp>
+        </div>
+        <!-- 删除弹窗 -->
+        <div :controller="cjzsjbgl-delete-vm" class="sjbgl-modal-delete">
+            <xmp :widget="{is:'common-ms-modal', title:@sjbgl_txt.delete, modalSelector:'.sjbgl-del-body', drag:true, btnalign:'center', modalWidth:300, modalHeight:80, show:@show,onOk:@handleOk,onCancel:@handleCancel,cancelText: @sjbgl_txt.cancel, okText: @sjbgl_txt.ok}">
+                <div class="sjbgl-del-body">
+                    <p class="tip-text">{{@sjbgl_txt.sureDelete}}</p>
+                </div>
+            </xmp>
+        </div>
+        <!-- 查看弹窗 -->
+        <div :controller="cjzsjbgl-look-vm" class="sjbgl-modal-upload-info">
+            <!-- <xmp :widget="{is:'common-ms-modal', title:'Edit', modalSelector:'#cjzsjbgl-modal-look', drag:true, btnalign:'center', modalWidth:600, modalHeight:200, show:@show,ifcancelBtn:false,onOk:@handleOk,onCancel:@handleOk}">
+                <div id="cjzsjbgl-modal-look" ms-html="@updateContent">
+                </div>
+            </xmp> -->
+            <xmp :widget="{is:'common-ms-modal', title:@sjbgl_txt.edit, modalSelector:'#cjzsjbgl-modal-look', drag:true, btnalign:'center', modalWidth:400, modalHeight:300, okText: @sjbgl_txt.ok,cancelText: @sjbgl_txt.cancel,show:@show,onOk:@handleOk,onCancel:@handleCancle}">
+                <div id="cjzsjbgl-modal-look">
+                    <!-- 设备厂商影响设备型号 -->
+                    <!-- 此处的设备厂商/型号过滤掉已废弃的了(注释不要放到ms-form内的最开始，否则将解析出错) -->
+                    <ms-form :widget="{$form:@$uploadform,inline:true}">
+                        <ms-form-item :class="['sjbglLN', 'hideManu', 'form-item manu-item',!@validJson.manufacturer && 'has-error',(@manufacturerOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>设备厂商:</label>
+                            <ms-select :widget="{col:'manufacturer', value:[@defaultManufacturer], displayValue:'暂无可选的设备厂商', options:@manufacturerOptions,onChange:@handleManuChange}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.manufacturer">请选择设备厂商</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['sjbglLN', 'form-item model-item',!@validJson.model && 'has-error',(@modelOptions.length === 0 && 'disabled')]">
+                            <label>
+                                <i>* </i>{{@sjbgl_txt.deviceModel}}</label>
+                            <ms-select :widget="{col:'model', value:[@defaultModel], displayValue:@sjbgl_txt.noDeviceModel, options:@modelOptions, onChange:@handleModelChange}">
+                            </ms-select>
+                            <div class="form-tip invalid-tip" :if="!@validJson.model">{{@sjbgl_txt.selectDeviceModel}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['sjbglLN','versionBottom', 'form-item',((!@validJson.version || !@validJson.versionAccept) ? 'has-error' : '')]">
+                            <label>
+                                <i>* </i>{{@sjbgl_txt.version}}</label>
+                            <div class="has-icon has-icon-input-wrap">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.version}" :duplex="@inputJson.version" :focus="@handleFocus('version',$event)"
+                                    :blur="@handleFormat('version',@versionReg,30,$event)">
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('version',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip tip-md" :if="@showJson.version">
+                                <i class="fa fa-info-circle"></i>{{@sjbgl_txt.supportVersion}}</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.version">{{@inputJson.version.length > 30 ? @sjbgl_txt.upTo30 : @sjbgl_txt.correctVersion}}</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.versionAccept">{{@sjbgl_txt.versionExists}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['sjbglLN', 'form-item',((!@validJson.path || !@validJson.pathUnique) ? 'has-error' : '')]">
+                            <label>
+                                <i>* </i>{{@sjbgl_txt.uploadPackage}}</label>
+                            <div class="has-icon has-icon-input-wrap has-icon-disabled">
+                            <!-- <div class="has-icon has-icon-input-wrap"> -->
+                                <input type="text" class="form-control" :attr="{title:@inputJson.path}" :duplex="@inputJson.path" disabled>
+                                <!-- <input type="text" class="form-control" :attr="{title:@inputJson.path}" :duplex="@inputJson.path"> -->
+                            </div>
+                            <!-- <input type="button" id="fileupload" class="btn btn-normal sjbglUploadOpenBtn" value="Seclect"> -->
+                            <div class="form-tip invalid-tip" :if="!@validJson.path">{{@sjbgl_txt.selectUpgrade}}</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.pathUnique">{{@sjbgl_txt.upgradeExists}}</div>
+                        </ms-form-item>
+                        <ms-form-item :class="['sjbglLN', 'form-item textarea-item',!@validJson.updateInfo && 'has-error']">
+                            <label>
+                                <i>* </i>{{@sjbgl_txt.instruction}}</label>
+                            <div class="has-icon">
+                                <textarea class="form-control" :attr="{title:@inputJson.updateInfo}" :duplex="@inputJson.updateInfo" :focus="@handleFocus('updateInfo',$event)"
+                                    :blur="@handleFormat('updateInfo',@updateInfoReg,null,$event)"></textarea>
+                                <i class="fa fa-close" :visible="false" :mousedown="@handleClear('updateInfo',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.updateInfo">{{@sjbgl_txt.enterUpdates}}</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+        <ms-download-tip :widget="{show:@downloadTipShow,plugLink:'/static/flash_player.zip',getShowStatus:getShowStatus}">
+            <div>
+                <p>{{@sjbgl_txt.flash}}</p>
+                <p class="tip-text">
+                    <i class="fa fa-info-circle"></i>{{@sjbgl_txt.closeBrowser}}</p>
+            </div>
+        </ms-download-tip>
+    </div>
+</template>

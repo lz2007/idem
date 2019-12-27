@@ -1,0 +1,13 @@
+.common-input-inner .tree-select-wrap{
+    height: 100% !important;
+    width: 100% !important;
+}
+.common-input-inner .form-control.tree-select-form{
+    height: 100% !important;
+}
+.common-input-inner .tree-select-wrap .tree-select-selected{
+    top: 5px;
+}
+.common-input-inner .tree-select-selected{
+    color: #536b82;
+}

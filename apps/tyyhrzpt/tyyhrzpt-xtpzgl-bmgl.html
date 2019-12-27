@@ -1,0 +1,171 @@
+<template>
+    <div class="bmgl-container">
+        <div class="right-bar">
+            <div class="yhgl-search">
+                <label class="yhgl-dataSpan">所属部门：</label>
+                <div :controller="lineTree" class="yhgl-dataIpt">
+                    <ms-tree-selecting :widget="{tree:@data,selectedKey:@selectedKey, changeTree:@changeTree, Search:true,showSearch:true,wrapId: 'bmgl_orgId',selectedTitle:@selectedTitle,onChange:@handleCheck,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                    <!-- <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'bmgl_orgId', getSelected:@getSelected,selectedTitle:@selectedTitle,onChange:@handleTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting> -->
+
+                </div>
+
+            </div>
+            <div class="right-top-bar">
+                <ul class="rtUl">
+                    <li :if="@bmgl_operation.authority.CREATE">
+                        <button :click="actions('add_rc')" class="menuLi-label" id="addDep">新增部门</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="bmgl-table" :controller="doc-table-remote">
+
+                <ms-table-saika-li :attr="{id: 'bmglTable'}" :class="gmgl-table" :widget="{data:@remoteList,isTitle:true,actions:@actions,onSelect:@handleSelect,onSelectAll:@handleSelectAll,loading:@loading,pagination:@pagination,onChange:@handleTableChange}">
+                    <ms-table-header :attr="{data-order: 1}" :widget="{dataIndex:'orgName',type:'selection',width:10}"></ms-table-header>
+                    <ms-table-header :attr="{data-order: 2}" :widget="{title:'序号',dataIndex:'index',width:10}"></ms-table-header>
+                    <ms-table-header :attr="{data-order: 3}" :widget="{title:'操作',dataIndex:'space',width:20}">
+                        <span :controller="bmgl-operation">
+                            <span class="bmgl-opt-edit" :if="@authority.EDIT" :click="handle('edit')">编辑</span>
+                            <span class="bmgl-opt-delete" :if="@authority.DELETE" :click="handle('delSingle')">删除</span>
+                            <span :if="@authority.OPT_SHOW"> - </span>
+                        </span>
+                    </ms-table-header>
+                    <ms-table-header :attr="{data-order: 4}" :widget="{title:'部门名称',dataIndex:'orgName',width:40}"></ms-table-header>
+                    <ms-table-header :attr="{data-order: 5}" :widget="{title:'部门编号',dataIndex:'orgCode',width:20}"></ms-table-header>
+                </ms-table-saika-li>
+                <div class="bmgl-btn-pos">
+                    <button :click="actions('del')" class="bmgl-del-all-btn">批量删除</button>
+                </div>
+                <ms-pages :widget="{total:@pagination.total,pageSize:@pagination.pageSize,current:@pagination.current,onChange:@handleTableChange,getCurrent:@getCurrent}"></ms-pages>
+
+            </div>
+        </div>
+        <div class="bmgl-dialog">
+            <ms-dialog :widget="{$innerVm: 'dialog_main', show: @show, okText: '确认', cancelText: '取消', onOk: @handleOk, onCancel: @handleCancel}">
+                <div slot="body" ms-skip>
+                    <xmp is="ms-form" :widget="{$form: @$form}">
+                        <div class="add-dialog" ms-if="@isAdd || @isEdit">
+                            <span class="bmgl-spanForm-star">* </span>
+                            <ms-form-item :widget="{label: '部门名称 :'}">
+                                <ms-input :focus="@bmgl_left_focus('orgName')" :blur="@bmgl_left_blur('orgName')" :widget="{value:@dep_name, col: 'orgName'}"></ms-input>
+                            </ms-form-item>
+                            <div class="yhgl-yhtc-prompt">
+                                <span :css="{display:@orgName_display}">
+                                    <span class="fa fa-times yhtc-left-clear yhtc-right-remove yhtc-orgNameIsTrue" :mousedown="@handleClear('Main', 'orgName')"></span>
+                                    <i class="fa fa-exclamation-circle"> 部门名称不能为空</i>
+                                </span>
+                                <span :class="['bmgl-isNull']" :css="{display:@orgName_isNull}">
+                                    <span class="fa fa-times yhtc-left-clear yhtc-right-remove yhtc-orgNameIsTrue" :mousedown="@handleClear('Main', 'orgName')"></span>
+                                    <i class="fa fa-exclamation-circle"> 部门名称不能为空</i>
+                                </span>
+                            </div>
+                            <span class="bmgl-spanForm-star" style="margin-top:18px">* </span>
+                            <ms-form-item :widget="{label:'部门编号 :'}">
+                                <ms-input :focus="@bmgl_left_focus('orgCode')" :blur="@bmgl_left_blur('orgCode')" :widget="{value:@dep_code, col: 'orgCode'}"></ms-input>
+                            </ms-form-item>
+                            <div class="yhgl-yhtc-prompt">
+                                <span :css="{display:@orgCode_display}">
+                                    <span class="fa fa-times yhtc-left-clear yhtc-right-remove yhtc-orgCodeIsTrue" :mousedown="@handleClear('Main', 'orgCode')"></span>
+                                    <i class="fa fa-exclamation-circle"> 只能接受不小于8位数字或者英文组成的编码</i>
+                                </span>
+                                <span :class="['bmgl-isNull']" :css="{display:@orgCode_isNull}">
+                                    <span class="fa fa-times yhtc-left-clear yhtc-right-remove yhtc-orgCodeIsTrue" :mousedown="@handleClear('Main', 'orgCode')"></span>
+                                    <i class="fa fa-exclamation-circle"> 只能接受不小于8位数字或者英文组成的编码</i>
+                                </span>
+                            </div>
+                            <div class="bmgl-edit-order">
+                                <span class="bmgl-spanForm-star orderStar">* </span>
+                                <ms-form-item :widget="{label:'排序 :'}">
+                                    <ms-input :focus="@bmgl_left_focus('order')" :blur="@bmgl_left_blur('order')" ms-on-keypress="@checkOrder" :widget="{value:@dep_order, col: 'orderNo'}"></ms-input>
+                                </ms-form-item>
+                                <div class="yhgl-yhtc-prompt">
+                                    <span :css="{display:@order_display}">
+                                        <span class="fa fa-times yhtc-left-clear yhtc-right-remove yhtc-orgOrderIsTrue" :mousedown="@handleClear('Main', 'orderNo')"></span>
+                                        <i class="fa fa-exclamation-circle"> 排序只能输入小于9999的正整数</i>
+                                    </span>
+                                    <span :class="['bmgl-isNull']" :css="{display:@order_isNull}">
+                                        <span class="fa fa-times yhtc-left-clear yhtc-right-remove yhtc-orgOrderIsTrue" :mousedown="@handleClear('Main', 'orderNo')"></span>
+                                        <i class="fa fa-exclamation-circle"> 排序只能输入小于9999的正整数</i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="delete-dialog" ms-if="@isDeleteSingle">
+                            <span>是否确定删除该部门么？</span>
+                        </div>
+                        <div class="delete-dialog" ms-if="@isDelete">
+                            <span>是否确定删除目前选中的{{@manNum}}个部门</span>
+                        </div>
+                    </xmp>
+                </div>
+            </ms-dialog>
+        </div>
+        <div class="bmgl-dialog-rc">
+            <ms-dialog :widget="{$innerVm: 'dialog_main_rc', show: @show_rc, okText: '确认', cancelText: '取消', onOk: @handleOk_rc, onCancel: @handleCancel_rc}">
+                <div slot="body" ms-skip>
+                    <xmp is="ms-form" :widget="{$form: @$form}">
+                        <div class="add-dialog" ms-if="@isAdd || @isEdit">
+                            <span class="bmgl-spanForm-star">* </span>
+                            <ms-form-item :widget="{label: '部门名称 :'}">
+                                <ms-input :focus="@bmgl_left_focus('orgName')" :blur="@bmgl_left_blur('orgName')" :widget="{value:@dep_name, col: 'orgName'}"></ms-input>
+                            </ms-form-item>
+                            <div class="yhgl-yhtc-prompt">
+                                <span :css="{display:@orgName_display}">
+                                    <span class="fa fa-times yhtc-left-clear yhtc-right-remove yhtc-orgNameIsTrue" :mousedown="@handleClear('Rc', 'orgName')"></span>
+                                    <i class="fa fa-exclamation-circle"> 部门名称不能为空</i>
+                                </span>
+                                <span :class="['bmgl-isNull']" :css="{display:@orgName_isNull}">
+                                    <span class="fa fa-times yhtc-left-clear yhtc-right-remove yhtc-orgNameIsTrue" :mousedown="@handleClear('Rc', 'orgName')"></span>
+                                    <i class="fa fa-exclamation-circle"> 部门名称不能为空</i>
+                                </span>
+                            </div>
+                            <span class="bmgl-spanForm-star" style="margin-top:18px">* </span>
+                            <ms-form-item :widget="{label:'部门编号 :'}">
+                                <ms-input :focus="@bmgl_left_focus('orgCode')" :blur="@bmgl_left_blur('orgCode')" :widget="{value:@dep_code, col: 'orgCode'}"></ms-input>
+                            </ms-form-item>
+                            <div class="yhgl-yhtc-prompt">
+                                <span :css="{display:@orgCode_display}">
+                                    <span class="fa fa-times yhtc-left-clear yhtc-right-remove yhtc-orgCodeIsTrue" :mousedown="@handleClear('Rc', 'orgCode')"></span>
+                                    <i class="fa fa-exclamation-circle"> 只能接受不小于8位数字或者英文组成的编码</i>
+
+                                </span>
+                                <span :class="['bmgl-isNull']" :css="{display:@orgCode_isNull}">
+                                    <span class="fa fa-times yhtc-left-clear yhtc-right-remove yhtc-orgCodeIsTrue" :mousedown="@handleClear('Rc', 'orgCode')"></span>
+                                    <i class="fa fa-exclamation-circle"> 只能接受不小于8位数字或者英文组成的编码</i>
+                                </span>
+                            </div>
+                            <div class="bmgl-edit-order">
+                                <span class="bmgl-spanForm-star orderStar">* </span>
+                                <ms-form-item :widget="{label:'排序 :'}">
+                                    <ms-input :focus="@bmgl_left_focus('order')" :blur="@bmgl_left_blur('order')" ms-on-keypress="@checkOrder" :widget="{value:@dep_order, col: 'orderNo'}"></ms-input>
+                                </ms-form-item>
+                                <div class="yhgl-yhtc-prompt">
+                                    <span :css="{display:@order_display}">
+                                        <span class="fa fa-times yhtc-left-clear yhtc-right-remove yhtc-orgOrderIsTrue" :mousedown="@handleClear('Rc', 'orderNo')"></span>
+                                        <i class="fa fa-exclamation-circle"> 排序只能输入小于9999的正整数</i>
+                                    </span>
+                                    <span :class="['bmgl-isNull']" :css="{display:@order_isNull}">
+                                        <span class="fa fa-times yhtc-left-clear yhtc-right-remove yhtc-orgOrderIsTrue" :mousedown="@handleClear('Rc', 'orderNo')"></span>
+                                        <i class="fa fa-exclamation-circle"> 排序只能输入小于9999的正整数</i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="delete-dialog" ms-if="@isDelete">
+                            <span>是否确定删除该部门么？</span>
+                        </div>
+                    </xmp>
+                </div>
+            </ms-dialog>
+        </div>
+        <div class="success-dialog-confirm">
+            <ms-dialog :widget="{$innerVm: 'success-confirm', show: @show_confirm, okText: '确认', cancelText: '取消', onOk: @handleOk_confirm, onCancel: @handleCancel_confirm}">
+                <div slot="body" ms-skip>
+                    <div class="delete-dialog">
+                        <span>{{@confirmText}}</span>
+                    </div>
+                </div>
+            </ms-dialog>
+        </div>
+        <br style="clear:both;">
+    </div>
+</template>

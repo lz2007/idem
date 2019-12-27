@@ -1,0 +1,179 @@
+<template>
+    <div class="sszhxt-gjgl-gjsz" :class="[@extra_class ? 'gjsz_en' : '']">
+        <h4>{{@gjsz_txt.deviceAlarmTypes}}</h4>
+        <div class="gjszInlne-block-container">
+            <div class="radio-inline">
+                <span class="gjszInlne-block">{{@gjsz_txt.power}}</span>
+                <div class="radio-inline" style="width: 680px;">
+                    <label class="radio-inline radio-inline-span">{{@gjsz_txt.Priority}}:</label>
+                    <label class="radio-inline ">
+                        <input type="radio" name="radio1" value='0' :duplex="@deviceBattery">
+                        <span class="URGENT">{{@gjsz_txt.Urgent}}</span>
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="radio1" value="1" :duplex="@deviceBattery">
+                        <span class="IMPORTANT">{{@gjsz_txt.Important}}</span>
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="radio1" value="2" :duplex="@deviceBattery">
+                        <span class="GENERAL">{{@gjsz_txt.General}}</span>
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="radio1" value="3" :duplex="@deviceBattery">
+                        <span class="PROMPT">{{@gjsz_txt.Note}}</span>
+                    </label>
+                </div>
+            </div>
+            <div>
+                <div class="radio-inline">
+                    <span class="gjszInlne-block">{{@gjsz_txt.StorageCapacity}}</span>
+                    <div class="radio-inline" style="width: 680px;">
+                        <label class="radio-inline radio-inline-span">{{@gjsz_txt.Priority}}:</label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio2" value='0' :duplex="@deviceStorage">
+                            <span class="URGENT">{{@gjsz_txt.Urgent}}</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio2" value="1" :duplex="@deviceStorage">
+                            <span class="IMPORTANT">{{@gjsz_txt.Important}}</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio2" value="2" :duplex="@deviceStorage">
+                            <span class="GENERAL">{{@gjsz_txt.General}}</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio2" value="3" :duplex="@deviceStorage">
+                            <span class="PROMPT">{{@gjsz_txt.Note}}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4>{{@gjsz_txt.StateAlarmTypes}}</h4>
+        <div class="gjszInlne-block-container">
+            <div class="radio-inline">
+                <span class="gjszInlne-block">{{@gjsz_txt.online}}</span>
+                <div class="radio-inline" style="width: 680px;">
+                    <label class="radio-inline radio-inline-span">{{@gjsz_txt.Priority}}:</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="radio3" value="0" :duplex="@deviceOnline">
+                        <span class="URGENT">{{@gjsz_txt.Urgent}}</span>
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="radio3" value="1" :duplex="@deviceOnline">
+                        <span class="IMPORTANT">{{@gjsz_txt.Important}}</span>
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="radio3" value="2" :duplex="@deviceOnline">
+                        <span class="GENERAL">{{@gjsz_txt.General}}</span>
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="radio3" value="3" :duplex="@deviceOnline">
+                        <span class="PROMPT">{{@gjsz_txt.Note}}</span>
+                    </label>
+                </div>
+            </div>
+            <div>
+                <div class="radio-inline">
+                    <span class="gjszInlne-block">{{@gjsz_txt.offline}}</span>
+                    <div class="radio-inline" style="width: 680px;">
+                        <label class="radio-inline radio-inline-span">{{@gjsz_txt.Priority}}:</label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio4" value="0" :duplex="@deviceOutline">
+                            <span class="URGENT">{{@gjsz_txt.Urgent}}</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio4" value="1" :duplex="@deviceOutline">
+                            <span class="IMPORTANT">{{@gjsz_txt.Important}}</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio4" value="2" :duplex="@deviceOutline">
+                            <span class="GENERAL">{{@gjsz_txt.General}}</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio4" value="3" :duplex="@deviceOutline">
+                            <span class="PROMPT">{{@gjsz_txt.Note}}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4>{{@gjsz_txt.WorkAlarmTypes}}</h4>
+        <div class="gjszInlne-block-container">
+            <div class="radio-inline">
+                <span class="gjszInlne-block">{{@gjsz_txt.SOSAlarm}}</span>
+                <div class="radio-inline" style="width: 680px;">
+                    <label class="radio-inline radio-inline-span">{{@gjsz_txt.Priority}}:</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="radio5" value="0" :duplex="@deviceSOS">
+                        <span class="URGENT">{{@gjsz_txt.Urgent}}</span>
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="radio5" value="1" :duplex="@deviceSOS">
+                        <span class="IMPORTANT">{{@gjsz_txt.Important}}</span>
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="radio5" value="2" :duplex="@deviceSOS">
+                        <span class="GENERAL">{{@gjsz_txt.General}}</span>
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="radio5" value="3" :duplex="@deviceSOS">
+                        <span class="PROMPT">{{@gjsz_txt.Note}}</span>
+                    </label>
+                </div>
+            </div>
+            <div :if="!@extra_class">
+                <div class="radio-inline">
+                    <span class="gjszInlne-block">{{@gjsz_txt.faceDetection}}</span>
+                    <div class="radio-inline" style="width: 680px;">
+                        <label class="radio-inline radio-inline-span">{{@gjsz_txt.Priority}}:</label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio6" value="0" :duplex="@faceMonitoring">
+                            <span class="URGENT">{{@gjsz_txt.Urgent}}</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio6" value="1" :duplex="@faceMonitoring">
+                            <span class="IMPORTANT">{{@gjsz_txt.Important}}</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio6" value="2" :duplex="@faceMonitoring">
+                            <span class="GENERAL">{{@gjsz_txt.General}}</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio6" value="3" :duplex="@faceMonitoring">
+                            <span class="PROMPT">{{@gjsz_txt.Note}}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div :if="!@extra_class">
+                <div class="radio-inline">
+                    <span class="gjszInlne-block">{{@gjsz_txt.carDetection}}</span>
+                    <div class="radio-inline" style="width: 680px;">
+                        <label class="radio-inline radio-inline-span">{{@gjsz_txt.Priority}}:</label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio7" value="0" :duplex="@carMonitoring">
+                            <span class="URGENT">{{@gjsz_txt.Urgent}}</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio7" value="1" :duplex="@carMonitoring">
+                            <span class="IMPORTANT">{{@gjsz_txt.Important}}</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio7" value="2" :duplex="@carMonitoring">
+                            <span class="GENERAL">{{@gjsz_txt.General}}</span>
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="radio7" value="3" :duplex="@carMonitoring">
+                            <span class="PROMPT">{{@gjsz_txt.Note}}</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buttonContainer">
+            <button type="button" class="btn " :click="@save">{{@gjsz_txt.save}}</button>
+            <button type="button" class="btn " :click="@reset">{{@gjsz_txt.reset}}</button>
+        </div>
+    </div>
+</template>

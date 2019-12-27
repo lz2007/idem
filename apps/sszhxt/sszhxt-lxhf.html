@@ -1,0 +1,326 @@
+<!-- 实时指挥系统--录像回放 -->
+<!-- caojiacong -->
+<template>
+    <div class="lxhf" :controller="lxhf-vm">
+        <div class="lxhf-side-bar" :visible="@showSide">
+            <!-- <ul class="side-bar-title" :click="@handleModeChange">
+                <li :class="@sidebarMode == 0 && 'active'">{{@sszhxt_language.device}}</li>
+                <li :class="@sidebarMode == 1 && 'active'">{{@sszhxt_language.police}}</li>
+            </ul> -->
+            <div class="side-bar-main">
+                <div class="search-box" :class="@extra_class_dialog ? '' : 'search-box-zhcn'">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+                        <ms-form-item :widget="{label:@sszhxt_language.department}"
+                            :class="[@extra_class_dialog ? 'form-item en' : 'form-item']">
+                            <ms-tree-selecting :class="[@extra_class_dialog ? 'en' : '']"
+                                :widget="{tree:@orgData, showSearch:true, hasIframe:true, wrapId: 'lxhf-tree-select-1', getSelected:@getSelected, selectedKey:@dataJson ? @dataJson.orgId : '', selectedTitle:@dataJson ? @dataJson.orgName : '', onChange:@handleTreeChange, extraExpandHandle:@extraExpandHandle}">
+                            </ms-tree-selecting>
+                        </ms-form-item>
+                        <!-- <div :if="@sidebarMode == 0">
+                            <ms-form-item :widget="{label:@sszhxt_language.device}" :class="[@extra_class_dialog ? 'form-item en' : 'form-item']">
+                                <div :class="[@extra_class_dialog ? 'has-icon-input-wrap en' : 'has-icon-input-wrap']">
+                                    <input type="text" class="form-control key"
+                                        :duplex="@deviceKey" :keypress="@handlePress" :focus="@handleQueryFocus" :blur="@handleQueryBlur">
+                                    <i class="input-close" :visible="false" :mousedown="@handleQueryClear('deviceKey',$event)|prevent"></i>
+                                </div>
+                            </ms-form-item>
+                        </div> -->
+                        <ms-form-item :class="[@extra_class_dialog ? 'form-item en' : 'form-item']">
+                            <div class="select-label" :class="@extra_class_dialog ? 'select-label-en' : ''">
+                                <div :click="@selectOptionChoose">
+                                    <span :visible="@sidebarMode ==1">{{@sszhxt_language.nameID}}</span>
+                                    <!-- <span :visible="@sidebarMode == 0">{{@sszhxt_language.device}}</span> -->
+                                    <!-- <span class="select-down select-icon" :visible="@selectOptionhide"></span> -->
+                                    <!-- <span class="select-up select-icon" :visible="!@selectOptionhide"></span> -->
+                                </div>
+                                <!-- <div class="select-option" :visible="!@selectOptionhide">
+                                    <span :class="@sidebarMode == 1 && 'active'"
+                                        :click="changeSelect(1)|stop">{{@sszhxt_language.police}}</span>
+                                    <span :class="@sidebarMode == 0 && 'active'"
+                                        :click="changeSelect(0)|stop">{{@sszhxt_language.device}}</span>
+                                </div> -->
+                            </div>
+                            <div :class="[@extra_class_dialog ? 'has-icon-input-wrap en' : 'has-icon-input-wrap']">
+                                <input :if="@sidebarMode ==1" type="text" class="form-control setWidth"
+                                    :attr="{placeholder:@sszhxt_language.enterNameID || ''}" :duplex=" @userKey"
+                                    :keypress="@handlePress" :focus="@handleQueryFocus" :blur="@handleQueryBlur">
+                                <input :if="@sidebarMode == 0" type="text" class="form-control setWidth"
+                                    :attr="{placeholder:@sszhxt_language.enterDeviceNameID|| ''}" :duplex="@deviceKey"
+                                    :keypress="@handlePress" :focus="@handleQueryFocus" :blur="@handleQueryBlur">
+                                <i class="input-close" :class="@extra_class_dialog ? '' : 'input-close-zhcn'"
+                                    :visible="false" :mousedown="@handleQueryClear($event)|prevent"></i>
+                            </div>
+                        </ms-form-item>
+                        <ms-form-item :widget="{label:@sszhxt_language.startTime}"
+                            :class="[@extra_class_dialog ? 'form-item en' : 'form-item']" :click="handleDateClick">
+                            <ms-datepicker
+                                :widget="{ col: 'startTime', placeholder: @sszhxt_language.startTime,
+                                value: @queryTime,format:'YYYY-MM-DD HH:mm:ss',
+                                        width: @extra_class_dialog ? 153:180, display: 'relative', className: 'sszhxt_lxhf_datapicker', languageSelect: @extra_class_dialog ? 'en' : ''}">
+                            </ms-datepicker>
+                        </ms-form-item>
+                        <ms-form-item :widget="{label:@sszhxt_language.endTime}"
+                            :class="[@extra_class_dialog ? 'form-item en' : 'form-item']" :click="handleDateClick">
+                            <ms-datepicker
+                                :widget="{ col: 'endTime', placeholder: @sszhxt_language.endTime,
+                                value: @queryTime2,format:'YYYY-MM-DD HH:mm:ss',
+                                        width: @extra_class_dialog ? 153:180, display: 'relative', className: 'sszhxt_lxhf_datapicker', languageSelect: @extra_class_dialog ? 'en' : ''}">
+                            </ms-datepicker>
+                        </ms-form-item>
+                    </ms-form>
+                    <button type="button" :class="@useSearch ? ' ': 'btnDisabled'"
+                        :click="@handleQuery">{{@sszhxt_language.query}}</button>
+                </div>
+                <ul class="video-preview-list" :scroll="@handleListScroll">
+                    <li :if="@isNull" class="list-null">{{@sszhxt_language.noResult}}</li>
+                    <li :if="@sidebarMode===0" :for="($index,el) in @videoPreData" class="video-preview-item"
+                        :class="@activeVideo===$index && 'active-video'" :click="@tabPoliceVideo(el,$event)">
+                        <!-- <img src="#" alt="" class="video-thumbnail"> -->
+                        <ul class="video-info">
+                            <li :attr="{title:@el.deviceName || ''}">
+                                <span>{{@sszhxt_language.deviceName}}：</span>
+                                {{@el.deviceName | fillterEmpty}}
+                            </li>
+                            <li :attr="{title:@el.deviceId || ''}">
+                                <span>{{@sszhxt_language.deviceID}}：</span>
+                                {{@el.deviceId | fillterEmpty}}
+                            </li>
+                            <li :attr="{title:@el.formatStartTime || ''}">
+                                <span>{{@sszhxt_language.takenDateandTime}}：</span>
+                                {{@el.formatStartTime | fillterEmpty}}
+                            </li>
+                            <li :attr="{title:@el.durationStr || ''}">
+                                <span>{{@sszhxt_language.videoLength}}：</span>
+                                {{@el.durationStr | fillterEmpty}}
+                            </li>
+                        </ul>
+                    </li>
+                    <li :if="@sidebarMode===1" :for="($index,el) in @videoPreData" class="video-preview-item"
+                        :class="@activeVideo===$index && 'active-video'" :click="@tabPoliceVideo(el,$event)">
+                        <!-- <img src="#" alt="" class="video-thumbnail"> -->
+                        <ul class="video-info">
+                            <li :attr="{title:@el.userCode || ''}">
+                                <span>{{@sszhxt_language.userCode}}：</span>
+                                {{@el.userCode | fillterEmpty}}
+                            </li>
+                            <li :attr="{title:@el.userName || ''}">
+                                <span>{{@sszhxt_language.userName}}：</span>
+                                {{@el.userName | fillterEmpty}}
+                            </li>
+                            <li :attr="{title:@el.formatStartTime || ''}">
+                                <span>{{@sszhxt_language.takenDateandTime}}：</span>
+                                {{@el.formatStartTime | fillterEmpty}}
+                            </li>
+                            <li :attr="{title:@el.durationStr || ''}">
+                                <span>{{@sszhxt_language.videoLength}}：</span>
+                                {{@el.durationStr| fillterEmpty}}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div style="position: absolute">
+            <div class="lxhf-side-btn" :click="@handleSideBtn" :class="@showSide ? 'lxhf-side-hide' : 'lxhf-side-show'">
+            </div>
+        </div>
+        <div class="lxhf-main-container">
+            <div class="graphic-container clearfix">
+                <div class="lxhf-video" style="position:relative;">
+                    <div class="video-ocx-wrap" :css="{height:@videoHeight}">
+                        <!--<object :if="!@isie" id="video-ocx" CLSID="{455791d4-4095-4f70-b2b3-f5c424f25ad9}" TYPE="application/x-itst-activex" Event_OcxEventProxy="_onOcxEventProxy"-->
+                        <!--width="100%" height="100%"></object>-->
+                        <embed :if="!@isie" id="video-ocx" type="application/npGSVideoPlugin-plugin"
+                            name="npGSVideoPlugin" width="100%" height="100%">
+                        <object :if="@isie" id="video-ocx" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9"
+                            width="100%" height="100%"></object>
+                        <!-- <object id="video-ocx" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9" width="100%" height="100%"></object> -->
+                    </div>
+                    <div class="video-tool-wrap">
+                        <ul class="video-tool-bar" :visible="@activeVideo !==''">
+                            <li>
+                                <div class="sound-bar-wrap">
+                                    <div class="sound" :attr="{title: @spjk_txt.soundVolume}"></div>
+                                    <div class="sound-bar">
+                                        <div class="sound-level-wrap" :click="@handleSoundClick| prevent">
+                                            <span class="sound-level" :css="{'right':(100 - @soundLevel)+'%'}"></span>
+                                            <div class="sound-btn-wrap">
+                                                <span class="sound-btn" :mousedown="handleSoundMouseDown|prevent"
+                                                    :css="{'left': @soundLevel + '%'}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="fa cut" :attr="{title:@sszhxt_language_main.cut}"
+                                    :click="@handleCut"></span>
+                            </li>
+                            <li>
+                                <span class="fa proportion" :attr="{title:@sszhxt_language_main.proportion}"></span>
+                            </li>
+                            <li>
+                                <span class="fa enlarge" :attr="{title:@sszhxt_language_main.enlarge}"></span>
+                            </li>
+                            <li>
+                                <span class="fa step-backward" :attr="{title:@sszhxt_language_main.stepBack}"
+                                    :click="@handleStepPre"></span>
+                            </li>
+                            <li>
+                                <span class="fa fast-backward" :attr="{title:@sszhxt_language_main.slowPlay}"
+                                    :click="@handleSlower"></span>
+                            </li>
+                            <li>
+                                <span class="fa" :class="@playing ? 'pause' : 'play'"
+                                    :attr="{ 'title':@playing? @sszhxt_language_main.pause : @sszhxt_language_main.play}"
+                                    :click="@handlePlay"></span>
+                            </li>
+                            <li>
+                                <span class="fa stop" :attr="{title:@sszhxt_language_main.stop}"
+                                    :click="@handleStop"></span>
+                            </li>
+                            <li>
+                                <span class="fa fast-forward" :attr="{title:@sszhxt_language_main.fastPlay}"
+                                    :click="@handleFaster"></span>
+                            </li>
+                            <li>
+                                <span class="fa step-forward" :attr="{title:@sszhxt_language_main.stepForward}"
+                                    :click="@handleStepNext"></span>
+                            </li>
+                            <li class="video-speed">
+                                <span>{{@sszhxt_language_main.singlePlay}}</span>
+                            </li>
+                            <li class="video-speed">
+                                <span :if="@extra_class_dialog">{{@speed}}x{{@sszhxt_language_main.currentRate}}</span>
+                                <span :if="!@extra_class_dialog">{{@speed}}{{@sszhxt_language_main.beisu}}</span>
+                            </li>
+                            <li class="video-full">
+                                <span class="fa full" :click="@handleMaxView"></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- <div class="lxhf-map" id="lxhf-map">
+                    <div class="map-loading">
+                        <span class="fa fa-spinner fa-pulse"></span>正在加载</div>
+                </div> -->
+            </div>
+            <div class="label-container">
+                <div class="label-title">
+                    <span>{{@sszhxt_language.mark}}</span>
+                    <button type="button" class="btn" :click="@handleSaveMark"
+                        :visible="@isEdit">{{@sszhxt_language.save}}</button>
+                    <button type="button" class="btn" :click="@handleEditMark"
+                        :visible="!@isEdit && !@labelNull && @activeVideo!==''">{{@sszhxt_language.edit}}</button>
+                    <button type="button" class="btn" :click="@handleEditMark"
+                        :visible="!@isEdit && @labelNull">{{@sszhxt_language.add}}</button>
+                </div>
+                <div class="label-content">
+                    <div class="label-form" :if="@isEdit">
+                        <!-- MarkType字段    -->
+                        <!-- <ms-form-item :class="[ 'form-item', (@labelTypeOptions.length===0 && 'disabled'),!@validJson.labelType
+                                        && 'has-error']">
+                                <label>
+                                    <i>* </i>{{@sszhxt_language.markType}}:</label>
+                                <ms-select :widget="{col: 'labelType',options:@labelTypeOptions, value:[@labelTypeOptions.length> 0 ? @labelInfo.labelType : ''], displayValue:[@labelTypeOptions.length === 0 ? @sszhxt_language.notMarkType
+                                    : @sszhxt_language.inputMarkType], onChange:@handleMarkTypeChnage}"></ms-select>
+                                <div class="form-tip invalid-tip" :if="!@validJson.labelType">{{@sszhxt_language.inputMarkType}}</div>
+                            </ms-form-item> -->
+                        <ms-form :widget="{$form:@$labelForm,inline:true}">
+                            <ms-form-item :class="['form-item',!@validJson.location && 'has-error']">
+                                <label>
+                                    <i>* </i>{{@sszhxt_language.takenPlace}}:</label>
+                                <div class="has-icon has-icon-input-wrap">
+                                    <input type="text" class="form-control" :attr="{title:@labelInfo.location}"
+                                        :duplex="@labelInfo.location" :focus="@handleFocus('location',$event)"
+                                        :blur="@handleFormat('location',null,$event)">
+                                    <i class="input-close" :visible="false"
+                                        :mousedown="@handleClear('location',$event)|prevent"></i>
+                                </div>
+                                <div class="form-tip invalid-tip" :if="!@validJson.location">
+                                    {{@sszhxt_language.inputLoc}}</div>
+                            </ms-form-item>
+                            <ms-form-item :class="['form-item',!@validJson.labelTime && 'has-error']"
+                                :click="handleEditDateClick">
+                                <label>
+                                    <i>* </i>{{@sszhxt_language.takenTime}}:</label>
+                                <ms-datepicker :widget="{
+                                                        col:'labelTime',
+                                                        placeholder:'',
+                                                        width:'260',
+                                                        value: @labelInfo.labelTime,
+                                                        direction:'up',
+                                                        format:'YYYY-MM-DD HH:mm:ss',
+                                                        showTime: true,
+                                                        onChange: @handleLabelTimeChange,
+                                                        className: 'sszhxt_lxhf_datapicker',
+                                                        languageSelect: @extra_class_dialog ? 'en' : ''
+                                                    }" :attr="{placeholder:@sszhxt_language.takenTime || ''}">
+                                </ms-datepicker>
+                                <div class="form-tip invalid-tip" :if="!@validJson.labelTime">
+                                    {{@sszhxt_language.inputTime}}</div>
+                            </ms-form-item>
+                            <ms-form-item :class="['form-item','textarea-item',!@validJson.description && 'has-error']">
+                                <label>
+                                    <i>* </i>{{@sszhxt_language.describe}}:</label>
+                                <div class="has-icon">
+                                    <textarea class="form-control" :attr="{title:@labelInfo.description}"
+                                        :duplex="@labelInfo.description" :focus="@handleFocus('description',$event)"
+                                        :blur="@handleFormat('description',@descriptionReg,$event)"></textarea>
+                                    <i class="input-close" :visible="false"
+                                        :mousedown="@handleClear('description',$event)|prevent"></i>
+                                </div>
+                                <div class="form-tip invalid-tip" :if="!@validJson.description">
+                                    {{@sszhxt_language.inputDesc}}</div>
+                            </ms-form-item>
+                        </ms-form>
+                    </div>
+                    <div class="label-infos" :if="!@isEdit && !@labelNull">
+                        <!-- <div class="label-info-item">
+                            <label>{{@sszhxt_language.markType}}：</label>
+                            <div class="label-item-detail">
+                                <span :attr="{'origin-title':(@activeVideo !== '' ? @labelTypeName : ''),'data-toggle':'popover'}">{{(@activeVideo
+                                    !== '' ? @labelTypeName : '-') | fillterEmpty}}</span>
+                            </div>
+                        </div> -->
+                        <div class="label-info-item">
+                            <label>{{@sszhxt_language.takenPlace}}：</label>
+                            <div class="label-item-detail">
+                                <span :attr="{'origin-title':@labelInfo.location || '','data-toggle':'popover'}">{{@labelInfo.location
+                                    | fillterEmpty}}</span>
+                            </div>
+                        </div>
+                        <div class="label-info-item">
+                            <label>{{@sszhxt_language.takenTime}}：</label>
+                            <div class="label-item-detail">
+                                <span :attr="{'origin-title':@labelInfo.labelTime || '','data-toggle':'popover'}">{{@labelInfo.labelTime
+                                    | fillterEmpty}}</span>
+                            </div>
+                        </div>
+                        <div class="label-info-item">
+                            <label>{{@sszhxt_language.describe}}：</label>
+                            <div class="label-item-detail">
+                                <span :attr="{'origin-title':@labelInfo.description || '','data-toggle':'popover'}">{{@labelInfo.description
+                                    | fillterEmpty}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="label-infos" :if="!@isEdit && @labelNull">
+                        <p>{{@sszhxt_language.notMark}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ms-download-tip :widget="{show:@downloadTipShow,getShowStatus:getShowStatus}">
+            <div>
+                <p>{{@tipText}}
+                    <br />
+                    <span :if="@showtip">{{@sszhxt_language_main.downloadConfirm}}</span>
+                </p>
+                <p class="tip-text">
+                    <i class="fa fa-info-circle"></i>{{@sszhxt_language_main.rebootBrowser}}</p>
+            </div>
+        </ms-download-tip>
+    </div>
+</template>

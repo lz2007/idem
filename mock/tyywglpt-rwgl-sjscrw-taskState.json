@@ -1,0 +1,29 @@
+{
+  "code": 0,
+  "msg": "成功！",
+"data": {
+"count": 1, 
+"storageInfos": [ {
+        "rid": "123456",
+        "name": "string",
+        "port": 0,
+        "ip": "8888",
+        "orgRid": "123",
+        "orgName": "123",
+        "status": 2,
+        "totalCapacity": 300,
+        "remainCapacity": 300,
+        "uploadUrl": "string",
+        "downloadUrl": "string",
+        "pointPlay": "string",
+        "worktimeBegin": "00:00:00",
+        "worktimeEnd": "23:00:00",
+        "account": "string",
+        "password": "string",
+        "expireDaysNormal": 1,
+        "expireDaysSpecial": 1
+}]
+
+}
+
+}

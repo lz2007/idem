@@ -1,0 +1,42 @@
+{
+    "code": 0,
+    "msg": "成功！",
+    "data": [
+        {
+            "code": "LEVAM_AJKP_ZQPDZFJLY",
+            "name": "正确佩戴执法记录仪",
+            "desc": "没有描述",
+            "order": 46,
+            "createdTime": 1514169646000,
+            "createBy": "admin"
+        }, {
+            "code": "LEVAM_AJKP_YSPZLZSYX",
+            "name": "音视频资料真实有效 ",
+            "desc": "没有描述",
+            "order": 47,
+            "createdTime": 1514169646000,
+            "createBy": "admin"
+        }, {
+            "code": "LEVAM_AJKP_GZQLYRW",
+            "name": "告知权利与任务 ",
+            "desc": "没有描述",
+            "order": 48,
+            "createdTime": 1514169646000,
+            "createBy": "admin"
+        }, {
+            "code": "LEVAM_AJKP_SLGJCJ",
+            "name": "摄录关键场景 ",
+            "desc": "没有描述",
+            "order": 49,
+            "createdTime": 1514169646000,
+            "createBy": "admin"
+        }, {
+            "code": "GMD1301040020180205111019ffeffffff",
+            "name": "测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2测试测试2",
+            "desc": null,
+            "order": 56,
+            "createdTime": 1517800220000,
+            "createBy": "admin"
+        }
+    ]
+}

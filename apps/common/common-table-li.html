@@ -1,0 +1,58 @@
+<template>
+    <div>
+        <div class="table-saika-li" ms-attr="{id:@$id}">
+            <ul class="table-saika-thead" :css="{paddingRight:@paddingRight}">
+                <li :if="@needSelection" :class="['col-'+@selectWidth]">
+                    <ms-checkbox :widget="{checked:@isAllChecked,onChange:@handleCheckAll}" :class="['active',@isAllSelected ? '' : 'visibility']"></ms-checkbox>
+                </li>
+                <li :for="el in @columns" :class="el.width ? ['col-'+el.width]:''" :attr="@headerPopover ? {rel:'drevil',tdval:el.title}:''">{{el.title}}</li>
+            </ul>
+            <ul class="table-saika-tbody">
+                <li :for="($index, record) in @data_01">
+                    <div class="tbody" :if="@needSelection" :class="['table-saika-checkbox','col-'+@selectWidth]">
+                        <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1,onChange:function(){@handleCheck(arguments[0].target.checked,record)}}"></ms-checkbox>
+                    </div>
+                    <div class="tbody" :for="col in @columns" :class="[col.className ?'table-saika-'+col.className : '',col.width ? ['col-'+col.width]:'']">
+                        <div class="" :attr="@isTitle && record[col.dataIndex] && (record[col.dataIndex] != '-') ? {rel:'drevil',tdval:(col.promptBox ? record[col.promptBox]:record[col.dataIndex])}:''"
+                            :html="col.template"></div>
+                        <div :if="col.promptBox" :attr="{title:record[col.promptBox]}" class="trigon"></div>
+                    </div>
+                </li>
+                <li :for="($index, record) in @data_02">
+                    <div class="tbody" :if="@needSelection" :class="['table-saika-checkbox','col-'+@selectWidth]">
+                        <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1,onChange:function(){@handleCheck(arguments[0].target.checked,record)}}"></ms-checkbox>
+                    </div>
+                    <div class="tbody" :for="col in @columns" :class="[col.className ?'table-saika-'+col.className : '',col.width ? ['col-'+col.width]:'']">
+                        <div class="" :attr="@isTitle && record[col.dataIndex] && (record[col.dataIndex] != '-') ? {rel:'drevil',tdval:(col.promptBox ? record[col.promptBox]:record[col.dataIndex])}:''"
+                            :html="col.template"></div>
+                        <div :if="col.promptBox" :attr="{title:record[col.promptBox]}" class="trigon"></div>
+                    </div>
+                </li>
+                <li :for="($index, record) in @data_03">
+                    <div class="tbody" :if="@needSelection" :class="['table-saika-checkbox','col-'+@selectWidth]">
+                        <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1,onChange:function(){@handleCheck(arguments[0].target.checked,record)}}"></ms-checkbox>
+                    </div>
+                    <div class="tbody" :for="col in @columns" :class="[col.className ?'table-saika-'+col.className : '',col.width ? ['col-'+col.width]:'']">
+                        <div class="" :attr="@isTitle && record[col.dataIndex] && (record[col.dataIndex] != '-') ? {rel:'drevil',tdval:(col.promptBox ? record[col.promptBox]:record[col.dataIndex])}:''"
+                            :html="col.template"></div>
+                        <div :if="col.promptBox" :attr="{title:record[col.promptBox]}" class="trigon"></div>
+                    </div>
+                </li>
+                <li :for="($index, record) in @data_04">
+                    <div class="tbody" :if="@needSelection" :class="['table-saika-checkbox','col-'+@selectWidth]">
+                        <ms-checkbox :widget="{checked:@checked.indexOf(record[@key])!=-1,onChange:function(){@handleCheck(arguments[0].target.checked,record)}}"></ms-checkbox>
+                    </div>
+                    <div class="tbody" :for="col in @columns" :class="[col.className ?'table-saika-'+col.className : '',col.width ? ['col-'+col.width]:'']">
+                        <div class="" :attr="@isTitle && record[col.dataIndex] && (record[col.dataIndex] != '-') ? {rel:'drevil',tdval:(col.promptBox ? record[col.promptBox]:record[col.dataIndex])}:''"
+                            :html="col.template"></div>
+                        <div :if="col.promptBox" :attr="{title:record[col.promptBox]}" class="trigon"></div>
+                    </div>
+                </li>
+            </ul>
+            <div class="table-saika-loading" :css="{display:@display}">
+                <span class="loadingSpan">结果加载中</span>
+            </div>
+            <div :if="!@loading && !@data.length" class="noData">暂无数据</div>
+        </div>
+    </div>
+</template>

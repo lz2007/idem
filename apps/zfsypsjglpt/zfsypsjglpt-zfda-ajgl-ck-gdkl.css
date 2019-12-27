@@ -1,0 +1,136 @@
+/* topbar -start */
+
+.zfsypsjglpt-zfda-ajgl-gdkl {
+    display: block;
+    float: left;
+    position: absolute;
+    left: 186px;
+    right: 0px;
+    top: 135px;
+    height: 82%;
+    min-width: 1163px;
+    padding-right: 15px;
+    padding-left: 10px;
+}
+
+.zfsypsjglpt-zfda-ajgl-gdkl .topbar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-color: #f3fbff;
+    line-height: 30px;
+}
+
+.zfsypsjglpt-zfda-ajgl-gdkl .topbar .infos {
+    margin-left: 8px;
+}
+
+#fileupload {
+    z-index: 1;
+    position: absolute;
+    right: 0;
+    background: #0078d7;
+    color: #fff;
+    line-height: 15px;
+    cursor: pointer;
+}
+
+#fileupload-container {
+    position: absolute;
+    right: 0;
+    width: 110px;
+    top: 0;
+    height: 30px;
+    overflow: hidden;
+    z-index: 0;
+}
+
+#fileupload-container #fileupload-file {
+    font-size: 999px;
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+/* topbar -end */
+
+.zfsypsjglpt-zfda-ajgl-gdkl .ajgl-tabCont {
+    position: relative;
+    top: 42px;
+    height: 80%;
+}
+
+.zfsypsjglpt-zfda-ajgl-gdkl .ajgl-tabCont .col-25 {
+    width: 25%;
+}
+
+.zfsypsjglpt-zfda-ajgl-gdkl .ajgl-tabCont .ane-checkbox input[type="checkbox"]+.text::before {
+    margin-bottom: 5px;
+    min-width: 14px;
+    height: 14px;
+    line-height: 16px;
+}
+
+.zfsypsjglpt-zfda-ajgl-gdkl .kelu {
+    position: relative;
+    top: 8%;
+    overflow: hidden;
+    height: 16%;
+}
+
+.zfsypsjglpt-zfda-ajgl-gdkl .kelu .kelutools {
+    width: 50%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.zfsypsjglpt-zfda-ajgl-gdkl .kelu .progress-bar-success {
+    background-color: #337ab7;
+}
+
+.zfsypsjglpt-zfda-ajgl-gdkl .kelu .Speed {
+    position: absolute;
+    right: -24px;
+    width: 20px;
+    height: 20px;
+    color: #077ce1;
+    font-weight: 500;
+}
+
+.zfsypsjglpt-zfda-ajgl-gdkl .kelu .kelu-loading {
+    color: #077ce1;
+    font-weight: 500;
+}
+
+.zfsypsjglpt-zfda-ajgl-gdkl .kelu .item-kulu {
+    -webkit-flex: 0 0 18%;
+    flex: 0 0 18%;
+}
+
+.zfsypsjglpt-zfda-ajgl-gdkl .kelu .item-keluimg {
+    -webkit-flex: 0 0 15%;
+    flex: 0 0 15%;
+}
+
+.zfsypsjglpt-zfda-ajgl-gdkl .kelu .item-progress {
+    -webkit-flex: 1;
+    flex: 1;
+    margin-top: 25px;
+    position: relative;
+}
+
+.zfsypsjglpt-zfda-ajgl-gdkl .kelu .kelu-btn {
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    background-color: #0078d7;
+    padding: 14px 32px;
+}

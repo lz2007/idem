@@ -1,0 +1,93 @@
+<template>
+    <div class="top-form" :visible="@authority.SEARCH">
+        <xmp is="ms-form" :widget="{$form:@$searchForm,inline:true}">
+
+            <div class="top-form-inline">
+                <span style="margin-left: 13px;">执勤部门:</span>
+                <div class="inline-component">
+                    <ms-tree-selecting :widget="{col:'orgPath',tree:@orgData, showSearch:true, wrapId: 'zfygl-tree-select-jycx', getSelected:@getSelected, selectedKey:@dataJson ? @dataJson.orgId : '', selectedTitle:@dataJson ? @dataJson.orgName : '', onChange:@handleTreeChange, extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                    <i class="fa includeChild" :click="@clickincludeChild(el,key) | stop" :class="[(includeChild?'fa-check-square checked':'fa-square-o')]">
+                        <span class="text">包含子部门</span>
+                    </i>
+                </div>
+                <ms-form-item :widget="{label: '姓名/警号:'}" :css="{'margin-left': '-6px'}">
+                    <ms-input :widget="{col: 'userCode', value:@userCode}" :focus="@input_focus" :blur="@input_blur"></ms-input>
+                    <span class="fa fa-close zfda-sgcl-jtwf-right-close" :mousedown="(@userCode='')"></span>
+                </ms-form-item>
+                <span class="bjsj">违法时间:</span>
+                <div class="inline-component">
+                    <ms-select :widget="{
+                                        col:'timeMode',
+                                        value: @timeMode,
+                                        onChange:@time_Change
+                                    }">
+                        <ms-select-option :widget="{value:1}">本周</ms-select-option>
+                        <ms-select-option :widget="{value:2}">本月</ms-select-option>
+                        <ms-select-option :widget="{value:3}">自定义时间</ms-select-option>
+                    </ms-select>
+                </div>
+
+                <div :visible="@isDuration" class="inline-component timeCover">
+                    <ms-form-item :widget="{label:'开始时间:'}">
+                        <ms-datepicker :widget="{
+                                        col:'wfStartTime',
+                                        placeholder:'请选择开始时间',
+                                        value: @wfStartTime,
+                                    }"></ms-datepicker>
+                    </ms-form-item>
+                    <ms-form-item :widget="{label:'结束时间:'}">
+                        <ms-datepicker :widget="{
+                                        col:'wfEndTime',
+                                        placeholder:'请选择结束时间',
+                                        value: @wfEndTime
+                                    }"></ms-datepicker>
+                    </ms-form-item>
+                </div>
+            </div>
+
+            <div class="top-form-inline">
+                <ms-form-item :widget="{label: '当事人:'}" :css="{'margin-left': '14px'}">
+                    <ms-input :widget="{col: 'dsr', value:@dsr}" :focus="@input_focus" :blur="@input_blur"></ms-input>
+                    <span class="fa fa-close zfda-sgcl-jtwf-right-close" :mousedown="(@dsr='')"></span>
+
+                </ms-form-item>
+
+                <ms-form-item :widget="{label: '驾驶证号:'}">
+                    <ms-input :widget="{col: 'jszh', value:@jszh}" :focus="@input_focus" :blur="@input_blur"></ms-input>
+                    <span class="fa fa-close zfda-sgcl-jtwf-right-close" :mousedown="(@jszh='')"></span>
+
+                </ms-form-item>
+
+                <ms-form-item :widget="{label: '车牌号码:'}">
+                    <ms-input :widget="{col: 'hphm', value:@hphm}" :focus="@input_focus" :blur="@input_blur"></ms-input>
+                    <span class="fa fa-close zfda-sgcl-jtwf-right-close" :mousedown="(@hphm='')"></span>
+
+                </ms-form-item>
+            </div>
+
+            <div class="top-form-inline">
+                <ms-form-item :widget="{col:'ardess' ,label: '违法地点:'}">
+                    <ms-input :widget="{col: 'wfdz', value:@wfdz}" :focus="@input_focus" :blur="@input_blur"></ms-input>
+                    <span class="fa fa-close zfda-sgcl-jtwf-right-close" :mousedown="(@wfdz='')"></span>
+
+                </ms-form-item>
+                <ms-form-item :widget="{col: 'number',label: '决定书编号:'}" :css="{'margin-left': '-14px'}">
+                    <ms-input :widget="{col: 'jdsbh', value:@jdsbh}" :focus="@input_focus" :blur="@input_blur"></ms-input>
+                    <span class="fa fa-close zfda-sgcl-jtwf-right-close" :mousedown="(@jdsbh='')"></span>
+
+                </ms-form-item>
+                <ms-form-item :widget="{col: 'guanlian',label: '关联媒体:'}">
+                    <ms-select :widget="{
+                        col:'glmt',
+                        value: [@glmt],
+                    }">
+                        <ms-select-option :widget="{value:'99'}">不限</ms-select-option>
+                        <ms-select-option :widget="{value:'1'}">已关联</ms-select-option>
+                        <ms-select-option :widget="{value:'0'}">未关联</ms-select-option>
+                    </ms-select>
+                </ms-form-item>
+            </div>
+            <a class="ajgl_search_btn" :click="@fromsearch | stop">查询</a>
+        </xmp>
+    </div>
+</template>

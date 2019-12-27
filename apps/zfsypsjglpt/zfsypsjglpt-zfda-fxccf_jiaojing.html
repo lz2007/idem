@@ -1,0 +1,12 @@
+<template>
+      <div class="lz-container">
+        <div class="sgcl-container jtwf-container" :if="!page">
+            <ms-sgcl-search-fcfxc cached="true" :widget="{id:'zfda-jtwf_fcfxc_search_id',searchfn:search,onReady:onReadyVm}"></ms-sgcl-search-fcfxc>
+            <ms-sgcl-list-fcfxc :widget="{isLoading:isLoading,datas:datas,pageSize:@pageSize,current:@current}"></ms-sgcl-list-fcfxc>
+            <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,getCurrent:@getCurrent,overLimit:@overLimit}"></ms-pages>
+        </div>
+        <div class="sgcl-container jtwf-container" :if="page">
+            <ms-zfda-checks :widget="{isclose:isclose,onReady:onReadycheck}"></ms-zfda-checks>
+        </div>
+    </div>
+</template>

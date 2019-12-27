@@ -1,0 +1,188 @@
+/* 采集站等分配弹框 */
+.ccfwglAllocationDialog{
+    overflow: hidden;
+    margin:-16px;
+}
+.ccfwglAllocationDialog  .left-wrap,.ccfwglAllocationDialog  .right-wrap{
+ width:320px;
+ height:424px;
+ border:1px solid #B9CDE2;
+ border-top:none;
+}
+.ccfwglAllocationDialog  .middle-wrap{
+    width:40px;
+    height:424px;
+    padding: 158px 5px 0 5px;
+}
+.ccfwglAllocationDialog  .middle-wrap .fa{
+    font-size: 60px;
+    color:#718EA8;
+    cursor: pointer;
+}
+.ccfwglAllocationDialog  .middle-wrap .fa.disabled{
+    color: #ddd;
+}
+.ccfwglAllocationDialog  .left-wrap,.ccfwglAllocationDialog  .middle-wrap,.ccfwglAllocationDialog  .right-wrap{
+    float: left;
+}
+.ccfwglAllocationDialog  .left-wrap{
+    border-left: none;
+}
+.ccfwglAllocationDialog  .right-wrap{
+    border-right:none;
+}
+.ccfwglAllocationDialog .title{
+    background-color: #F8F8F8;
+    border-bottom:1px solid #B9CDE2;
+    margin: 0;
+    padding: 10px;
+}
+.ccfwglAllocationDialog .left-content,.ccfwglAllocationDialog .right-content{
+  padding: 10px;
+}
+.ccfwglAllocationDialog .left-content  .search-input-wrap{
+  width: 298px;
+  border:1px solid #B9CDE2;
+  height:36px;
+  padding: 3px 0;
+} 
+.ccfwglAllocationDialog  .search-input-wrap input{
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    width: 268px;
+    border-right:1px solid #B9CDE2;
+    padding-left: 8px;
+}
+.ccfwglAllocationDialog  .search-input-wrap i{
+    display: inline-block;
+    width:28px;
+    height: 28px;
+    text-align: center;
+    font-size: 14px;
+}
+.ccfwglAllocationDialog .org-group{
+    height: 330px;
+    width: 298px;
+    overflow: auto;
+    margin-top: 10px;
+}
+/* 覆盖树字体样式 */
+.ccfwglAllocationDialog .org-group .ztree li a span{
+    font-size: 14px;
+    font-family: "Microsoft YaHei",serif;
+    color: #536b82;
+}
+/* 覆盖树蓝色图标位置 */
+.ccfwglAllocationDialog .org-group .ztree li a span.ico_docu{
+    background: url(/static/image/tyywglpt-ccfwgl/station1.png) 0 4px no-repeat;
+}
+.ccfwglAllocationDialog  .right-content dt{
+    height:28px;
+    line-height: 28px;
+}
+.ccfwglAllocationDialog  .right-content{
+    font-family: "Microsoft YaHei",serif;
+    color: #536b82;
+    height: 388px;
+    overflow-y: auto;
+}
+.ccfwglAllocationDialog  .right-content .fa-close{
+    cursor: pointer;
+}
+.ccfwglAllocationDialog  .right-content  .rightItemsNull{
+    font-size: 14px;
+}
+.ccfwglAllocationDialog  .right-content  i{
+    margin: 7px 3px;
+    height: 14px;
+    width: 19px;
+}
+.ccfwglAllocationDialog  .right-content  dt i{
+    height: 21px;
+    width: 21px;
+    margin: 2px 0 0 0;
+}
+.ccfwglAllocationDialog  .right-content  dt em{
+    background: url(/static/image/tyywglpt-ccfwgl/org.png?__sprite) no-repeat 0px -1px;
+    width: 22px;
+    height: 17px;
+    margin-top: 4px;
+    margin-left: -3px;
+}
+.ccfwglAllocationDialog  .right-content dl a{
+    width: 214px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 28px;
+    line-height: 28px;
+    font-size: 14px;
+    font-family: "Microsoft YaHei",serif;
+    color: #536b82;
+    font-weight: normal;
+}
+.ccfwglAllocationDialog  .right-content  dt  i.expand{
+    background: url(/static/image/tyywglpt-ccfwgl/expand.png?__sprite) no-repeat 0px 1px;
+}
+.ccfwglAllocationDialog  .right-content dt i.collapse{
+    background: url(/static/image/tyywglpt-ccfwgl/collapse.png?__sprite) no-repeat 0px 1px;
+}
+.ccfwglAllocationDialog  .right-content em,.ccfwglAllocationDialog  .right-content i,.ccfwglAllocationDialog  .right-content a,.ccfwglAllocationDialog  .right-content span{
+    float: left;
+    display: inline-block;
+}
+.ccfwglAllocationDialog  .right-content  dl {
+    margin-bottom: 0;
+}
+.ccfwglAllocationDialog  .right-content  dl span{
+    width: 28px;
+    height: 28px;
+    color :#C42E2E;
+    padding:5px 3px;
+    font-size: 18px;
+}
+.ccfwglAllocationDialog  .right-content dd{
+    margin-left: 6px;
+    cursor: pointer;
+    margin-bottom: 2px;
+    height: 28px;
+    
+}
+.ccfwglAllocationDialog  .right-content dd.active,.ccfwglAllocationDialog  .right-content dd:hover{
+    background-color: #CBDEF7; 
+    border: 1px #3E8EEF solid;
+    margin-left: 4px;
+}
+.ccfwglAllocationDialog  .right-content dd i{
+    margin-left: 12px;
+    background: url(/static/image/tyywglpt-ccfwgl/station1.png?__sprite) no-repeat 0px 1px;
+}
+/* 修改默认input[placeholder]样式 */
+.ccfwglAllocationDialog ::-webkit-input-placeholder,.ccfwglAllocationDialog  :-ms-input-placeholder  { /* WebKit browsers */  /* Internet Explorer 10+ */
+    font-family: "Microsoft YaHei",serif;
+    color: #536b82 !important;
+}
+.ywzx-assign-right{
+    width: 30px;
+    height: 30px;
+    float: left;
+    margin-bottom: 30px;
+    cursor: pointer;
+    background: url(/static/image/xtywgl/rightassign.png?__sprite) center center no-repeat;      
+}
+.ywzx-assign-left{
+    width: 30px;
+    height: 30px;
+    float: left;
+    cursor: pointer;
+    background: url(/static/image/xtywgl/leftassign.png?__sprite) center center no-repeat;      
+}
+.ccfwglAllocationDialog .faClose{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    margin-left: -35px;
+    cursor: pointer;
+    background: url(/static/image/xtywgl/del.png?__sprite) center center no-repeat;     
+}

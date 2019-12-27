@@ -1,0 +1,30 @@
+{
+    "code": 0,
+    "total": 7,
+    "data": {
+        "totalPages": 1,
+        "totalElements":1,
+        "currentPages":1,
+        "perPages":20,
+        "currentElements": [{
+                "orgName": "213",
+                "space": "",
+                "scccl": "1",
+                "ywccl": 2,
+                "jtwfcctgs": 3,
+                "jtwfcctgbl": "4",
+                "jtwfccbtgs": 6,
+                "jtwfccbtgbl": "7",
+                "jtwffhqkss": 8,
+                "jtwffhqkbss": 9,
+                "jtwffhkfqk": 10,
+                "sgclcctgs":11,
+                "sgclcctgbl":12,
+                "sgclccbtgs":13,
+                "sgclccbtgbl": 14,
+                "sgclfhqkss":15,
+                "sgclfhqkbss":16,
+                "sgclfhkfqk":17
+        }]
+    }
+}

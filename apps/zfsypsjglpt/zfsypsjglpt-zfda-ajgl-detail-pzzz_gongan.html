@@ -1,0 +1,22 @@
+<template>
+    <div class="zfda-ajgl-pzzz">
+        <div class="pzzz-menu">
+            <ul class="menu-li">
+                <li class="pzzz-active" :click="clickMenu('tpdy')" id="tpdy">
+                    <span>图片打印</span>
+                </li>
+                <li :click="clickMenu('gdkl')" id="gdkl">
+                    <span>光碟刻录</span>
+                </li>
+                <li :click="clickMenu('zzsm')" id="zzsm">
+                    <span>制作说明</span>
+                </li>
+            </ul>
+            <button class="pzzz-return" :click="@back">返回</button>
+        </div>
+        <div class="pzzz-menu-border"></div>
+        <div class="pzzz-content">
+            <div ms-html="@pzzz_currentPage"></div>
+        </div>
+    </div>
+</template>

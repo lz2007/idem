@@ -1,0 +1,16 @@
+<template>
+    <div :css="@css" class="common-input">
+        <div class="common-input-container">
+            <label class="common-input-label" :attr="{title:@title}">
+                <a ms-if="@input.required" class="common-input-required">*</a>{{@input.name}}:
+            </label>
+            <div class="common-input-input">
+                <div class="common-input-inner">
+                    <textarea value="" class="form-control common-input-inner-input" ms-duplex="@input.value" ms-attr="{id:@id,placeHolder:@input.placeHolder || '',value:@input.value}" :focus="@input_focus" :blur="@input_blur" :keyup="@enter_click"></textarea>
+                    <span class="fa fa-close common-input-xx" :mousedown="@closeX" :visible="@xSHow"></span>
+                </div>
+            </div>
+        </div>
+        <div class="common-input-alert" :visible="@alertShow">{{@alertText}}</div>
+    </div>
+</template>

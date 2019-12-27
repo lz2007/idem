@@ -1,0 +1,820 @@
+/* .lxhf {
+    position: absolute;
+    top: 66px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+} */
+
+.lxhf .clearfix {
+    display: block;
+}
+
+.lxhf .ane-select-selected {
+    top: -1px;
+}
+
+.lxhf .lxhf-side-bar {
+    width: 326px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    min-height: 660px;
+    min-height: 650px\0;
+    color: #b0b0ae;
+    font-family: "Microsoft YaHei", serif;
+    background: #fff;
+    border: 1px solid #d1d0d0;
+    overflow: hidden;
+}
+
+.lxhf .side-bar-title {
+    margin: 0;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    color: #536b82;
+    border-bottom: 1px solid #d6dce1;
+    background-color: #eff4f8;
+}
+
+.lxhf .side-bar-title {
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.lxhf .side-bar-title li {
+    display: inline-block;
+    width: 50%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.lxhf .side-bar-title li:hover,
+.lxhf .side-bar-title .active {
+    color: #0078d7;
+}
+
+.lxhf .side-bar-title .active {
+    border-bottom: 3px solid #0078d7;
+}
+
+.lxhf .side-bar-main {
+    position: absolute;
+    top: 20px;
+    bottom: 20px;
+    /* padding: 5px; */
+    margin: 0 20px;
+    font-size: 14px;
+}
+
+.lxhf .form-inline .form-item {
+    width: 286px;
+    height: 28px;
+    line-height: 28px;
+    margin-bottom: 16px;
+}
+
+.lxhf .form-inline label {
+    width: 65px;
+    text-align: right;
+    margin-right: 5px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #666666;
+    font-weight: normal;
+}
+
+.lxhf .form-inline .form-item.en>label {
+    width: 105px;
+    text-align: right;
+    margin-right: 10px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: normal;
+}
+
+.lxhf .label-form .form-inline label {
+    width: 115px;
+}
+
+.lxhf .label-form .form-inline label i {
+    color: #d2403d;
+}
+
+.lxhf .form-inline .form-control {
+    width: 180px;
+    display: inline-block;
+    padding: 0 8px;
+    height: 28px;
+    line-height: 28px;
+    border: 1px soild #d1d0d0;
+    border-radius: 2px;
+    vertical-align: middle;
+}
+
+.lxhf .form-inline .en .form-control {
+    width: 168px;
+    display: inline-block;
+    padding: 0 12px;
+    height: 28px;
+    line-height: 28px;
+    border: 1px soild #d1d0d0;
+    border-radius: 2px;
+    vertical-align: middle;
+    color: #414f5c;
+}
+
+.lxhf .form-inline .en .setWidth {
+    width: 164px;
+    height: 24px;
+    line-height: 24px;
+    vertical-align: top;
+}
+
+.lxhf .form-inline input.form-control,
+.lxhf .form-inline textarea.form-control {
+    padding: 0 20px 0 8px;
+}
+
+.lxhf .search-box .tree-panel {
+    right: 0;
+}
+
+.lxhf .ane-datepicker {
+    display: inline-block;
+}
+
+.lxhf .ane-select-arrow {
+    top: 4px;
+}
+
+.lxhf .search-box form {
+    margin-left: -2px;
+    color: #2c3640;
+    font-size: 14px;
+}
+
+.lxhf .search-box button,
+.lxhf .search-box button:visited {
+    height: 28px;
+    width: 80px;
+    font-size: 14px;
+    color: #fff;
+    margin: 0 auto;
+    display: inherit;
+    line-height: 1;
+    background: #1055b3;
+    border-radius: 2px;
+    margin-top: 4px;
+}
+
+.lxhf .search-box button:hover {
+    /* background: #db7400; */
+}
+
+.lxhf .search-box button:focus {
+    /* background: #db7400; */
+    outline: none;
+}
+
+/* ie8 输入框文字过长时padding-left,padding-right失效处理 */
+
+.lxhf .has-icon-input-wrap {
+    display: inline-block;
+    padding-left: 12px;
+    padding-right: 20px;
+    border: 1px solid #d1d0d0;
+    border-radius: 2px;
+    line-height: 26px;
+    vertical-align: middle;
+    background: #fff;
+}
+
+.lxhf .has-icon-input-wrap.en {
+    display: inline-block;
+    padding-left: 0px;
+    padding-right: 0px;
+    border: 1px solid #b8c5d3;
+    border-radius: 2px;
+    line-height: 26px;
+    vertical-align: middle;
+    background: #fff;
+    width: 168px;
+}
+
+.lxhf .has-icon-input-wrap input.form-control {
+    border: none;
+    width: 146px;
+    height: 26px;
+    line-height: 26px;
+    padding: 0;
+    vertical-align: top;
+}
+
+.lxhf .video-preview-list {
+    /* height: 100%; */
+    margin-top: 18px;
+    overflow: auto;
+    width: 107%;
+}
+
+.lxhf .list-null {
+    color: #b2b2b2;
+    font-size: 16px;
+    margin-left: 100px;
+
+}
+
+.lxhf .video-preview-item {
+    margin-bottom: 10px;
+    border: 1px solid #d1d0d0;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    color: #414f5c;
+}
+
+.lxhf .video-preview-item.active-video,
+.lxhf .video-preview-item:hover {
+    /* background: #0078d7; */
+    color: #1055b3;
+    border: 1px solid #1055b3;
+}
+
+.lxhf .video-preview-item.active-video {
+    cursor: text;
+}
+
+.lxhf .video-preview-list .video-thumbnail {
+    margin-top: 5px;
+    margin-right: 5px;
+    float: left;
+    width: 60px;
+    height: 60px;
+}
+
+.lxhf .video-preview-list .video-info {
+    /* float: left; */
+    height: 100%;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.lxhf .video-preview-list .video-info li {
+    width: 225px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    list-style: none;
+}
+
+.lxhf .video-preview-list .video-info li span {
+    font-weight: bold;
+}
+
+.lxhf .lxhf-main-container {
+    height: 100%;
+    padding: 20px 0 0 20px;
+    margin-left: 320px;
+    position: relative;
+}
+
+.lxhf .graphic-container {
+    height: 56%;
+}
+
+.lxhf .graphic-container .lxhf-video {
+    width: 70%;
+}
+
+.lxhf .graphic-container .lxhf-video,
+.lxhf .graphic-container .lxhf-map {
+    float: left;
+    height: 100%;
+    /* min-height: 360px;
+    min-height: 320px\0; */
+    border: 1px solid #d1d0d0;
+}
+
+.lxhf .graphic-container .lxhf-video {
+    margin-right: 8px;
+}
+
+.lxhf .video-ocx-wrap {
+    background: #000;
+    /* height: 370px; */
+    /* height: 330px\0; */
+    /* background: url(/static/image/sszhxt/ocx.png?__sprite) -70px 0 no-repeat; */
+}
+
+.lxhf .video-tool-wrap {
+    height: 40px;
+    line-height: 30px;
+    background: #000;
+}
+
+.lxhf .video-tool-bar {
+    height: 40px;
+    line-height: 40px;
+    text-align: left;
+    position: relative;
+}
+
+.lxhf .video-tool-bar .video-speed {
+    display: inline-block;
+    border: 1px solid #fff;
+    height: 23px;
+    line-height: 33px;
+    margin-left: 15px;
+}
+
+.lxhf .video-tool-bar .video-speed span {
+    color: #fff;
+    position: relative;
+    top: -6px;
+}
+
+.lxhf .video-tool-bar .video-full {
+    position: absolute;
+    right: -5px;
+    top: 2px;
+}
+
+.lxhf .video-tool-bar li {
+    display: inline-block;
+    margin: 6px 5px;
+    font-size: 12px;
+    color: #358dcc;
+    cursor: pointer;
+}
+
+.lxhf .video-tool-bar li:hover {
+    color: #0078d7;
+}
+
+.lxhf .video-tool-bar.disabled li {
+    cursor: not-allowed;
+}
+
+.lxhf .video-tool-bar.disabled li:hover {
+    color: #666;
+}
+
+.lxhf .video-tool-bar .disabled {
+    cursor: not-allowed;
+    color: #d4d7d9;
+}
+
+/*------------------ 针对ie8下字体图标不能及时更新的问题开始 -------------*/
+
+.lxhf .video-tool-bar .disabled.fa-step-backward:before {
+    content: "\f048 ";
+}
+
+.lxhf .video-tool-bar .disabled.fa-fast-backward:before {
+    content: "\f049 ";
+}
+
+.lxhf .video-tool-bar .disabled.fa-pause:before {
+    content: "\f04c ";
+}
+
+.lxhf .video-tool-bar .disabled.fa-play:before {
+    content: "\f04b ";
+}
+
+.lxhf .video-tool-bar .disabled.fa-stop:before {
+    content: "\f04d ";
+}
+
+.lxhf .video-tool-bar .disabled.fa-fast-forward:before {
+    content: "\f050 ";
+}
+
+.lxhf .video-tool-bar .disabled.fa-step-forward:before {
+    content: "\f051 ";
+}
+
+/*----------------- 针对ie8下字体图标不能及时更新的问题结束------------ */
+
+.lxhf .graphic-container .lxhf-map {
+    position: relative;
+    border: 1px solid #ccc;
+}
+
+.lxhf .label-container {
+    /* position: absolute;
+    top: 416px;
+    top: 376px\0;
+    bottom: 70px;
+    left: 8px;
+    right: 8px;
+    min-height: 220px; */
+    height: 274px;
+    margin-top: 8px;
+    margin-right: 20px;
+    color: #536b82;
+    background: #dadfe6;
+}
+
+.lxhf .label-container .label-title {
+    height: 48px;
+    padding-top: 10px;
+}
+
+.lxhf .label-container .label-title span {
+    line-height: 30px;
+    text-align: left;
+    color: #121511;
+    padding-top: 5px;
+    padding-left: 16px;
+    font-size: 16px;
+}
+
+.lxhf .label-container .label-title .btn {
+    width: 70px;
+    color: #fff;
+    background: #1055b3;
+    float: right;
+    margin-right: 20px;
+    border-radius: 0;
+}
+
+.lxhf .label-content {
+    height: 226px;
+    background: #fff;
+    border-top: 1px solid #d1d0d0;
+    background: #fff;
+    padding-left: 20px;
+}
+
+.lxhf .label-content form,
+.lxhf .label-content .label-infos {
+    position: relative;
+    padding: 10px 10px 0 0;
+    width: 500px;
+}
+
+.lxhf .label-content .form-item {
+    width: 380px;
+    margin-bottom: 20px;
+}
+
+.lxhf .label-content .form-control {
+    color: #536b82;
+    width: 260px;
+}
+
+.lxhf .label-content .textarea-item {
+    height: auto;
+}
+
+.lxhf .label-content .textarea-item .fa-close {
+    top: 0;
+}
+
+.lxhf .label-content textarea.form-control {
+    height: 100px;
+    resize: none;
+}
+
+.lxhf .label-infos label {
+    float: left;
+}
+
+.lxhf .label-infos .label-info-item {
+    overflow: hidden;
+    height: 30px;
+    line-height: 30px;
+}
+
+.lxhf .label-infos .label-info-item label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #414f5c;
+}
+
+.lxhf .label-infos .label-item-detail {
+    max-width: 390px;
+    float: left;
+}
+
+.lxhf .label-infos .label-item-detail span {
+    float: left;
+    max-width: 390px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    color: #414f5c;
+}
+
+.lxhf .label-content .btn {
+    position: absolute;
+    top: 10px;
+    right: -100px;
+    width: 50px;
+    height: 30px;
+    line-height: 1;
+    color: #fff;
+    background: #0053ba;
+}
+
+.lxhf .label-content .btn:hover {
+    background: #0057a1;
+}
+
+.lxhf .form-item .has-icon {
+    background: #fff;
+    display: inline-block;
+    position: relative;
+}
+
+.lxhf .label-container .form-item .has-icon-input-wrap {
+    padding: 0 20px 0 12px;
+    border: 1px solid #d1d0d0;
+    border-radius: 2px;
+    background: #fff;
+}
+
+.lxhf .label-container .form-item .has-icon-input-wrap input {
+    width: 226px;
+    height: 26px;
+    padding: 0;
+    border: none;
+}
+
+.lxhf .label-container .has-error .has-icon-input-wrap {
+    background: #fff;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    border-color: #a94442;
+}
+
+.lxhf .form-item .fa-close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 16px;
+    color: #536b82;
+    cursor: pointer;
+}
+
+.lxhf .form-item .form-tip {
+    margin-left: 23px;
+    position: absolute;
+    width: 100%;
+    padding-left: 98px;
+    text-align: left;
+    line-height: 1;
+}
+
+.lxhf .form-item .form-tip.tip-md {
+    width: 120%;
+}
+
+.lxhf .form-item .fa-info-circle {
+    color: #E09E1F;
+    margin-right: 5px;
+}
+
+.lxhf .form-item .invalid-tip {
+    color: #d2403d;
+}
+
+.sszhxt-lxhf-map {
+    position: absolute;
+    top: 101px;
+    right: 20px;
+}
+
+.sszhxt-lxhf-sosBtn {
+    right: 3px;
+    left: auto;
+    top: 75px;
+}
+
+.sszhxt-lxhf-sos-info {
+    right: 3px;
+    left: auto;
+    top: 140px;
+}
+
+.sszhxt_lxhf_datapicker {
+    position: relative;
+    z-index: 99999;
+}
+
+/* 视频图标 */
+.video-tool-bar .fa {
+    display: inline-block;
+    width: 28px;
+    height: 23px;
+}
+
+.video-tool-bar .step-backward {
+    background: url(/static/image/sszh-lxhf/step-backward.png) 0 0 no-repeat;
+}
+
+.video-tool-bar .fast-backward {
+    background: url(/static/image/sszh-lxhf/fast-backward.png) 0 0 no-repeat;
+}
+
+.video-tool-bar .pause {
+    background: url(/static/image/sszh-lxhf/pause.png) 0 0 no-repeat;
+}
+
+.video-tool-bar .play {
+    background: url(/static/image/sszh-lxhf/play.png) 0 0 no-repeat;
+}
+
+.video-tool-bar .stop {
+    background: url(/static//image/sszh-lxhf/stop.png) 0 0 no-repeat;
+}
+
+.video-tool-bar .fast-forward {
+    background: url(/static/image/sszh-lxhf/fast-forward.png) 0 0 no-repeat;
+}
+
+.video-tool-bar .step-forward {
+    background: url(/static/image/sszh-lxhf/step-forward.png) 0 0 no-repeat;
+}
+
+.video-tool-bar .cut {
+    background: url(/static/image//sszh-lxhf/cut.png) 0 0 no-repeat;
+}
+
+.video-tool-bar .enlarge {
+    background: url(/static/image/sszh-lxhf/enlarge.png) 0 0 no-repeat;
+}
+
+.video-tool-bar .proportion {
+    background: url(/static/image/sszh-lxhf/proportion.png) 0 0 no-repeat;
+}
+
+.video-tool-bar .full {
+    background: url(/static/image/sszh-lxhf/full.png) 0 0 no-repeat;
+}
+
+/* 音量调节样式 */
+.lxhf .sound-bar-wrap {
+    margin-right: 40px;
+    margin-left: 5px;
+}
+
+.lxhf .sound {
+    display: inline-block;
+    height: 22px;
+    width: 22px;
+    background: url(/static/image/sszh-lxhf/sound.png) 0 0 no-repeat;
+
+}
+
+.lxhf .sound-bar {
+    position: relative;
+    height: 6px;
+    width: 100px;
+    display: inline-block;
+    top: -7px;
+    left: 8px;
+
+}
+
+.lxhf .sound-level-wrap {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    margin: 0 auto;
+    border-radius: 10px;
+    background: #aaa;
+}
+
+.lxhf .sound-level {
+    position: absolute;
+    left: 0;
+    height: 6px;
+    background: #fff;
+    border-radius: 10px;
+}
+
+.lxhf .sound-btn-wrap {
+    width: 90%;
+    position: relative;
+}
+
+.lxhf .sound-btn {
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: -3px;
+    left: 0;
+}
+
+.lxhf .lxhf-side-btn {
+    position: relative;
+    width: 12px;
+    height: 40px;
+    top: 350px;
+    cursor: pointer;
+    z-index: 99;
+}
+
+.lxhf .lxhf-side-show {
+    left: 0;
+    background: url(/static/image/sszh-lxhf/show.png) 0 0 no-repeat;
+}
+
+.lxhf .lxhf-side-hide {
+    left: 326px;
+    background: url(/static/image/sszh-lxhf/hide.png) 0 0 no-repeat;
+}
+
+.input-close {
+    background: url(/static/image/sszhxt/input-close.png) 0 0 no-repeat;
+    width: 16px;
+    height: 16px;
+    display: block;
+    position: absolute;
+    top: 7px;
+    right: 6px;
+    cursor: pointer;
+}
+.input-close.input-close-zhcn {
+    right: 39px;
+}
+.lxhf .ane-datepicker .fa-times-circle::before {
+    content: url(/static/image/sszhxt/input-close.png) !important;
+    position: relative;
+    right: -5px;
+    top: -1px;
+}
+
+.lxhf .select-label {
+    display: inline-block;
+    width: 60px;
+    margin-right: 10px;
+    text-align: right;
+    position: relative;
+    cursor: pointer;
+    color: #666;
+    font-weight: normal;
+}
+
+.lxhf .select-label.select-label-en {
+    width: 105px;
+}
+
+.lxhf .select-label .select-icon {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    margin-left: 5px;
+}
+
+.lxhf .select-label .select-down {
+    background: url(/static/image/sszhxt/caret-down.png) 0 0 no-repeat;
+}
+
+.lxhf .select-label .select-up {
+    background: url(/static/image/sszhxt/caret-up.png) 0 0 no-repeat;
+    color: #1055b3;
+}
+
+.lxhf .select-label .select-option {
+    position: absolute;
+    z-index: 99;
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+}
+
+.lxhf .select-label .select-option span {
+    display: block;
+    width: 105px;
+    padding-right: 17px;
+    cursor: pointer;
+}
+
+.lxhf .select-label .active {
+    color: #1055b3;
+    background: #e0e7ec;
+}
+
+.lxhf .search-box .btnDisabled {
+    background-color: #666;
+}
+
+.lxhf .search-box .ane-datepicker {
+    width: 168px !important;
+}
+
+.lxhf .search-box.search-box-zhcn .ane-datepicker {
+    width: 180px !important;
+}

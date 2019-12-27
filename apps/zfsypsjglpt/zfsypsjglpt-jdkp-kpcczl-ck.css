@@ -1,0 +1,48 @@
+.kpcczl-tab {
+    border: 1px solid #e4e4e4;
+    background: #0078db;
+}
+
+.kpcczl-tab span {
+    font-size: 14px;
+    line-height: 30px;
+    color: white;
+    display: inline-block;
+    /* border: 1px solid #e4e4e4; */
+    /* padding: 0px 28px; */
+    border-left: none;
+    width: 180px;
+    text-align: center;
+    cursor: pointer;
+    border-top: none;
+    border-bottom: none;
+}
+
+.kpcczl-tab span a {
+    font-size: 10px;
+    vertical-align: 1px;
+    color: white;
+    background: rgb(204, 204, 204);
+    /* line-height: 0px; */
+    padding: -7px;
+    padding: 0px 3px;
+    border-radius: 5px;
+}
+
+.kpcczl-tab span:hover {
+    background: rgb(35, 145, 259);
+}
+
+.kpcczl-tab .lightTab {
+    background: rgb(35, 145, 259);
+    /* color: #096ec6; */
+    /* font-weight: bold; */
+}
+
+.kpcczl-content {
+    margin-top: 8px;
+}
+
+.kpcczl-tab .lightTab a {
+    background: red;
+}

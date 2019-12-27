@@ -1,0 +1,102 @@
+<template>
+    <div class="ajgl-table ajtb" :controller="ajgl-table">
+        <div class="ajgl-table jqtb" style="margin-top:42px;">
+            <div :class="['ajgl-tabCont']">
+                <div :controller="zfda-fcfxc-table" :class="['table-index']" id="zfda-fcfxc-table">
+                    <div class="table-index-thead-fixed">
+                        <ul class="table-index-thead" :css="{paddingRight:@paddingRight}">
+                            <li data-order='1' class="col-5">序号</li>
+                            <li data-order='2' class="col-5">操作</li>
+                            <li data-order='3' class="col-15">执勤部门</li>
+                            <li data-order='4' class="col-10">姓名/警号</li>
+                            <li data-order='5' class="col-10">违法编号</li>
+                            <!-- 这个字段是客户比较关注，无锡所最新的接口已包含，但还没发布，前端先隐藏这个字段，等无锡所发布最新接口后再放开，后台不需处理。 -->
+                            <!-- <li class="col-9">违法通知书号</li> -->
+                            <li data-order='6' class="col-10">决定书编号</li>
+                            <li data-order='7' class="col-10">违法时间</li>
+                            <li data-order='8' class="col-10">违法地点</li>
+
+                            <li data-order='9' class="col-10">车牌号码</li>
+                            <li data-order='10' class="col-10">号牌种类</li>
+                            <li data-order='11' class="col-5">关联媒体</li>
+
+                        </ul>
+                    </div>
+                    <ul class="table-index-tbody">
+                        <li :if="(!@data.length)" class="list-null">暂无数据</li>
+                        <li :for="($index, record) in @data">
+                            <div class="tbody col-5">
+                                <div class="table-cont">{{(current-1)*pageSize+$index+1}}</div>
+                            </div>
+                            <div class="tbody col-5">
+                                <div class="table-cont">
+                                    <span>
+                                        <a :if="@authority.CHECK" class="checkLook" :click="@handle('jycx',record)">查看</a>
+                                        <span :if="!@authority.CHECK">-</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="tbody col-15">
+                                <div class="table-cont" :attr="record['orgName'] && (record['orgName'] != '-') ? {rel:'drevil',tdval:record['orgName']}:''">
+                                    {{record['orgName']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['userCode'] && (record['userCode'] != '-') ? {rel:'drevil',tdval:(record['userName']+'('+record['userCode']+')')}:''">
+                                    {{record['userName']}} ({{record['userCode']}})
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['wfbh'] && (record['wfbh'] != '-') ? {rel:'drevil',tdval:record['wfbh']}:''">
+                                    {{record['wfbh']}}
+                                </div>
+                            </div>
+                            <!-- 这个字段是客户比较关注，无锡所最新的接口已包含，但还没发布，前端先隐藏这个字段，等无锡所发布最新接口后再放开，后台不需处理。 -->
+                            <!-- <div class="tbody col-9">
+                                <div class="table-cont" :attr="record['wftzsbh'] && (record['wftzsbh'] != '-') ? {rel:'drevil',tdval:record['wftzsbh']}:''">
+                                    {{record['wftzsbh']}}
+                                </div>
+                            </div> -->
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['jdsbh'] && (record['jdsbh'] != '-') ? {rel:'drevil',tdval:record['jdsbh']}:''">
+                                    {{record['jdsbh']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['wfsj'] && (record['wfsj'] != '-') ? {rel:'drevil',tdval:record['wfsj']}:''">
+                                    {{record['wfsj']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['wfdz'] && (record['wfdz'] != '-') ? {rel:'drevil',tdval:record['wfdz']}:''">
+                                    {{record['wfdz']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['hphm'] && (record['hphm'] != '-') ? {rel:'drevil',tdval:record['hphm']}:''">
+                                    {{record['hphm']}}
+                                </div>
+                            </div>
+                            <div class="tbody col-10">
+                                <div class="table-cont" :attr="record['hpzlmc'] && (record['hpzlmc'] != '-') ? {rel:'drevil',tdval:record['hpzlmc']}:''">
+                                    {{record['hpzlmc']}}
+                                </div>
+                            </div>
+
+                            <div class="tbody col-5">
+                                <div class="table-cont">
+                                    {{record['relStatus']?'已关联':'未关联'}}
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="table-index-loading" :if="@loading">
+                        <span class="loadingSpan">结果加载中</span>
+                    </div>
+                    <!-- <div :if="(!@loading && !@data.length)" class="noData">暂无数据</div> -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</template>

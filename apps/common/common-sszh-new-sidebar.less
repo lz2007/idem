@@ -1,0 +1,440 @@
+.common-sszh-side-bar {
+  float: left;
+  width: 265px;
+  height: 100%;
+  font-family: "Microsoft YaHei", serif;
+  /* border: 1px solid #d6dce1; */
+  position: relative;
+  background: #fff;
+}
+
+.common-sszh-side-bar .device-type-select {
+  padding: 0 5px;
+  margin-bottom: 5px;
+}
+
+.common-sszh-side-bar .ane-select {
+  width: 168px;
+  padding: 0 20px 0 12px;
+  height: 28px;
+  line-height: 28px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.common-sszh-side-bar.sszhSideBar_en .ane-select {
+  width: 138px;
+}
+
+.common-sszh-side-bar .ane-select-arrow {
+  top: 4px;
+}
+
+.common-sszh-side-bar .side-bar-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  font-size: 14px;
+  padding: 20px;
+  color: #414f5c;
+}
+
+.common-sszh-side-bar .input-group {
+  margin-bottom: 14px;
+  position: relative;
+  padding: 0 5px;
+}
+
+.common-sszh-side-bar .input-group .fa-close {
+  position: absolute;
+  color: #536b82;
+  font-size: 16px;
+  right: 38px;
+  top: 6px;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.common-sszh-side-bar button {
+  width: 30px;
+  height: 28px;
+  padding: 5px 10px;
+  background: url(/static/image/sszhxt/sidebar-search.png) center center no-repeat;
+  border: 1px solid #b8c5d3;
+  border-radius: 2px;
+  border-left: none;
+}
+
+.common-sszh-side-bar button:focus {
+  outline: none;
+}
+
+.common-sszh-side-bar .input-group input {
+  height: 26px;
+  line-height: 26px;
+  color: #000;
+  padding: 0;
+  border: none;
+}
+
+.common-sszh-side-bar .input-group.input-tip input {
+  font-size: 12px;
+  color: #ccc;
+}
+
+.common-sszh-side-bar .input-group.input-error input {
+  font-size: 12px;
+  color: #d8a09f;
+}
+
+.common-sszh-side-bar .has-icon-input-wrap {
+  width: 100%;
+  display: inline-block;
+  padding-left: 3px;
+  padding-right: 10px;
+  margin-right: -1px;
+  border: 1px solid #b8c5d3;
+  border-radius: 2px;
+  border-right: none;
+  vertical-align: middle;
+  background: #fff;
+}
+
+.common-sszh-side-bar .input-group.input-error .has-icon-input-wrap {
+  background: #fff;
+  border: 1px solid #d2403d;
+}
+
+.common-sszh-side-bar .input-group.input-error button {
+  border-left: 1px solid #d2403d;
+}
+
+.common-sszh-side-bar .check-container {
+  padding: 0 5px;
+  margin-top: 6px;
+}
+
+.common-sszh-side-bar .check-container label {
+  font-weight: normal;
+}
+
+.common-sszh-side-bar .check-container input {
+  display: none;
+  width: 0;
+  display: inline-block;
+}
+
+.common-sszh-side-bar .check_selected,
+.common-sszh-side-bar .check_unselected {
+  width: 14px;
+  height: 14px;
+  margin: 0 5px 0 0;
+}
+
+.common-sszh-side-bar .check_selected {
+  background: url(/static/image/sszhxt/check_selected.png?__sprite) 0 0 no-repeat;
+}
+
+.common-sszh-side-bar .check_unselected {
+  background: url(/static/image/sszhxt/check_unselected.png?__sprite) 0 0 no-repeat;
+
+}
+
+.common-sszh-side-bar .ztree-container {
+  width: 100%;
+  height: 90%;
+  overflow: auto;
+  margin-top: 20px;
+}
+
+.common-sszh-side-bar .ztree-container .ztree {
+  padding-bottom: 20px;
+  padding-left: 0px;
+}
+
+.common-sszh-side-bar .ztree-container .ztree li {
+  margin: 2px;
+}
+
+.common-sszh-side-bar .ztree li span.button.ico_close {
+  margin-right: 2px;
+  background: url(../../static/image/sszhxt/org.png) no-repeat scroll;
+  vertical-align: top;
+}
+
+.common-sszh-side-bar .ztree li span.button.ico_open {
+  margin-right: 2px;
+  background: url(../../static/image/sszhxt/org.png) no-repeat scroll;
+  vertical-align: top;
+}
+
+.common-sszh-side-bar .ztree li span.button.chk.checkbox_true_part,
+.common-sszh-side-bar .ztree li span.button.chk.checkbox_true_part_focus {
+  background: url(/static/image/sszhxt/check_selected.png?__sprite) center -22px no-repeat;
+}
+
+.common-sszh-side-bar .ztree li span.button.chk.checkbox_true_full,
+.common-sszh-side-bar .ztree li span.button.chk.checkbox_true_full_focus {
+  background: url(/static/image/sszhxt/check_selected.png?__sprite) center 0 no-repeat;
+}
+
+/* .common-sszh-side-bar .ztree li span.button.chk.checkbox_true_full,
+.common-sszh-side-bar .ztree li span.button.chk.checkbox_true_full_focus,
+.common-sszh-side-bar .ztree li span.button.chk.checkbox_true_part,
+.common-sszh-side-bar .ztree li span.button.chk.checkbox_true_part_focus {
+    background: url(/static/image/sszhxt/check_selected.png?__sprite) center center no-repeat;
+} */
+
+.common-sszh-side-bar .ztree li span.button.chk.checkbox_false_full {
+  background: url(/static/image/sszhxt/check_unselected.png?__sprite) center center no-repeat;
+}
+
+.common-sszh-side-bar .ztree li span.button.chk.checkbox_false_full_focus {
+  background: url(/static/image/sszhxt/check_unselected.png?__sprite) center center no-repeat;
+}
+
+.common-sszh-side-bar .ztree li span.button.chk.checkbox_false_disable {
+  opacity: .5;
+  filter: alpha(opacity=50);
+  background: url(/static/image/sszhxt/check_unselected.png?__sprite) center center no-repeat;
+}
+
+.common-sszh-side-bar .ztree li span.button.chk {
+  width: 14px;
+  height: 14px;
+}
+
+.common-sszh-side-bar .recent-look {
+  font-size: 12px;
+}
+
+.common-sszh-side-bar .recent-look .recent-item {
+  width: 100%;
+  height: 100%;
+  font-size: 12px;
+  height: 24px;
+  line-height: 24px;
+  padding-left: 24px;
+  cursor: pointer;
+}
+
+.common-sszh-side-bar .recent-look .list-null {
+  color: #3c3c3c;
+  text-align: center;
+  padding-left: 0;
+}
+
+.common-sszh-side-bar .recent-look .name,
+.common-sszh-side-bar .recent-look .time {
+  float: left;
+  text-align: left;
+}
+
+.common-sszh-side-bar .recent-look .name {
+  width: 102px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #3c3c3c;
+  margin-right: 2px;
+}
+
+.common-sszh-side-bar .recent-look .time {
+  color: #999;
+}
+
+.common-sszh-side-bar .recent-look .person.isonline {
+  background: url(/static/image/sszhxt/person.png?__sprite) 0 2px no-repeat;
+}
+
+.common-sszh-side-bar .recent-look .person.isoffline {
+  background: url(/static/image/sszhxt/person_offline.png?__sprite) 0 2px no-repeat;
+}
+
+.common-sszh-side-bar .recent-look .device.isonline {
+  background: url(/static/image/sszhxt/device.png?__sprite) 0 2px no-repeat;
+}
+
+.common-sszh-side-bar .recent-look .device.isoffline {
+  background: url(/static/image/sszhxt/device_offline.png?__sprite) 0 2px no-repeat;
+}
+
+.common-sszh-side-bar .recent-look .active {
+  background-color: #e8eff5 !important;
+}
+
+.common-sszh-side-bar .recent-look .device:hover {
+  background-color: #e8eff5;
+}
+
+.common-sszh-side-bar .recent-look .device.isoffline:hover {
+  background-color: #fff;
+  cursor: not-allowed;
+}
+
+.common-sszh-side-bar .recent-look .person:hover {
+  cursor: not-allowed;
+}
+
+.common-sszh-side-bar .recent-look .person-device-list {
+  padding-left: 20px;
+}
+
+.common-sszh-side-bar .recent-look .person-device-list li {
+  padding-left: 50px;
+  height: 24px;
+  line-height: 24px;
+  color: #3c3c3c;
+  cursor: pointer;
+  text-align: left;
+}
+
+.common-sszh-side-bar .input-close {
+  background: url(/static/image/sszhxt/input-close.png) 0 0 no-repeat;
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 32px;
+  /* 防止事件被覆盖 */
+  z-index: 99;
+}
+
+.common-sszh-side-bar {
+  .side-bar-main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    font-size: 14px;
+    padding: 5px;
+    .search-box {
+      .dev-type-wrap {
+        margin: 10px;
+        ul {
+          height: 40px;
+          li {
+            width: 40px;
+            height: 40px;
+            float: left;
+            margin-right: 10px;
+            position: relative;
+            &.disactive {
+              background-color: #7a7a7a;
+            }
+          }
+          .type-dev {
+            background-color: #ff7e00;
+            &::after {
+              display: inline-block;
+              content: "";
+              width: 22px;
+              height: 30px;
+              background: url(/static/image/theme/sszhxt/deviceTree/dev-icon.png?__sprite)
+                no-repeat;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+            }
+          }
+          .type-car {
+            background-color: #009bfe;
+            &::after {
+              display: inline-block;
+              content: "";
+              width: 33px;
+              height: 28px;
+              background: url(/static/image/theme/sszhxt/deviceTree/car-icon.png?__sprite)
+                no-repeat;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+            }
+          }
+          .type-fastDomeCameras {
+            background-color: #00ad41;
+            &::after {
+              display: inline-block;
+              content: "";
+              width: 26px;
+              height: 30px;
+              background: url(/static/image/theme/sszhxt/deviceTree/fastDomeCameras-icon.png?__sprite)
+                no-repeat;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+            }
+          }
+          .type-drone {
+            background-color: #4470ff;
+            &::after {
+              display: inline-block;
+              content: "";
+              width: 32px;
+              height: 34px;
+              background: url(/static/image/theme/sszhxt/deviceTree/drone-icon.png?__sprite)
+                no-repeat;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+            }
+          }
+        }
+      }
+      .device-type-type {
+        margin-top: 2px;
+        width: 70px;
+        .ane-select {
+          width: 100%;
+        }
+      }
+      .device-type-search {
+        .form-control {
+          width: 174px;
+          margin-left: 4px;
+          padding-right: 16px;
+        }
+      }
+      .device-type-type.device-type-type-en {
+        width: 112px;
+      }
+      .device-type-search.device-type-search-en>input {
+        width: 131px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .searchInfo{
+        border: 1px solid #ccc;
+        padding: 5px;
+        position: absolute;
+        background: #fff;
+        z-index: 99;
+        width: 96%;
+        height: auto;
+        max-height: 66%;
+        overflow: auto;
+      }
+    }
+  }
+  .input-group {
+    .select {
+      display: inline-block;
+      width: 70px;
+    }
+    .input {
+      display: inline-block;
+    }
+  }
+}
+
+.common-sszh-side-bar .check-container input {
+  display: none !important;
+}

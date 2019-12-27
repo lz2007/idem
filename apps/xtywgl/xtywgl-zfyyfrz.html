@@ -1,0 +1,60 @@
+<template>
+    <div class="ywzx-zfyyfrz">
+        <!-- 左边———采集站查询 -->
+        <div class="zfyyfrz_menubar-left">
+            <div class="ccfwglAllocationDialog AllocationDialog search-bar" style="margin:0px !important;">
+                <div class="search-input-wrap">
+                    <input type="text" :duplex="@searchInputValue" :attr="{placeholder: @zfyyfrz_txt.nameOfDockingStation}" ms-keypress="@handleSearchEnter($event)">
+                    <i class="fa fa-search" :click="@handleSearchClick"></i>
+                </div>
+                <div class="org-group" id="sjbgl">
+                    <xmp is="ms-tree" :widget="{tree: @orgData,beforeExpand:@handleBeforeExpand, expandedKeys: @expandedKeys, onSelect:@onSelect}"></xmp>                    
+                </div>
+            </div>
+        </div>
+        <!-- 右边——采集站对应日志文件数据展示 -->
+        <div class="zfyyfrz_right">
+            <div class="title">
+                <span :if="@hrefList.length == 0">{{@selectName}}</span>
+                <div :if="@hrefList.length !== 0" class="return_btn">
+                    <a :click="@returnBtn(h,$i)" :if="@hasReturn" :for="($i, h) in @hrefList">
+                        {{@h}}
+                        <span :if="$i < @hrefList.length - 1"> / </span>  <!-- 最后一个不显示“/” -->
+                    </a> 
+                </div>
+            </div>
+            <div class="content">
+                <div class="zfyyfrz-loading" :if="@loading">
+                    <span class="loadingSpan">{{@zfyyfrz_txt.loading}}</span>
+                </div>
+                <div class="noSelectDevice" :if="@list.length == 0 && @isselectparent && !@loading">{{@zfyyfrz_txt.pleaseSelectDevice}}</div>
+                <div class="noSelectDevice" :if="@list.length == 0 && !@isselectparent && !@loading">{{@zfyyfrz_txt.noData}}</div>
+                <div :for="($index, item) in @list" class="dataList"  :if="!@loading">
+                    <div class="first-item">
+                        <input type="checkbox" :attr="{'id':$index}" :duplex-checked="item.checked" data-duplex-changed="@handleCheck($index,item,$event)">
+                        <label :attr="{'for':$index}" :class="[item.checked ? 'check_selected' : 'check_unselected']"></label>
+                    </div>
+                    <div :if="!@item.showCheck" class="firstItem">
+                        <span class="icon-file"></span>
+                        <a :click="@openFolder(@item.name)">
+                            {{@item.name.replace("/","")}}
+                        </a>
+                    </div>
+                    <div :if="@item.showCheck">
+                        {{@item.name}}
+                    </div>
+                </div>
+            </div>
+            <!-- 右边底部——全选 下载 -->
+            <div class="foot" :if="@authority.DOWNLOAD && @list.length !== 0 && !@loading">
+                <div>
+                    <input type="checkbox" id="checkall" :duplex-checked="@checkAll" data-duplex-changed="@handleCheckAll($event)">
+                    <label for="checkall" :class="[@checkAll ? 'check_selected' : 'check_unselected']"></label>
+                    <span>{{@zfyyfrz_txt.allSelect}}</span>
+                </div>
+                <!-- 下载按钮 -->
+                <button type="button" class="btn btn-query" :click="@download">{{@zfyyfrz_txt.download}}</button>
+            </div>
+        </div>
+    </div>
+</template>

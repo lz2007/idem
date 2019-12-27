@@ -1,0 +1,116 @@
+[
+  {
+    "id": 1,
+    "text": "广州市公安局",
+    "updateTime": "2017-07-18 02:39:03",
+    "orgIsDelete": 0,
+    "children": [
+      {
+        "id": 2,
+        "text": "天河区大队",
+        "parentOrg": null,
+        "updateTime": "2017-07-18 02:39:44",
+        "orgCode": "1234501",
+        "orgIsDelete": 0,
+        "path": "1#2",
+        "orderNum": 2,
+        "children": [
+          {
+            "id": 8,
+            "text": "324",
+            "parentOrg": null,
+            "updateTime": "2017-08-29 04:26:57",
+            "orgCode": "23423",
+            "orgIsDelete": 0,
+            "path": "1#2#8",
+            "orderNum": 8,
+            "children": [
+
+            ],
+            "dutyRange": null,
+            "iconCls": "dept"
+          }
+        ],
+        "dutyRange": null,
+        "iconCls": "dept"
+      },
+      {
+        "id": 3,
+        "text": "11122",
+        "parentOrg": null,
+        "updateTime": "2017-08-08 05:55:04",
+        "orgCode": "2222",
+        "orgIsDelete": 0,
+        "path": "1#3",
+        "orderNum": 3,
+        "children": [
+
+        ],
+        "dutyRange": null,
+        "iconCls": "dept"
+      },
+      {
+        "id": 4,
+        "text": "dsadsd",
+        "parentOrg": null,
+        "updateTime": "2017-08-29 03:22:53",
+        "orgCode": "qdsasd",
+        "orgIsDelete": 0,
+        "path": "1#4",
+        "orderNum": 4,
+        "children": [
+
+        ],
+        "dutyRange": null,
+        "iconCls": "dept"
+      },
+      {
+        "id": 5,
+        "text": "1",
+        "parentOrg": null,
+        "updateTime": "2017-08-29 03:56:21",
+        "orgCode": "2",
+        "orgIsDelete": 0,
+        "path": "1#5",
+        "orderNum": 5,
+        "children": [
+
+        ],
+        "dutyRange": null,
+        "iconCls": "dept"
+      },
+      {
+        "id": 6,
+        "text": "111",
+        "parentOrg": null,
+        "updateTime": "2017-08-29 04:21:45",
+        "orgCode": "111",
+        "orgIsDelete": 0,
+        "path": "1#6",
+        "orderNum": 6,
+        "children": [
+
+        ],
+        "dutyRange": null,
+        "iconCls": "dept"
+      },
+      {
+        "id": 7,
+        "text": "112",
+        "parentOrg": null,
+        "updateTime": "2017-08-29 04:23:15",
+        "orgCode": "112",
+        "orgIsDelete": 0,
+        "path": "1#7",
+        "orderNum": 7,
+        "children": [
+
+        ],
+        "dutyRange": null,
+        "iconCls": "dept"
+      }
+    ],
+    "dutyRange": "",
+    "iconCls": "dept"
+  }
+]

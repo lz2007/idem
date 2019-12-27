@@ -1,0 +1,589 @@
+.userStep1-cont ::-ms-clear {
+    display: none;
+}
+
+.userStep1-total {
+    font-family: "Microsoft YaHei";
+}
+
+.userStep2-total {
+    font-family: "Microsoft YaHei";
+}
+
+.userStep1-prompt {
+    height: 30px;
+    padding: 0 20px;
+    margin-bottom: 5px;
+}
+
+.userStep1-prompt>span {
+    line-height: 30px;
+    color: #536C80;
+    font-weight: bold;
+}
+
+.userStep1-prompt>span>i {
+    margin: 0 5px;
+}
+
+.userStep1-cont {
+    margin: 0 10px;
+}
+
+.userStep1-cont .form-control {
+    height: 30px;
+    padding: 4px 12px;
+    width: 165px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+}
+
+.userStep1-left {
+    display: inline-block;
+    vertical-align: top;
+    width: 50%;
+    padding-right: 15px;
+    text-align: right;
+}
+
+.yhgl_yhtc_en .userStep1-left {
+    padding-right: 50px;
+}
+
+.userStep1-right {
+    vertical-align: top;
+    display: inline-block;
+    width: 50%;
+    padding-right: 37px;
+    text-align: right;
+}
+
+.userStep1-left .form-inline .radio,
+.userStep1-right .form-inline .checkbox {
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 0;
+    vertical-align: middle;
+    width: 107px;
+}
+
+.yhgl_yhtc_en .userStep1-left .form-inline .acconutRadio .radio {
+    width: 140px;
+}
+
+.userStep1-left .checkbox-group {
+    display: inline-block;
+    width: 215px;
+    text-align: left;
+}
+
+.yhgl_yhtc_en .userStep1-left .acconutRadio .checkbox-group {
+    width: 280px;
+}
+
+.userStep1-cont .form-inline .form-control {
+    display: inline-block;
+    vertical-align: middle;
+    width: 215px;
+    color: #536C80;
+    padding-right: 25px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.yhgl_yhtc_en .userStep1-cont .form-inline .form-control {
+    /* width: 180px; */
+}
+
+.userStep1-cont .form-inline .form-group {
+    display: inline-block;
+    /* margin-bottom: 15px; */
+    width: 303px;
+}
+
+.userStep1-cont .yhgl-yhtc-prompt {
+    height: 20px;
+    border-width: 0px;
+    vertical-align: middle;
+    width: 303px;
+    padding-left: 90px;
+    text-align: left;
+}
+
+.yhgl_yhtc_en .userStep1-cont .yhgl-yhtc-prompt {
+    width: auto;
+    padding-left: 140px;
+}
+
+.userStep1-cont .yhgl-yhtc-prompt>span {
+    text-align: right;
+}
+
+.yhgl-yhtc-prompt .fa-exclamation-circle {
+    color: #a5a0a0;
+    font-size: 12px;
+}
+
+.userStep1-cont .radioCls {
+    margin-bottom: 20px;
+    width: 303px;
+    display: inline-block;
+}
+
+.yhgl_yhtc_en .userStep1-cont .acconutRadio.radioCls {
+    width: 419px;
+}
+
+.userStep1-cont .radioCls label {
+    color: #536C80;
+    font-size: 14px;
+}
+
+.userStep1-select {
+    margin-bottom: 20px;
+    width: 303px;
+    display: inline-block;
+}
+
+.yhgl_yhtc_en .userStep1-select {
+    width: 355px;
+}
+
+.userStep1-role-select {
+    width: 303px;
+    display: inline-block;
+}
+
+.userStep1-right-select {
+    width: 303px;
+    display: inline-block;
+}
+
+.yhgl_yhtc_en .userStep1-right-select {
+    width: 367px;
+}
+
+.userStep1-cont .orgTree {
+    margin-bottom: 20px;
+    width: 303px;
+    display: inline-block;
+}
+
+.yhgl_yhtc_en .userStep1-cont .orgTree {
+    width: 388px;
+    text-align: left;
+    padding-left: 30px;
+}
+
+.userStep1-right .form-inline .ane-datepicker {
+    display: inline-block;
+    max-width: 215px;
+    width: 215px;
+    vertical-align: middle;
+}
+
+.userStep1-select .ane-select-selection .ane-select-selected,
+.userStep1-role-select .ane-select-selection .ane-select-selected {
+    color: #536C80;
+    font-family: "Microsoft YaHei";
+}
+
+.userStep1-left .orgTree .ane-tree-select-selection .ane-tree-select-selected {
+    color: #536C80;
+    font-family: "Microsoft YaHei";
+}
+
+.userStep1-right .datepicker-cls {
+    width: 303px;
+    display: inline-block;
+    color: #536C80;
+    margin-top: 50px;
+}
+
+.yhgl_yhtc_en .userStep1-right .datepicker-cls {
+    width: 367px;
+}
+
+.userStep1-cont .xxbz {
+    margin-right: 5px;
+}
+
+.userStep1-cont .form-inline .has-feedback .form-control-feedback {
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    top: 0;
+}
+
+.userStep1-cont .form-inline .yhtc-psw .form-control-feedback {
+    margin-right: 20px;
+}
+
+.userStep1-cont .help-block {
+    margin-bottom: 0px;
+    position: absolute;
+    top: 23px;
+    /* left: 93px; */
+    width: 303px;
+    text-align: left;
+    padding-left: 91px;
+    z-index: 99;
+    background-color: #fff;
+}
+
+.userStep1-cont .form-inline .control-label {
+    margin-bottom: 0;
+    vertical-align: middle;
+    font-weight: normal;
+    color: #536C80;
+    font-weight: bold;
+}
+
+.userStep1-cont .form-inline .radio input[type="radio"],
+.form-inline .checkbox input[type="checkbox"] {
+    position: relative;
+    margin-left: 0;
+}
+
+.userStep1-cont .ane-radio label.ane-radio-inner {
+    padding-left: 0;
+    width: 20px;
+    height: 30px;
+}
+
+.userStep1-cont .ane-radio input[type=radio]+.checked {
+    /* top: -19px; */
+    background-image: url('/static/image/xtpzgl-yhgl/radio-checked.png?__sprite');
+    background-repeat: no-repeat;
+    line-height: 30px;
+    min-height: 12px;
+    min-width: 12px;
+}
+
+.userStep1-cont .ane-radio input[type=radio] {
+    width: 0;
+}
+
+.userStep1-cont .ane-radio input[type=radio]+.check {
+    /* top: -19px; */
+    background-image: url('/static/image/xtpzgl-yhgl/radio-check.png?__sprite');
+    background-repeat: no-repeat;
+    line-height: 30px;
+    min-height: 12px;
+    min-width: 12px;
+}
+
+@-moz-document url-prefix() {
+
+    .userStep1-cont .ane-radio input[type=radio]+.check,
+    .userStep1-cont .ane-radio input[type=radio]+.checked {
+        top: -19px;
+    }
+}
+
+.userStep1-cont .ane-tree-select .ane-tree-select-arrow,
+.userStep1-cont .ane-select .ane-select-arrow {
+    position: absolute;
+    top: 3px;
+}
+
+.userStep1-cont .ane-select.ane-select-multiple {
+    min-height: 26px;
+    padding: 0px 0px 0px 12px;
+}
+
+.userStep1-cont .ane-select-selection.ane-select-tags li.ane-select-choice {
+    background-color: transparent;
+    margin: 0px 4px 0 0;
+    padding: 0px 3px 0px 0px;
+}
+
+.userStep1-right .userStep1-select .ane-select-multiple .ane-select-selection {
+    width: 151px;
+    height: 26px;
+    overflow: hidden;
+}
+
+.activeTime-bg {
+    color: #c8ccd0;
+}
+
+.activeTime-bg>input {
+    color: #c8ccd0;
+}
+
+.yhgl-span-star {
+    color: red;
+}
+
+.yhgl-spanForm-star {
+    color: red;
+    margin-top: 3px;
+    position: absolute;
+    left: 64px;
+}
+
+.yhgl_yhtc_en .nameStar {
+    left: 98px;
+}
+
+.yhgl_yhtc_en .policeIdStar {
+    left: 78px;
+}
+
+.yhgl-spanIdCard-star {
+    color: red;
+    position: absolute;
+    right: 314px;
+    margin-top: 4px;
+}
+
+.yhgl-spanNum-star {
+    color: red;
+    position: absolute;
+    right: 300px;
+    top: 103px;
+}
+
+.yhgl-spanPsw-star {
+    color: red;
+    position: absolute;
+    right: 300px;
+    top: 153px;
+}
+
+.psw-showHide {
+    position: absolute;
+    top: 134px;
+    right: 45px;
+    cursor: pointer;
+}
+
+.yhtc-psw input {
+    padding-right: 40px;
+}
+
+.yhtc-psw i {
+    display: none;
+}
+
+.userStep1-cont .has-error .help-block {
+    color: #d2403d;
+}
+
+.yhtc-isNull {
+    color: #d2403d;
+    font-size: 12px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    float: left;
+    /* padding-left: 12px; */
+    height: 20px;
+}
+
+.yhtc-isNull>i {
+    font-family: "HiraginoSansGB-W3", sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    float: left;
+}
+
+.yhtc-left-remove {
+    position: relative;
+    left: 125px;
+    top: -29px;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    line-height: 26px;
+    text-align: center;
+    pointer-events: none;
+    z-index: 2;
+    font-size: 16px;
+    color: #A94442;
+}
+
+.yhtc-left-clear {
+    position: absolute;
+    left: 112px;
+    top: -29px;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    line-height: 26px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    color: #536C80;
+}
+
+.yhtc-right-clear {
+    position: absolute;
+    left: 617px;
+    top: 51px;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    line-height: 26px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    color: #536C80;
+}
+
+.yhtc-error {
+    color: #d2403d;
+}
+
+.yhtc-numIsTrue {
+    position: absolute;
+    left: 618px;
+    top: 102px;
+}
+
+.yhtc-nameIsTrue {
+    position: absolute;
+    left: 298px;
+    top: 51px;
+}
+
+.yhtc-policeNumIsTrue {
+    position: absolute;
+    left: 298px;
+    top: 101px;
+}
+
+.yhtc-mPhoneIsTrue {
+    position: absolute;
+    left: 298px;
+    top: 350px;
+}
+
+.yhgl_yhtc_en .yhtc-nameIsTrue,
+.yhgl_yhtc_en .yhtc-policeNumIsTrue,
+.yhgl_yhtc_en .yhtc-mPhoneIsTrue {
+    left: 350px;
+}
+
+.yhtc-idCardIsTrue {
+    position: absolute;
+    left: 617px;
+    top: 51px;
+}
+
+.yhtc-emailIsTrue {
+    position: absolute;
+    left: 617px;
+    top: 300px;
+}
+
+.yhtc-pswIsTrue {
+    position: absolute;
+    left: 617px;
+    top: 150px;
+}
+
+.userStep1-left .ane-radio input[type=radio]+.text:before {
+    display: none
+}
+
+.userStep1-left .ane-radio-inner-ie span {
+    display: inline-block !important;
+}
+
+.userStep1-right .job-select .form-control {
+    border-color: #843534;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
+}
+
+.userStep1-right .job-select .fa-caret-down:before {
+    color: #A94442;
+}
+
+.userStep1-left .role-select .form-control {
+    border-color: #843534;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
+}
+
+.userStep1-left .role-select .fa-caret-down:before {
+    color: #A94442;
+}
+
+.userStep1-right .policeType-select .form-control {
+    border-color: #843534;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483;
+}
+
+.userStep1-right .policeType-select .fa-caret-down:before {
+    color: #A94442;
+}
+
+.userStep1-left .orgTree .tree-select-wrap .tree-select-selected {
+    top: 5px;
+    color: #536B82;
+    left: 14px;
+}
+
+.userStep1-left .orgTree .tree-select-wrap .tree-select-search {
+    height: 20px;
+    width: 80%;
+    left: 13px;
+    top: 5px;
+    position: absolute;
+    outline: none;
+    border: none;
+    color: #536B82;
+}
+
+.userStep1-left .orgTree .tree-select-wrap .treeSearchResult li {
+    text-align: left;
+}
+
+.userStep1-left .orgTree .tree-select-wrap .treeSearchResult li:hover {
+    /* text-decoration: underline;
+    color: #0078D7; */
+    background-color: #DFF1FF;
+}
+
+/* *********************************************步骤2的样式**************************************************** */
+.userStep2-total {
+    margin: -15px 30px 0 30px;
+    height: 450px;
+    display: none;
+}
+
+.userStep2-bodyTitle {
+    height: 60px;
+    border-bottom: 1px solid #0078d7;
+    text-align: left;
+    vertical-align: 60px;
+}
+
+.userStep2-bodyTitle>span {
+    font-size: 15px;
+    color: #0078d7;
+    font-weight: bold;
+    display: block;
+    line-height: 60px;
+}
+
+.userStep2-tree {
+    height: 390px;
+    overflow: auto;
+    width: 100%;
+}
+
+.userStep2-tree .ztree * {
+    font-size: 14px;
+    color: #536C80;
+}
+
+/* .userStep2-tree .ztree li span.button.chk.checkbox_false_part {
+    background-position: -26px -48px;
+}
+.userStep2-tree .ztree li span.button.chk.checkbox_false_part_focus {
+    background-position: -26px -68px;
+} */

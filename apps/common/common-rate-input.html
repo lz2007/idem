@@ -1,0 +1,19 @@
+<template>
+    <div class="rate-main-wrap">
+        <div :for="($index,record) in @data" class="rate-input-wrap">
+            <div class="up-input">
+                <span :if="$index == 0">≥</span>                
+                <input :if="!($index == 0)" type="text" :class="[@sign+'input_'+$index+'_rateMax']" ms-duplex="@record.rateMax" data-duplex-changed="@handleChange($index,record,record.rateMax,'rateMax')" class="form-control">
+                <span :if="!($index == 0)">~</span>
+                <!-- <span style="float:right;">%</span> -->
+                <input type="text" :class="[@sign+'input_'+$index+'_rateMin']" :css="{width: ($index == 0) ? 120 : 60 }" ms-duplex="@record.rateMin" data-duplex-changed="@handleChange($index,record,record.rateMin,'rateMin')" class="form-control">
+            </div>
+            <div class="down-input">
+                <input :class="[@sign+'input_'+$index+'_point']" type="text" :blur="@blurFunc(record.point, $index)" :focus="@focusFunc(record.point,$index)" ms-duplex="@record.point" data-duplex-changed="@handleChange($index,record,record.point,'point')" class="form-control">
+                <span :class="[@sign+'tips_'+$index]" style="display: none;">
+                    <i class="fa fa-exclamation-circle">&nbsp;{{@tips_text}}</i>
+                </span>
+            </div>
+        </div>
+    </div>
+</template>

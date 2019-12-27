@@ -1,0 +1,41 @@
+/* 实时指挥系统------信息采集模块 */
+.sszhst-xxcj{
+    width:100%;
+    height:100%;
+    font-family: "Microsoft YaHei",serif;
+    color: #536b82;
+    padding: 0 20px 0 0;
+}
+.sszhst-xxcj .xxcj-sideBar{
+    width: 160px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    top: 66px;
+    z-index: 1;
+    background: #05599A;
+    border-right: 1px solid #d3e3f1;
+    margin-right: 10px;
+    overflow: auto;
+}
+.sszhst-xxcj .xxcj-sideBar  li{
+    height:36px;
+    line-height:36px; 
+    width:100%;
+}
+.sszhst-xxcj .xxcj-sideBar  li.active{
+    background: #2391E5;
+}
+.sszhst-xxcj .xxcj-sideBar a{
+    display: inline-block;
+    width:100%;
+    color:#fff;
+    padding-left:15px;   
+    
+}
+.sszhst-xxcj .xxjc-content{
+    position: relative;
+    height: 96%;
+    margin-left: 160px;
+    padding: 8px 0px 8px 8px;
+}

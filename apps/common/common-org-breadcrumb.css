@@ -1,0 +1,26 @@
+.com-breadcrumb {
+    background-color: #f3f5f7;
+    border: 1px solid #e4e4e4;
+    width: 100%;
+}
+
+.com-breadcrumb li a {
+    color: #0419dc;
+}
+
+.com-breadcrumb li a:hover {
+    cursor: pointer;
+}
+
+.com-breadcrumb li a.active {
+    color: #536b82;
+}
+
+.com-breadcrumb li a.active:hover {
+    cursor: default;
+}
+
+.com-breadcrumb > li + li:before {
+    color: #536b82;
+    content: "\003e\003e"; /* >> */
+}

@@ -1,0 +1,276 @@
+[
+  {
+    "accountName": "",
+    "children": [
+      {
+        "accountName": "",
+        "children": [
+          {
+            "accountName": "1",
+            "children": null,
+            "iconSkin": "man",
+            "id": 14,
+            "name": "001",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "001"
+          },
+          {
+            "accountName": "1234510",
+            "children": null,
+            "iconSkin": "man",
+            "id": 15,
+            "name": "10",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "1234510"
+          },
+          {
+            "accountName": "1234514",
+            "children": null,
+            "iconSkin": "man",
+            "id": 19,
+            "name": "14",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "1234514"
+          },
+          {
+            "accountName": "1234513",
+            "children": null,
+            "iconSkin": "man",
+            "id": 18,
+            "name": "13",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "1234513"
+          },
+          {
+            "accountName": "1234512",
+            "children": null,
+            "iconSkin": "man",
+            "id": 17,
+            "name": "12",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "1234512"
+          },
+          {
+            "accountName": "1234511",
+            "children": null,
+            "iconSkin": "man",
+            "id": 16,
+            "name": "11",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "1234511"
+          },
+          {
+            "accountName": "123458",
+            "children": null,
+            "iconSkin": "man",
+            "id": 13,
+            "name": "8",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "123458"
+          },
+          {
+            "accountName": "123457",
+            "children": null,
+            "iconSkin": "man",
+            "id": 12,
+            "name": "7",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "123457"
+          },
+          {
+            "accountName": "123456",
+            "children": null,
+            "iconSkin": "man",
+            "id": 11,
+            "name": "6",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "123456"
+          },
+          {
+            "accountName": "123455",
+            "children": null,
+            "iconSkin": "man",
+            "id": 10,
+            "name": "5",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "123455"
+          },
+          {
+            "accountName": "123454",
+            "children": null,
+            "iconSkin": "man",
+            "id": 9,
+            "name": "4",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "123454"
+          },
+          {
+            "accountName": "123453",
+            "children": null,
+            "iconSkin": "man",
+            "id": 8,
+            "name": "3",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "123453"
+          },
+          {
+            "accountName": "123452",
+            "children": null,
+            "iconSkin": "man",
+            "id": 7,
+            "name": "2",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "123452"
+          },
+          {
+            "accountName": "123451",
+            "children": null,
+            "iconSkin": "man",
+            "id": 6,
+            "name": "1",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "123451"
+          },
+          {
+            "accountName": "123459",
+            "children": null,
+            "iconSkin": "man",
+            "id": 22,
+            "name": "9",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "123459"
+          },
+          {
+            "accountName": "1234516",
+            "children": null,
+            "iconSkin": "man",
+            "id": 21,
+            "name": "16",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "1234516"
+          },
+          {
+            "accountName": "1234515",
+            "children": null,
+            "iconSkin": "man",
+            "id": 20,
+            "name": "15",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "1234515"
+          }
+        ],
+        "iconSkin": "org",
+        "id": 2,
+        "name": "天河区大队",
+        "nodeType": "Org",
+        "open": "false",
+        "policeCode": "1234501"
+      },
+      {
+        "accountName": "",
+        "children": [],
+        "iconSkin": "org",
+        "id": 3,
+        "name": "11122",
+        "nodeType": "Org",
+        "open": "true",
+        "policeCode": "2222"
+      },
+      {
+        "accountName": "",
+        "children": [
+          {
+            "accountName": "",
+            "children": [],
+            "iconSkin": "org",
+            "id": 13,
+            "name": "das",
+            "nodeType": "Org",
+            "open": "true",
+            "policeCode": "dasd"
+          }
+        ],
+        "iconSkin": "org",
+        "id": 4,
+        "name": "dsadsd",
+        "nodeType": "Org",
+        "open": "false",
+        "policeCode": "qdsasd"
+      },
+      {
+        "accountName": "",
+        "children": [],
+        "iconSkin": "org",
+        "id": 5,
+        "name": "1",
+        "nodeType": "Org",
+        "open": "true",
+        "policeCode": "2"
+      },
+      {
+        "accountName": "",
+        "children": [],
+        "iconSkin": "org",
+        "id": 6,
+        "name": "111",
+        "nodeType": "Org",
+        "open": "true",
+        "policeCode": "11145"
+      },
+      {
+        "accountName": "",
+        "children": [],
+        "iconSkin": "org",
+        "id": 7,
+        "name": "112",
+        "nodeType": "Org",
+        "open": "true",
+        "policeCode": "112"
+      },
+      {
+        "accountName": "",
+        "children": [
+          {
+            "accountName": "369",
+            "children": null,
+            "iconSkin": "man",
+            "id": 23,
+            "name": "whh",
+            "nodeType": "User",
+            "open": null,
+            "policeCode": "975"
+          }
+        ],
+        "iconSkin": "org",
+        "id": 9,
+        "name": "21",
+        "nodeType": "Org",
+        "open": "false",
+        "policeCode": "21"
+      }
+    ],
+    "iconSkin": "org",
+    "id": 1,
+    "name": "广州市公安局",
+    "nodeType": "Org",
+    "open": "true",
+    "policeCode": "12345"
+  }
+]

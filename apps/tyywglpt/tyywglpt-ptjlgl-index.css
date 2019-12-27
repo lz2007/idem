@@ -1,0 +1,43 @@
+/* 统一运维管理平台--平台级联管理
+caojiacong */
+
+.ptjlgl .tyywglpt-list-panel {
+    top: 146px;
+}
+
+.ptjlgl-modal .com-modal-modal-body {
+    padding-top: 16px;
+}
+
+.ptjlgl-modal .form-inline .form-item-lg {
+    width: 100%;
+}
+
+.ptjlgl-modal .form-item-lg .has-icon .form-control {
+    width: 485px;
+}
+
+.ptjlgl-modal .textarea-item .has-icon textarea {
+    height: 100px;
+    white-space: pre-wrap;
+    overflow: auto;
+    line-height: 1.5;
+}
+
+.ptjlgl-modal .form-item .form-tip.tip-md {
+    width: 140%;
+}
+
+.ptjlgl-modal-account.has-extra-btn .com-modal-btn-extra {
+    margin-right: -108px;
+    margin-left: 100px;
+}
+
+.ptjlgl-modal-account.has-extra-btn .com-modal-btn-ok {
+    margin-left: -100px;
+}
+
+.ptjlgl-modal-account.has-extra-btn .com-modal-btn-cancle {
+    /* 100 + 8 + 8 */
+    margin-left: 116px;
+}

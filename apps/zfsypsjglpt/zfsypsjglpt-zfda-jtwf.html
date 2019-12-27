@@ -1,0 +1,38 @@
+<template>
+    <div class="lz-container">
+        <div class="sgcl-container jtwf-container" :if="!page4">
+            <div class="tyywglpt-tool-bar-inner">
+                <li class="btn btn-tool" :for="item in @authorizedMenu" :class="[(@item.isactive? 'active':'')]" :click="@swichPages(item)">
+                    <a>
+                        <span>{{item.title}}</span>
+                    </a>
+                </li>
+            </div>
+
+
+            <!-- <div :if="page1">page1</div>
+            <div :if="page2">page2</div>
+            <div :if="page3">page3</div> -->
+            <div class="page1" :if="page1">
+                <ms-sgcl-search-jycx cached="true" :widget="{id:'jzfda-twf_jycx_search_id',searchfn:search,onReady:onReadyVm}"></ms-sgcl-search-jycx>
+                <ms-sgcl-list-jycx :widget="{isLoading:isLoading,datas:datas,pageSize:@pageSize,current:@current}"></ms-sgcl-list-jycx>
+            </div>
+
+            <div class="page2" :if="page2">
+                <ms-sgcl-search-fcfxc cached="true" :widget="{id:'zfda-jtwf_fcfxc_search_id',searchfn:search,onReady:onReadyVm}"></ms-sgcl-search-fcfxc>
+                <ms-sgcl-list-fcfxc :widget="{isLoading:isLoading,datas:datas,pageSize:@pageSize,current:@current}"></ms-sgcl-list-fcfxc>
+            </div>
+
+            <div class="page3" :if="page3">
+                <ms-sgcl-search-qzcs cached="true" :widget="{id:'zfda-jtwf_qzcs_search_id',searchfn:search,onReady:onReadyVm}"></ms-sgcl-search-qzcs>
+                <ms-sgcl-list-qzcs :widget="{isLoading:isLoading,datas:datas,pageSize:@pageSize,current:@current}"></ms-sgcl-list-qzcs>
+            </div> 
+
+            <ms-pages :widget="{id:'zfda--jtwf-ms-pages',total:@total,pageSize:@pageSize,current:@current,getCurrent:@getCurrent}"></ms-pages>
+        </div>
+
+        <div class="sgcl-container jtwf-container" :if="page4">
+            <ms-zfda-checks :widget="{isclose:isclose,onReady:onReadycheck}"></ms-zfda-checks>
+        </div>
+    </div>
+</template>

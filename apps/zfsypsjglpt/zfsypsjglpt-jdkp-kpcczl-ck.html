@@ -1,0 +1,21 @@
+<template>
+    <div class="kpcczl-ck" :controller="kpcczl-ck">
+        <div class="kpcczl-tab" :click="@tabChange">
+            <span ms-attr="{uil: 'jycxkp'}" class="lightTab">简易程序            
+            </span>
+            <span ms-attr="{uil: 'fxccf'}">非现场处罚            
+            </span>
+            <span ms-attr="{uil: 'qzcs'}">强制措施              
+            </span>
+            <!-- <span ms-attr="{uil: 'sgcl'}">事故处理
+                <a>{{@sgcl_num}}</a>
+            </span> -->
+        </div>
+        <div class="kpcczl-content">
+            <div :visible="@jycxkpShow" ms-html="@jycxkp"></div>
+            <div :visible="@fxccfShow" ms-html="@fxccf"></div>
+            <div :visible="@qzcsShow" ms-html="@qzcs"></div>
+            <!-- <div :visible="@sgclShow" ms-html="@sgcl"></div> -->
+        </div>
+    </div>
+</template>

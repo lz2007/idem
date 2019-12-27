@@ -1,0 +1,81 @@
+.sszhxt-gjgl-gjsz-map{
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+.sszhxt-gjgl-gjsz-sosBtn{
+    position: fixed;
+    bottom: 0px;
+    top: auto;
+    right: 0px;
+    left: auto;
+}
+.sszhxt-gjgl-gjsz-sos-info{
+    position: fixed;
+    bottom: 30px;
+    right: 0px;
+    left: auto;
+}
+.sszhxt-gjgl-gjsz{
+    padding: 10px 0px;
+    color: #597292;
+    min-height: 650px;
+}
+.sszhxt-gjgl-gjsz h4{
+    color:#0078D7;
+    font-weight: bold;
+    background-color: #eff4f8;
+    padding: 10px 20px;
+    margin: 0px;
+}
+.gjszInlne-block{
+    display: inline-block;
+    width: 250px;
+    vertical-align: top;
+}
+.gjszInlne-block-container{
+    padding: 30px 20px 10px;
+}
+.gjszInlne-block-container .URGENT, .gjszInlne-block-container .IMPORTANT, .gjszInlne-block-container .GENERAL, .gjszInlne-block-container .PROMPT {
+    padding: 2px 5px;
+    color: #fff;
+    border-radius: 4px;
+}
+.gjszInlne-block-container .URGENT {
+    background: red;
+}
+.gjszInlne-block-container .IMPORTANT{
+    background: orange;
+}
+.gjszInlne-block-container .GENERAL{
+    background: #00cc33;
+}
+.gjszInlne-block-container .PROMPT{
+    background: #3399ff;
+}
+.gjszInlne-block-container .radio-inline .radio-inline{
+    padding-bottom: 10px;
+    margin-left: 20px;
+    margin-right: 40px;
+}
+.gjszInlne-block-container .radio-inline-span{
+    margin-right: 0px !important;
+}
+.sszhxt-gjgl-gjsz .buttonContainer{
+    position: relative;
+    left: 0;
+    right:0;
+    top: 50px;
+    text-align: center;
+}
+.sszhxt-gjgl-gjsz .buttonContainer .btn{
+    background-color: #0078d7;
+    width: 120px;
+    height: 30px;
+    margin-right: 20px;
+    padding: 0px;
+    color: #ffffff;
+}
+.sszhxt-gjgl-gjsz .buttonContainer .btn:hover{
+    background-color:  #0057a1;
+}

@@ -1,0 +1,45 @@
+<template>
+    <div class="contentRight" style="height: 100%;">
+        <div class="tab-flex">
+            <div class="flex-item parallelogram" :for="item in dateDate" :class="[(item.active?'active':'')]" :click="itemClick(item)">
+                <span class="reverse-parallelogram">{{item.value}}</span>
+            </div>
+        </div>
+        <div class="echars-flex" style="height: calc(100% - 8px);height: -webkit-calc(100% - 8px);">
+
+            <div class="flex-item">
+                <ms-chartbox :widget="{title:'综合得分',leftCtl:zhdfleft,rightCtl:zhdfright}">
+                    <div slot="content" id="zhdf" style="height:100%;">
+
+                    </div>
+                </ms-chartbox>
+            </div>
+
+            <div class="flex-item">
+                <ms-chartbox :widget="{title:'摄录情况',leftCtl:slqkleft,rightCtl:slqkright}">
+                    <div slot="content" id="slqk" style="height:100%;">
+
+                    </div>
+                </ms-chartbox>
+                <div class="slqk-img"></div>
+            </div>
+
+            <div class="flex-item">
+                <ms-chartbox :widget="{title:'关联情况',leftCtl:glqkleft,rightCtl:glqkright}">
+                    <div slot="content" id="glqk" style="height:100%;">
+
+                    </div>
+                </ms-chartbox>
+            </div>
+
+            <div class="flex-item">
+                <ms-chartbox :widget="{title:'考评统计',leftCtl:kptjleft,rightCtl:kptjright}">
+                    <div slot="content" id="kptj" style="height:100%;">
+
+                    </div>
+                </ms-chartbox>
+            </div>
+
+        </div>
+    </div>
+</template>

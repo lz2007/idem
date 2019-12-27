@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title></title>
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="/node_modules/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="/node_modules/ane/dist/ane.css" rel="stylesheet" />
+    <script src="/static/mod.js"></script>
+    <!--[if lt IE 9]>
+            <script src="/static/polyfill/html5shiv.js"></script>
+            <script src="/static/polyfill/respond.src.js"></script>
+            <script
+                type="text/javascript"
+                src="/static/polyfill/html5.js"
+            ></script>
+            <script
+                type="text/javascript"
+                src="/static/polyfill/excanvas.js"
+            ></script>
+        <![endif]-->
+</head>
+
+<body :controller="fileNotExist_vm" class="fileNotExist">
+    <div class="mainPanel">
+        <img src="/static/image/404/file404.png">
+        <!-- <span class="fileTips">{{@file_txt.fileNotExist}}</span>
+        <a class="returnBtn" :click="@returnBtn">{{@file_txt.return}}</a> -->
+        <span class="fileTips">File does not exist</span>
+        <a class="returnBtn" :click="@returnBtn">Return</a>
+    </div>
+    <script>
+        require(["./file404"])
+    </script>
+</body>
+
+</html>

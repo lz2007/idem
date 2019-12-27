@@ -1,0 +1,8 @@
+<template>
+    <article class="sszhst-xxcj">
+       <ul class="xxcj-sideBar">
+        <li :for="($index,item) in menuData" :class="{active:$index == activeIndex}" :click="@handleMenuClick($index)"><a ms-attr="{href:item.url}">{{item.name}}</a></li>
+      </ul>
+      <div class="xxjc-content" ms-html="@currentPage"></div>
+    </article>
+</template>

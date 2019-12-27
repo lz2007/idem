@@ -1,0 +1,55 @@
+<!-- 统一运维管理平台--任务管理--自动关联服务 -->
+<!-- caojiacong -->
+<template>
+    <div class="tyywglpt zdglfw" :controller="zdglfw-vm">
+        <div class="tyywglpt-list-panel">
+            <div class="tyywglpt-list-header-wrap">
+                <ul class="tyywglpt-list-header">
+                    <li class="col-10 first-item">序号</li>
+                    <li class="col-20">服务名称</li>
+                    <li class="col-30">视频时长偏移</li>
+                    <li class="col-20">服务状态</li>
+                    <li class="col-20 last-item">昨日关联业务数</li>
+                </ul>
+            </div>
+            <ul class="tyywglpt-list-content">
+                <li :if="@loading" class="list-loading">
+                    <span>结果加载中</span>
+                </li>
+                <li :if="@isNull" class="list-null">暂无数据</li>
+                <li :if="!@loading && !@isNull" :for="($index, item) in @list">
+                    <div class="col-10 first-item">{{((@current - 1) * @pageSize) + $index+1}}</div>
+                    <div class="col-20" :attr="{'title':item.serviceNameXS || '','data-toggle':'popover'}">{{@item.serviceNameXS | fillterEmpty}}</div>
+                    <div class="col-30">
+                        <a :if="!@item.editMode && @authority.XGPY" class="oparate" :click="handleEditOffset(item,$event)">前{{@item.preDeviant | fillterEmpty}}分钟&nbsp;后{{@item.behindDeviant | fillterEmpty}}分钟</a>
+                        <span :if="!@authority.XGPY">前{{@item.preDeviant | fillterEmpty}}分钟&nbsp;后{{@item.behindDeviant | fillterEmpty}}分钟</span>
+                        <form :if="@item.editMode" class="offset-container">
+                            <ms-select :widget="{value:['pre-'+item.preDeviant]}" :class="['offset-pre-' + $index]">
+                                <ms-select-option :widget="{value: 'pre-5'}">前5分钟</ms-select-option>
+                                <ms-select-option :widget="{value: 'pre-10'}">前10分钟</ms-select-option>
+                                <ms-select-option :widget="{value: 'pre-15'}">前15分钟</ms-select-option>
+                                <ms-select-option :widget="{value: 'pre-20'}">前20分钟</ms-select-option>
+                                <ms-select-option :widget="{value: 'pre-30'}">前30分钟</ms-select-option>
+                                <ms-select-option :widget="{value: 'pre-45'}">前45分钟</ms-select-option>
+                                <ms-select-option :widget="{value: 'pre-60'}">前60分钟</ms-select-option>
+                            </ms-select>
+                            <ms-select :widget="{value:['behind-'+item.behindDeviant]}" :class="['offset-behind-' + $index]">
+                                <ms-select-option :widget="{value: 'behind-5'}">后5分钟</ms-select-option>
+                                <ms-select-option :widget="{value: 'behind-10'}">后10分钟</ms-select-option>
+                                <ms-select-option :widget="{value: 'behind-15'}">后15分钟</ms-select-option>
+                                <ms-select-option :widget="{value: 'behind-20'}">后20分钟</ms-select-option>
+                                <ms-select-option :widget="{value: 'behind-30'}">后30分钟</ms-select-option>
+                                <ms-select-option :widget="{value: 'behind-45'}">后45分钟</ms-select-option>
+                                <ms-select-option :widget="{value: 'behind-60'}">后60分钟</ms-select-option>
+                            </ms-select>
+                            <input type="button" class="btn btn-tool" value="保存" :click="@handleSaveOffset($index,item,$event)">
+                        </form>
+                    </div>
+                    <div class="col-20" :attr="{'title':item.durationStr  || '','data-toggle':'popover'}">本次已运行&nbsp;{{@item.durationStr | fillterEmpty}}</div>
+                    <div class="col-20" :attr="{'title':item.yesterdayBizCount || '','data-toggle':'popover'}">{{@item.yesterdayBizCount | fillterEmpty}}</div>
+                </li>
+            </ul>
+        </div>
+        <ms-pages :widget="{total:@total,pageSize:@pageSize,current:@current,onChange:@pageChange,getCurrent:@getCurrent}"></ms-pages>
+    </div>
+</template>

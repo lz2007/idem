@@ -1,0 +1,58 @@
+<template>
+    <div class="common-glmt" :css="{height: @height}">
+        <div class="col-md-7 col-xs-3 common-glmt-player">
+            <div class="jqgl-ck-mid-img" :if="@img_show" :css="{height: @height}">
+                <ms-pic-player :widget="{src: @src, playerID:'plIMG', preview_w:'300', preview_h:'250'}"></ms-pic-player>
+            </div>
+            <div class="outDateMediap" :if="@outdate_show" :css="{height: @height}">文件已过期</div>
+            <div class="finishDelete" :if="@dalete_show">已被删除关联</div>
+            <div class="ajgl-object" id="common-glmt-player" :if="@ocxPlayer_show">
+                <ms-player :widget="{dialog_status:@diaHide,src: @video_url, special_id:'ply', media_type:@media_type, player_width:@web_width, player_height:@web_height, player_left:@web_left, player_top:@web_top, play_status:@play_status}"></ms-player>
+            </div>
+        </div>
+        <div class="col-md-5 col-xs-3 common-glmt-mt">
+            <div class="glmt-title">
+                <span>关联媒体</span>
+            </div>
+            <div class="glmt-type">
+                <button ms-class="[@tabActiveIndex == 0 ? 'glmt_jj' : 'glmt_cj']" :click="@glmt_tab_click(0)">接处警</button>
+                <button ms-class="[@tabActiveIndex == 1 ? 'glmt_jj' : 'glmt_cj']" :click="@glmt_tab_click(1)">轨迹定位</button>
+            </div>
+
+            <div class="glmt-content" :if="tabActiveIndex == 0">
+                <div class="noDataInfo" ms-visible="!@mt_data.length">暂无数据</div>
+                <div class="glmt-jj-div" ms-for="(key,el) in @mt_data" :click="@clickMt">
+                    <div class="glmt-jj-inline firtmtinfo">
+                        <img :attr="{rid: @el.rid}" class="glmt-img" src="/static/image/zfda-ajgl-ck/man.png?__sprite">
+                        <span :attr="{rid: @el.rid,type: @el.type, path: @el.path ,name: @el.fileName}">文件名：{{@el.fileName}}
+                            <!-- <span class="innerSpan">({{@el.userCode}})</span> -->
+                        </span>
+                        <!-- <img :attr="{name: @el.rid}" :click="@toggleMt" class="zkCtrl" src="/static/image/zfda-ajgl-ck/wzk.png?__sprite"> -->
+                    </div>
+                    <div style="padding-left: 27px;white-space: nowrap;">
+                        <div class="glmt-jj-inline jj-inline-div cmspan">
+                            <span>拍摄民警：</span>
+                            <span class="cmspan_prop"><span>{{el.userName | checkNull}}({{el.userCode | checkNull}})</span></span>
+                        </div>
+                        <div class="glmt-jj-inline jj-inline-div cmspan">
+                            <span>拍摄时间：</span>
+                            <span class="cmspan_prop"><span>{{el.startTime | checkNull  | formatDate}}</span></span>
+                        </div>
+                        <div class="glmt-jj-inline jj-inline-div cmspan">
+                            <span>拍摄时长：</span>
+                            <span class="cmspan_prop"><span>{{el.duration | checkNull}}</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="glmt-content"  :visible="tabActiveIndex == 1" style="bottom: 0px;">
+                <ms-gjdw-map :widget="{ajaxData: @mapAjaxData, mapShow: @tabActiveIndex == 1}"></ms-gjdw-map>
+            </div>
+            <div class="glmt-nav"  :if="tabActiveIndex == 0">
+                <span>共有{{@mt_data.length}}条关联媒体</span>
+                <br style="clear:both">
+            </div>
+        </div>
+        <br style="clear: both">
+    </div>
+</template>

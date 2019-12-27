@@ -1,0 +1,192 @@
+.table-saika-li {
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    color: #536b82;
+}
+
+.table-saika-li ul {
+    list-style: none;
+}
+
+.table-saika-li ul label {
+    margin-bottom: 0;
+}
+
+/* 头部样式 */
+
+.table-saika-li .table-saika-thead {
+    width: 100%;
+    margin-top: -34px;
+    background: #e0e7ed;
+    border: 1px solid #a5b4bd;
+}
+
+.table-saika-li .table-saika-thead li {
+    display: inline-block;
+    height: 32px;
+    line-height: 32px;
+    vertical-align: middle;
+    background: #e0e7ec;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-left: 1px solid #a5b4bd;
+}
+
+.table-saika-li .table-saika-thead li:first-child {
+    border-left: none;
+}
+
+.table-saika-li .table-saika-thead li .ane-checkbox {
+    display: none;
+}
+
+.table-saika-li .table-saika-thead li .active {
+    display: inline;
+}
+
+/* 内容样式 */
+
+.table-saika-li .table-saika-tbody {
+    height: 100%;
+    min-height: 34px;
+    overflow: auto;
+    background: #f7f7f7;
+    border: 1px solid #e0e7ec;
+    border-top: none;
+}
+
+.table-saika-li .table-saika-tbody li {
+    text-align: center;
+    height: 34px;
+    line-height: 34px;
+    border-bottom: 1px solid #e0e7ec;
+}
+
+.table-saika-li .table-saika-tbody li .tbody {
+    display: inline-block;
+    padding: 0 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-left: 1px solid #e0e7ec;
+}
+
+.table-saika-li .table-saika-tbody li div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 34px;
+    line-height: 34px;
+}
+
+.table-saika-li .table-saika-tbody li .table-saika-checkbox {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+}
+
+.table-saika-li .table-saika-tbody li .table-saika-checkbox div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: clip;
+}
+
+/* 加载样式 */
+
+.table-saika-li .table-saika-loading {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    top: 0;
+    bottom: 0;
+    z-index: 99;
+    background-color: #F7F7F7;
+    line-height: 34px;
+    vertical-align: middle;
+    background: #f7f7f7 url(/static/image/tyywglpt/loading.gif) center center no-repeat;
+}
+
+.table-saika-li .loadingSpan {
+    position: absolute;
+    top: 52%;
+    left: 48%;
+    text-align: center;
+    color: #536b82;
+}
+
+.table-saika-li .trigon {
+    width: 0;
+    height: 0;
+    border-color: #009900 transparent;
+    border-width: 10px 0 0 10px;
+    border-style: solid;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 9;
+}
+
+.table-saika-li .noData {
+    position: absolute;
+    left: 49%;
+    top: 8px;
+    color: #536b82;
+    font-size: 14px;
+}
+
+
+.table-saika-li .col-2 {
+    width: 2%;
+}
+
+.table-saika-li .col-3 {
+    width: 3%;
+}
+
+.table-saika-li .col-4 {
+    width: 4%;
+}
+
+.table-saika-li .col-5 {
+    width: 5%;
+}
+
+.table-saika-li .col-8 {
+    width: 8%;
+}
+
+.table-saika-li .col-9 {
+    width: 9%;
+}
+
+.table-saika-li .col-10 {
+    width: 10%;
+}
+
+.table-saika-li .col-12 {
+    width: 12%;
+}
+
+.table-saika-li .col-15 {
+    width: 15%;
+}
+
+.table-saika-li .col-20 {
+    width: 20%;
+}
+
+.table-saika-li .col-30 {
+    width: 30%;
+}
+
+.table-saika-li .col-40 {
+    width: 40%;
+}
+
+.table-saika-li .visibility {
+    visibility: hidden;
+}

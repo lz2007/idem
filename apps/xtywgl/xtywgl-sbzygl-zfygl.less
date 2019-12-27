@@ -1,0 +1,671 @@
+/* 统一运维管理平台--设备资源管理--执法仪管理
+caojiacong */
+
+.ywzx-zfygl .tyywglpt-search-box .form-inline {
+    top: 0;
+}
+
+.ywzx-zfygl .search-line-second .form-item {
+    margin-bottom: 0;
+}
+
+.tyywglpt-search-box .form-item .form-control{
+    width: 50%;
+    border: 1px solid #b8c5d3;
+}
+
+
+.tyywglpt-search-box .has-icon-input-wrap{
+    width: 50%;
+    padding-right: 30px;
+    display: inline-block;
+    padding-left: 12px;
+    padding-right: 20px;
+    border: 1px solid #b8c5d3;
+    border-radius: 2px;
+    background: #fff;
+    input.form-control{
+        width: 100%;
+    }
+    input.form-control:focus{
+        outline: none;
+    }
+    *:focus {
+        outline: none;
+    } 
+}
+
+/* 尽量减少宽度让注册时间选中一段时间时，多出来的两个时间框不会掉到第三行 */
+
+/* .ywzx-zfygl .tyywglpt-search-box label{
+    width: 60px;
+}
+.ywzx-zfygl .tyywglpt-search-box .form-item{
+    width: 245px;
+} */
+
+.ywzx-zfygl .tyywglpt-search-box .label-lg {
+    width: 288px;
+}
+
+.ywzx-zfygl .tyywglpt-search-box .label-lg label {
+    width: 103px;
+}
+
+.ywzx-zfygl .duration-container {
+    display: inline-block;
+}
+
+.ywzx-zfygl .form-item.duration-item {
+    label{
+        vertical-align: top !important;
+    }
+    margin-right: 15px;
+}
+
+.tyywglpt-search-box{
+    .duration-item{
+        .ane-datepicker{
+            width: 100%;
+        }
+        .datepickerEndTime{
+            width: 100%;
+            margin: 10px 0;            
+        }
+    }
+}
+
+.ywzx-zfygl .duration-container .form-control {
+    height: 30px;
+}
+
+.ywzx-zfygl .date-line {
+    margin: 0 4px;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+}
+
+
+
+.ywzx-zfygl-modal-register .com-modal-modal-body,
+.ywzx-zfygl-modal-modify .com-modal-modal-body {
+    padding: 0;
+}
+
+.ywzx-zfygl-modal-register .modal-title,
+.ywzx-zfygl-modal-modify .modal-title {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.ywzx-zfygl-modal-register .allot-type-btn,
+.ywzx-zfygl-modal-modify .allot-type-btn {
+    width: 80px;
+    position: absolute;
+    left: 16px;
+}
+
+.ywzx-zfygl-modal-register .allot-container,
+.ywzx-zfygl-modal-modify .allot-container {
+    height: 150px;
+}
+
+.ywzx-zfygl-modal-register .form-inline .form-item-lg,
+.ywzx-zfygl-modal-modify .form-inline .form-item-lg {
+    width: 100%;
+}
+
+.ywzx-zfygl-modal-register .form-item-lg .form-control,
+.ywzx-zfygl-modal-modify .form-item-lg .form-control {
+    width: 166px;
+}
+
+.ywzx-zfygl-modal-register .form-item-lg .has-icon .form-control,
+.ywzx-zfygl-modal-modify .form-item-lg .has-icon .form-control {
+    width: 461px;
+}
+
+/* 采集站定向升级 */
+
+.sbzygl-modal-direct .com-modal-modal-body {
+    padding: 20px 50px;
+    font-size: 14px;
+}
+
+.sbzygl-modal-direct .form-inline .form-item {
+    width: 400px;
+}
+
+.sbzygl-modal-direct .form-item .form-control {
+    width: 280px;
+}
+
+.sbzygl-modal-direct .com-modal-modal-body label {
+    width: auto;
+    text-align: left;
+}
+
+.sbzygl-modal-direct .checkbox-group {
+    width: 500px;
+    height: 150px;
+    overflow: hidden;
+}
+
+.sbzygl-modal-direct .checkbox-group .device-list,
+.sbzygl-modal-direct .checkbox-group .model-list {
+    height: 120px;
+    overflow: auto;
+    // margin-left: -4px\0;
+}
+
+.sbzygl-modal-direct .checkbox-group .null {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    font-size: 14px;
+}
+
+.sbzygl-modal-direct .checkbox-group li {
+    display: inline-block;
+    width: 110px;
+    height: 24px;
+    line-height: 24px;
+    margin-right: 10px;
+}
+
+.sbzygl-modal-direct .checkbox-group li .select-label {
+    width: 12px;
+    height: 12px;
+}
+
+.sbzygl-modal-direct .checkbox-group li label {
+    width: 78px;
+    font-weight: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sbzygl-modal-direct .checkbox-group li input {
+    width: 0;
+    display: none;
+    // display: inline-block\0;
+}
+
+.sbzygl-modal-direct .check_selected {
+    background: url(/static/image/tyywglpt/check_selected.png?__sprite);
+}
+
+.sbzygl-modal-direct .check_unselected {
+    background: url(/static/image/tyywglpt/check_unselected.png?__sprite);
+}
+
+.sbzygl-modal-direct .checkbox-group .list-loading {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: url(/static/image/tyywglpt/loading.gif) center center no-repeat;
+}
+
+.sbzygl-modal-direct .list-loading span {
+    width: 100%;
+    position: absolute;
+    top: 54%;
+    left: 0;
+    text-align: center;
+}
+
+/* 远程配置更新 */
+
+.ywzx-zfygl-modal-remote-update .com-modal-modal-body {
+    padding-top: 16px;
+}
+
+.ywzx-zfygl-modal-remote-update .form-inline .form-item {
+    width: 320px;
+}
+
+.ywzx-zfygl-modal-remote-update .form-item label {
+    width: 130px;
+}
+
+.ywzx-zfygl-modal-remote-update .form-item .form-tip {
+    padding-left: 135px;
+}
+
+.ywzx-zfygl-modal-remote-update .form-inline .form-item-lg {
+    width: 100%;
+}
+
+.ywzx-zfygl-modal-remote-update .form-item-lg .has-icon .form-control {
+    width: 485px;
+}
+
+.ywzx-zfygl .tyywglpt-list-panel {
+    top: 100px;
+    margin-left: 370px;
+    padding-right: 10px;
+}
+
+.ywzx-zfygl{
+    width: 100%;
+    height: 100%;
+    #fileupload {
+        z-index: 1;
+        right: 0;
+        color: #fff;
+        line-height: 15px;
+        position: relative;
+        background: #1055b3;
+        cursor: pointer;
+    }
+    .ywzx-zfjly-left{
+        width: 360px;
+        left: 8px;
+        height: 100%;
+        background: white;
+        .tyywglpt-search-box {
+            position: relative;
+            padding: 9px 8px;
+            margin-top: 0px;
+            background: #ffffff;
+            border: none;
+            .form-item label{
+                display: inline-block;
+                width: 40%;
+                height: 30px;
+                margin-right: 10px;
+                line-height: 30px;
+                text-align: right;
+                font-weight: normal;
+                vertical-align: middle;
+                font-size: 14px;
+                color: #2c3640;
+            }
+            .form-inline .form-item{
+                width: 100%;
+                display: inline-block;
+                margin-bottom: 10px;
+                margin-right: 20;
+            }
+            .hiddenType{
+                display: none !important;
+            }
+            .search-line-second{
+                .form-item{
+                    margin-bottom: 10px;
+                }
+                .input-close-ywzx-user{
+                    width: 30px;
+                    height: 30px;
+                    position:absolute;    
+                    top: 0px;
+                    right: 25px;    
+                    cursor: pointer;
+                    background: url(/static/image/xtywgl/input_close_icon.png?__sprite) no-repeat;
+                }  
+            } 
+            
+            .btn-query {
+                position: absolute;
+                top: auto;
+                bottom: -40px;
+                right: 116px;
+                width: 80px;
+                height: 30px;
+                margin-left: 40px;
+                background: #1055b3;
+                border-radius: 2px;
+            }
+        }
+    }
+    .ywzx-zfjly-bar{
+        margin-left: 370px;
+        position: absolute;
+        top: 13px;
+        left: 8px;
+        right: 8px;
+        .btnIcon{
+            background-color: #1055b3;
+            text-align: left;
+            width: auto;
+            padding-right: 20px;
+            display: inline-block;
+            cursor: pointer;
+            margin-right: 10px;
+            border-radius: 2px;
+            .icon{
+                width: 30px;
+                height: 30px;
+                float: left;
+            }
+            .icon_addUser{
+                background: url(/static/image/xtpzgl-yhgl/icon_addUser.png?__sprite) center center no-repeat;
+            }
+            .icon_bulkRegister{
+                background: url(/static/image/xtpzgl-yhgl/icon_export.png?__sprite) center center no-repeat;
+            }
+            .btn-tool{
+                width: auto;
+                height: 30px;
+                line-height: 14px;
+                background: #1055b3;
+                vertical-align: top;
+                text-align: left;
+                margin-right: 0;
+            }
+            .btn-tool.disabled{
+                background: #d4d7d9;
+                opacity: 1;
+                filter: alpha(opacity=100);
+            }
+        }
+        .btnIcon.disabled{
+            background: #d4d7d9;
+        }
+        .divBulkRegistration{
+        }
+        .btn-bulkRegistration{
+        }
+    }
+    .tyywglpt-list-header-wrap {
+        width: 100%;
+        margin-top: -34px;
+        background: #e0e7ec;
+        overflow: hidden;
+        border: none;
+        .tyywglpt-list-header li {
+            display: inline-block;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            background: #e0e7ec;
+            position: relative;
+            border: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border-left: 1px solid #F2F2F2;
+        }        
+    }
+    .tyywglpt-list-content {
+        height: 100%;
+        min-height: 34px;
+        overflow: auto;
+        background: #ffffff;
+        border: 0px solid #e0e7ec;
+        border-top: none;
+        white-space: nowrap;
+        .list-loading {
+            position: relative;
+            height: 100%;
+            text-align: center;
+            background: #ffffff url(/static/image/tyywglpt/loading.gif) center center no-repeat;
+        }
+    }
+    .bottom-tool-bar.disabled{
+        background: #d4d7d9;
+    }
+    .bottom-tool-bar{
+        margin-left: 370px;
+        left: 8px;
+        width: 150px;
+        height: 30px;
+        margin-right: 10px;
+        position: absolute;
+        bottom: 22px;
+        margin-top: 8px;
+        background: #1055b3;
+        border-radius: 2px;
+        .btn-tool{
+            // width: 100px;
+            height: 30px;
+            margin-top: 0px;
+            margin-right: 0px;
+            bottom: 0px;
+            background-color: #1055b3;
+        }
+        .btn-tool.disabled{
+            background: #d4d7d9;
+            opacity: 1;
+        }
+        .icon_batchDel{
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+            background: url(/static/image/xtpzgl-yhgl/icon_batchDel.png?__sprite) center center no-repeat;           
+        } 
+    }
+    .chooseDate{
+        display: inline-block;
+        width: 50%;
+        .has-feedback{
+            width: 100%;
+        }
+        .captureTime{
+            width: 100%;
+            .time{
+                display: inline-block;
+                width: 48%;
+                border: 1px solid #b8c5d3;
+                border-radius: 2px;
+                font-size: 10px;
+                text-align: center;
+                height: 30px;
+                line-height: 30px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+            .thisWeek{
+                margin-right: 4%;
+            }
+            .thisWeek.active, .thisMonth.active{
+                border-color: #1055b3;
+                color: #1055b3;
+            }
+        }
+    }
+    #zfygl-tree-select-1{
+        width: 50%;
+        .tree-select-form{
+            width: 100%;
+        }
+    }
+    .tyywglpt-search-box .form-item .fa-close{
+        right: 30px;
+    }
+    .qrcode{
+        display: inline-block;
+        vertical-align: middle;
+        width: 19px;
+        height: 19px;
+        background: url(/static/image/xtpzgl-yhgl/icon_qrcode.png?__sprite) center center no-repeat; 
+        cursor: pointer;
+    }
+    .op_edit{
+        display: inline-block;
+        width: 18px;
+        height: 20px;
+        margin-right: 20%;
+        // background: url(/static/image/xtpzgl-yhgl/icon_editUser.png?__sprite) center center no-repeat; 
+        background: url(/static/image/xtywgl/edit.png?__sprite) center center no-repeat; 
+        vertical-align: middle;
+        cursor: pointer;
+        border-left: none;
+    }
+    .op_delete{
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        // background: url(/static/image/xtpzgl-yhgl/icon_deleteUser.png?__sprite) center center no-repeat; 
+        background: url(/static/image/xtywgl/del.png?__sprite) center center no-repeat; 
+        vertical-align: middle;
+        cursor: pointer;
+        border-left: none;
+    }
+    .com-modal-modal-header{
+        background: #3e4f5d;
+    }
+    .com-modal-modal-footer{
+        border-top: none;
+    }
+    .com-modal-btn{
+        background: #1055b3;
+        border-color: #1055b3;
+    }
+    .zfygl-modal-register .com-modal-modal-body, .zfygl-modal-modify .com-modal-modal-body{
+        padding: 0;
+    }
+    .zfygl-modal-register .modal-title, .zfygl-modal-modify .modal-title{
+        margin: 0;
+    }
+    .zfygl-modal-register .form-item-lg .has-icon .form-control, .zfygl-modal-modify .form-item-lg .has-icon .form-control{
+        width: 146px;
+    }          
+    
+    .sbzygl-modal label{
+        // width: 155px;
+        width:124px;
+        font-weight: normal;
+        color: #2c3640;
+        margin-right: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .sbzygl-modal .form-inline .form-item{
+        width: 100%;
+        margin-right: 0;
+    }
+    .sbzygl-modal .modal-title{
+        border: none;
+        background: none;
+        color: #2c3640;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .sbzygl-modal .modal-title.top{
+        margin-bottom: 0;
+    }
+    .zfygl-modal-register .allot-container, .zfygl-modal-modify .allot-container{
+        height: auto;
+    }
+    .sbzygl-modal label i{
+        color: red;
+        vertical-align: middle;
+        margin-right: 3px;
+    }
+    .sbzygl-modal .form-item .form-tip{
+        // padding-left: 166px;
+        padding-left: 134px;
+    }
+    .sbzygl-modal .form-item .form-tip.tip-md{
+        width: 100%;
+    }
+    .showQRcode{
+        display: none;
+        position: fixed;
+        left: 1124px;
+        top: 194px;
+        width: 250px;
+        height: 270px;
+        background-color: transparent !important;
+        border: 1px solid rgba(0, 0, 0, .2);
+        border-bottom: none;
+        border-radius: 6px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+        outline: 0;
+        padding: 0;
+
+        .qrcode-head{
+            display: block;
+            position: relative;
+            width: 100%;
+            height: 25px;
+            padding: 0;
+            background-color: #414f5c !important;
+            line-height: 25px;
+            span{
+                display: inline-block;
+                float: left;
+                margin-left: 15px;
+                color: #fff;
+            }
+            .refreshQRcode{
+                display: inline-block;
+                float: right;
+                width: 15px;
+                height: 15px;
+                margin: 5px 10px 0 0;
+                cursor: pointer;
+                background:url('/static/image/xtpzgl-yhgl/icon_refresh.png?__sprite') no-repeat;
+            }
+            .closeQRcode{
+                display: inline-block;
+                float: right;
+                margin-right: 15px;
+                color: #fff;
+                background-color: #414f5c !important;
+                font-size: 19px;
+                line-height: 1;
+                font-weight: bold;
+                text-shadow: 0 1px 0 #fff;
+                filter: alpha(opacity=20);
+                cursor: pointer;
+            }
+        }
+        .qrcode-body{
+            position: relative;
+            width: 100%;
+            height: 245px;
+            line-height: 242px;
+            margin: 0 auto;
+            background-color: #fff !important;
+
+            .imgQRcode{
+                display: inline-block;
+                vertical-align: middle;
+                background-color: #fff !important;
+                .qrcode{/*二维码大小要与原图相同，否则识别不出来*/
+                    width: 200px;
+                    height: 200px;
+                }
+            }
+        }
+    }
+    .showQRcode.active{
+        display: block;
+    }
+}
+.tyywglpt .btn-normal{
+    background: #1055b3;
+}
+.ywzx-zfygl .sbzygl-modal .form-item .form-tip.tip-md,
+.ywzx-zfygl .sbzygl-modal .form-item .form-tip{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    // max-width: 341px;
+    max-width: 315px;
+}
+.sbzygl-modal{
+    .com-modal-modal-footer button{
+        // margin-left: 20px;
+        margin: 0 10px;
+    }
+}
+.zfygl-modal-modify{
+    .ane-select-selection .ane-select-selected{
+        width: 84%;
+    }
+}
+.tyywglpt-list-content div{
+    border-left: 1px solid #F2F2F2;
+}
+.tyywglpt-list-header{
+    padding-right: 0;
+}
+.form-control,.sbzygl-modal .form-item .has-icon{
+    border: 1px solid #b8c5d3;
+}

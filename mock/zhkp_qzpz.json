@@ -1,0 +1,189 @@
+{
+    "id": "asdfasdfasdf",
+    "dsjEQRate": {
+        "itemRPS": [
+            {
+                "rateMin": 100,
+                "rateMax": -1,
+                "point": 10
+            },
+            {
+                "rateMin": 95,
+                "rateMax": 100,
+                "point": 8
+            },
+            {
+                "rateMin": 90,
+                "rateMax": 95,
+                "point": 5
+            },
+            {
+                "rateMin": 0,
+                "rateMax": 90,
+                "point": 2
+            }
+        ],
+        "maxPoint": 10
+    },
+    "dsjUsageRate": {
+        "itemRPS": [
+            {
+                "rateMin": 90,
+                "rateMax": -1,
+                "point": 10
+            },
+            {
+                "rateMin": 70,
+                "rateMax": 90,
+                "point": 8
+            },
+            {
+                "rateMin": 50,
+                "rateMax": 70,
+                "point": 5
+            },
+            {
+                "rateMin": 0,
+                "rateMax": 50,
+                "point": 2
+            }
+        ],
+        "maxPoint": 10
+    },
+    "videoImportOnTimeRate": {
+        "itemRPS": [
+            {
+                "rateMin": 100,
+                "rateMax": -1,
+                "point": 10
+            },
+            {
+                "rateMin": 95,
+                "rateMax": 100,
+                "point": 8
+            },
+            {
+                "rateMin": 90,
+                "rateMax": 95,
+                "point": 5
+            },
+            {
+                "rateMin": 0,
+                "rateMax": 90,
+                "point": 2
+            }
+        ],
+        "maxPoint": 10
+    },
+    "psMatchRate": {
+        "itemRPS": [
+            {
+                "rateMin": 100,
+                "rateMax": -1,
+                "point": 20
+            },
+            {
+                "rateMin": 95,
+                "rateMax": 100,
+                "point": 17
+            },
+            {
+                "rateMin": 90,
+                "rateMax": 95,
+                "point": 14
+            },
+            {
+                "rateMin": 85,
+                "rateMax": 90,
+                "point": 11
+            },
+            {
+                "rateMin": 80,
+                "rateMax": 85,
+                "point": 8
+            },
+            {
+                "rateMin": 75,
+                "rateMax": 80,
+                "point": 5
+            },
+            {
+                "rateMin": 0,
+                "rateMax": 75,
+                "point": 2
+            }
+        ],
+        "maxPoint": 20
+    },
+    "cmMatchRate": {
+        "itemRPS": [
+            {
+                "rateMin": 100,
+                "rateMax": -1,
+                "point": 20
+            },
+            {
+                "rateMin": 95,
+                "rateMax": 100,
+                "point": 17
+            },
+            {
+                "rateMin": 90,
+                "rateMax": 95,
+                "point": 14
+            },
+            {
+                "rateMin": 85,
+                "rateMax": 90,
+                "point": 11
+            },
+            {
+                "rateMin": 80,
+                "rateMax": 85,
+                "point": 8
+            },
+            {
+                "rateMin": 75,
+                "rateMax": 80,
+                "point": 5
+            },
+            {
+                "rateMin": 0,
+                "rateMax": 75,
+                "point": 2
+            }
+        ],
+        "maxPoint": 20
+    },
+    "basicEVARate": {
+        "itemRPS": [
+            {
+                "rateMin": 5,
+                "rateMax": -1,
+                "point": 10
+            },
+            {
+                "rateMin": 4,
+                "rateMax": 5,
+                "point": 8
+            },
+            {
+                "rateMin": 3,
+                "rateMax": 4,
+                "point": 5
+            },
+            {
+                "rateMin": 2,
+                "rateMax": 3,
+                "point": 2
+            },
+            {
+                "rateMin": 0,
+                "rateMax": 2,
+                "point": 0
+            }
+        ],
+        "maxPoint": 10
+    },
+    "legalEVAPoint": 20
+}

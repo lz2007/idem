@@ -1,0 +1,41 @@
+<template>
+    <div>
+        <div class="pswContent" :class="@modelName.replace(/,/g,'')">
+            <div class="modelName">{{@modelName}}</div>
+            <div class="targetPsw targetPsw2" :if="@showEdit">{{@zfymm_txt.targetPassword1}}</div>
+            <div class="targetPsw" :if="!@showEdit">{{@zfymm_txt.targetPassword2}}</div>
+            <div class="pswIpt" :if="!@showEdit">
+                <ms-input :css="{display: @iptPsw}" :focus="@psw_focus" :blur="@psw_blur"
+                    :widget="{col:'psw',type:'password',value:@psw_value,onChange:@handleChange_psw}"></ms-input>
+                <ms-input :css="{display: @iptTxt}" :focus="@psw_focus" :blur="@psw_blur"
+                    :widget="{col:'psw',value:@psw_value,onChange:@handleChange_psw}"></ms-input>
+                <span>
+                    <i :if="@showPsw" class="showPsw" :mousedown="@showPswOrTxt" :attr="{title: @zfymm_txt.showPsw}"></i>
+                    <i :if="!@showPsw" class="showTxt" :mousedown="@showPswOrTxt" :attr="{title: @zfymm_txt.showTxt}"></i>
+                </span>
+            </div>
+            <div class="pswIpt pswNoIpt" :if="@showEdit">
+                    <ms-input :css="{display: @iptPsw}" :focus="@psw_focus" :blur="@psw_blur"
+                        :widget="{col:'psw',type:'password',value:@psw_value,onChange:@handleChange_psw}"></ms-input>
+                    <ms-input :css="{display: @iptTxt}" :focus="@psw_focus" :blur="@psw_blur"
+                        :widget="{col:'psw',value:@psw_value,onChange:@handleChange_psw}"></ms-input>
+                    <span>
+                        <i :if="@showPsw" class="showPsw" :mousedown="@showPswOrTxt" :attr="{title: @zfymm_txt.showPsw}"></i>
+                        <i :if="!@showPsw" class="showTxt" :mousedown="@showPswOrTxt" :attr="{title: @zfymm_txt.showTxt}"></i>
+                    </span>
+            </div>
+            <div class="zfymm-btn" :if="@authority.EDIT">
+                <button type="button" class="editBtn" :click='@handleEdit' :if="@showEdit">{{@zfymm_txt.edit}}</button>
+                <button type="button" class="saveBtn" :click='@handleSave' :if="!@showEdit" :class="@pswError ? 'saveDisable' : ''" :attr="@pswError ? {disabled: disabled} : {disabled: false}">{{@zfymm_txt.save}}</button>
+                <button type="button" class="cancelBtn" :click='@handleCancel' :if="!@showEdit">{{@zfymm_txt.cancel}}</button>
+            </div>
+        </div>
+        <div class="errorTip" :if="@pswError" :class="@extra_class ? '' : 'errorTip_zhcn'">{{@zfymm_txt.pleaseenterthepasswordinthecorrectformat}}</div>
+        <div class="ruleTip" :if="@showRuleTip">
+            <p>
+                {{@zfymm_txt.ruleTips}}
+            </p>
+        </div>
+        
+    </div>
+</template>

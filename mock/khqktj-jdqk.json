@@ -1,0 +1,163 @@
+{
+    "code": 0,
+    "msg": "成功！",
+    "data": {
+        "totalPages": 5,
+        "totalElements": 100,
+        "currentPages": 0,
+        "perPages": 20,
+        "currentElements": [{
+                "name": "一级部门",
+                "type": "部门",
+                "userCount": 70,
+                "fileCreateInfo": 56,
+                "fileCreateDate": null,
+                "fileCreateRate": " 0.5555"
+            },
+            {
+                "name": "张三(10000)",
+                "type": "警员",
+                "userCount": 1,
+                "fileCreateInfo": "建档",
+                "fileCreateDate": 1556978707000,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "李四(10001)",
+                "type": "辅警",
+                "userCount": 1,
+                "fileCreateInfo": "未建档",
+                "fileCreateDate": null,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "张三(10000)",
+                "type": "警员",
+                "userCount": 1,
+                "fileCreateInfo": "建档",
+                "fileCreateDate": 1556978707000,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "李四(10001)",
+                "type": "辅警",
+                "userCount": 1,
+                "fileCreateInfo": "未建档",
+                "fileCreateDate": null,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "张三(10000)",
+                "type": "警员",
+                "userCount": 1,
+                "fileCreateInfo": "建档",
+                "fileCreateDate": 1556978707000,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "李四(10001)",
+                "type": "辅警",
+                "userCount": 1,
+                "fileCreateInfo": "未建档",
+                "fileCreateDate": null,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "张三(10000)",
+                "type": "警员",
+                "userCount": 1,
+                "fileCreateInfo": "建档",
+                "fileCreateDate": 1556978707000,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "李四(10001)",
+                "type": "辅警",
+                "userCount": 1,
+                "fileCreateInfo": "未建档",
+                "fileCreateDate": null,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "张三(10000)",
+                "type": "警员",
+                "userCount": 1,
+                "fileCreateInfo": "建档",
+                "fileCreateDate": 1556978707000,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "李四(10001)",
+                "type": "辅警",
+                "userCount": 1,
+                "fileCreateInfo": "未建档",
+                "fileCreateDate": null,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "张三(10000)",
+                "type": "警员",
+                "userCount": 1,
+                "fileCreateInfo": "建档",
+                "fileCreateDate": 1556978707000,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "李四(10001)",
+                "type": "辅警",
+                "userCount": 1,
+                "fileCreateInfo": "未建档",
+                "fileCreateDate": null,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "张三(10000)",
+                "type": "警员",
+                "userCount": 1,
+                "fileCreateInfo": "建档",
+                "fileCreateDate": 1556978707000,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "李四(10001)",
+                "type": "辅警",
+                "userCount": 1,
+                "fileCreateInfo": "未建档",
+                "fileCreateDate": null,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "张三(10000)",
+                "type": "警员",
+                "userCount": 1,
+                "fileCreateInfo": "建档",
+                "fileCreateDate": 1556978707000,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "李四(10001)",
+                "type": "辅警",
+                "userCount": 1,
+                "fileCreateInfo": "未建档",
+                "fileCreateDate": null,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "张三(10000)",
+                "type": "警员",
+                "userCount": 1,
+                "fileCreateInfo": "建档",
+                "fileCreateDate": 1556978707000,
+                "fileCreateRate": " -"
+            },
+            {
+                "name": "李四(10001)",
+                "type": "辅警",
+                "userCount": 1,
+                "fileCreateInfo": "未建档",
+                "fileCreateDate": null,
+                "fileCreateRate": " -"
+            }
+        ]
+    }
+}

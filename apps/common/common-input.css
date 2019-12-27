@@ -1,0 +1,71 @@
+.common-input-label{
+    display:inline-block;
+    width: 35%;
+    /* height: 100%; */
+    text-align: right;
+    word-break: keep-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    color: #536b82;
+    padding-right: 5px;
+    /* height: 100%; */
+    cursor: pointer;
+}
+.common-input{
+    display: inline-block;
+    margin-bottom: 17px;
+    position: relative;
+}
+.common-input-input{
+    display: inline-block;
+    width: 65%;
+    height: 100%;
+    vertical-align: middle;
+}
+.common-input-inner{
+    /* padding-right: 10px; */
+    height: 100%;
+    position: relative;
+    
+}
+.common-input-xx{
+    position: absolute;
+    right: 2px;
+    font-size: 17px;
+    color: #536b82;
+    line-height: 30px;
+}
+.common-input-inner-input{
+    display: inline-block !important;
+    height: 100% !important;
+    padding-right: 14px;
+}
+.common-input-container{
+    padding: 0 5px;
+    height: 100%;
+}
+.common-input-alert{
+    width: 100%;
+    position: absolute;
+    bottom: -17px;
+    color: red;
+    /* padding-left: 38%; */
+    left: 36%;
+}
+.common-input-inner input::-ms-clear,
+.common-input-inner [type=text]::-ms-clear,
+.common-input-inner [type=input]::-ms-clear{
+    display: none;
+    width : 0;
+    height: 0;
+  }
+.common-input-required{
+    color: red;
+    display: inline-block;
+    vertical-align: middle;
+}
+.common-input textarea{
+    overflow: hidden;
+}

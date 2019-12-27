@@ -1,0 +1,119 @@
+.zfda-container .sgcl-container {
+  display: block;
+  overflow: auto;
+  float: left;
+  position: absolute;
+  left: 186px;
+  right: 0px;
+  top: 67px;
+  height: 91%;
+  min-height: 765px;
+  min-width: 1163px;
+  padding-right: 8px;
+  z-index: 100;
+}
+
+.zfda-container .ane-select-selection .ane-select-selected,
+.lz-container .ane-select-selection .ane-select-selected{
+  margin-top: 2px;
+}
+
+.zfda-container .top-form .ane-select-arrow, 
+.zfda-container .top-form .ane-tree-select-arrow,
+.lz-container .top-form .ane-select-arrow, 
+.lz-container .top-form .ane-tree-select-arrow {
+  top: 3px;
+}
+
+.zfda-container .page-ck {
+  z-index: 98;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: 831px;
+  height: 100%;
+  background: #FFF;
+}
+
+.sgcl-container .top-form .tree-select-selected {
+  margin-left: 0 !important;
+}
+
+.sgcl-container .top-form .tree-select-search {
+  width: 100%;
+}
+
+.sgcl-container .top-form .fa.includeChild {
+  color: #536b82;
+  cursor: pointer;
+  margin-left: 2px;
+}
+
+.sgcl-container .top-form .fa.includeChild.checked {
+  color: #0078d7
+}
+
+.sgcl-container .top-form .fa.includeChild>.text {
+  color: #536b82;
+}
+
+.zfda-container #gxx_ocx,
+.lz-container #gxx_ocx {
+  position: absolute;
+  left: 1px;
+  top: 55px;
+}
+
+.zfda-container #gxx_ocx #ocx_playControll a,
+.lz-container #gxx_ocx #ocx_playControll a {
+  display: inline-block;
+}
+
+.zfda-container .zfdn-com-isImg,
+.lz-container .zfdn-com-isImg {
+  position: absolute;
+  left: 1px;
+  top: 55px;
+}
+
+.sgcl-container .table-index-thead>li {
+  min-width: 25px;
+}
+
+.sgcl-container .table-index .noData {
+  top: 35px;
+}
+
+.sgcl-container .zfda-sgcl-jtwf-right-close,
+.jtwf-container .zfda-sgcl-jtwf-right-close {
+  display: none;
+  right: 22px;
+  position: absolute;
+  top: 6px;
+  cursor: pointer;
+}
+
+.jtwf-container .top-form-inline .form-control {
+  width: 138px;
+  height: 28px;
+  line-height: 1.028571;
+}
+
+@media screen and (max-width: 1434px) {
+  .sgcl-container .top-form-inline .form-control {
+    width: 112px !important;
+    padding-right: 26px;
+  }
+  .sgcl-container .top-form .inline-component .ane-datepicker {
+    width: 112px !important;
+  }
+  .sgcl-container .top-form .inline-component .ane-datepicker-icon,
+  .sgcl-container .top-form .inline-component .ane-datepicker-clear {
+    right: 3px;
+  }
+}
+
+.sgcl-container .table-index-tbody {
+  cursor: auto;
+}

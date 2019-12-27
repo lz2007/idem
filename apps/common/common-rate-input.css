@@ -1,0 +1,68 @@
+.rate-main-wrap {
+    display: inline-block;
+}
+
+.rate-input-wrap {
+    width: 154px;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.rate-input-wrap div>input {
+    display: inline-block;
+    text-align: center;
+    height: 24px;
+    line-height: 24px;
+    vertical-align: middle;
+    color: #536b82
+}
+
+.rate-input-wrap div.up-input {
+    text-align: justify;
+    margin-bottom: 10px;
+}
+
+.rate-input-wrap div.up-input span {
+    /* margin-left: 4px; */
+    margin-left: 11px;
+}
+
+.rate-input-wrap div.up-input input {
+    display: inline-block;
+    text-align: center;
+    width: 60px;
+    float: right;
+}
+
+.rate-input-wrap div.up-input input:first-child {
+    float: left;
+}
+
+.rate-main-wrap input::-ms-clear,
+.rate-main-wrap input::-ms-reveal {
+    display: none;
+}
+
+.rate-main-wrap input.form-control {
+    padding: 0 12px;
+}
+
+.rate-main-wrap .input_error {
+    border-color: #d2403d !important;
+}
+
+.rate-main-wrap .down-input {
+    position: relative;
+}
+
+.rate-main-wrap .rate-tips {
+    position: absolute;
+    top: 22px;
+    left: 10px;
+    font-size: 12px;
+    color: #d2403d;
+}
+
+.rate-main-wrap .fa-exclamation-circle {
+    color: #d2403d;
+}

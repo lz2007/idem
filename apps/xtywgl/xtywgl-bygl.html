@@ -1,0 +1,332 @@
+<!-- 统一运维管理平台--平台级联管理-上联管理 -->
+<template>
+    <div class="tyywglpt tyywglpt-ptjlgl-bywgl">
+        <ul class="tyywglpt-ptjlgl-bywgl-nav">
+            <li class="tyywglpt-ptjlgl-bywgl-nav-item" :class="[@ywfzatcive, @extra_class ? 'btn-tool-en' : '']" :click-1="ywfzatciveClass"
+                :click-2="@switchView('ywfz')">{{@bygl_language.businessGroup}}</li>
+            <li class="tyywglpt-ptjlgl-bywgl-nav-item" :class="[@xzqhatcive, @extra_class ? 'btn-tool-en' : '']" :click-1="xzqhatciveClass"
+                :click-2="@switchView('xzqh')">{{@bygl_language.administrativeDivision}}
+            </li>
+        </ul>
+        <!-- 按钮 -->
+        <div class="tyywglpt-search-box">
+            <input type="button" :if="authority.STGL" ms-duplex="@bygl_language.viewManagement" :click-2="@handleView" class="btn btn-tool" :class="[ @extra_class ? 'btn-tool-en' : '']">
+        </div>
+        <!-- 重构 -->
+
+        <div class="tyywglpt-bywgl-box">
+            <div class="tyywglpt-bywgl-ywfz-xzqh">
+                <div class="input-group">
+                    <input type="text" class="form-control" ms-duplex="@name" :keypress="@handlePress"
+                        :attr="{placeholder:(@switchType == 'ywfz' ? @bygl_language.searchableaccordingtodepartmentandcommcode : @bygl_language.searchaccordingtodepartmentanddivisionnumber)}">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" :click="query">{{@bygl_language.query}}</button>
+                    </span>
+                </div>
+
+                <div class="tyywglpt-bywgl-ywfz-content row">
+                    <div class="tyywglpt-bywgl-ywfz-department col-md-6" :css="{height: @Treeheight}"
+                        :visible="(@switchType=='ywfz')">
+                        <ms-tree-bygl
+                            :widget="{treeId:'tyywglpt-bywgl-ywfz-department', treeData:@orgData,zTreeOnClick:@zTreeOnClick,async:@async,onAsyncSuccess:@onAsyncSuccess,addHoverDom:@addHoverDom,removeHoverDom:@removeHoverDom}">
+                        </ms-tree-bygl>
+                    </div>
+                    <div class="tyywglpt-bywgl-ywfz-department col-md-6" :css="{height: @Treeheight}"
+                        :visible="(@switchType=='xzqh')">
+                        <ms-tree-bygl
+                            :widget="{treeId:'tyywglpt-bywgl-xzqh-department', treeData:@orgData2,zTreeOnClick:@zTreeOnClick,async:@async,onAsyncSuccess:@onAsyncSuccess,addHoverDom:@addHoverDom,removeHoverDom:@removeHoverDom}">
+                        </ms-tree-bygl>
+                    </div>
+                    <div class="tyywglpt-bywgl-ywfz-equipment col-md-6" :css="{height: @Treeheight}"
+                        :visible="(@switchType=='ywfz')">
+                        <p class="tyywglpt-bywgl-ywfz-equipment-text text-center">
+                            <ms-tree-bygl
+                                :widget="{treeId:'tyywglpt-bywgl-ywfz-equipment-text',treeData:@deviceTreeData,async:@async,onAsyncSuccess:@onAsyncSuccess,zTreeOnClick:@zTreeOnClick,addHoverDom:@addHoverDom,removeHoverDom:@removeHoverDom}">
+                            </ms-tree-bygl>
+                        </p>
+                    </div>
+                    <div class="tyywglpt-bywgl-ywfz-equipment col-md-6" :css="{height: @Treeheight}"
+                        :visible="(@switchType=='xzqh')">
+                        <p class="tyywglpt-bywgl-ywfz-equipment-text text-center">
+                            <ms-tree-bygl
+                                :widget="{treeId:'tyywglpt-bywgl-xzqh-equipment-text',treeData:@deviceTreeData2,async:@async,onAsyncSuccess:@onAsyncSuccess,zTreeOnClick:@zTreeOnClick,addHoverDom:@addHoverDom,removeHoverDom:@removeHoverDom}">
+                            </ms-tree-bygl>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tyywglpt-bywgl-Jurisdiction" :if="authority.QXGL">
+                <div class="tyywglpt-bywgl-Jurisdiction-info">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span class="labelName">
+                                {{@bygl_language.name}}
+                            </span>
+                            <span class="labelValue">
+                                {{JurisdictionData.oldName}}
+                            </span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="labelName">
+                                {{(@switchType == 'ywfz' ? @bygl_language.commCodes : @bygl_language.zoningNumbers)}}
+                            </span>
+                            <span class="labelValue">
+                                {{JurisdictionData.deviceId}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row margin-top">
+                        <div class="col-md-6">
+                            <span class="labelName">
+                                {{@bygl_language.founder}}
+                            </span>
+                            <span class="labelValue">
+                                {{JurisdictionData.createUser}}
+                            </span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="labelName">
+                                {{@bygl_language.creationTime}}
+                            </span>
+                            <span class="labelValue">
+                                <span :if="JurisdictionData.createTime=='-'">
+                                    {{JurisdictionData.createTime}}
+                                </span>
+                                <span :if="JurisdictionData.createTime!='-'">
+                                    {{JurisdictionData.createTime | date("yyyy-MM-dd HH:mm:ss")}}
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bottom-tool-bar" style="margin-top:8px;">
+                    <input class="btn btn-tool JurisdictionBtn" :class="[@extra_class ? 'btn-tool-en' : '', (!@JurisdictionData.deviceId && 'disabled')]"
+                        :attr="{disabled:!@JurisdictionData.deviceId}" type="button" :click="jurisdiction" ms-duplex="@bygl_language.permissionManagement">
+                </div>
+
+                <!-- 表格 -->
+                <div class="ptjlgl-bywgl-table" :if="!@extra_class">
+                    <ms-comtable :widget="{loading:@loading,data:@list,actions:@actionsRoleByOrgPath,panelCss:{marginTop: 42,position: 'absolute',
+                          width: '100%',
+                          height: '66%',
+                          paddingRight:10}}">
+                        <ms-comtable-header
+                            :widget="{title:@bygl_language.username,dataIndex:'userName',colwidth:'33.33333%',isHide:false,popover:true}">
+                        </ms-comtable-header>
+                        <ms-comtable-header
+                            :widget="{title:@bygl_language.usercode,dataIndex:'userCode',colwidth:'33.33333%',isHide:false,popover:true}">
+                        </ms-comtable-header>
+                        <ms-comtable-header :widget="{title:@bygl_language.operation,colwidth:'33.33333%'}">
+                            <a style=" color: #175ab5;
+                          cursor: pointer;padding: 4px;" :click="handle('delete')">删除</a>
+                        </ms-comtable-header>
+                    </ms-comtable>
+                </div>
+                <div class="ptjlgl-bywgl-table" :if="@extra_class">
+                    <ms-comtable :widget="{loading:@loading,data:@list,actions:@actionsRoleByOrgPath,panelCss:{marginTop: 42,position: 'absolute',
+                          width: '100%',
+                          height: '75%',
+                          paddingRight:10}}">
+                        <ms-comtable-header
+                            :widget="{title:@bygl_language.username,dataIndex:'userName',colwidth:'33.33333%',isHide:false,popover:true}">
+                        </ms-comtable-header>
+                        <ms-comtable-header
+                            :widget="{title:@bygl_language.usercode,dataIndex:'userCode',colwidth:'33.33333%',isHide:false,popover:true}">
+                        </ms-comtable-header>
+                        <ms-comtable-header :widget="{title:@bygl_language.operation,colwidth:'33.33333%'}">
+                            <a style=" color: #175ab5;
+                          cursor: pointer;padding: 4px;" :click="handle('delete')">Delete</a>
+                        </ms-comtable-header>
+                    </ms-comtable>
+                </div>
+            </div>
+        </div>
+
+        <!-- 选择弹窗 -->
+        <div :controller="ptjlgl-bywgl-select-vm" class="sbzygl-modal sbzygl-modal-tip ptjlgl-modal-select">
+            <xmp
+                :widget="{is:'common-ms-modal', title:@bygl_language.tip, modalSelector:'#ptjlgl-bywgl-select-body', drag:true, btnalign:'center', modalWidth:520, show:@show,onOk:@handleOk,onCancel:@handleCancel, okText: @bygl_language.ok, cancelText: @bygl_language.cancel}">
+                <div id="ptjlgl-bywgl-select-body" :scroll="selectScroll">
+                    <ms-tree-bygl
+                        :widget="{treeId:'tyywglpt-bywgl-ywfz-equipment-select',treeData:@selectData,zTreeOnClick:@zTreeOnClick}">
+                    </ms-tree-bygl>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 删除弹窗 -->
+        <div :controller="ptjlgl-bywgl-delete-vm" class="sbzygl-modal sbzygl-modal-tip ptjlgl-modal-delete">
+            <xmp
+                :widget="{is:'common-ms-modal', title:@bygl_language.delete, modalSelector:'#ptjlgl-bywgl-del-body', drag:true, btnalign:'center', modalWidth:400, modalHeight:100, show:@show,onOk:@handleOk,onCancel:@handleCancel, okText: @bygl_language.ok, cancelText: @bygl_language.cancel}">
+                <div id="ptjlgl-bywgl-del-body">
+                    <p class="tip-text">
+                        <p class="text">{{@bygl_language.areyousuretodeletethedata}}</p>
+                    </p>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 新增弹窗 -->
+        <div :controller="ptjlgl-bywgl-add-vm" class="sbzygl-modal sbxhgl-model cjzxhgl-bywgl-modal-add">
+            <xmp
+                :widget="{is:'common-ms-modal', title:@title, modalSelector:'#cjzxhgl-bywgl-modal-add', modalWidth:400, modalHeight: auto, btnalign:'center',show:@show, onOk:@handleOk, onCancel:@handleCancel, okText: @bygl_language.ok, cancelText: @bygl_language.cancel}">
+                <div id="cjzxhgl-bywgl-modal-add">
+                    <ms-form :widget="{$form:@$form,inline:true}">
+
+                        <ms-form-item :class="['form-item','addName',!@validJson.manufacturerName && 'has-error']">
+                            <label>
+                                <i>* </i>{{@bygl_language.name}}</label>
+                            <div class="has-icon">
+                                <input type="text" class="form-control" :attr="{title:@inputJson.manufacturerName}"
+                                    :duplex="@inputJson.manufacturerName"
+                                    :focus="@handleFocus('manufacturerName',$event)"
+                                    :blur="@handleFormat('manufacturerName',@modelReg,$event)">
+                                <i class="fa fa-close" :visible="false"
+                                    :mousedown="@handleClear('manufacturerName',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.manufacturerName">
+                                <i class="fa fa-info-circle"></i>{{@bygl_language.supportthecombinationofChineseandEnglishnumbers}}</div>
+                            <div class="form-tip invalid-tip" :if="!@validJson.manufacturerName">{{@inputJson.manufacturerName.length
+                              > 32 ? @bygl_language.upto32bitcharacterscanbeentered : @bygl_language.pleaseenterthecorrectname}}</div>
+                        </ms-form-item>
+
+                        <ms-form-item :class="['form-item',!@validJson.workstationCode && 'has-error']">
+                            <label>
+                                <i>* </i>{{typeName}}:</label>
+                            <div class="has-icon" :class="[(@type=='modify' && 'has-icon-disabled')]">
+                                <input type="text" class="form-control"
+                                    :attr="{title:@inputJson.workstationCode,disabled:(@type=='modify' && 'disabled')}"
+                                    :duplex="@inputJson.workstationCode" :focus="@handleFocus('workstationCode',$event)"
+                                    :blur="@handleFormat('workstationCode',@modelReg,$event)">
+                                <i class="fa fa-close" :visible="false"
+                                    :mousedown="@handleClear('workstationCode',$event)|prevent"></i>
+                            </div>
+                            <div class="form-tip valid-tip" :if="@showJson.workstationCode">
+                                <i class="fa fa-info-circle"
+                                    :if="handleAddType=='ywfz'">{{@bygl_language.only20digitcombinationsaresupportedreferencevalue44020000902150000011}}</i>
+                                <i class="fa fa-info-circle"
+                                    :if="handleAddType=='xnzz'">{{@bygl_language.only20digitcombinationsaresupportedreferencevalue44020000902160000011}}</i>
+                                <i class="fa fa-info-circle" :if="handleAddType=='xzqh'">{{@bygl_language.upto20digitcombinationscanbeentered}}</i>
+                            </div>
+                            <div class="form-tip invalid-tip"
+                                :if="!@validJson.workstationCode && handleAddType!='xzqh'">
+                                {{@inputJson.workstationCode.length
+                              > 20 ? @bygl_language.upto20digitscanbeentered : @bygl_language.pleaseenterthecorrectcommcode}}</div>
+                            <div class="form-tip invalid-tip"
+                                :if="!@validJson.workstationCode && handleAddType=='xzqh'">
+                                {{@inputJson.workstationCode.length
+                              > 20 ? @bygl_language.upto20digitscanbeentered : @bygl_language.pleaseenterthecorrectzoningnumber}}</div>
+                        </ms-form-item>
+                    </ms-form>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 新增设备 -->
+        <div :controller="ptjlgl-bywgl-equipment-vm" class="sbzygl-modal sbxhgl-model cjzxhgl-bywgl-modal-equipment">
+            <xmp
+                :widget="{is:'common-ms-modal', title:@title, modalSelector:'#cjzxhgl-bywgl-modal-equipment', modalWidth:720, modalHeight: 400, btnalign:'center',show:@show, onOk:@handleOk, onCancel:@handleCancel, okText: @bygl_language.ok, cancelText: @bygl_language.cancel}">
+                <div id="cjzxhgl-bywgl-modal-equipment">
+                    <div class="form-inline" style="margin: 18px 0;">
+                        <div class="form-group has-feedback form-item label-lg" style="width: auto;
+                      padding-top: 7px;
+                      vertical-align: top;"></div>
+
+                        <div class="searchInputBox">
+                            <input type="text" class="searchInput form-control" style="width: 314px;"
+                                :keydown="keydownQuery" :duplex="gbcodeList" :attr="{placeholder: @bygl_language.supportFuzzySearchforDeviceNameandCommCodeofSelectedDepartments}" >
+                            <button class="btn btn-default searchBtn" type="button" :click="query">{{@bygl_language.query}}</button>
+                        </div>
+                    </div>
+
+                    <div class="search-from">
+                        <ms-tree-bygl
+                            :widget="{treeId:@bywglEquipmentTreeId,treeData:@equipmentTreeData,async:@async,onAsyncSuccess:@onAsyncSuccess,onAsyncError:@onAsyncError,zTreeOnClick:@zTreeOnClick,zTreeOnCheck:@zTreeOnCheck,enable:@enable}">
+                        </ms-tree-bygl>
+                    </div>
+
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 权限管理 -->
+        <div :controller="ptjlgl-bywgl-Jurisdiction-vm"
+            class="sbzygl-modal sbxhgl-model cjzxhgl-bywgl-modal-Jurisdiction">
+            <xmp
+                :widget="{is:'common-ms-modal', title:@title, modalSelector:'#cjzxhgl-bywgl-modal-Jurisdiction', modalWidth:720, modalHeight: 400, btnalign:'center',show:@show, onOk:@handleOk, onCancel:@handleCancel, okText: @bygl_language.ok, cancelText: @bygl_language.cancel}">
+                <div id="cjzxhgl-bywgl-modal-Jurisdiction">
+                    <div class="form-inline" style="margin: 18px 0;" :if="@show">
+                        <div class="form-group has-feedback form-item label-lg" style="width: auto;
+                          padding-top: 7px;
+                          vertical-align: top;"></div>
+                        <div class="searchInputBox" style="height: 34px;">
+                            <input type="text" class="searchInput form-control" style="width: 314px; float: left;"
+                                :keydown="keydownQuery" :duplex="gbcodeList" :attr="{placeholder: @bygl_language.searchablebyAliasandUsername}">
+                            <button class="btn btn-default searchBtn" type="button" style="float: left;"
+                                :click="query">{{@bygl_language.query}}</button>
+                        </div>
+
+                    </div>
+
+                    <div class="Jurisdiction-user">
+                        <div class="row text-center">
+                            <div class="col-sm-4 Jurisdiction-user-item" :for="($index,item) in Jurisdiction">
+                                <button class="btn btn-default" type="button" :click="JurisdictionClick(item)"
+                                    :class="(item.isClick?'btn-success':'btn-default')"
+                                    :attr="{title: @item.userName + '(' + @item.userCode + ')'}">
+                                    {{item.userName}}({{item.userCode}})
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-center" :if="noResultData">
+                            {{@bygl_language.noResult}}
+                        </div>
+                    </div>
+                </div>
+            </xmp>
+        </div>
+
+        <!-- 视图管理弹窗 -->
+        <div :controller="ptjlgl-bywgl-view-vm" class="sbzygl-modal ptjlgl-modal ptjlgl-modal-view">
+            <xmp
+                :widget="{is:'common-ms-modal', title:@bygl_language.viewManagement, modalSelector:'#bywgl-modal-view', modalWidth:720, modalHeight: auto, btnalign:'center',show:@show, onOk:@handleOk, onCancel:@handleCancel, okText: @bygl_language.ok, cancelText: @bygl_language.cancel}">
+                <div id="bywgl-modal-view">
+                    <div class="view-box" id="ptjlgl-bywgl-modal-view">
+
+                        <div class="view-tabs">
+                            <div class="view-tab view-tab1">
+
+                                <div class="fz">
+                                    <div class="tyywglpt-tool-bar">
+                                        <div class="tyywglpt-tool-bar-inner">
+                                            <input type="button" ms-duplex="@bygl_language.businessGroup" :click="handleView('ywfz')"
+                                                 class="btn btn-tool ywfzBtn" :class="[@viewSelected?'':'noselect', @extra_class ? 'btn-tool-en' : '']">
+                                            <input type="button" ms-duplex="@bygl_language.administrativeDivision" :click="handleView('xzqh')"
+                                                 class="btn btn-tool" :class="[@viewSelected?'noselect':'', @extra_class ? 'btn-tool-en' : '']">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tree-panel" :visible="@viewSelected">
+                                    <ms-ztree
+                                        :widget="{treeId:'bywgl-ywfz-View',switchType:'ywfz', checkable: true,treeData: @data,setChkDisabled:@setChkDisabled}">
+                                    </ms-ztree>
+                                </div>
+
+                                <div class="tree-panel" :visible="!@viewSelected">
+                                    <ms-ztree
+                                        :widget="{treeId:'bywgl-xzqh-View',switchType:'xzqh',checkable: true,treeData: @data2,setChkDisabled:@setChkDisabled2}">
+                                    </ms-ztree>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </xmp>
+        </div>
+    </div>
+</template>

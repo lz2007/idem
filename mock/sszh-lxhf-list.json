@@ -1,0 +1,29 @@
+{
+    "code": 0,
+    "msg": "成功！",
+    "data": {
+        "totalPages": 1,
+        "totalElements": 1,
+        "currentPages": 10,
+        "perPages": 10,
+        "currentElements": [{
+            "rid": "1",
+            "startTime": 1513216834951,
+            "endTime": 1513219474951,
+            "size": 100,
+            "duration": 123,
+            "deviceId": "123",
+            "deviceName": "123",
+            "importTime": 1513219474951
+        },{
+            "rid": "2",
+            "startTime": 1513216834951,
+            "endTime": 1513219474951,
+            "size": 100,
+            "duration": 123,
+            "deviceId": "123",
+            "deviceName": "123",
+            "importTime": 1513219474951
+        }]
+    }
+}

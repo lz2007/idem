@@ -1,0 +1,14 @@
+<template>
+    <div :controller="browser-upgrate-tips" class="browser-upgrate-tips" :visible="@upgrateShow" ms-effect="{is:'slide-animate',action:@action}">
+        <!-- <p>您的浏览器可以进博物馆了</p> -->
+        <p>为了更好的浏览本网站，请使用“{{@browserText}}”</p>
+        <div class="download-btn">
+            <button id="GSBrowser">立刻下载</button>
+        </div>
+        <div class="close-btn">
+            <span>
+                <i class="fa fa-close" :click="@close"></i>
+            </span>
+        </div>
+    </div>
+</template>

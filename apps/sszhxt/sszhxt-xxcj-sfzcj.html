@@ -1,0 +1,86 @@
+<template>
+    <div class="sszhxt sfzcj">
+      <div class="sszhxt-tool-bar">
+        <ms-form :widget="{$form:@$form,inline:true}">
+            <div>
+                <ms-form-item :widget="{label:'执法部门:'}" :class="'form-item'">
+                    <ms-tree-selecting :widget="{tree:@orgData, showSearch:true, wrapId: 'xxcj-tree-select-1', getSelected:@getSelected, onChange:@handleTreeChange}"></ms-tree-selecting>
+                </ms-form-item>
+                <ms-form-item :widget="{label:'执法人员:'}" :class="'form-item'">
+                    <ms-input :widget="{col:'lawerPerson'}"></ms-input>
+                </ms-form-item>
+                <div  class="xxjctime-container">
+                    <ms-form-item :widget="{label:'采集时间:'}" :class="'form-item'">
+                            <ms-datepicker :widget="{
+                                    col:'beginTime',
+                                    placeholder:'请选择开始日期',
+                                    value: @beginTime,
+                                }"></ms-datepicker>
+                        </ms-form-item>
+                </div>
+                <span class="date-line" >-&nbsp;&nbsp;</span>
+                <div  class="xxjctime-container">
+                    <ms-form-item :widget="{label:''}" :class="'form-item'">
+                            <ms-datepicker :widget="{
+                                    col:'endTime',
+                                    placeholder:'请选择结束日期',
+                                    value: @endTime
+                                }"></ms-datepicker>
+                        </ms-form-item>
+                 
+                </div>
+            </div>
+            <div class="search-line-second">
+                <ms-form-item :widget="{label:'被检人姓名:'}" :class="'form-item'">
+                    <ms-input :widget="{col:'concernedPerson'}"></ms-input>
+                </ms-form-item>
+                <ms-form-item :widget="{label:'核查状态:'}" :class="'form-item'">
+                    <ms-select :widget="{col:'checkStatus', value:[1]}">
+                        <ms-select-option :widget="{value:1}">不限</ms-select-option>
+                        <ms-select-option :widget="{value:2}">正常</ms-select-option>
+                        <ms-select-option :widget="{value:3}">在逃人员</ms-select-option>
+                        <ms-select-option :widget="{value:4}">带有前科</ms-select-option>
+                        <ms-select-option :widget="{value:5}">三所信息</ms-select-option>
+                    </ms-select>
+                </ms-form-item>
+             
+            </div>
+            <button  type="button" class="btn btn-query  sfzcj-query" :click="@handleQuery">查询</button>
+        </ms-form>
+      </div>
+      <div class="sszhxt-list-panel">
+          <ul class="sszhxt-list-header sfzcj-list-header">
+              <li class="col-5 first-item">序号</li>
+              <li class="col-13">详细信息</li>
+              <li class="col-17">身份证头像</li>
+              <li class="col-13">被检人员姓名</li>
+              <li class="col-13">身份证号</li>
+              <li class="col-13">核查状态</li>
+              <li class="col-13">执法人员</li>
+              <li class="col-13">采集时间</li>
+          </ul>
+          <ul class="sszhxt-list-content  sfzcj-list-content">
+              <li :visible="@noData" class="list-null">暂无数据</li>
+              <li :for="($index, item) in @tableData">
+                  <div class="col-5 first-item">{{(@currentPage-1)*@pageSize+$index+1}}</div>
+                  <div class="col-13">
+                      <a :if="@authority.CK" class="oparate" href="javascript:void(0)" :click="@handleLookClick ($index,item)">查看</a>
+                      <span :if="@authority.OPT_SHOW"> - </span>
+                  </div>
+                  <div class="col-17">{{item.name}}</div>
+                  <div class="col-13">{{item.ip}}</div>
+                  <div class="col-13">{{item.port}}</div>
+                  <div class="col-13">{{item.orgName}}</div>
+                  <div class="col-13">{{item.totalCapacity}}</div>
+                  <div class="col-13">{{item.remainCapacity}}</div>
+              </li>
+          </ul>
+        
+      </div>
+      <div :if="isDetailExist"  ms-html="sfzcjDetail"  class="sfzcjDetail">
+      </div>
+      <!-- 分页 -->
+      <ms-pages  :widget="{total:@total,onChange:@handlePageChange,current:@currentPage,getCurrent:@getCurrent}"></ms-pages>
+      
+    </div>
+</template>

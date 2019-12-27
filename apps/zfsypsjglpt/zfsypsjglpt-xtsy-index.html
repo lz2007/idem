@@ -1,0 +1,134 @@
+<template>
+    <div>
+        <div class="zfsypsjglpt-xtsy">
+            <div class="zfsypsjglpt-xtsy-title">
+                <!-- 欢迎登录执法视音频数据管理系统！ -->
+                <span>{{@zfsypsjglpt_language.welcomeTip}}</span>
+            </div>
+            <div class="zfsypsjglpt-xtsy-info">
+                <div class="info-icon">
+                    <img src="/static/image/zfsypsjglpt/police.png">
+                </div>
+                <div class="info-content">
+                    <div class="zfsypsjglpt-xtsyInfoDetail">
+                        <span>{{@zfsypsjglpt_language.hello}}</span>
+                        <span class="account">{{@loginUserInfo.userName}}</span>
+                        <!-- 您的身份 -->
+                        <span>，{{@zfsypsjglpt_language.identity}}：</span>
+                        <span>{{@loginUserInfo.roleNames}}</span>
+                    </div>
+                    <div class="zfsypsjglpt-xtsyInfoDetail">
+                        <!-- 上次登录时间 -->
+                        <span> {{@zfsypsjglpt_language.lastLoginTime}}：</span>
+                        <span>{{@loginUserInfo.lastlogintime}}</span>
+                        <!-- 上次登录IP -->
+                        <span :css="{marginLeft:15}">{{@zfsypsjglpt_language.lastLoginIP}}：</span>
+                        <span>{{@loginUserInfo.lastLonginIp}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="zfsypsjglpt-xtsy-situation">
+            <div class="zfsypsjglpt-xtsy-situation-today">
+                <p>今日情况</p>
+                <div>
+                    <p class="situation-count situation-three-con">
+                        <span>{{@todaySituation.videoTime}}</span>
+                        <span>{{@todaySituation.caseMarkNumber}}</span>
+                        <span>{{@todaySituation.caseRelatedNumber}}</span>
+                    </p>
+                    <p class="situation-three-con">
+                        <span>视频时长（小时）</span>
+                        <span>案件标注数量（条）</span>
+                        <span>案件关联数量（条）</span>
+                    </p>
+                </div>
+            </div>
+            <div class="zfsypsjglpt-xtsy-situation-month">
+                <p>本月情况</p>
+                <div>
+                    <p class="situation-count situation-three-con">
+                        <span>{{@monthSituation.videoTime}}</span>
+                        <span>{{@monthSituation.caseMarkNumber}}</span>
+                        <span>{{@monthSituation.caseRelatedNumber}}</span>
+                    </p>
+                    <p class="situation-three-con">
+                        <span>视频时长（小时）</span>
+                        <span>案件标注数量（条）</span>
+                        <span>案件关联数量（条）</span>
+                    </p>
+                </div>
+            </div>
+            <div class="zfsypsjglpt-xtsy-situation-year">
+                <p>今年情况</p>
+                <div>
+                    <p class="situation-count situation-three-con">
+                        <span>{{@yearSituation.videoTime}}</span>
+                        <span>{{@yearSituation.caseMarkNumber}}</span>
+                        <span>{{@yearSituation.caseRelatedNumber}}</span>
+                    </p>
+                    <p class="situation-three-con">
+                        <span>视频时长（小时）</span>
+                        <span>案件标注数量（条）</span>
+                        <span>案件关联数量（条）</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="zfsypsjglpt-xtsy-linepic">
+            <p>执法仪平均在线时长</p>
+            <div id="zfypjzxsc">
+
+            </div>
+        </div>
+        <div class="zfsypsjglpt-xtsy-rate">
+            <div class="xtsy-rate-model text-align-left">
+                <div>
+                    <p>
+                        部门建档率
+
+                    </p>
+                    <img src="/static/image/zfsypsjglpt/tab1.jpg?__sprite">
+                    <div id="bmjd-rate">
+
+                    </div>
+                </div>
+            </div>
+            <div class="xtsy-rate-model">
+                <div>
+                    <p>
+                        部门关联率
+
+                    </p>
+                    <img src="/static/image/zfsypsjglpt/tab2.jpg?__sprite">
+                    <div id="bmgl-rate">
+
+                    </div>
+                </div>
+            </div>
+            <div class="xtsy-rate-model">
+                <div>
+                    <p>
+                        部门标注率
+
+                    </p>
+                    <img src="/static/image/zfsypsjglpt/tab3.jpg?__sprite">
+                    <div id="bmbz-rate">
+
+                    </div>
+                </div>
+            </div>
+            <div class="xtsy-rate-model text-align-right">
+                <div>
+                    <p>
+                        部门抽查率
+                    </p>
+                    <img src="/static/image/zfsypsjglpt/tab4.jpg?__sprite">
+                    <div id="bmcc-rate">
+
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</template>

@@ -1,0 +1,101 @@
+<template>
+    <div class="sszhxt sfzcjck">
+        <div class="sszhxt-tool-bar">
+            <button type="button" class="btn btn-query" :click="@handleBack">返回</button>
+        </div>
+        <div class="sfzcjck-pesonalInfo">
+            <div class="detailInfo">
+                <div class="pic"><img src="/static/image/sszhxt-xxcj/crimePic.png" alt="嫌疑人照片"></div>
+                <ul>
+                    <li>
+                        <h5 class="title">姓名:</h5><span class="content">{{@pesonalInfo.name}}</span></li>
+                    <li>
+                        <h5 class="title">性别:</h5><span class="content">{{@pesonalInfo.sex}}</span></li>
+                    <li>
+                        <h5 class="title">民族:</h5><span class="content">{{@pesonalInfo.nation}}</span></li>
+                    <li>
+                        <h5 class="title">户籍:</h5><span class="content">{{@pesonalInfo.register}}</span></li>
+                    <li>
+                        <h5 class="title">出生日期:</h5><span class="content">{{@pesonalInfo.birthDate}}</span></li>
+                    <li>
+                        <h5 class="title">签发机构:</h5><span class="content">{{@pesonalInfo.org}}</span></li>
+                    <li>
+                        <h5 class="title">省份证号码:</h5><span class="content">{{@pesonalInfo.idCard}}</span></li>
+                    <li>
+                        <h5 class="title">身份证有效期:</h5><span class="content">{{@pesonalInfo.idCardExpireTime}}</span></li>
+                </ul>
+            </div>
+            <div class="mapPath map-backdrop" id="xxcj-sfzcjck-map"></div>
+        </div>
+        <ol class="menu-tip">
+            <li :click="@handleRunInfoClick(0)" :class="{disabled : 0 != @currentIndex}">在逃信息</li>
+            <li :click="@handleExCriminalClick(1)" :class="{disabled : 1 != @currentIndex}">前科信息</li>
+            <li :click="@handleThreePoliceClick(2)" :class="{disabled : 2 != @currentIndex}">三所信息</li>
+        </ol>
+        <div class="sszhxt-list-panel" :visible="0 == @currentIndex">
+            <ul class="sszhxt-list-header">
+                <li class="col-4 first-item">序号</li>
+                <li class="col-24">所犯罪名</li>
+                <li class="col-24">案件编号</li>
+                <li class="col-24">逃跑日期</li>
+                <li class="col-24">抓获日期</li>
+
+            </ul>
+            <ul class="sszhxt-list-content">
+                <li :visible="@runTableData.length == 0" class="list-null">暂无数据</li>
+                <li :for="($index, item) in @runTableData">
+                    <div class="col-4 first-item">{{$index+1}}</div>
+                    <div class="col-24">{{item.criminalCatalog}}</div>
+                    <div class="col-24">{{item.caseNumber}}</div>
+                    <div class="col-24">{{item.runDate}}</div>
+                    <div class="col-24">-</div>
+
+                </li>
+            </ul>
+        </div>
+        <div class="sszhxt-list-panel" :visible="1 == @currentIndex">
+            <ul class="sszhxt-list-header">
+                <li class="col-4 first-item">序号</li>
+                <li class="col-24">所犯罪名</li>
+                <li class="col-24">案件编号</li>
+                <li class="col-24">抓获日期</li>
+                <li class="col-24">释放日期</li>
+
+            </ul>
+            <ul class="sszhxt-list-content">
+                <li :visible="@exCriminalData.length == 0" class="list-null">暂无数据</li>
+                <li :for="($index, item) in @exCriminalData">
+                    <div class="col-4 first-item">{{$index+1}}</div>
+                    <div class="col-24">{{item.criminalCatalog}}</div>
+                    <div class="col-24">{{item.caseNumber}}</div>
+                    <div class="col-24">{{item.catchDate}}</div>
+                    <div class="col-24">{{item.setFredDate}}</div>
+
+                </li>
+            </ul>
+        </div>
+        <div class="sszhxt-list-panel" :visible="2 == @currentIndex">
+            <ul class="sszhxt-list-header">
+                <li class="col-4 first-item">序号</li>
+                <li class="col-24">所犯罪名</li>
+                <li class="col-24">案件编号</li>
+                <li class="col-24">所名称</li>
+                <li class="col-24">处所日期</li>
+
+            </ul>
+            <ul class="sszhxt-list-content">
+                <li :visible="@threePoliceData.length == 0" class="list-null">暂无数据</li>
+                <li :for="($index, item) in @threePoliceData">
+                    <div class="col-4 first-item">{{$index+1}}</div>
+                    <div class="col-24">{{item.criminalCatalog}}</div>
+                    <div class="col-24">{{item.caseNumber}}</div>
+                    <div class="col-24">{{item.policeOffice}}</div>
+                    <div class="col-24">{{item.outpoliceOfficeDate}}</div>
+                </li>
+            </ul>
+        </div>
+
+
+
+    </div>
+</template>

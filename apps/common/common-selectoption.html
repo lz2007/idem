@@ -1,0 +1,24 @@
+<template>
+    <div class="tree-select-wrap" :attr="{id:@wrapId}">
+        <div class="form-control tree-select-form" :click="@handleClick">
+            <span class="tree-select-selected" :attr="{title:@selectedTitle}" :css="{visibility:!@visible ? 'visible':'hidden'}">{{@selectedTitle}}</span>
+            <input class="tree-select-search" name="search" type="text" autocomplete="off" :duplex="@searchValue"
+                :keyup="@handelSearchByAjax" :css="{visibility:(@showSearch && @visible && @treeData.length > 0)?'visible':'hidden'}" />
+            <!-- 该input框是用来防止在[name=search]框中按回车而刷新页面的问题 -->
+            <input type="text" style="display:none" />
+            <i :visible="@treeData.length !== 0" class="fa ane-tree-select-arrow" :class="@visible ? 'fa-caret-up' : 'fa-caret-down'"></i>
+        </div>
+        <div :visible="@visible && @noMatch" class="no-match">{{@select_txt.noRecord}}</div>
+        <div :visible="@treeData.length === 0" class="no-data">{{@select_txt.noDep}}</div>
+        <div :visible="@visible && !@noMatch && treeData.length > 0" :css="{width:@width,height:@height}" class="tree-panel">
+
+            <ul :attr="{id: @treeId}" class="ztree" :visible="@isShowTreeOresult"></ul>
+            <ul class="treeSearchResult" :visible="!@isShowTreeOresult">
+                <li :for="($index, item) in @searchData" :click="@onSelect($event,'', item.node)">{{item.node.orgName}}</li>
+            </ul>
+
+            <iframe :if="hasIframe" :css="{width:@iframeWidth,height:@iframeHeight}" src="about:blank" frameBorder="0"
+                marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%;z-index:-1; filter:alpha(opacity=0);"></iframe>
+        </div>
+    </div>
+</template>

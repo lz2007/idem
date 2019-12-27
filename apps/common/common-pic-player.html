@@ -1,0 +1,81 @@
+<template>
+    <div class="common_pic_panel" id="common_pic_panel">
+        <!-- 4.0 ocx -->
+        <!-- <object id="regOcxDiv" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9" width="1" height="1"></object> -->
+
+        <!-- 5.0 ocx -->
+        <!-- <object id="regOcxDiv" classid="clsid:8C85B9C1-6B4C-4ECB-9887-2428DA03F77C" width="1" height="1"></object> -->
+        <div class="pic_ocx" :if="@is_IE">
+            <object id="gxxPlayOcx" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9" width="100%" height="100%"></object>
+        </div>
+        <div class="pic_ocx" :if="!@is_IE">
+            <embed type="application/npGSVideoPlugin-plugin" name="npGSVideoPlugin" id="npGSVideoPlugin_pic" width="100%"
+                height="100%">
+        </div>
+        <div class="loading_panel" :if="@loading">
+            <span class="loading_panel_pic" :class="[@pic_class ? 'loading_panel_pic_en' : '']"></span>
+        </div>
+        <img class="more-img" :attr="{src: @src}" width="0" height="0" style="float: left;">
+        <div class="common_pic_show" :class="[@playerID]">
+            <div class="pic_content" :mouseover="@mouseover" :mouseout="@mouseout">
+                <div class="pic_mark">
+                    <div class="mark_left"></div>
+                    <div class="mark_right"></div>
+                    <div class="mark_top"></div>
+                    <div class="mark_bottom"></div>
+                </div>
+                <a href="javascript: void(0);" class="img_panel">
+                    <img :if="@pic_class" class="errorImg" :attr="{src: @src}" width="100%" height="100%" onerror="javascript:this.src='../../static/image/404/img_abnormal.png';document.getElementById('common_pic_controller_btn').style.display='none';document.getElementsByClassName('errorImg')[0].className='errorClass';">
+                    <img :if="!@pic_class" class="errorImg" :attr="{src: @src}" width="100%" height="100%" onerror="javascript:this.src='../../static/image/404/img_abnormal_zhcn.png';document.getElementById('common_pic_controller_btn').style.display='none';document.getElementsByClassName('errorImg')[0].className='errorClass';">
+                    <!-- <img :attr="{src: @src}" width="100%" height="100%" onerror="javascript:this.src='../../static/image/404/img_abnormal.png'"> -->
+                    <span id="line_left" :mouseup="@line_mouseup"></span>
+                    <span id="line_right" :mouseup="@line_mouseup"></span>
+                    <span id="line_top" :mouseup="@line_mouseup"></span>
+                    <span id="line_bottom" :mouseup="@line_mouseup"></span>
+                </a>
+            </div>
+            <div class="pic_large"></div>
+        </div>
+        <div class="common_pic_controller">
+            <div class="common_pic_controller_btn" id="common_pic_controller_btn">
+                <!-- 原图 -->
+                <a class="init_btn" id="yt" :attr="{title: @player_txt.originalImage}" :click="@yt"></a>
+                <!-- 去雾霾 -->
+                <!-- <a class="controller_btn" id="qwm" :attr="{title: @player_txt.toSmog}" :click="@qwm"></a> -->
+                <!-- 去强光 -->
+                <!-- <a class="controller_btn" id="qqg" :attr="{title: @player_txt.toGlare}" :click="@qqg"></a> -->
+                <!-- 对比度增强 -->
+                <!-- <a class="controller_btn" id="zft" :attr="{title: @player_txt.contrastEnhancement}" :click="@zft"></a> -->
+                <!-- 低照度图像增强 -->
+                <!-- <a class="controller_btn" id="gzbc" :attr="{title: @player_txt.lowIlluminationImageEnhancement}" :click="@gzbc"></a> -->
+                <!-- 去噪 -->
+                <!-- <a class="controller_btn" id="qz" :attr="{title: @player_txt.denoising}" :click="@qz"></a> -->
+                <!-- 设置区域 -->
+                <!-- <a class="controller_btn" id="szqy" :attr="{title: @player_txt.setUp}" :click="@szqy"></a> -->
+                <!-- 放大 -->
+                <a class="controller_btn" id="fd" :attr="{title: @player_txt.enlarge}" :click="@fd"></a>
+                <!-- 另存为 -->
+                <!-- <a class="savefile_btn" id="lcw" :attr="{title: @player_txt.saveAs}" :click="@lcw"></a> -->
+                <div class="change_panel">
+                    <span class="change_txt"></span>
+                    <span class="reduce_btn" :click="@reduce_btn">-</span>
+                    <span class="change_num">{{@change_num}}</span>
+                    <!-- <input type="text" class="change_num" ms-duplex="@change_num" readonly> -->
+                    <span class="add_btn" :click="@add_btn">+</span>
+                </div>
+            </div>
+        </div>
+
+        <!--player弹窗-->
+        <div class="player_dialog_panel">
+            <ms-dialog :widget="{$innerVm: 'player_pic_dialog', okText: @player_txt.okText, cancelText: @cancelText, className: 'player_pic_dialog_class', show: @player_dialog_show, onCancel: @dialogCancel, onOk:@dialogOk, isMove:true, width: @dialog_width, height: @dialog_height, move_return: @move_return}">
+                <div slot="body" ms-skip>
+                    <span>{{@close_txt}}</span>
+                    <span class="tip-text">
+                        <i class="fa fa-info-circle"></i>{{@player_txt.restartTip}}
+                    </span>
+                </div>
+            </ms-dialog>
+        </div>
+    </div>
+</template>

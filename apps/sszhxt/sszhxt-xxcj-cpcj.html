@@ -1,0 +1,94 @@
+<template>
+    <div class="sszhst-xxcj-cpcj">
+        <div class="sszhxt-tool-bar">
+            <ms-form :widget="{$form:@$form,inline:true}">
+                <div>
+
+                    <ms-form-item :widget="{label:'车牌号码:'}" :class="'form-item'">
+                        <ms-input :widget="{col:'lawerPerson'}"></ms-input>
+                    </ms-form-item>
+                    <ms-form-item :widget="{label:'重要性标注:'}" :class="'form-item'">
+                        <ms-select :widget="{col:'checkStatus', value:[1]}">
+                            <ms-select-option :widget="{value:1}">不限</ms-select-option>
+                            <ms-select-option :widget="{value:2}">重要</ms-select-option>
+                            <ms-select-option :widget="{value:3}">一般</ms-select-option>
+                        </ms-select>
+                    </ms-form-item>
+                </div>
+                <div class="search-line-second">
+                    <div class="xxjctime-container">
+                        <ms-form-item :widget="{label:'开始时间:'}" :class="'form-item'">
+                            <ms-datepicker :widget="{
+                                        col:'beginTime',
+                                        placeholder:'请选择开始时间',
+                                        value: @beginTime,
+                                    }"></ms-datepicker>
+                        </ms-form-item>
+                    </div>
+                    <!-- <span class="date-line" >-&nbsp;&nbsp;</span> -->
+                    <div class="xxjctime-container">
+                        <ms-form-item :widget="{label:'结束时间:'}" :class="'form-item'">
+                            <ms-datepicker :widget="{
+                                        col:'endTime',
+                                        placeholder:'请选择结束时间',
+                                        value: @endTime
+                                    }"></ms-datepicker>
+                        </ms-form-item>
+
+                    </div>
+
+
+                </div>
+                <button type="button" class="btn btn-query" :click="@handleQuery">查询</button>
+            </ms-form>
+        </div>
+        <div class="sszhxt-list-panel cpcj-list-panel">
+            <ul class="  cpcj-list-content">
+                <li :visible="@noData" class="list-null">暂无数据</li>
+                <!-- <li :for="($index, item) in @tableData">
+                      <div class="carPic">
+                          <img src="/static/image/sszhxt-xxcj/carPic.png" alt="车牌采集照片">
+                      </div>
+                      <div class="car-detail">
+                          <h5>车牌号码：</h5><span>{{@item.carNum}}</span>
+                          <h5>车辆类型：</h5><span>{{@item.carType}}</span>
+                          <h5>卡口名称：</h5><span>{{@item.bayonet}}</span>
+                          <h5>时间：</h5><span>{{@item.time}}</span>
+                      </div>
+                      <div class="type">{{@item.typeTag == 1 ? '重要' : '一般'}}</div>
+                  </li> -->
+                <li :for="($index, item) in @tableData">
+                    <div class="carPic" :click="handlePicClick">
+                        <img src="/static/image/sszhxt-xxcj/carPic.png" alt="车牌采集照片">
+                    </div>
+                    <div class="car-detail">
+                        <div>
+                            <h5>车牌号码：</h5><span>{{@item.carNum}}</span>
+                        </div>
+                        <div>
+                            <h5>车辆类型：</h5><span>{{@item.carType}}</span>
+                        </div>
+                        <div>
+                            <h5>卡口名称：</h5><span>{{@item.bayonet}}</span>
+                        </div>
+                        <div>
+                            <h5>时&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;间：</h5><span class="time">{{@item.time}}</span>
+                        </div>
+                    </div>
+                    <div :class="['type',item.typeTag == 1 ? 'important' : 'normal' ]">{{@item.typeTag == 1 ? '重要' : '一般'}}</div>
+                </li>
+            </ul>
+        </div>
+        <!-- 查看文件弹框 -->
+        <div :controller="cpcjLookVideo">
+            <xmp :widget="{title : @title,is:'common-ms-modal',modalSelector:'.cpcj-video',drag:true,modalWidth:@modalWidth,show: @show,modalWidth:@modalWidth, onCancel: @handleCancel, onOk: @handleOk,ifokBtn:false,cancelText:@cancelText}">
+                <div class="cpcj-video">
+                    <object id="cpcjPlayOcx" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9" width="100%" height="100%" style="display: block;"></object>
+                </div>
+            </xmp>
+        </div>
+        <!-- 分页 -->
+        <ms-pages :widget="{total:@total,onChange:@handlePageChange,current:@currentPage,getCurrent:@getCurrent}"></ms-pages>
+
+    </div>
+</template>

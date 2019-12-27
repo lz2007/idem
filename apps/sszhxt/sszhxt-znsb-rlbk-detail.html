@@ -1,0 +1,63 @@
+<template>
+    <div class="znsb_rlbk_detail">
+        <div class="return_panel">
+            <a class="return_btn" :click="@returnBtn">{{@rlbk_detail_txt.return}}</a>
+        </div>
+        <div class="rlbk_detail_content">
+            <div class="comparison_info">
+                <div class="scene">
+                    <span>{{@rlbk_detail_txt.sceneImgTxt}}</span>
+                    <img :attr="{src:@scene_img}" onerror="javascript:this.src='../../static/image/sszhxt-znsb/rlbk_404.png';">
+                </div>
+                <div class="percent">
+                    <div id="show_percent" style="height:100%;"> </div>
+                    <span :class="[@extra_class ? 'percent_span_en' : 'percent_span']">{{@rlbk_detail_txt.resemblance}}</span>
+                </div>
+                <div class="recognition_content">
+                    <div class="recognition">
+                        <span>{{@rlbk_detail_txt.recognitionImgTxt}}</span>
+                        <img :attr="{src:@recognition_info.regImg}" onerror="javascript:this.src='../../static/image/sszhxt-znsb/rlbk_404.png';">
+                    </div>
+                    <div class="recognition_label">
+                        <label>{{@rlbk_detail_txt.name}}：</label>
+                        <label :attr="{'data-toggle':'tooltip'}">{{@recognition_info.name|isNull}}</label><br>
+                        <label>{{@rlbk_detail_txt.sex}}：</label>
+                        <label :attr="{'data-toggle':'tooltip'}">{{extra_class? (@recognition_info.gender == 1?
+                            'Male':'Female'):(@recognition_info.gender == 1? '男':'女')}}</label><br>
+                        <label>{{@rlbk_detail_txt.race}}：</label>
+                        <label :attr="{'data-toggle':'tooltip'}">{{@recognition_info.nation|isNull}}</label><br>
+                        <label>{{@rlbk_detail_txt.identityCard}}：</label>
+                        <label :attr="{'data-toggle':'tooltip'}" :class="[@extra_class ? 'label_m' : '']">{{@recognition_info.certificateId|isNull}}</label><br>
+                        <label>{{@rlbk_detail_txt.birthplace}}：</label>
+                        <label :attr="{'data-toggle':'tooltip'}" :class="[@extra_class ? 'label_b' : '']">{{@recognition_info.birthPlace|isNull}}</label><br>
+                        <label>{{@rlbk_detail_txt.personType}}：</label>
+                        <label :attr="{'data-toggle':'tooltip'}" :class="[@extra_class ? 'label_s' : '']">{{@recognition_info.personTypeName|isNull}}</label><br>
+                    </div>
+                </div>
+                <div class="map_border"></div>
+            </div>
+            <div class="comparison_result">
+                <span class="result_title">{{@rlbk_detail_txt.queryingResult}}</span>
+                <div class="control_bar">
+                    <a class="next"></a>
+                    <ul></ul>
+                    <a class="prev"></a>
+                    <span class="pageState"></span>
+                </div>
+                <ul class="result_list">
+                    <li ms-for="el in @result_list" :class="['result_li']">
+                        <div :click="@result_list_click(@el.index)" style="width:100%; height:100%;">
+                            <img :attr="{src:@el.regImg}" onerror="javascript:this.src='../../static/image/sszhxt-znsb/rlbk_404.png';">
+                            <div :class="[@extra_class ? 'result_txt_en' : 'result_txt']">
+                                <span>{{@extra_class ? @rlbk_detail_txt.resemblance + ':' :
+                                    @rlbk_detail_txt.resemblance + '：'}}</span>
+                                <!-- <span>{{@rlbk_detail_txt.resemblance}}：</span> -->
+                                <span>{{@el.similarity | numberShowPercent}}</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</template>

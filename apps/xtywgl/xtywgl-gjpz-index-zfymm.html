@@ -1,0 +1,18 @@
+<template>
+    <div class="ywzx-zfymm">
+       <div class="changePswTitle">
+            {{@zfymm_txt.changeBWCAdministratorPassword}}
+       </div>
+       <div class="zfymm-loading" :if="@loading">
+            <span class="loadingSpan">{{@zfymm_txt.loading}}</span>
+        </div>
+       <div class="noAuthority" :if="!@authority.QUERY && !@loading">{{@zfymm_txt.noQueryAuthority}}</div>
+       <div class="modelTotal" :if="@authority.QUERY && !@loading">
+            <div class="bwcPswnoData" :if="@modelArr.length == 0">{{@zfymm_txt.noData}}</div>
+            <div class="modelList" :for="($index,el) in @modelArr">
+                <!-- <ms-xtywgl-zfymm-psw :widget="{idIndex:$index, data:el}"></ms-xtywgl-zfymm-psw> -->
+                <xmp is="ms-xtywgl-zfymm-psw" :widget="{idIndex:$index, data:el}"></xmp>
+            </div>
+        </div>
+    </div>
+</template>

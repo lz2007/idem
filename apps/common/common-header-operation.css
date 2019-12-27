@@ -1,0 +1,303 @@
+#changePwd input {
+    width: 250px;
+    display: inline-block;
+    padding-right: 25px;
+}
+
+#changePwd .has-feedback label~.form-control-feedback {
+    top: 0px;
+}
+
+#changePwd .ipt-class {
+    text-align: center;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+#changePwd .ane-input-tips {
+    width: 250px;
+    text-align: left;
+}
+
+#changePwd .ane-label-tips .ane-label-tips-label {
+    display: inline-block;
+    color: #536b82;
+    font-weight: bold;
+    width: 85px;
+    text-align: right;
+}
+
+#changePwd.sszhxt_en .ane-label-tips .ane-label-tips-label {
+    width: 132px;
+}
+
+#changePwd.sszhxt_en input,
+#changePwd.sszhxt_en .ane-input-tips {
+    width: 220px;
+}
+
+#changePwd .ane-label-tips {
+    width: 418px;
+    text-align: center;
+}
+
+#changePwd .fa-exclamation-circle:before {
+    content: '';
+}
+
+#changePwd .pwd-tips {
+    position: absolute;
+    top: 40px;
+    left: 133px;
+}
+
+#changePwd .warn {
+    color: #d2403d;
+    font-size: 12px;
+}
+
+#changePwd .ane-input-tips-clear {
+    font-size: 0px !important;
+    background: url(/static/image/zfsypsjglpt/pw_input_close.png?__sprite) no-repeat;
+}
+
+.edit-pwd,
+.logout_vm {
+    width: 450px;
+}
+
+.qrCodeDialog .modal-header,
+.edit-pwd .modal-header,
+.logout_vm .modal-header,
+.help-dialog .modal-header {
+    background-color: #414f5c;
+    color: #fff;
+    cursor: move;
+}
+
+.qrCodeDialog .close,
+.edit-pwd .close,
+.logout_vm .close,
+.help-dialog .close {
+    color: #ffffff;
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+.edit-pwd .modal-body .form-group label {
+    width: 80px;
+    height: 34px;
+    line-height: 34px;
+    margin-top: 10px;
+    display: inline-block;
+    text-align: right;
+}
+
+
+/* .edit-pwd .modal-body .form-control {
+    width: 400px;
+    margin-left: 10px;
+    margin-top: 10px;
+} */
+
+.edit-pwd .modal-body .form-inline {
+    text-align: center;
+}
+
+.edit-pwd .modal-body .form-inline .help-block {
+    margin-left: 90px;
+    text-align: left;
+}
+
+.edit-pwd .form-inline .has-feedback .form-control-feedback {
+    top: 10px;
+}
+
+.qrCodeDialog .modal-footer {
+    display: none !important;
+}
+
+.qrCodeDialog .modal-body {
+    padding: 15px 20px !important;
+}
+
+.qrCodeDialog .policeInfo {
+    width: 100%;
+    height: 100%;
+    padding: 0 40px;
+    color: #414f5c;
+    margin-top: 20px;
+}
+
+.qrCodeDialog .policeInfo .textPanel {
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+}
+
+.qrCodeDialog .policeInfo .textPanel span {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+
+.qrCodeDialog .policeInfo .textPanel .span_small {
+    max-width: 110px;
+}
+
+.qrCodeDialog .policeInfo .span_title {
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.qrCodeDialog .qrCodeImg {
+    width: 208px;
+    height: 208px;
+}
+
+.qrCodeDialog .tips {
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    text-align: center;
+}
+
+.qrCodeDialog .comparison_result {
+    width: 100%;
+    height: 25px;
+    overflow: hidden;
+}
+
+.qrCodeDialog .comparison_result .control_bar {
+    position: relative;
+}
+
+.qrCodeDialog .comparison_result .tempWrap {
+    margin-left: 26px;
+    width: 246px !important;
+}
+
+.qrCodeDialog .comparison_result .control_bar .pageState,
+.qrCodeDialog .comparison_result .control_bar ul {
+    display: none;
+}
+
+.qrCodeDialog .comparison_result .control_bar .next,
+.qrCodeDialog .comparison_result .control_bar .prev {
+    display: block;
+    width: 22px;
+    height: 54px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.qrCodeDialog .comparison_result .control_bar .next {
+    position: absolute;
+    right: 0px;
+    top: 125px;
+    background: url(/static/image/sszhxt-znsb/nextBtn.png) 0 0 no-repeat;
+}
+
+.qrCodeDialog .comparison_result .control_bar .nextStop {
+    background: url(/static/image/sszhxt-znsb/nextStopBtn.png) 0 0 no-repeat;
+    cursor: not-allowed;
+}
+
+.qrCodeDialog .comparison_result .control_bar .prev {
+    position: absolute;
+    left: 0px;
+    top: 125px;
+    background: url(/static/image/sszhxt-znsb/prevBtn.png) 0 0 no-repeat;
+}
+
+.qrCodeDialog .comparison_result .control_bar .prevStop {
+    background: url(/static/image/sszhxt-znsb/prevStopBtn.png) 0 0 no-repeat;
+    cursor: not-allowed;
+}
+
+.qrCodeDialog .comparison_result .result_li {
+    width: 50px;
+    height: 25px;
+    float: left;
+    color: #607785;
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+}
+
+.qrCodeDialog .comparison_result .result_li.listActive {
+    color: #414f5c;
+    border-bottom: 2px solid #414f5c;
+}
+
+.logout_vm .modal-footer,
+.help-dialog .modal-footer {
+    border-top: none;
+    padding-right: 53px;
+    margin-top: 10px;
+}
+
+.edit-pwd .modal-footer {
+    border-top: none;
+    padding-right: 53px;
+    margin-top: -10px;
+}
+
+.edit-pwd .modal-footer .btn,
+.logout_vm .modal-footer .btn,
+.help-dialog .modal-footer .btn {
+    padding: 0;
+}
+
+.edit-pwd .modal-footer .btn-primary,
+.logout_vm .modal-footer .btn-primary,
+.edit-pwd .modal-footer .btn-default,
+.logout_vm .modal-footer .btn-default,
+.help-dialog .modal-footer .btn-default {
+    width: 80px;
+    height: 30px;
+    line-height: 28px;
+    color: #fff;
+    background-color: #1055b3;
+    margin-left: 20px;
+    border: 1px solid #1055b3;
+    border-radius: 2px;
+    outline: none;
+}
+
+.edit-pwd .modal-footer .btnOk {
+    float: left;
+    margin-left: 110px;
+}
+
+.edit-pwd .modal-footer .btnCancel {
+    float: right;
+    margin-right: 70px;
+}
+
+.logout_vm .modal-footer .btnOk {
+    float: left;
+    margin-left: 110px;
+}
+
+.logout_vm .modal-footer .btnCancel {
+    float: right;
+    margin-right: 70px;
+}
+
+.edit-pwd .modal-footer .btn-primary:hover,
+.logout_vm .modal-footer .btn-primary:hover,
+.edit-pwd .modal-footer .btn-default:hover,
+.logout_vm .modal-footer .btn-default:hover,
+.help-dialog .modal-footer .btn-default:hover {
+    color: #fff;
+    background-color: #0e4899;
+    border: 1px solid #0e4899;
+}
+
+.changePwdDialog .modal-body {
+    margin-top: 20px;
+}

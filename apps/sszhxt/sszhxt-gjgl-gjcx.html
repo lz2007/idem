@@ -1,0 +1,281 @@
+<template>
+    <div class="sxzhxt-gjgl sszhxt-layout" :keyup="@handleEnter">
+        <!-- 左侧搜索内容 begin -->
+        <div class="left left-layout border sszhxt-search-box" :if="!@extra_class">
+            <xmp is="ms-form" :widget="{$form:@$searchForm,type:'search',inline:true}">
+                <ms-form-item :widget="{label: '告警类型:'}" :class="['form-item']">
+                    <ms-select :widget="{col:'sosType', value:[@json.sosType], onChange:@handleAlarmTypeChange}">
+                        <ms-select-option :widget="{value:'DEVICE_SOS'}">设备告警</ms-select-option>
+                        <ms-select-option :widget="{value:'STATUS_SOS'}">状态告警</ms-select-option>
+                        <ms-select-option :widget="{value:'BUSINESS_SOS'}">业务告警</ms-select-option>
+                    </ms-select>
+                </ms-form-item>
+                <div :visible="@json.sosType =='DEVICE_SOS'">
+                    <ms-form-item :widget="{label: '告警源:'}" :class="['form-item']">
+                        <ms-select :widget="{col:'sourceType', value:[@json.DEVICE_SOSType],onChange:@handleSourceTypeChange}">
+                            <ms-select-option :widget="{value:'ALL'}">不限</ms-select-option>
+                            <ms-select-option :widget="{value:'DEVICE_ELECTRIC_CAPACITANCE'}">电量不足</ms-select-option>
+                            <ms-select-option :widget="{value:'DEVICE_STORAGE_CAPACITANCE'}">存储不足</ms-select-option>
+                        </ms-select>
+                    </ms-form-item>
+                </div>
+                <div :visible="@json.sosType =='STATUS_SOS'">
+                    <ms-form-item :widget="{label: '告警源:'}" :class="['form-item']">
+                        <ms-select :widget="{col:'sourceType', value:[@json.STATUS_SOSType],onChange:@handleSourceTypeChange}">
+                            <ms-select-option :widget="{value:'ALL'}">不限</ms-select-option>
+                            <ms-select-option :widget="{value:'DEVICE_ONLINE'}">设备上线</ms-select-option>
+                            <ms-select-option :widget="{value:'DEVICE_OFFLINE'}">设备下线</ms-select-option>
+                        </ms-select>
+                    </ms-form-item>
+                </div>
+                <div :visible="@json.sosType =='BUSINESS_SOS'">
+                    <ms-form-item :widget="{label: '告警源:'}" :class="['form-item']">
+                        <ms-select :widget="{col:'sourceType', value:[@json.BUSINESS_SOSType],onChange:@handleSourceTypeChange}">
+                            <ms-select-option :widget="{value:'DEVICE_SOS'}">sos告警</ms-select-option>
+                        </ms-select>
+                    </ms-form-item>
+                </div>
+                <!--<div>-->
+                <!--<ms-form-item   :widget="{label: '告警级别:'}" :class="['form-item']">-->
+                <!--<ms-select :widget="{col:'sosLevel', value:[@json.sosLevel],onChange:@handleAlarmLevelChange}">-->
+                <!--<ms-select-option :widget="{value:'5'}">不限</ms-select-option>-->
+                <!--<ms-select-option :widget="{value:'0'}">紧急</ms-select-option>-->
+                <!--<ms-select-option :widget="{value:'1'}">重要</ms-select-option>-->
+                <!--<ms-select-option :widget="{value:'2'}">一般</ms-select-option>-->
+                <!--<ms-select-option :widget="{value:'3'}">提示</ms-select-option>-->
+                <!--</ms-select>-->
+                <!--</ms-form-item>-->
+                <!--</div>-->
+                <div :visible="@json.sosType =='BUSINESS_SOS'">
+                    <ms-form-item :widget="{label: '处理状态:'}" :class="['form-item']">
+                        <ms-select :widget="{col:'status', value:[@json.status],onChange:@handleStatusChange}">
+                            <ms-select-option :widget="{value:'ALL'}">不限</ms-select-option>
+                            <ms-select-option :widget="{value:'HANDLED'}">已处理</ms-select-option>
+                            <ms-select-option :widget="{value:'WAITING'}">待处理</ms-select-option>
+                            <ms-select-option :widget="{value:'OVERDUE'}">逾期未处理</ms-select-option>
+                        </ms-select>
+                    </ms-form-item>
+                </div>
+                <ms-form-item :widget="{label: '部门:'}" :class="'form-item'">
+                    <ms-tree-selecting :widget="{tree:@orgData, showSearch:true,selectedKey:@orgId,selectedTitle:@selectedTitle, wrapId: 'tree-select-wrap-gjgl', getSelected:@getSelected,onChange:@handleTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                </ms-form-item>
+
+                <ms-form-item :widget="{label:'人员:'}" :class="['inputUser', 'form-item']">
+                    <ms-input :widget="{col:'userCode',onChange:@handleUsercodeChange,value:@json.userCode, placeholder: '用户名/备注名'}" :focus="@handleInputFocus"
+                        :blur="@handleInputBlur" :keyup="@handleQuickSearch"></ms-input>
+                    <i class="close-clear close-clear-zhcn" :mousedown="@handleCloseClear"></i>
+                </ms-form-item>
+
+                <ms-form-item :widget="{label: '开始时间:'}" :class="'form-item'">
+                    <ms-datepicker :widget="{
+                        format:'YYYY-MM-DD HH:mm:ss',placeholder:'请选择开始时间',col:'beginTime',value:
+                        @beginTime,direction:'down',showTime: true,onChange:@handleBeginTimeChange
+                    }"></ms-datepicker>
+                </ms-form-item>
+
+                <ms-form-item :widget="{label: '结束时间:'}" :class="'form-item'">
+                    <ms-datepicker :widget="{
+                        format:'YYYY-MM-DD HH:mm:ss',placeholder:'请选择结束时间',col:'endTime',value:
+                        @endTime,direction:'down',showTime: true,onChange:@handleEndTimeChange
+                    }"></ms-datepicker>
+                </ms-form-item>
+
+
+                <!--<ms-form-item :widget="{label: '告警状态:'}" :class="['form-item']">-->
+                <!--<ms-select :widget="{col:'handleStatus', value:[@json.handleStatus],onChange:@handleStatusChange}">-->
+                <!--<ms-select-option :widget="{value:'ALL'}">不限</ms-select-option>-->
+                <!--<ms-select-option :widget="{value:'HANDLED'}">已处理</ms-select-option>-->
+                <!--<ms-select-option :widget="{value:'WAITING'}">待处理</ms-select-option>-->
+                <!--<ms-select-option :widget="{value:'OVERDUE'}">逾期未处理</ms-select-option>-->
+                <!--</ms-select>-->
+                <!--</ms-form-item>-->
+
+                <button type="button" class="btn btn-query" :click="@querySearch">查询</button>
+            </xmp>
+        </div>
+
+        <div class="left left-layout border sszhxt-search-box gjcx_en" :if="@extra_class">
+            <xmp is="ms-form" :widget="{$form:@$searchForm,type:'search',inline:true}">
+                <ms-form-item :widget="{label: 'Alarm Type'}" :class="['form-item']">
+                    <ms-select :widget="{col:'sosType', value:[@json.sosType], onChange:@handleAlarmTypeChange}">
+                        <ms-select-option :widget="{value:'DEVICE_SOS'}">Device Alarm</ms-select-option>
+                        <ms-select-option :widget="{value:'STATUS_SOS'}">State Alarm</ms-select-option>
+                        <ms-select-option :widget="{value:'BUSINESS_SOS'}">Work Alarm</ms-select-option>
+                    </ms-select>
+                </ms-form-item>
+                <div :visible="@json.sosType =='DEVICE_SOS'">
+                    <ms-form-item :widget="{label: 'Source'}" :class="['form-item']">
+                        <ms-select :widget="{col:'sourceType', value:[@json.DEVICE_SOSType],onChange:@handleSourceTypeChange}">
+                            <ms-select-option :widget="{value:'ALL'}">All</ms-select-option>
+                            <ms-select-option :widget="{value:'DEVICE_ELECTRIC_CAPACITANCE'}">Low Battery</ms-select-option>
+                            <!-- <ms-select-option :widget="{value:'DEVICE_STORAGE_CAPACITANCE'}">Insufficient Storage Capacity</ms-select-option> -->
+                        </ms-select>
+                    </ms-form-item>
+                </div>
+                <div :visible="@json.sosType =='STATUS_SOS'">
+                    <ms-form-item :widget="{label: 'Source'}" :class="['form-item']">
+                        <ms-select :widget="{col:'sourceType', value:[@json.STATUS_SOSType],onChange:@handleSourceTypeChange}">
+                            <ms-select-option :widget="{value:'ALL'}">All</ms-select-option>
+                            <ms-select-option :widget="{value:'DEVICE_ONLINE'}">Online</ms-select-option>
+                            <ms-select-option :widget="{value:'DEVICE_OFFLINE'}">Offline</ms-select-option>
+                        </ms-select>
+                    </ms-form-item>
+                </div>
+                <div :visible="@json.sosType =='BUSINESS_SOS'">
+                    <ms-form-item :widget="{label: 'Source'}" :class="['form-item']">
+                        <ms-select :widget="{col:'sourceType', value:[@json.BUSINESS_SOSType],onChange:@handleSourceTypeChange}">
+                            <ms-select-option :widget="{value:'DEVICE_SOS'}">SOS</ms-select-option>
+                        </ms-select>
+                    </ms-form-item>
+                </div>
+                <!--<div>-->
+                <!--<ms-form-item   :widget="{label: '告警级别:'}" :class="['form-item']">-->
+                <!--<ms-select :widget="{col:'sosLevel', value:[@json.sosLevel],onChange:@handleAlarmLevelChange}">-->
+                <!--<ms-select-option :widget="{value:'5'}">不限</ms-select-option>-->
+                <!--<ms-select-option :widget="{value:'0'}">紧急</ms-select-option>-->
+                <!--<ms-select-option :widget="{value:'1'}">重要</ms-select-option>-->
+                <!--<ms-select-option :widget="{value:'2'}">一般</ms-select-option>-->
+                <!--<ms-select-option :widget="{value:'3'}">提示</ms-select-option>-->
+                <!--</ms-select>-->
+                <!--</ms-form-item>-->
+                <!--</div>-->
+                <div :visible="@json.sosType =='BUSINESS_SOS'">
+                    <ms-form-item :widget="{label: 'State'}" :class="['form-item']">
+                        <ms-select :widget="{col:'status', value:[@json.status],onChange:@handleStatusChange}">
+                            <ms-select-option :widget="{value:'ALL'}">All</ms-select-option>
+                            <ms-select-option :widget="{value:'HANDLED'}">Treated</ms-select-option>
+                            <ms-select-option :widget="{value:'WAITING'}">Untreated</ms-select-option>
+                            <ms-select-option :widget="{value:'OVERDUE'}">Overdue</ms-select-option>
+                        </ms-select>
+                    </ms-form-item>
+                </div>
+                <ms-form-item :widget="{label: 'Department'}" :class="'form-item'">
+                    <ms-tree-selecting :widget="{tree:@orgData, showSearch:true,selectedKey:@orgId,selectedTitle:@selectedTitle, wrapId: 'tree-select-wrap-gjgl', getSelected:@getSelected,onChange:@handleTreeChange,extraExpandHandle:@extraExpandHandle}"></ms-tree-selecting>
+                </ms-form-item>
+
+                <ms-form-item :widget="{label:'User'}" :class="['inputUser', 'form-item']">
+                    <ms-input 
+                    :widget="{col:'userCode',onChange:@handleUsercodeChange,value:@json.userCode, placeholder: 'Enter Username/Alias'}" 
+                    :focus="@handleInputFocus"
+                    :blur="@handleInputBlur" 
+                    :keyup="@handleQuickSearch"></ms-input>
+                    <i class="close-clear" :mousedown="@handleCloseClear"></i>
+                </ms-form-item>
+
+                <ms-form-item :widget="{label: 'From'}" :class="'form-item time_label'">
+                    <ms-datepicker :widget="{
+                            format:'YYYY-MM-DD HH:mm:ss',placeholder:'Select the start time',col:'beginTime',value:
+                            @beginTime,direction:'down',showTime: true,onChange:@handleBeginTimeChange,
+                            languageSelect:'en'
+                        }"></ms-datepicker>
+                </ms-form-item>
+
+                <ms-form-item :widget="{label: 'To'}" :class="'form-item time_label'">
+                    <ms-datepicker :widget="{
+                            format:'YYYY-MM-DD HH:mm:ss',placeholder:'Select the end time',col:'endTime',value:
+                            @endTime,direction:'down',showTime: true,onChange:@handleEndTimeChange, languageSelect:'en'
+                        }"></ms-datepicker>
+                </ms-form-item>
+
+
+                <!--<ms-form-item :widget="{label: '告警状态:'}" :class="['form-item']">-->
+                <!--<ms-select :widget="{col:'handleStatus', value:[@json.handleStatus],onChange:@handleStatusChange}">-->
+                <!--<ms-select-option :widget="{value:'ALL'}">不限</ms-select-option>-->
+                <!--<ms-select-option :widget="{value:'HANDLED'}">已处理</ms-select-option>-->
+                <!--<ms-select-option :widget="{value:'WAITING'}">待处理</ms-select-option>-->
+                <!--<ms-select-option :widget="{value:'OVERDUE'}">逾期未处理</ms-select-option>-->
+                <!--</ms-select>-->
+                <!--</ms-form-item>-->
+
+                <button type="button" :class="@useSearch? '':'btnDisabled'" class="btn btn-query" :click="@querySearch">Query</button>
+            </xmp>
+        </div>
+        <!-- 左侧搜索内容 end -->
+
+        <!-- 右侧表格主体内容 begin -->
+        <!-- 表格数据begin -->
+        <div class="right right-layout tyywglpt-list-panel">
+            <div :if="@isChangeTable" style="height: 100%;">
+                <div class="tyywglpt-list-header-wrap">
+                    <ul class="tyywglpt-list-header">
+                        <li class="col-5 first-item">{{@sszhxt_language.tableNo}}</li>
+                        <li class="col-8">{{@sszhxt_language.tableOperation}}</li>
+                        <li class="col-11">{{@sszhxt_language.Department}}</li>
+                        <li class="col-10">{{@sszhxt_language.PoliceNameID}}</li>
+                        <li class="col-14">{{@sszhxt_language.nSNumber}}</li>
+                        <li class="col-16">{{@sszhxt_language.alarmLonLat}}</li>
+                        <li class="col-16">{{@sszhxt_language.alarmTime}}</li>
+                        <li class="col-9">{{@sszhxt_language.alarmSource}}</li>
+                        <!-- <li class="col-8">{{@sszhxt_language.alarmLevel}}</li> -->
+                        <li class="col-11 last-item">{{@sszhxt_language.dealState}}</li>
+                    </ul>
+                </div>
+                <ul class="tyywglpt-list-content">
+                    <li :if="@loading" class="list-loading">
+                        <span>{{@sszhxt_language.loading}}</span>
+                    </li>
+                    <li :if="@list.length == 0" class="list-null">{{@sszhxt_language.noRecords}}</li>
+                    <li :for="($index, item) in @copy_list">
+                        <div class="col-5 first-item">{{((@current - 1) * @json.pageSize) + $index+1}}</div>
+                        <div class="col-8"><span class="look" :click="@gjgllook($index)" :attr="{title: @sszhxt_language.check}">{{@sszhxt_language.check}}</span></div>
+                        <div class="col-11" :attr="{'origin-title':item.orgName,'data-toggle': 'popover'}">{{item.orgName}}</div>
+                        <div class="col-10" :attr="{'data-toggle':'popover','origin-title':(@item.userCode || '-') + '(' + (@item.userName || '-') + ')'}">{{(@item.userCode
+                            || '-') + '(' + (@item.userName || '-') + ')'}}</div>
+                        <div class="col-14" :attr="{'data-toggle':'popover','origin-title':item.deviceId || ''}">{{@item.deviceId}}</div>
+                        <div class="col-16" :attr="{'data-toggle':'popover','origin-title':(@item.longitude_title || '-') + '/' + (@item.latitude_title || '-') || ''}">
+                            {{((@item.longitude || '-') + '/' + (@item.latitude || '-')) }}
+                        </div>
+                        <div class="col-16" :attr="{'origin-title':item.time,'data-toggle': 'popover' }">{{@item.time}}</div>
+                        <div class="col-9" :attr="{'origin-title':item.sosSource} | changeData('sosSource')">{{@item.sosSource
+                            | changeData('sosSource')}}</div>
+                        <!-- <div class="col-8" :attr="{'origin-title':item.sosLevel} | changeData('sosLevel')">
+                            <span :class="[@item.sosLevel==0 ? 'URGENT':(@item.sosLevel==1?'IMPORTANT':(@item.sosLevel==2?'GENERAL':'PROMPT'))]">{{@item.sosLevel
+                                | changeData('sosLevel') }}</span>
+                        </div> -->
+                        <div class="col-11" :attr="{'origin-title':item.status} | changeData('status')" :class="[item.status == 'WAITING' ? 'waitDeal' : '']">{{item.status
+                            | changeData('status')}}</div>
+                    </li>
+                </ul>
+            </div>
+            <div :if="!@isChangeTable" style="height: 100%;">
+                <div class="tyywglpt-list-header-wrap">
+                    <ul class="tyywglpt-list-header">
+                        <li class="col-5 first-item">{{@sszhxt_language.tableNo}}</li>
+                        <li class="col-20">{{@sszhxt_language.Department}}</li>
+                        <li class="col-20">{{@sszhxt_language.PoliceNameID}}</li>
+                        <li class="col-20">{{@sszhxt_language.nSNumber}}</li>
+                        <li class="col-15">{{@sszhxt_language.alarmSource}}</li>
+                        <!-- <li class="col-10">{{@sszhxt_language.alarmLevel}}</li> -->
+                        <li class="col-20 last-item">{{@sszhxt_language.alarmTime}}</li>
+                    </ul>
+                </div>
+                <ul class="tyywglpt-list-content">
+                    <li :if="@loading" class="list-loading">
+                        <span>{{@sszhxt_language.loading}}</span>
+                    </li>
+                    <li :if="@list.length == 0" class="list-null">{{@sszhxt_language.noRecords}}</li>
+                    <li :for="($index, item) in @list">
+                        <div class="col-5 first-item">{{((@current - 1) * @json.pageSize) + $index+1}}</div>
+                        <div class="col-20" :attr="{'origin-title':item.orgName,'data-toggle': 'popover'}">{{item.orgName}}</div>
+                        <div class="col-20" :attr="{'data-toggle':'popover','origin-title':(@item.userCode || '-') + '(' + (@item.userName || '-') + ')'}">{{(@item.userCode
+                            || '-') + '(' + (@item.userName || '-') + ')'}}</div>
+                        <div class="col-20" :attr="{'data-toggle':'popover','origin-title':item.deviceId || ''}">{{@item.deviceId}}</div>
+                        <div class="col-15" :attr="{'origin-title':item.sosSource} | changeData('sosSource')">{{@item.sosSource
+                            | changeData('sosSource')}}</div>
+                        <!-- <div class="col-10" :attr="{'origin-title':item.sosLevel} | changeData('sosLevel')">
+                            <span :class="[@item.sosLevel==0 ? 'URGENT':(@item.sosLevel==1?'IMPORTANT':(@item.sosLevel==2?'GENERAL':'PROMPT'))]">{{@item.sosLevel
+                                |changeData('sosLevel') }}</span>
+                        </div> -->
+                        <div class="col-20" :attr="{'origin-title':item.time,'data-toggle': 'popover' }">{{@item.time}}</div>
+                        <!--<div class="col-10" :attr="{'origin-title':item.status} | changeData('status')" :class="[item.status == 'WAITING' ? 'waitDeal' : '']">{{item.status | changeData('status')}}</div>-->
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <!--<div :if="isDetailExist" ms-html="gjglDetail" class="gjglDetail"></div>-->
+        <!-- 页码 -->
+        <ms-pages :widget="{total:@total,onChange:@onChangePage,current:@current,getCurrent:@getCurrent}"></ms-pages>
+
+    </div>
+</template>

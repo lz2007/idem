@@ -1,0 +1,14 @@
+.com-progress .progress-bar-info{
+    background-color: #0E8FF5;
+}
+
+.com-progress.progress{
+    position: relative;
+    background-color: #D8E6EF;
+    border-radius: 20px;
+}
+.com-progress.progress .com-progress-press{
+    position: absolute;
+    left: 45%;
+    color: #ffffff;
+}

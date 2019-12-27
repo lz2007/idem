@@ -1,0 +1,104 @@
+.chartBox {
+    font-size: 16px;
+    height: 100%;
+}
+
+.chartBox .chartBox-head {
+    color: #0099CC;
+    height: 30px;
+}
+
+.chartBox .chartBox-head .chartBox-head-title {
+    background-color: #002D4C;
+    color: #21dafb;
+    height: inherit;
+    float: left;
+    font-size: 18px;
+    font-weight: 600;
+    position: relative;
+    z-index: 2;
+}
+
+.chartBox .chartBox-head .parallelogram {
+    width: 20px;
+    height: inherit;
+    float: left;
+    margin-left: 32px;
+}
+
+.chartBox .chartBox-head .chartBox-head-title span {
+    z-index: 3;
+    height: 30px;
+    width: 100%;
+    left: 0;
+    line-height: 30px;
+    padding-left: 8px;
+    position: absolute;
+    background: #002d4c;
+}
+
+.chartBox .chartBox-head .chartBox-head-title::before {
+    position: absolute;
+    top: 0;
+    right: -30px;
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-bottom: 30px solid #002D4C;
+    z-index: 1;
+}
+
+.chartBox .chartBox-head .chartBox-head-ctl {
+    width: 120px;
+    float: right;
+    text-align: right;
+}
+
+.chartBox .chartBox-head .chartBox-head-ctl .left,
+.chartBox .chartBox-head .chartBox-head-ctl .right {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: #002D4C;
+    position: relative;
+    cursor: pointer;
+    margin: 0;
+}
+
+.chartBox .chartBox-head .chartBox-head-ctl .left {
+    margin-right: 10px;
+}
+
+.chartBox .chartBox-head .chartBox-head-ctl .left::before,
+.chartBox .chartBox-head .chartBox-head-ctl .right::before {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    top: 9px;
+    left: 4px;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #000b12;
+}
+
+.chartBox .chartBox-head .chartBox-head-ctl .left::before {
+    transform: rotate(-90deg);
+    left: 0px;
+}
+
+.chartBox .chartBox-head .chartBox-head-ctl .right::before {
+    transform: rotate(90deg);
+}
+
+.chartBox .chartBox-content{
+    background-color: #001f35;
+    color: #fff;
+    margin-top: 4px;
+    font-weight: normal;
+    height: calc(100% - 30px);
+    width: 100%;
+    overflow: hidden;
+}

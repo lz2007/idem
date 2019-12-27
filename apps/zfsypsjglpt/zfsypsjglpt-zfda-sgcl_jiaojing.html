@@ -1,0 +1,16 @@
+<template>
+    <div class="zfda-container">
+        <div class="sgcl-container" :if="!@pageck">
+            <ms-sgcl-search cached="true" :widget="{id:'zfda-sgcl-search',searchfn:search,onReady:onReadyVm}"></ms-sgcl-search>
+            <ms-sgcl-list :widget="{isLoading:isLoading,datas:datas,current:@current,pageSize:@pageSize}"></ms-sgcl-list>
+            <ms-pages :widget="{id:'zfda-sgcl-ms-page',total:@total,pageSize:@pageSize,current:@current,getCurrent:@getCurrent,overLimit:@overLimit}"></ms-pages>
+        </div>
+
+        <!-- <div class="page-ck" :if="@pageck">
+            <ms-zfda-checks :widget="{isclose:isclose,onReady:onReadycheck}"></ms-zfda-checks>
+        </div> -->
+        <div class="jtwf-container" :if="pageck">
+            <ms-zfda-checks :widget="{isclose:isclose,onReady:onReadycheck}"></ms-zfda-checks>
+        </div>
+    </div>
+</template> 

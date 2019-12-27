@@ -1,0 +1,1592 @@
+{
+	"code": 0,
+	"msg": "成功！",
+	"data": [{
+		"code": "/gmvcs/uap",
+		"name": "统一用户认证平台",
+		"order": 1,
+		"menus": [{
+			"menuCode": "CAS_MENU_YHGL",
+			"menuName": "用户管理",
+			"childs": [{
+				"menuCode": "CAS_FUNC_YHGL_CREATE",
+				"menuName": "用户管理_新增",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 102,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "CAS_FUNC_YHGL_DELETE",
+				"menuName": "用户管理_删除",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 104,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "CAS_FUNC_YHGL_EDIT",
+				"menuName": "用户管理_编辑",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 103,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "CAS_FUNC_YHGL_SEARCH",
+				"menuName": "用户管理_查询",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 101,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "CAS_FUNC_YHGL_SET_ORG",
+				"menuName": "用户管理_设置角色范围",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 105,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "CAS_FUNC_YHGL_IMPORT",
+				"menuName": "用户管理_导入",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 106,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "CAS_FUNC_YHGL_EXPORT",
+				"menuName": "用户管理_导出",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 107,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "CAS_FUNC_YHGL_EXPORT_TEMPLATE",
+				"menuName": "用户管理_导出模板",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 108,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 100,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "CAS_MENU_BMGL",
+			"menuName": "部门管理",
+			"childs": [{
+				"menuCode": "CAS_FUNC_BMGL_DELETE",
+				"menuName": "部门管理_删除",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 203,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "CAS_FUNC_BMGL_CREATE",
+				"menuName": "部门管理_新增",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 201,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "CAS_FUNC_BMGL_EDIT",
+				"menuName": "部门管理_编辑",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 202,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 200,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "CAS_MENU_GNQX",
+			"menuName": "功能权限",
+			"childs": [{
+				"menuCode": "CAS_FUNC_GNQX_CREATE",
+				"menuName": "功能权限_新增角色",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 301,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "CAS_FUNC_GNQX_DELETE",
+				"menuName": "功能权限_删除角色",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 303,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "CAS_FUNC_GNQX_EDIT",
+				"menuName": "功能权限_编辑角色",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 302,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "CAS_MENU_XTCD",
+			"menuName": "系统菜单",
+			"childs": [{
+				"menuCode": "CAS_FUNC_GNQX_IMPORT",
+				"menuName": "系统菜单_导入菜单",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 401,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 400,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "CAS_MENU_SJZD",
+			"menuName": "数据字典",
+			"childs": [],
+			"url": null,
+			"icon": null,
+			"orderNo": 500,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "CAS_MENU_CZRZ",
+			"menuName": "操作日志",
+			"childs": [{
+				"menuCode": "CAS_FUNC_CZRZ_SEARCH",
+				"menuName": "操作日志_查询",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 601,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 600,
+			"path": "",
+			"menuType": "MENU"
+		}]
+	},
+	{
+		"code": "/gmvcs/audio",
+		"name": "执法视音频数据管理平台",
+		"order": 2,
+		"menus": [{
+			"menuCode": "AUDIO_MENU_YSPK",
+			"menuName": "音视频库",
+			"childs": [{
+				"menuCode": "AUDIO_MENU_YSPK_ZFYPS",
+				"menuName": "执法仪拍摄",
+				"childs": [{
+					"menuCode": "AUDIO_FUNCTION_YSPK_ZFYPS_CHECK_GG",
+					"menuName": "音视频库_执法仪拍摄_查看_更改",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 705,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "AUDIO_FUNCTION_YSPK_ZFYPS_CHECK_SCGL",
+					"menuName": "音视频库_执法仪拍摄_查看_删除关联",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 705,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "AUDIO_FUNCTION_YSPK_ZFYPS_CHECK",
+					"menuName": "音视频库_执法仪拍摄_查看",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 703,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "AUDIO_FUNCTION_YSPK_ZFYPS_CHECK_TJGL",
+					"menuName": "音视频库_执法仪拍摄_查看_添加关联",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 705,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "AUDIO_FUNCTION_YSPK_ZFYPS_SEARCH",
+					"menuName": "音视频库_执法仪拍摄_查询",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 702,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "AUDIO_FUNCTION_YSPK_ZFYPS_DELETE",
+					"menuName": "音视频库_执法仪拍摄_删除",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 703,
+					"path": "",
+					"menuType": "FUNCTION"
+				}],
+				"url": null,
+				"icon": null,
+				"orderNo": 701,
+				"path": "",
+				"menuType": "MENU"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 700,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "AUDIO_MENU_ZFDA",
+			"menuName": "执法档案",
+			"childs": [{
+				"menuCode": "AUDIO_MENU_ZFDA_AJGL",
+				"menuName": "案件关联",
+				"childs": [{
+					"menuCode": "AUDIO_FUNCTION_ZFDA_AJGL_CHECK",
+					"menuName": "音视频库_执法档案_案件关联_查看",
+					"childs": [{
+						"menuCode": "AUDIO_FUNCTION_ZFDA_AJGL_CHECK_TJGL",
+						"menuName": "音视频库_执法档案_案件关联_查看_添加关联",
+						"childs": [],
+						"url": null,
+						"icon": null,
+						"orderNo": 801,
+						"path": "",
+						"menuType": "FUNCTION"
+					},
+					{
+						"menuCode": "AUDIO_FUNCTION_ZFDA_AJGL_CHECK_SCGL",
+						"menuName": "音视频库_执法档案_案件关联_查看_删除关联",
+						"childs": [],
+						"url": null,
+						"icon": null,
+						"orderNo": 801,
+						"path": "",
+						"menuType": "FUNCTION"
+					}],
+					"url": null,
+					"icon": null,
+					"orderNo": 801,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "AUDIO_FUNCTION_ZFDA_AJGL_SEARCH",
+					"menuName": "音视频库_执法档案_案件关联_查询",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 801,
+					"path": "",
+					"menuType": "FUNCTION"
+				}],
+				"url": null,
+				"icon": null,
+				"orderNo": 801,
+				"path": "",
+				"menuType": "MENU"
+			},
+			{
+				"menuCode": "AUDIO_MENU_ZFDA_JQGL",
+				"menuName": "警情关联",
+				"childs": [{
+					"menuCode": "AUDIO_FUNCTION_ZFDA_JQGL_SEARCH",
+					"menuName": "音视频库_执法档案_警情关联_查询",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 801,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "AUDIO_FUNCTION_ZFDA_JQGL_CHECK",
+					"menuName": "音视频库_执法档案_警情关联_查看",
+					"childs": [{
+						"menuCode": "AUDIO_FUNCTION_ZFDA_JQGL_CHECK_SCGL",
+						"menuName": "音视频库_执法档案_警情关联_查看_删除关联",
+						"childs": [],
+						"url": null,
+						"icon": null,
+						"orderNo": 801,
+						"path": "",
+						"menuType": "FUNCTION"
+					},
+					{
+						"menuCode": "AUDIO_FUNCTION_ZFDA_JQGL_CHECK_TJGL",
+						"menuName": "音视频库_执法档案_警情关联_查看_添加关联",
+						"childs": [],
+						"url": null,
+						"icon": null,
+						"orderNo": 801,
+						"path": "",
+						"menuType": "FUNCTION"
+					}],
+					"url": null,
+					"icon": null,
+					"orderNo": 801,
+					"path": "",
+					"menuType": "FUNCTION"
+				}],
+				"url": null,
+				"icon": null,
+				"orderNo": 801,
+				"path": "",
+				"menuType": "MENU"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 700,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "AUDIO_MENU_YSPK_ZFYPS",
+			"menuName": "执法仪拍摄",
+			"childs": [{
+				"menuCode": "AUDIO_FUNCTION_YSPK_ZFYPS_CHECK_TJGL",
+				"menuName": "音视频库_执法仪拍摄_查看_添加关联",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 705,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "AUDIO_FUNCTION_YSPK_ZFYPS_CHECK_GG",
+				"menuName": "音视频库_执法仪拍摄_查看_更改",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 705,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "AUDIO_FUNCTION_YSPK_ZFYPS_CHECK_SCGL",
+				"menuName": "音视频库_执法仪拍摄_查看_删除关联",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 705,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "AUDIO_FUNCTION_YSPK_ZFYPS_DELETE",
+				"menuName": "音视频库_执法仪拍摄_删除",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 703,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "AUDIO_FUNCTION_YSPK_ZFYPS_SEARCH",
+				"menuName": "音视频库_执法仪拍摄_查询",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 702,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "AUDIO_FUNCTION_YSPK_ZFYPS_CHECK",
+				"menuName": "音视频库_执法仪拍摄_查看",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 703,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 701,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "AUDIO_MENU_TJFX_GLQKTJ",
+			"menuName": "关联情况统计",
+			"childs": [{
+				"menuCode": "AUDIO_FUNCTION_TJFX_GLQKTJ_SEARCH",
+				"menuName": "音视频库_统计分析_关联情况统计_查询",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 801,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "AUDIO_FUNCTION_TJFX_GLQKTJ_EXPORT",
+				"menuName": "音视频库_统计分析_关联情况统计_导出",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 801,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 801,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "AUDIO_MENU_TJFX_SLQKTJ",
+			"menuName": "摄录情况统计",
+			"childs": [{
+				"menuCode": "AUDIO_FUNCTION_TJFX_SLQKTJ_SEARCH",
+				"menuName": "音视频库_统计分析_摄录情况统计_查询",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 801,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "AUDIO_FUNCTION_TJFX_SLQKTJ_EXPORT",
+				"menuName": "音视频库_统计分析_摄录情况统计_导出",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 801,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 801,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "AUDIO_MENU_TJFX_ZCTJ",
+			"menuName": "资产统计",
+			"childs": [{
+				"menuCode": "AUDIO_FUNCTION_TJFX_ZCTJ_SEARCH",
+				"menuName": "音视频库_统计分析_资产统计_查询",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 801,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "AUDIO_FUNCTION_TJFX_ZCTJ_EXPORT",
+				"menuName": "音视频库_统计分析_资产统计_导出",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 801,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 801,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "AUDIO_MENU_ZFDA_AJGL",
+			"menuName": "案件关联",
+			"childs": [{
+				"menuCode": "AUDIO_FUNCTION_ZFDA_AJGL_SEARCH",
+				"menuName": "音视频库_执法档案_案件关联_查询",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 801,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "AUDIO_FUNCTION_ZFDA_AJGL_CHECK",
+				"menuName": "音视频库_执法档案_案件关联_查看",
+				"childs": [{
+					"menuCode": "AUDIO_FUNCTION_ZFDA_AJGL_CHECK_TJGL",
+					"menuName": "音视频库_执法档案_案件关联_查看_添加关联",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 801,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "AUDIO_FUNCTION_ZFDA_AJGL_CHECK_SCGL",
+					"menuName": "音视频库_执法档案_案件关联_查看_删除关联",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 801,
+					"path": "",
+					"menuType": "FUNCTION"
+				}],
+				"url": null,
+				"icon": null,
+				"orderNo": 801,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 801,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "AUDIO_MENU_ZFDA_JQGL",
+			"menuName": "警情关联",
+			"childs": [{
+				"menuCode": "AUDIO_FUNCTION_ZFDA_JQGL_CHECK",
+				"menuName": "音视频库_执法档案_警情关联_查看",
+				"childs": [{
+					"menuCode": "AUDIO_FUNCTION_ZFDA_JQGL_CHECK_SCGL",
+					"menuName": "音视频库_执法档案_警情关联_查看_删除关联",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 801,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "AUDIO_FUNCTION_ZFDA_JQGL_CHECK_TJGL",
+					"menuName": "音视频库_执法档案_警情关联_查看_添加关联",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 801,
+					"path": "",
+					"menuType": "FUNCTION"
+				}],
+				"url": null,
+				"icon": null,
+				"orderNo": 801,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "AUDIO_FUNCTION_ZFDA_JQGL_SEARCH",
+				"menuName": "音视频库_执法档案_警情关联_查询",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 801,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 801,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "AUDIO_MENU_TJFX",
+			"menuName": "统计分析",
+			"childs": [{
+				"menuCode": "AUDIO_MENU_TJFX_GLQKTJ",
+				"menuName": "关联情况统计",
+				"childs": [{
+					"menuCode": "AUDIO_FUNCTION_TJFX_GLQKTJ_SEARCH",
+					"menuName": "音视频库_统计分析_关联情况统计_查询",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 801,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "AUDIO_FUNCTION_TJFX_GLQKTJ_EXPORT",
+					"menuName": "音视频库_统计分析_关联情况统计_导出",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 801,
+					"path": "",
+					"menuType": "FUNCTION"
+				}],
+				"url": null,
+				"icon": null,
+				"orderNo": 801,
+				"path": "",
+				"menuType": "MENU"
+			},
+			{
+				"menuCode": "AUDIO_MENU_TJFX_SLQKTJ",
+				"menuName": "摄录情况统计",
+				"childs": [{
+					"menuCode": "AUDIO_FUNCTION_TJFX_SLQKTJ_EXPORT",
+					"menuName": "音视频库_统计分析_摄录情况统计_导出",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 801,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "AUDIO_FUNCTION_TJFX_SLQKTJ_SEARCH",
+					"menuName": "音视频库_统计分析_摄录情况统计_查询",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 801,
+					"path": "",
+					"menuType": "FUNCTION"
+				}],
+				"url": null,
+				"icon": null,
+				"orderNo": 801,
+				"path": "",
+				"menuType": "MENU"
+			},
+			{
+				"menuCode": "AUDIO_MENU_TJFX_ZCTJ",
+				"menuName": "资产统计",
+				"childs": [{
+					"menuCode": "AUDIO_FUNCTION_TJFX_ZCTJ_SEARCH",
+					"menuName": "音视频库_统计分析_资产统计_查询",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 801,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "AUDIO_FUNCTION_TJFX_ZCTJ_EXPORT",
+					"menuName": "音视频库_统计分析_资产统计_导出",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 801,
+					"path": "",
+					"menuType": "FUNCTION"
+				}],
+				"url": null,
+				"icon": null,
+				"orderNo": 801,
+				"path": "",
+				"menuType": "MENU"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 900,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "AUDIO_MENU_JDKP",
+			"menuName": "监督考评",
+			"childs": [],
+			"url": null,
+			"icon": null,
+			"orderNo": 1000,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "AUDIO_MENU_RZGL",
+			"menuName": "日志管理",
+			"childs": [],
+			"url": null,
+			"icon": null,
+			"orderNo": 1100,
+			"path": "",
+			"menuType": "MENU"
+		}]
+	},
+	{
+		"code": "/gmvcs/uom",
+		"name": "统一运维管理平台",
+		"order": 3,
+		"menus": [{
+			"menuCode": "UOM_MEMU_RWGL",
+			"menuName": "任务管理",
+			"childs": [{
+				"menuCode": "UOM_MEMU_RWGL_SJSCRW",
+				"menuName": "数据上传任务",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "MENU"
+			},
+			{
+				"menuCode": "UOM_MEMU_RWGL_LXXZRW",
+				"menuName": "录像下载任务",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "MENU"
+			},
+			{
+				"menuCode": "UOM_MEMU_RWGL_SSLXRW",
+				"menuName": "实时录像任务",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "MENU"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MEMU_RWGL_LXXZRW",
+			"menuName": "录像下载任务",
+			"childs": [],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MEMU_RWGL_SJSCRW",
+			"menuName": "数据上传任务",
+			"childs": [],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MEMU_RWGL_SSLXRW",
+			"menuName": "实时录像任务",
+			"childs": [],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_CCFWGL",
+			"menuName": "存储服务管理",
+			"childs": [{
+				"menuCode": "UOM_MENU_CCFWGL_BAQLXFWGL",
+				"menuName": "办案区录像服务管理",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "MENU"
+			},
+			{
+				"menuCode": "UOM_MENU_CJZSCFWGL",
+				"menuName": "采集站上传服务管理",
+				"childs": [{
+					"menuCode": "UOM_FUNCTION_CJZSCFWGL_CK",
+					"menuName": "存储服务管理_采集站上传服务管理_查看",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_CJZSCFWGL_MODIFY",
+					"menuName": "存储服务管理_采集站上传服务管理_修改",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_CJZSCFWGL_CCCL",
+					"menuName": "存储服务管理_采集站上传服务管理_存储策略",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_CJZSCFWGL_REGISTRY",
+					"menuName": "存储服务管理_采集站上传服务管理_注册",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_CJZSCFWGL_DELETE",
+					"menuName": "存储服务管理_采集站上传服务管理_删除",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_CJZSCFWGL_CCFX",
+					"menuName": "存储服务管理_采集站上传服务管理_存储分析",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_CJZSCFWGL_SEARCH",
+					"menuName": "存储服务管理_采集站上传服务管理_查询",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_CJZSCFWGL_CJZFP",
+					"menuName": "存储服务管理_采集站上传服务管理_采集站分配",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				}],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "MENU"
+			},
+			{
+				"menuCode": "UOM_MENU_CCFWGL_KHDSCFWGL",
+				"menuName": "客户端上传服务管理",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "MENU"
+			},
+			{
+				"menuCode": "UOM_MENU_CCFWGL_4GZFYLXFWEGL",
+				"menuName": "4G执法仪录像服务管理",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "MENU"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_CCFWGL_4GZFYLXFWEGL",
+			"menuName": "4G执法仪录像服务管理",
+			"childs": [],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_CCFWGL_BAQLXFWGL",
+			"menuName": "办案区录像服务管理",
+			"childs": [],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_CCFWGL_KHDSCFWGL",
+			"menuName": "客户端上传服务管理",
+			"childs": [],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_CJGZZGL",
+			"menuName": "采集工作站管理",
+			"childs": [{
+				"menuCode": "UOM_FUNCTION_CJGZZGL_REGISTRY",
+				"menuName": "设备资源管理_采集工作站管理_注册",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_CJGZZGL_SEARCH",
+				"menuName": "设备资源管理_采集工作站管理_查询",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_CJGZZGL_UPDATE",
+				"menuName": "设备资源管理_采集工作站管理_升级",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_CJGZZGL_DELETE",
+				"menuName": "设备资源管理_采集工作站管理_删除",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_CJGZZGL_CLPZ",
+				"menuName": "设备资源管理_采集工作站管理_策略配置",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_CJGZZGL_MODIFY",
+				"menuName": "设备资源管理_采集工作站管理_修改",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_CJGZZGL_AQPZ",
+				"menuName": "设备资源管理_采集工作站管理_安全配置",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_CJZSCFWGL",
+			"menuName": "采集站上传服务管理",
+			"childs": [{
+				"menuCode": "UOM_FUNCTION_CJZSCFWGL_CK",
+				"menuName": "存储服务管理_采集站上传服务管理_查看",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_CJZSCFWGL_CJZFP",
+				"menuName": "存储服务管理_采集站上传服务管理_采集站分配",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_CJZSCFWGL_DELETE",
+				"menuName": "存储服务管理_采集站上传服务管理_删除",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_CJZSCFWGL_CCCL",
+				"menuName": "存储服务管理_采集站上传服务管理_存储策略",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_CJZSCFWGL_REGISTRY",
+				"menuName": "存储服务管理_采集站上传服务管理_注册",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_CJZSCFWGL_CCFX",
+				"menuName": "存储服务管理_采集站上传服务管理_存储分析",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_CJZSCFWGL_MODIFY",
+				"menuName": "存储服务管理_采集站上传服务管理_修改",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_CJZSCFWGL_SEARCH",
+				"menuName": "存储服务管理_采集站上传服务管理_查询",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_PTJLGL",
+			"menuName": "平台级联管理",
+			"childs": [{
+				"menuCode": "UOM_MENU_PTJLGL_XJGBPTGL",
+				"menuName": "下级国标平台管理",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "MENU"
+			},
+			{
+				"menuCode": "UOM_MENU_PTJLGL_SJGBPTGL",
+				"menuName": "上级国标平台管理",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "MENU"
+			},
+			{
+				"menuCode": "UOM_MENU_PTJLGL_SJZFYPTGL",
+				"menuName": "上级执法仪平台管理",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "MENU"
+			},
+			{
+				"menuCode": "UOM_MENU_PTJLGL_XJZFYPTGL",
+				"menuName": "下级执法仪平台管理",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "MENU"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_PTJLGL_SJGBPTGL",
+			"menuName": "上级国标平台管理",
+			"childs": [],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_PTJLGL_SJZFYPTGL",
+			"menuName": "上级执法仪平台管理",
+			"childs": [],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_PTJLGL_XJGBPTGL",
+			"menuName": "下级国标平台管理",
+			"childs": [],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_PTJLGL_XJZFYPTGL",
+			"menuName": "下级执法仪平台管理",
+			"childs": [],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_SBSJRZ",
+			"menuName": "设备升级日志",
+			"childs": [{
+				"menuCode": "UOM_FUNCTION_SBSJRZ_SEARCH",
+				"menuName": "升级管理_设备升级日志_查询",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_SBZYGL",
+			"menuName": "设备资源管理",
+			"childs": [{
+				"menuCode": "UOM_MENU_ZFYGL",
+				"menuName": "执法仪管理",
+				"childs": [{
+					"menuCode": "UOM_FUNCTION_ZFYGL_MODIFY",
+					"menuName": "设备资源管理_执法仪管理_修改",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_ZFYGL_REGISTRY",
+					"menuName": "设备资源管理_执法仪管理_注册",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_ZFYGL_DELETE",
+					"menuName": "设备资源管理_执法仪管理_删除",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_ZFYGL_SEARCH",
+					"menuName": "设备资源管理_执法仪管理_查询",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				}],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "MENU"
+			},
+			{
+				"menuCode": "UOM_MENU_CJGZZGL",
+				"menuName": "采集工作站管理",
+				"childs": [{
+					"menuCode": "UOM_FUNCTION_CJGZZGL_REGISTRY",
+					"menuName": "设备资源管理_采集工作站管理_注册",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_CJGZZGL_UPDATE",
+					"menuName": "设备资源管理_采集工作站管理_升级",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_CJGZZGL_AQPZ",
+					"menuName": "设备资源管理_采集工作站管理_安全配置",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_CJGZZGL_SEARCH",
+					"menuName": "设备资源管理_采集工作站管理_查询",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_CJGZZGL_MODIFY",
+					"menuName": "设备资源管理_采集工作站管理_修改",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_CJGZZGL_CLPZ",
+					"menuName": "设备资源管理_采集工作站管理_策略配置",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_CJGZZGL_DELETE",
+					"menuName": "设备资源管理_采集工作站管理_删除",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				}],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "MENU"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_SJBGL",
+			"menuName": "升级包管理",
+			"childs": [{
+				"menuCode": "UOM_FUNCTION_SJBGL_DELETE",
+				"menuName": "升级管理_升级包管理_删除",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_SJBGL_UPLOAD",
+				"menuName": "升级管理_升级包管理_上传升级包",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_SJBGL_SEARCH",
+				"menuName": "升级管理_升级包管理_查询",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_SJGL",
+			"menuName": "升级管理",
+			"childs": [{
+				"menuCode": "UOM_MENU_SBSJRZ",
+				"menuName": "设备升级日志",
+				"childs": [{
+					"menuCode": "UOM_FUNCTION_SBSJRZ_SEARCH",
+					"menuName": "升级管理_设备升级日志_查询",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				}],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "MENU"
+			},
+			{
+				"menuCode": "UOM_MENU_SJBGL",
+				"menuName": "升级包管理",
+				"childs": [{
+					"menuCode": "UOM_FUNCTION_SJBGL_DELETE",
+					"menuName": "升级管理_升级包管理_删除",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_SJBGL_SEARCH",
+					"menuName": "升级管理_升级包管理_查询",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				},
+				{
+					"menuCode": "UOM_FUNCTION_SJBGL_UPLOAD",
+					"menuName": "升级管理_升级包管理_上传升级包",
+					"childs": [],
+					"url": null,
+					"icon": null,
+					"orderNo": 300,
+					"path": "",
+					"menuType": "FUNCTION"
+				}],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "MENU"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		},
+		{
+			"menuCode": "UOM_MENU_ZFYGL",
+			"menuName": "执法仪管理",
+			"childs": [{
+				"menuCode": "UOM_FUNCTION_ZFYGL_MODIFY",
+				"menuName": "设备资源管理_执法仪管理_修改",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_ZFYGL_REGISTRY",
+				"menuName": "设备资源管理_执法仪管理_注册",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_ZFYGL_DELETE",
+				"menuName": "设备资源管理_执法仪管理_删除",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			},
+			{
+				"menuCode": "UOM_FUNCTION_ZFYGL_SEARCH",
+				"menuName": "设备资源管理_执法仪管理_查询",
+				"childs": [],
+				"url": null,
+				"icon": null,
+				"orderNo": 300,
+				"path": "",
+				"menuType": "FUNCTION"
+			}],
+			"url": null,
+			"icon": null,
+			"orderNo": 300,
+			"path": "",
+			"menuType": "MENU"
+		}]
+	},
+	{
+		"code": "/gmvcs/license",
+		"name": "统一授权管理平台",
+		"order": 4,
+		"menus": []
+	},
+	{
+		"code": "/gmvcs/",
+		"name": "实时指挥系统",
+		"order": 5,
+		"menus": []
+	}]
+}

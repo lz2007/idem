@@ -1,0 +1,108 @@
+.ywzx-ccms {
+    height: 100%;
+    .radio{
+        display: block;
+        margin: 0px 10px 10px 20px !important;
+        padding-top: 10px;
+        label {
+            vertical-align: bottom !important;
+        }
+    }
+
+    .ane-radio input[type=radio] + .text:before {
+        line-height: 30px;
+        min-height: 18px;
+        min-width: 18px;
+        margin-top: 6px;
+        background: url('/static/image/xtpzgl-yhgl/radioCheck.png?__sprite') no-repeat;
+        content: '';
+        border-color: #cccc;
+    }
+    .ane-radio input[type="radio"]:checked + .text::before {
+        line-height: 30px;
+        min-height: 18px;
+        min-width: 18px;
+        margin-top: 6px;
+        background: url('/static/image/xtpzgl-yhgl/radioChecked.png?__sprite') no-repeat;
+    }
+
+    .modeTotal {
+        text-align: center;
+        padding-top: 40px;
+        .modeList {
+            display: inline-block;
+            width: 306px;
+            padding: 30px;
+            margin: 20px;
+            border: 1px solid #b8c5d3;
+            min-height: 304px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            &.selectedMode {
+                border: 1px solid #0053ba;
+            }
+            .selectIcon {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+            .modeTitle {
+                font-family: 'Arial Negreta', 'Arial Normal', 'Arial';
+                font-weight: 700;
+                font-style: normal;
+                font-size: 16px;
+                color: #2c3640;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .modeImg {
+                min-height: 100px;
+            }
+            .desc {
+                font-size: 14px;
+                color: #2c3640;
+                text-align: center;
+                margin-top: 30px;
+            }
+            &.lightTextCorlor {
+                border: 1px solid #0053ba;
+                .modeTitle {
+                    color: #0053ba;
+                }
+                .desc {
+                    color: #0053ba;
+                }
+            }
+            &.hybrid {
+                .modeImg{
+                    :first-child {
+                        margin-right: 40px;
+                    }
+                }
+                .desc {
+                    text-align: justify;
+                }
+            }
+        }
+        &.selectDisable {
+            .modeList{
+                cursor: not-allowed;
+            }
+        }
+    }
+    
+    .ccms-btn{
+        margin-top: 40px;
+        text-align: center;
+        button {
+            width: 84px;
+            height: 24px;
+            color: #FFFFFF;
+            background-color: rgb(16,85,179);
+        }
+        .cancelBtn {
+            margin-left: 40px;
+        }
+    }
+}

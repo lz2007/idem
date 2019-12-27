@@ -1,0 +1,5 @@
+<template>
+    <ol :attr="{id: @cid}" class="breadcrumb com-breadcrumb">
+        <li :for="($index, item) in @list"><a :click="@clickItem($index, item)" :class="[(@list.length - 1) == $index && $index != 0   ? 'active' : '']">{{@item.orgName}}</a></li>
+    </ol>
+</template>

@@ -1,0 +1,205 @@
+/* 统一运维管理平台--设备资源管理--多路视频采集设备管理
+caojiacong */
+
+.dlspcjsbgl .channel-search-box .form-inline {
+    top: 0;
+}
+
+.dlspcjsbgl .search-line-second .form-item {
+    margin-bottom: 0;
+}
+
+.dlspcjsbgl .tyywglpt-search-box .label-lg {
+    width: 288px;
+}
+
+.dlspcjsbgl .tyywglpt-search-box .label-lg label {
+    width: 103px;
+}
+
+.dlspcjsbgl .duration-container {
+    display: inline-block;
+}
+
+.dlspcjsbgl .form-item.duration-item {
+    margin-right: 15px;
+}
+
+.dlspcjsbgl .duration-container .form-control {
+    height: 30px;
+}
+
+.dlspcjsbgl .date-line {
+    margin: 0 4px;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+}
+
+.dlspcjsbgl .tyywglpt-list-panel {
+    top: 244px;
+}
+
+#dlspcjsbgl-modal-modify {
+    padding-top: 16px;
+}
+
+.dlspcjsbgl-modal-register .channel-btn,
+.dlspcjsbgl-modal-modify .channel-btn {
+    float: right;
+    margin-right: 16px;
+    padding: 0 10px;
+    margin-top: 3px;
+    background: #0078d7;
+}
+
+.dlspcjsbgl-modal-register .channel-btn:hover,
+.dlspcjsbgl-modal-modify .channel-btn:hover {
+    background: #0057a1;
+}
+
+.dlspcjsbgl-modal-register .channel-btn.disabled,
+.dlspcjsbgl-modal-modify .channel-btn.disabled {
+    background: #d4d7d9;
+}
+
+.dlspcjsbgl-modal-register .channel-btn.disabled:hover,
+.dlspcjsbgl-modal-modify .channel-btn.disabled:hover {
+    background: #d4d7d9;
+}
+
+.dlspcjsbgl-modal-register .form-inline .form-item,
+.dlspcjsbgl-modal-modify .form-inline .form-item {
+    width: 360px;
+}
+
+.dlspcjsbgl-modal-register .form-inline .form-item-lg,
+.dlspcjsbgl-modal-modify .form-inline .form-item-lg {
+    width: 100%;
+}
+
+.dlspcjsbgl-modal-register .form-item-lg .form-control,
+.dlspcjsbgl-modal-modify .form-item-lg .form-control {
+    width: 560px;
+}
+
+.dlspcjsbgl-modal-register .form-item-lg .has-icon .form-control,
+.dlspcjsbgl-modal-modify .form-item-lg .has-icon .form-control {
+    width: 526px;
+}
+
+.channel-panel {
+    margin-bottom: 15px;
+}
+
+.channel-list-null {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.channel-error {
+    color: #d2403d;
+}
+
+.has-scroll {
+    padding-right: 17px;
+}
+
+.channel-list-panel {
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #536b82;
+    text-align: center;
+    border: 1px solid #e0e7ec;
+    overflow: hidden;
+}
+
+.channel-list-header {
+    width: 100%;
+    background: #e0e7ed;
+    border: 1px solid #a5b4bd;
+}
+
+.channel-list-header li {
+    display: inline-block;
+    height: 32px;
+    line-height: 32px;
+    background: #e0e7ec;
+    border-left: 1px solid #a5b4bd;
+}
+
+.channel-list-header li i {
+    color: red;
+}
+
+.channel-list-content {
+    max-height: 180px;
+    min-height: 34px;
+    overflow: auto;
+    background: #f7f7f7;
+    border-top: none;
+}
+
+.channel-list-content li {
+    height: 60px;
+    line-height: 54px;
+    border-bottom: 1px solid #e0e7ec;
+}
+
+.channel-list-content li:hover {
+    background: #e8eff5;
+}
+
+.channel-list-content .col-item {
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    padding: 0 4px;
+    border-left: 1px solid #e0e7ec;
+}
+
+.channel-list-content .operate {
+    color: #536b82;
+    cursor: pointer;
+}
+
+.channel-list-content .operate:hover {
+    color: #0057a1;
+}
+
+.channel-list-panel .first-item {
+    border-left: none;
+}
+
+.channel-tips .fa-info-circle {
+    color: #E09E1F;
+    margin-right: 5px;
+}
+
+#dlspcjsbgl-modal-register .channel-list-content .form-item,
+#dlspcjsbgl-modal-modify .channel-list-content .form-item {
+    width: 96%;
+    margin: 0;
+    border: none;
+    line-height: 1.2;
+}
+
+#dlspcjsbgl-modal-register .channel-list-content .form-control,
+#dlspcjsbgl-modal-modify .channel-list-content .form-control {
+    width: 96%;
+    line-height: 30px;
+}
+
+#dlspcjsbgl-modal-register .channel-list-content .has-icon,
+#dlspcjsbgl-modal-modify .channel-list-content .has-icon {
+    width: 100%;
+    text-align: left;
+}
+
+#dlspcjsbgl-modal-register .channel-list-content .form-tip,
+#dlspcjsbgl-modal-modify .channel-list-content .form-tip {
+    font-size: 12px;
+    padding-left: 0;
+}

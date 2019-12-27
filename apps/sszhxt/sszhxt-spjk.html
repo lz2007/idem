@@ -1,0 +1,80 @@
+<!-- 实时指挥系统--视频监控 -->
+<!-- caojiacong -->
+<template>
+    <div class="spjk" :controller="spjk-vm" :mouseup="@handleSoundMouseUp" :keydown="@exitFull">
+        <ms-sszh-sidebar
+            :widget="{treeId:'poll-tree',spjkBool: true, useSearch: @useSearch,owner:'sszhxt-spjk-polltree',onCheck:@handleTreeCheck,extraProcessWhenPersonChange:@extraProcessWhenPersonChange}">
+        </ms-sszh-sidebar>
+        <div class="spjk-main-container">
+            <div class="video-list" :css="{height:@videoHeight}">
+                <!--<object :if="!@isie" id="video-ocx" CLSID="{455791d4-4095-4f70-b2b3-f5c424f25ad9}" TYPE="application/x-itst-activex" Event_OcxEventProxy="_onOcxEventProxy"-->
+                <!--width="100%" height="100%"></object>-->
+                <embed :if="!@isie" id="video-ocx" type="application/npGSVideoPlugin-plugin" name="npGSVideoPlugin"
+                    width="100%" height="100%">
+
+                <object :if="@isie" id="video-ocx" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9" width="100%"
+                    height="100%"></object>
+                <!--<object id="video-ocx" classid="clsid:455791d4-4095-4f70-b2b3-f5c424f25ad9" width="100%" height="100%"></object>-->
+            </div>
+            <div class="main-title">
+                <!-- <h3>{{@spjk_txt.monitor}}</h3> -->
+                <ul class="ocx-tool-bar">
+                    <li :click="@handleSound" :mouseleave="handleSoundMouseLeave">
+                        <div class="sound-bar-wrap">
+                            <div class="sound_close" :if="@soundLevel === 0" :attr="{title: @spjk_txt.soundVolume}"></div>
+                            <div class="sound" :if="@soundLevel != 0"  :attr="{title: @spjk_txt.soundVolume}"></div>
+                            <div class="sound-bar" :visible="@soundShow" :on-mousewheel="handleSoundScroll" :mousemove="@handleSoundMouseMove|prevent">
+                                <div class="triangle outer-triangle"></div>
+                                <div class="triangle inner-triangle"></div>
+                                <div class="sound-level-wrap" :mousedown="@handleSoundMouseDown|prevent">
+                                    <span class="sound-level" :css="{'top':(100 - @soundLevel)+'%'}"></span>
+                                    <div class="sound-btn-wrap">
+                                    <span class="sound-btn" :css="{'top': (100-@soundLevel)+ '%'}"></span>
+                                    </div>
+                                </div>
+                                <span class="sound-num">{{@soundLevel}}%</span>
+                            </div>
+                            <iframe :visible="@soundShow" src="about:blank" frameBorder="0" marginHeight="0"
+                                marginWidth="0" style="position:absolute; visibility:inherit; top:-89px;left:29px;width:100%; height:75%;z-index:0;opacity:0;filter:alpha(opacity=0);"></iframe>
+                        </div>
+                    </li>
+                    <li :click="@handleSplit1"><span class="split1" :attr="{title: @spjk_txt.oneScreen}"></span></li>
+                    <li :click="@handleSplit4"><span class="split4" :attr="{title: @spjk_txt.fourScreen}"></span></li>
+                    <li :click="@handleSplit6"><span class="split6" :attr="{title: @spjk_txt.sixScreen}"></span></li>
+                    <li :click="@handleSplit9"><span class="split9" :attr="{title: @spjk_txt.nineScreen}"></span></li>
+                    <li :click="@handleSplit"><span class="split" :attr="{title: @spjk_txt.customScreen}"></span></li>
+                    <li><span class="full" :attr="{title: @common_txt.fullScreen}" :click="@handleFull"></span></li>
+                    <!-- <li class="close-current" :attr="{title: @spjk_txt.closeOne}" :click="@handleClose"></li> -->
+                    <li :click="@handleCloseAll"><span class="closeall" :attr="{title: @spjk_txt.closeAll}" :click="@handleCloseAll"></span></li>
+                </ul>
+            </div>
+        </div>
+        <iframe id='lala' src="about:blank" marginheight="0" marginwidth="0" style="border-radius: 5px;display: none; position:absolute; visibility:inherit; top:257px;left:643px;width:360px; height:200px;z-index:992;opacity:1;filter:alpha(opacity=0);background: #fff;"
+            frameborder="0"></iframe>
+        <iframe id='notification_show' src="about:blank" marginheight="0" marginwidth="0" style="border-radius: 5px;display: none; position:absolute; visibility:inherit; top:8px;right:20px;width:310px; height:44px;z-index:992;opacity:1;filter:alpha(opacity=0);background: #1a1a1a;"
+            frameborder="0"></iframe>
+        <div :controller="spjk-split-vm" class="spjk-modal-split">
+            <xmp :widget="{is:'common-ms-modal', title:@spjk_txt.customScreen, btnalign:'center', modalSelector:'#spjk-modal-split', modalWidth:360, modalHeight: 100, show:@show, onOk:@handleOk, onCancel:@handleCancel, extramove:@extramove, okText: @spjk_txt.confirm, cancelText: @spjk_txt.cancel}">
+                <div id="spjk-modal-split">
+                    <div class="form-item">
+                        <label>{{@spjk_txt.row}}：</label>
+                        <ms-modal-select :widget="{show:@rowShow,getSelected:@getRowSelected}"></ms-modal-select>
+                    </div>
+                    <div class="form-item">
+                        <label>{{@spjk_txt.column}}：</label>
+                        <ms-modal-select :widget="{show:@columnShow,getSelected:@getColumnSelected}"></ms-modal-select>
+                    </div>
+                    <iframe src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0" style="position:absolute; visibility:inherit; top:0px;left:0px;width:100%; height:100%;z-index:-1;opacity:0;filter:alpha(opacity=0);"></iframe>
+                </div>
+            </xmp>
+        </div>
+        <ms-download-tip :widget="{show:@downloadTipShow,getShowStatus:getShowStatus}">
+            <div>
+                <p>{{@tipText}}
+                    <br /><span :if="@showtip">{{@common_txt.downloadConfirm}}</span></p>
+                <p class="tip-text">
+                    <i class="fa fa-info-circle"></i>{{@common_txt.rebootBrowser}}</p>
+            </div>
+        </ms-download-tip>
+    </div>
+</template>

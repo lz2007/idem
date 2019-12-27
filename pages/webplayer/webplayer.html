@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+        #web_id_firefox,
+        #web_id_ie {
+            display: none;
+        }
+
+        #no_webplayer {
+            display: none;
+            text-decoration: none;
+            padding: 10px;
+            font-size: 14px;
+            background-color: #2b2b2b;
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body width="100%" height="100%">
+    <div>
+        <a href="/static/webplayer-3.0.2.0.exe" id="no_webplayer">点击下载安装国迈播放器，并允许浏览器加载</a>
+        <object id="web_id_firefox" CLSID="{1116F670-8828-4187-822A-BB67C6317F22}" TYPE="application/x-itst-activex" Event_OcxEventProxy="_onOcxEventProxy"
+            width="100%" height="100%"></object>
+        <object id="web_id_ie" classid="CLSID:1116F670-8828-4187-822A-BB67C6317F22" width="100%" height="100%"></object>
+    </div>
+</body>
+<script>
+    var isIE, is_install = true;
+    window.onload = function () {
+        isIE = isIE_fuc();
+        if (isIE) {
+            document.getElementById("web_id_firefox").style.display = "none";
+            document.getElementById("web_id_ie").style.display = "block";
+        } else {
+            document.getElementById("web_id_firefox").style.display = "block";
+            document.getElementById("web_id_ie").style.display = "none";
+        }
+    }
+
+    function web_resize(p_width, p_height) { // ----- 初始化播放器大小、绑定resize时使用
+        if (isIE) {
+            document.body.style.width = p_width + "px";
+            document.body.style.height = p_height + "px";
+            document.getElementById("web_id_ie").width = p_width;
+            document.getElementById("web_id_ie").height = p_height;
+
+            try {
+                ie_obj = new ActiveXObject("zapwebplayer.ZapWebPlayer.1");
+                if (ie_obj) {
+                    web_id_ie.initFrameSize(p_width, p_height);
+                }
+            } catch (e) {
+                is_install = false;
+                document.getElementById("no_webplayer").style.width = p_width + "px";
+                document.getElementById("no_webplayer").style.height = p_height + "px";
+                document.getElementById("web_id_ie").style.display = "none";
+                document.getElementById("no_webplayer").style.display = "block";
+            }
+            // web_id_ie.initFrameSize(p_width, p_height);
+        } else {
+            document.body.style.width = p_width + "px";
+            document.body.style.height = p_height + "px";
+            document.getElementById("web_id_firefox").style.width = p_width + "px";
+            document.getElementById("web_id_firefox").style.height = p_height + "px";
+
+            web_id_firefox.initFrameSize(p_width, p_height);
+        }
+    }
+
+    function play(url) { // ----- 播放，参数为播放地址
+        if (false == is_install)
+            return;
+        if (isIE) {
+            web_id_ie.playMedia(url, "");
+        } else {
+            web_id_firefox.playMedia(url, "");
+        }
+    }
+
+    function stop() { // ----- 停止播放
+        if (false == is_install)
+            return;
+        if (isIE) {
+            web_id_ie.stopPlay();
+        } else {
+            web_id_firefox.stopPlay();
+        }
+    }
+
+    function isIE_fuc() {
+        if (!!window.ActiveXObject || "ActiveXObject" in window)
+            return true;
+        else
+            return false;
+    }
+</script>
+
+</html>
